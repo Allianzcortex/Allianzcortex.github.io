@@ -1,0 +1,38 @@
+---
+layout: page
+title: "Projects"
+permalink: /projects/
+---
+
+写的一些小项目：
+
+- [FBRank](https://github.com/Allianzcortex/FBRank)
+
+一个在线查看命令足球信息的命令行工具
+
+- [cortexForum](https://github.com/Allianzcortex/cortexForum)
+
+一款基于 `Django` 所做的论坛（人人都有一个写 v2ex 的梦...）
+
+- [AccountBook](https://github.com/Allianzcortex/AcountBook)
+
+一项基于 `QT` 的家庭资产管理软件
+
+---
+
+参与过的项目：
+
+- 为 `@7SDream` 写的 [zhih-oauth](https://github.com/7sDream/zhihu-oauth) 提了两个 PR。BTW,这个项目非常漂亮，装饰器实现的好哇。
+
+- 为 `@yumendy` 写的 [LibraryManagement](https://github.com/yumendy/LibraryManagement) 提供了一个修正版 [LibraryManagement](https://github.com/Allianzcortex/myLM), 在原本的基础上增加了 `form 表单`，从而用 `form.cleaned_data.get()` 取代了 `request.POST.get()`，更容易实现前后端的分离，增加了对错误条件的判断，将数据库由 SQLite 改为 `MySQL`。
+
+---
+
+待填坑的项目：
+
+- [Seaeels](https://github.com/Allianzcortex/Seaeels) 一个爬虫框架。不知道什么时候能继续写完啊......不过 `crawlProxy` 文件夹里实现了从
+`xici 秘密花园 peuland ip84` 里爬代理 IP 的几个方法。
+
+- [bweever](https://github.com/Allianzcortex/bweever) 当初的一个脑洞，想实现一个附带文档和算法说明的算法库。现在已经衍变成了一堆算法实现的集合......
+
+

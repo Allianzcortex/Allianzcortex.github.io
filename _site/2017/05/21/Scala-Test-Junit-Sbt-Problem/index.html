@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  
+  
+  <title>ScalaTest 和 JUnit 集成，使用 Sbt 不执行测试的解决办法</title>
+  <meta name="description" content="ScalaTest 与 JUnit 集成后，执行 sbt test 提示 no tests are executed 的解决办法">
+  
+
+  <link rel="stylesheet" href="/assets/main.css">
+  <link rel="canonical" href="http://localhost:4000/2017/05/21/Scala-Test-Junit-Sbt-Problem/">
+  
+  
+  <link rel="alternate" type="application/rss+xml" title="Allianzcortex-Blog" href="http://localhost:4000/feed.xml">
+
+  
+
+  
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:site" content="hzcortex">
+  <meta name="twitter:title" content="ScalaTest 和 JUnit 集成，使用 Sbt 不执行测试的解决办法">
+  <meta name="twitter:description" content="ScalaTest 与 JUnit 集成后，执行 sbt test 提示 no tests are executed 的解决办法">
+  
+    <meta name="twitter:creator" content="hzcortex">
+  
+  
+
+  <script type="text/javascript">
+  WebFontConfig = {
+    google: { families: [ 'Bitter:400,700,400italic:latin' ] }
+  };
+  (function() {
+    var wf = document.createElement('script');
+    wf.src = ('https:' == document.location.protocol ? 'https' : 'http') +
+      '://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
+    wf.type = 'text/javascript';
+    wf.async = 'true';
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(wf, s);
+  })();
+</script>
+
+  
+
+</head>
+
+
+  <body>
+
+    <header class="site-header">
+
+  <div class="wrapper">
+
+    <a class="site-title" href="/">Allianzcortex-Blog</a>
+
+    <nav class="site-nav">
+      
+        
+        <a class="page-link" href="/archives/">Archives</a>
+      
+        
+        <a class="page-link" href="/projects/">Projects</a>
+      
+        
+        <a class="page-link" href="/about/">About</a>
+      
+        
+        <a class="page-link" href="/board/">board</a>
+      
+        
+        <a class="page-link" href="/feed.xml">RSS</a>
+      
+    </nav>
+
+  </div>
+
+</header>
+
+
+    <main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    
+      <h1 class="post-title" itemprop="name headline">ScalaTest 和 JUnit 集成，使用 Sbt 不执行测试的解决办法</h1>
+    
+    <p class="post-meta"><time datetime="2017-05-22T00:29:10+08:00" itemprop="datePublished">May 21, 2017</time> • 
+  
+  
+
+</p>
+  </header>
+
+  <div class="post-content" itemprop="articleBody">
+    <p>ScalaTest 与 JUnit 集成后，执行 <code class="highlighter-rouge">sbt test</code> 提示 <code class="highlighter-rouge">no tests are executed</code> 的解决办法</p>
+
+<!-- more -->
+
+<p>最近在试着写一个用 Scala 解决 LeetCode 的 <a href="https://github.com/Allianzcortex/Scala-LeetCode">集合</a>，Scala 里的单元测试一般推荐使用 ScalaTest，而大部分 Scala 使用者都有 Java 背景，所以 ScalaTest 也可以与 Junit 集成使用，参见 <a href="http://www.scalatest.org/getting_started_with_junit_4_in_scala">链接</a></p>
+
+<h4 id="遇到了什么问题">遇到了什么问题</h4>
+
+<p>首先定义如下的测试代码：</p>
+
+<figure class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">import</span> <span class="nn">org.scalatest.</span><span class="o">{</span><span class="nc">BeforeAndAfterEach</span><span class="o">,</span> <span class="nc">FunSpec</span><span class="o">,</span> <span class="nc">FunSuite</span><span class="o">}</span>
+
+<span class="k">class</span> <span class="nc">FileUtilTest</span> <span class="k">extends</span> <span class="nc">FunSpec</span> <span class="k">with</span> <span class="nc">BeforeAndAfterEach</span> <span class="o">{</span>
+    <span class="n">it</span><span class="o">(</span><span class="s">"should be equal"</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">assert</span><span class="o">(</span><span class="n">xx</span><span class="o">.</span><span class="n">max</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span><span class="mi">2</span><span class="o">)</span> <span class="o">==</span> <span class="mi">2</span><span class="o">)</span>
+    <span class="o">}</span>
+<span class="o">}</span></code></pre></figure>
+
+<p>然后定义如下的 <strong>build.sbt</strong> 文件：</p>
+
+<figure class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="n">libraryDependencies</span> <span class="o">+=</span> <span class="s">"org.scalatest"</span> <span class="o">%</span> <span class="s">"scalatest_2.12"</span> <span class="o">%</span> <span class="s">"3.0.1"</span> <span class="o">%</span> <span class="s">"test"</span>
+<span class="n">libraryDependencies</span> <span class="o">+=</span> <span class="s">"junit"</span> <span class="o">%</span> <span class="s">"junit"</span> <span class="o">%</span> <span class="s">"4.8.1"</span> <span class="o">%</span> <span class="s">"test"</span></code></pre></figure>
+
+<p>上面是 Scala-Test 最标准的代码</p>
+
+<p>同时用 IDEA 和 <code class="highlighter-rouge">sbt test</code> 来跑测试用例都没有问题</p>
+
+<p>那么如果想要引入 JUnit 的话则如下：</p>
+
+<figure class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">import</span> <span class="nn">org.junit.Assert._</span>
+<span class="k">import</span> <span class="nn">org.scalatest.junit.</span><span class="o">{</span><span class="nc">AssertionsForJUnit</span><span class="o">}</span>
+<span class="k">import</span> <span class="nn">com.leetcode.util.</span><span class="o">{</span><span class="nc">FileUtil</span> <span class="k">=&gt;</span> <span class="n">xx</span><span class="o">}</span>
+<span class="k">import</span> <span class="nn">org.junit.Test</span>
+
+<span class="k">class</span> <span class="nc">FileUtilTest</span> <span class="k">extends</span>  <span class="nc">AssertionsForJUnit</span> <span class="o">{</span>
+    <span class="nd">@Test</span> <span class="k">def</span> <span class="n">test_max</span><span class="o">()={</span>
+     <span class="n">assertTrue</span><span class="o">(</span><span class="n">xx</span><span class="o">.</span><span class="n">max</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span><span class="mi">2</span><span class="o">)==</span><span class="mi">2</span><span class="o">)</span>
+   <span class="o">}</span>
+
+<span class="o">}</span></code></pre></figure>
+
+<p>在这种情况下用 IDEA 可以跑测试用例，但用 <code class="highlighter-rouge">sbt test</code> 的话会提示 <code class="highlighter-rouge">no tests are executed</code></p>
+
+<p>参考：http://stackoverflow.com/questions/28174243/run-junit-tests-with-sbt 需要在原有 sbt 的基础上加上：</p>
+
+<figure class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="n">crossPaths</span> <span class="o">:=</span> <span class="kc">false</span>
+<span class="n">libraryDependencies</span> <span class="o">+=</span> <span class="s">"com.novocode"</span> <span class="o">%</span> <span class="s">"junit-interface"</span> <span class="o">%</span> <span class="s">"0.11"</span> <span class="o">%</span> <span class="nc">Test</span>
+<span class="n">testOptions</span> <span class="o">+=</span> <span class="nc">Tests</span><span class="o">.</span><span class="nc">Argument</span><span class="o">(</span><span class="nc">TestFrameworks</span><span class="o">.</span><span class="nc">JUnit</span><span class="o">,</span> <span class="s">"-q"</span><span class="o">,</span> <span class="s">"-v"</span><span class="o">)</span></code></pre></figure>
+
+<p>出现这个问题的原因还是在于 Scala 和 Java 最后编译出来的是两套不同的字节码</p>
+
+<hr />
+
+<p>看了一下，Spark 里面的测试用例都是用的纯 ScalaTest 框架，而没有用 JUnit ：-D</p>
+
+  </div>
+
+</article>
+
+        
+<div id="disqus_thread"></div>
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_shortname = 'allianzcortex-me'; // required: replace example with your forum shortname
+        // var disqus_developer = 1; // Comment out when the site is live
+        var disqus_identifier = "/2017/05/21/Scala-Test-Junit-Sbt-Problem/";
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+
+    </main>
+    <footer class="site-footer">
+
+  <div class="wrapper">
+
+    <p>
+      
+
+Pro Land
+    </p>
+
+  </div>
+
+</footer>
+
+
+  </body>
+
+</html>

@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  
+  
+  <title>一个 Java 多线程程序实例——JStorm 处理逻辑</title>
+  <meta name="description" content="在实时流 JStorm 中处理一个多线程的程序">
+  
+
+  <link rel="stylesheet" href="/assets/main.css">
+  <link rel="canonical" href="http://localhost:4000/2017/03/06/Write-A-Multithreading-Application/">
+  
+  
+  <link rel="alternate" type="application/rss+xml" title="Allianzcortex-Blog" href="http://localhost:4000/feed.xml">
+
+  
+
+  
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:site" content="hzcortex">
+  <meta name="twitter:title" content="一个 Java 多线程程序实例——JStorm 处理逻辑">
+  <meta name="twitter:description" content="在实时流 JStorm 中处理一个多线程的程序">
+  
+    <meta name="twitter:creator" content="hzcortex">
+  
+  
+
+  <script type="text/javascript">
+  WebFontConfig = {
+    google: { families: [ 'Bitter:400,700,400italic:latin' ] }
+  };
+  (function() {
+    var wf = document.createElement('script');
+    wf.src = ('https:' == document.location.protocol ? 'https' : 'http') +
+      '://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
+    wf.type = 'text/javascript';
+    wf.async = 'true';
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(wf, s);
+  })();
+</script>
+
+  
+
+</head>
+
+
+  <body>
+
+    <header class="site-header">
+
+  <div class="wrapper">
+
+    <a class="site-title" href="/">Allianzcortex-Blog</a>
+
+    <nav class="site-nav">
+      
+        
+        <a class="page-link" href="/archives/">Archives</a>
+      
+        
+        <a class="page-link" href="/projects/">Projects</a>
+      
+        
+        <a class="page-link" href="/about/">About</a>
+      
+        
+        <a class="page-link" href="/board/">board</a>
+      
+        
+        <a class="page-link" href="/feed.xml">RSS</a>
+      
+    </nav>
+
+  </div>
+
+</header>
+
+
+    <main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    
+      <h1 class="post-title" itemprop="name headline">一个 Java 多线程程序实例——JStorm 处理逻辑</h1>
+    
+    <p class="post-meta"><time datetime="2017-03-06T22:23:38+08:00" itemprop="datePublished">Mar 6, 2017</time> • 
+  
+  
+
+  
+  
+
+</p>
+  </header>
+
+  <div class="post-content" itemprop="articleBody">
+    <p>在实时流 JStorm 中处理一个多线程的程序
+<!-- more --></p>
+
+<hr />
+
+<p>Update：最近又遇到了这个问题。具体的原因就是最近在处理的程序用了一个自建的 redis pool。
+它在 getInstance() 方法这里用了 synchronized 关键字来加锁。</p>
+
+<p>但我们看一下 redis 是怎么实现这一点的。它继承了 Apache.commons.pool ，里面调用了
+<code class="highlighter-rouge">super.getResource()</code> 方法，而它又调用了 pool 里面的 <code class="highlighter-rouge">borrowObject</code> 方法。
+在 <code class="highlighter-rouge">borrowObject</code> 方法里，它已经实现了对多线程的考虑：</p>
+
+<p>long starttime = System.currentTimeMillis();
+1060        Latch<T> latch = new Latch<T>();
+1061        byte whenExhaustedAction;
+1062        long maxWait;
+1063        synchronized (this) {
+1064            // Get local copy of current config. Can't sync when used later as
+1065            // it can result in a deadlock. Has the added advantage that config
+1066            // is consistent for entire method execution
+1067            whenExhaustedAction = _whenExhaustedAction;
+1068            maxWait = _maxWait;
+1069
+// activate &amp; validate the object
+1203            try {
+1204                _factory.activateObject(latch.getPair().value);
+1205                if(_testOnBorrow &amp;&amp;
+1206                        !_factory.validateObject(latch.getPair().value)) {
+1207                    throw new Exception("ValidateObject failed");
+1208                }
+1209                synchronized(this) {
+1210                    _numInternalProcessing--;
+1211                    _numActive++;
+1212                }
+1213                return latch.getPair().value;
+1214            }
+1215            catch (Throwable e) {
+                ......
+}</T></T></p>
+
+  </div>
+
+</article>
+
+        
+
+
+    </main>
+    <footer class="site-footer">
+
+  <div class="wrapper">
+
+    <p>
+      
+
+Pro Land
+    </p>
+
+  </div>
+
+</footer>
+
+
+  </body>
+
+</html>

@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  
+  
+  <title>urlencode 的 space 问题，又是大坑</title>
+  <meta name="description" content="所以在 url 编/解码的时候，什么时候用 + ，什么时候用 %20 啊…….">
+  
+
+  <link rel="stylesheet" href="/assets/main.css">
+  <link rel="canonical" href="http://localhost:4000/2016/12/15/urldecode-20-space/">
+  
+  
+  <link rel="alternate" type="application/rss+xml" title="Allianzcortex-Blog" href="http://localhost:4000/feed.xml">
+
+  
+
+  
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:site" content="hzcortex">
+  <meta name="twitter:title" content="urlencode 的 space 问题，又是大坑">
+  <meta name="twitter:description" content="所以在 url 编/解码的时候，什么时候用 + ，什么时候用 %20 啊…….">
+  
+    <meta name="twitter:creator" content="hzcortex">
+  
+  
+
+  <script type="text/javascript">
+  WebFontConfig = {
+    google: { families: [ 'Bitter:400,700,400italic:latin' ] }
+  };
+  (function() {
+    var wf = document.createElement('script');
+    wf.src = ('https:' == document.location.protocol ? 'https' : 'http') +
+      '://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
+    wf.type = 'text/javascript';
+    wf.async = 'true';
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(wf, s);
+  })();
+</script>
+
+  
+
+</head>
+
+
+  <body>
+
+    <header class="site-header">
+
+  <div class="wrapper">
+
+    <a class="site-title" href="/">Allianzcortex-Blog</a>
+
+    <nav class="site-nav">
+      
+        
+        <a class="page-link" href="/archives/">Archives</a>
+      
+        
+        <a class="page-link" href="/projects/">Projects</a>
+      
+        
+        <a class="page-link" href="/about/">About</a>
+      
+        
+        <a class="page-link" href="/board/">board</a>
+      
+        
+        <a class="page-link" href="/feed.xml">RSS</a>
+      
+    </nav>
+
+  </div>
+
+</header>
+
+
+    <main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    
+      <h1 class="post-title" itemprop="name headline">urlencode 的 space 问题，又是大坑</h1>
+    
+    <p class="post-meta"><time datetime="2016-12-16T01:59:20+08:00" itemprop="datePublished">Dec 15, 2016</time> • 
+  
+  
+
+</p>
+  </header>
+
+  <div class="post-content" itemprop="articleBody">
+    <p>所以在 url 编/解码的时候，什么时候用 + ，什么时候用 %20 啊…….
+<!-- more --></p>
+
+<h4 id="背景">背景</h4>
+
+<p>简而言之是这样的，我司(写上这个词瞬间感觉逼格高了好多…….)的移动端打码是用 Nginx 收集，
+用 <code class="highlighter-rouge">urlencode</code> 编码。日常比较懒的话都是 tail -F | grep *** 后用在线工具解析的，但最近要对日志进行处理，就不能这么做了。喜闻乐见爆栈站上就有这个 <a href="http://stackoverflow.com/questions/28431359/how-to-decode-a-url-encoded-string-in-python">解析方法</a>，那就直接 <code class="highlighter-rouge">urllib.unquote</code> ，然后传进去。</p>
+
+<h4 id="发展">发展</h4>
+
+<p>但很快就发现不对劲啊，，，，如果说给的时间格式是 <code class="highlighter-rouge">2016-12-15 12:02:22</code>，在处理写进去之后的结果为
+<code class="highlighter-rouge">2016-12-15+12:02:22</code>。这么下去根本无法按照最近发生的时间来进行排序，连最基本的搜索功能都
+做不了，就更不要说进一步的处理了。</p>
+
+<h4 id="what-happened">What Happened</h4>
+
+<p>SO 上仍然有关于这个问题的 <a href="http://stackoverflow.com/questions/1634271/url-encoding-the-space-character-or-20">讨论</a>，就直接摘录 wikipedia 了：</p>
+
+<blockquote>
+  <p>When data that has been entered into HTML forms is submitted, the form field names and values are encoded and sent to the server in an HTTP request message using method GET or POST, or, historically, via email.[2] The encoding used by default is based on an early version of the general URI percent-encoding rules,[3] with a number of modifications such as newline normalization and replacing spaces with + instead of %20. The media type of data encoded this way is application/x-www-form-urlencoded, and it is currently defined (still in a very outdated manner) in the HTML and XForms specifications. In addition, the CGI specification contains rules for how web servers decode data of this type and make it available to applications.
+When HTML form data is sent in an HTTP GET request, it is included in the query component of the request URI using the same syntax described above. When sent in an HTTP POST request or via email, the data is placed in the body of the message, and application/x-www-form-urlencoded is included in the message’s Content-Type header.</p>
+</blockquote>
+
+<p>发生的原因是 URL 编码是分裂的，老式的 application/x-www-form-urlencoded 空格被表示为 + ，而 + 被表示为 “%2B”。比如在 Google 里搜索”Python urlencode+20”，query url 为 <code class="highlighter-rouge">https://www.google.com/search?q=Python+urlencode%2B20</code></p>
+
+<p>在现代的 url 的 HTTP URLs 中，空格被编码为”%20”，而 + 不被编码。</p>
+
+<p>在给的日志中空格仍然是按照 “+” 来传递的，而 unquote() 是按照现代方式解码的，所以造成结果的差异。解决办法就是在解码前用 <code class="highlighter-rouge">raw_data.replace('+','%20')</code>来把空格给转回去(因为日志包含内容里没有 + 号，所以这么做不会影响日志的表达性)。</p>
+
+<p>关于 urlencode 编码中各种对应关系，可以参考 <a href="http://www.degraeve.com/reference/urlencoding.php">这个列表</a></p>
+
+  </div>
+
+</article>
+
+        
+<div id="disqus_thread"></div>
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_shortname = 'allianzcortex-me'; // required: replace example with your forum shortname
+        // var disqus_developer = 1; // Comment out when the site is live
+        var disqus_identifier = "/2016/12/15/urldecode-20-space/";
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+
+    </main>
+    <footer class="site-footer">
+
+  <div class="wrapper">
+
+    <p>
+      
+
+Pro Land
+    </p>
+
+  </div>
+
+</footer>
+
+
+  </body>
+
+</html>
