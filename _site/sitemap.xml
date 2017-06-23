@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
+<loc>http://localhost:4000/2014/06/22/Python-Multiprocessing-Multithreading/</loc>
+<lastmod>2014-06-22T18:49:24+08:00</lastmod>
+</url>
+<url>
 <loc>http://localhost:4000/2014/11/21/some-techniques/</loc>
 <lastmod>2014-11-22T03:40:01+08:00</lastmod>
 </url>
@@ -23,6 +27,10 @@
 <url>
 <loc>http://localhost:4000/2015/10/21/Django-And-CortexForum/</loc>
 <lastmod>2015-10-22T04:39:49+08:00</lastmod>
+</url>
+<url>
+<loc>http://localhost:4000/2016/05/23/Read-Python-Open-Source-Project/</loc>
+<lastmod>2016-05-23T23:01:33+08:00</lastmod>
 </url>
 <url>
 <loc>http://localhost:4000/2016/07/03/hive-and-sqoop/</loc>

@@ -1,11 +1,11 @@
 ---
 layout: post
-title: Scala99 的一些题解与一个 Scala 类
+title: 《Scala For Impatient》的习题和 Scala 99 的一些题解记录
 date: 2017-05-21 13:29:10
 categories: Scala
 comments: true
 ---
-Scala 99 的一些题解记录，以及一个 Scala 类的实例
+《Scala For Impatient》的习题和 Scala 99 的一些题解记录
 
 <!-- more -->
 
@@ -23,6 +23,8 @@ Scala 学习的时候主要分为两方面吧：
 - Array/List/Seq 等一系列 Immutable 与 Mutable 对象，对应的 take/filter/map/flatMap/reduce/head/tail/init 等可以提高开发效率的方法
 
 - class/case class/object/trait 等新的 OO 相关内容
+
+关于水平掌握，达到 A3/L2 。
 
 最近做了 Scala99 里面的一些题目，试着做一些摘抄，里面有些题目提出了和原来的一些不一样的方法
 
