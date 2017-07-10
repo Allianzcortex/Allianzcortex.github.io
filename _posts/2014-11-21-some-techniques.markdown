@@ -10,6 +10,32 @@ comments: true
 
 <!-- more -->
 
+- 之前代码是这样的：
+```
+ private static byte[] decrypt(byte[] data, byte[] key) throws Exception {
+        SecureRandom sr = new SecureRandom();
+        DESKeySpec dks = new DESKeySpec(key);
+        SecretKeyFactory keyFactory = SecretKeyFactory.getInstance("DES");
+        SecretKey securekey = keyFactory.generateSecret(dks);
+        Cipher cipher = Cipher.getInstance("DES");
+        cipher.init(2, securekey, sr);
+        return cipher.doFinal(data);
+    }
+```
+
+各种 debug，看 DES 解法对应的 mode，最后还是要感谢 https://www.tools4noobs.com/online_tools/decrypt/ ，其实两行就用 Python 写好了：
+
+```
+def decrypt_des(input_):
+    """
+    :param input_: 加密的密文
+    :return: 经过 des 解密后的密文
+    """
+    des = DES.new("naidnefi", DES.MODE_ECB)
+    return "".join(x for x in des.decrypt(b64decode(input_)) if 31 < ord(x) < 127)
+```
+最后解密出来一堆 '\x5'，可以看 http://donsnotes.com/tech/charsets/ascii.html 来得到具体的含义，解决方法参考：https://stackoverflow.com/questions/14256593/remove-special-characters-from-the-string
+
 - 今天帮我司算法团队调一个 Bug，调的心好累......本来用 Python2 处理中文就很闹心，还要用正则来调。调试了一大堆 unicode 字符以后终于能跑了......结果在测试服务器能跑，在对方的线上服务器就不能跑，擦......最后搜到了这个 ！[链接](https://stackoverflow.com/questions/1446347/how-to-find-out-if-python-is-compiled-with-ucs-2-or-ucs-4)，一试，果然......测试的是用 ucs4 编译的，而线上的是用 ucs2 编译的。两个有什么区别......我不知道啊......现在到家都已经 12 点了，我要睡觉......明天再说
 
 - 自从 Google Reader 解散之后就没有怎么再用过 RSS 了，但最近发现还是很有用啊，类似 Push 和 Pull。这个 [链接](http://wokuang-blog.logdown.com/posts/208334-use-gmail-to-read-rss-data) 里说直接用 IFTTT 连接 Feedly 和 Gmail 就可以，但连接时候发现 IFTTT 必须要付费升级到 Pro 版才行。所以参考 [简书的这篇文章](http://www.jianshu.com/p/26b5c66e8546)，连接 RSS 和 Gmail。不过 IFTTT 改版后界面需要在右上角的个人主页那里点击 `New Applet`。有些 rss 的地址不一定好找，那就用 feedly 订阅后再导出 opml 文件，找到里面的 xmlUrl 属性对应内容。最后的截图如下：
