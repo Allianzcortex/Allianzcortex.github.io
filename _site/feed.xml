@@ -5,7 +5,7 @@
   
   <link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" />
   <link href="http://localhost:4000/" rel="alternate" type="text/html" />
-  <updated>2017-06-23T19:52:55+08:00</updated>
+  <updated>2017-09-09T21:03:44+08:00</updated>
   <id>http://localhost:4000//</id>
 
   
@@ -572,7 +572,73 @@ reduce:迭代任意一个 Iterrator 时只需要 O(1) 操作&lt;/p&gt;
 
 
 &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;__name__&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'__main__'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;check&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;  &lt;span class=&quot;c&quot;&gt;# 3 sample results: 1.00320512821,1.01938610662,0.982160555005&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;</content>
+    &lt;span class=&quot;n&quot;&gt;check&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;  &lt;span class=&quot;c&quot;&gt;# 3 sample results: 1.00320512821,1.01938610662,0.982160555005&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;第二个问题其实就是数据可用性的问题&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;最后抽象出黑盒问题：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# -*- coding:utf-8 -*-
+from __future__ import division
+
+from random import randint
+
+
+def gen_unique_list():
+    i = 0
+    res = set()
+    while i &amp;lt; 100000:
+        temp = [1] * 5
+        while True:
+            r1, r2, r3 = randint(0, 4), randint(0, 4), randint(0, 4)
+            if(r1 != r2 and r1 != r3 and r2 != r3):
+                temp[r1] = 0
+                temp[r2] = 0
+                temp[r3] = 0
+                break
+        if tuple(temp) not in res:
+            res.add(tuple(temp))
+        i += 1
+    return res
+
+
+def gen_probability():
+    res = gen_unique_list()
+    prob = 0
+    for elem in res:
+        # find last occurence
+        print elem
+        ind = 4 - list(reversed(elem)).index(0)
+        red_cnt, green_cnt = 3, 2
+        x = 1
+        # for in in range(0,ind)  这句话就是另一种思路了，显然不应该，最后得出的和都大于 1 了
+        for i in range(0, 5):
+            if(elem[i] == 0):
+                # means red
+                x *= (red_cnt / (red_cnt + green_cnt))
+                red_cnt -= 1
+            else:
+                # means green
+                x *= (green_cnt / (red_cnt + green_cnt))
+                green_cnt -= 1
+        prob += x
+        print x
+    print prob
+
+
+if __name__ == '__main__':
+    gen_probability()
+
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;但实际上直接 C(5,3) 就足够了……自己想的太复杂&lt;/p&gt;
+
+&lt;p&gt;这还只是一份数据，那么如果有两份数据呢。是在第一份数据可用的前提下 * 第二份数据可用，那么这两个问题就应该是独立的。
+因为前提是机器损坏已经发生了&lt;/p&gt;</content>
 
       
       
@@ -2590,6 +2656,35 @@ C++ 版：&lt;/p&gt;
       <content type="html" xml:base="http://localhost:4000/2014/11/21/some-techniques/">&lt;p&gt;一些碎碎念…&lt;/p&gt;
 
 &lt;!-- more --&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;之前代码是这样的：
+    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; private static byte[] decrypt(byte[] data, byte[] key) throws Exception {
+      SecureRandom sr = new SecureRandom();
+      DESKeySpec dks = new DESKeySpec(key);
+      SecretKeyFactory keyFactory = SecretKeyFactory.getInstance(&quot;DES&quot;);
+      SecretKey securekey = keyFactory.generateSecret(dks);
+      Cipher cipher = Cipher.getInstance(&quot;DES&quot;);
+      cipher.init(2, securekey, sr);
+      return cipher.doFinal(data);
+  }
+&lt;/code&gt;&lt;/pre&gt;
+    &lt;/div&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;各种 debug，看 DES 解法对应的 mode，最后还是要感谢 https://www.tools4noobs.com/online_tools/decrypt/ ，其实两行就用 Python 写好了：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;def decrypt_des(input_):
+    &quot;&quot;&quot;
+    :param input_: 加密的密文
+    :return: 经过 des 解密后的密文
+    &quot;&quot;&quot;
+    des = DES.new(&quot;naidnefi&quot;, DES.MODE_ECB)
+    return &quot;&quot;.join(x for x in des.decrypt(b64decode(input_)) if 31 &amp;lt; ord(x) &amp;lt; 127)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;最后解密出来一堆 ‘\x5’，可以看 http://donsnotes.com/tech/charsets/ascii.html 来得到具体的含义，解决方法参考：https://stackoverflow.com/questions/14256593/remove-special-characters-from-the-string&lt;/p&gt;
 
 &lt;ul&gt;
   &lt;li&gt;

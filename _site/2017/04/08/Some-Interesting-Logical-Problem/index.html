@@ -146,6 +146,72 @@
 <span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">'__main__'</span><span class="p">:</span>
     <span class="n">check</span><span class="p">()</span>  <span class="c"># 3 sample results: 1.00320512821,1.01938610662,0.982160555005</span></code></pre></figure>
 
+<ol>
+  <li>第二个问题其实就是数据可用性的问题</li>
+</ol>
+
+<p>最后抽象出黑盒问题：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code># -*- coding:utf-8 -*-
+from __future__ import division
+
+from random import randint
+
+
+def gen_unique_list():
+    i = 0
+    res = set()
+    while i &lt; 100000:
+        temp = [1] * 5
+        while True:
+            r1, r2, r3 = randint(0, 4), randint(0, 4), randint(0, 4)
+            if(r1 != r2 and r1 != r3 and r2 != r3):
+                temp[r1] = 0
+                temp[r2] = 0
+                temp[r3] = 0
+                break
+        if tuple(temp) not in res:
+            res.add(tuple(temp))
+        i += 1
+    return res
+
+
+def gen_probability():
+    res = gen_unique_list()
+    prob = 0
+    for elem in res:
+        # find last occurence
+        print elem
+        ind = 4 - list(reversed(elem)).index(0)
+        red_cnt, green_cnt = 3, 2
+        x = 1
+        # for in in range(0,ind)  这句话就是另一种思路了，显然不应该，最后得出的和都大于 1 了
+        for i in range(0, 5):
+            if(elem[i] == 0):
+                # means red
+                x *= (red_cnt / (red_cnt + green_cnt))
+                red_cnt -= 1
+            else:
+                # means green
+                x *= (green_cnt / (red_cnt + green_cnt))
+                green_cnt -= 1
+        prob += x
+        print x
+    print prob
+
+
+if __name__ == '__main__':
+    gen_probability()
+
+
+</code></pre>
+</div>
+
+<p>但实际上直接 C(5,3) 就足够了……自己想的太复杂</p>
+
+<p>这还只是一份数据，那么如果有两份数据呢。是在第一份数据可用的前提下 * 第二份数据可用，那么这两个问题就应该是独立的。
+因为前提是机器损坏已经发生了</p>
+
   </div>
 
 </article>

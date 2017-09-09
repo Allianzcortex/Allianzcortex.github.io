@@ -4,9 +4,12 @@ title: "About"
 permalink: /about/
 ---
 
+<div class="github-card" data-github="Allianzcortex" data-width="400" data-height="" data-theme="default"></div>
+<script src="//cdn.jsdelivr.net/github-cards/latest/widget.js"></script>
+
 - 毕业于 [HEU](http://www.hrbeu.edu.cn/)
 - 2012-2013 就读于`自动化学院`，2013-2016 就读于`计算机科学与技术学院`
-- 常用语言：`Python`（life is short:-D），`Java`（verbose yet obvious，评论一针见血...）
+- 常用语言：`Python`（life is short:-D），`Java`（verbose yet obvious...）
 - 熟悉语言：`Scala`（FP 要 one-line 啊啊啊），`C++`（好久没写了...）
 - 了解语言：`HTML/CSS`(修改一下 bootstrap，增添新样式还是没问题的:-D)
 - `Web 开发`，`统计`
