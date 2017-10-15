@@ -11,7 +11,7 @@ permalink: /projects/
 一个在线查看命令足球信息的命令行工具 
 
 <iframe src="https://ghbtns.com/github-btn.html?user=Allianzcortex&repo=FBRank&type=star&count=true" frameborder="0" scrolling="0" width="170px" height="20px"></iframe>
-
+<img src="https://camo.githubusercontent.com/679ca6ebb312875e15236daf218fc068060083b8/68747470733a2f2f62616467652e667572792e696f2f70792f464252616e6b2e737667" alt="PyPI version" data-canonical-src="https://badge.fury.io/py/FBRank.svg" style="max-width:100%;">
 
 
 - [cortexForum](https://github.com/Allianzcortex/cortexForum)

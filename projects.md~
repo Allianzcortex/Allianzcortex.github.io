@@ -53,3 +53,5 @@ permalink: /projects/
 其中里面一个相对有趣的项目是 [Scala-Leetcode](https://github.com/Infra-Intern/Scala-LeetCode)
 <iframe src="https://ghbtns.com/github-btn.html?user=Infra-Intern&repo=Scala-LeetCode&type=star&count=true" frameborder="0" scrolling="0" width="170px" height="20px"></iframe>
 
+其他的一些项目包括 [消息队列](https://github.com/Infra-Intern/MQ-DOC)、[RPC 框架]()、[分布式文件存储](https://github.com/Infra-Intern/LearnHDFS)、[分布式计算](https://github.com/Infra-Intern/LearnSpark)、[分布式缓存](https://github.com/Infra-Intern/LearnCodis)、[Netty 聊天系统](https://github.com/Infra-Intern/NettyCommunicationSystem)
+
