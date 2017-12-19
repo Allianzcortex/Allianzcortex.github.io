@@ -17,3 +17,7 @@ comments: true
 讨论 EOS 的图片
 
 ![EOS.png](/images/EOS.jpg)
+
+讨论比特币打赏：
+
+欢迎大家：**1KAYM9K6M6Cp7RJwwr4K1m59ETPxB6o8n4**
