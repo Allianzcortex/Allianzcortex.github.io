@@ -5,7 +5,7 @@
   
   <link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" />
   <link href="http://localhost:4000/" rel="alternate" type="text/html" />
-  <updated>2017-12-03T19:01:22+08:00</updated>
+  <updated>2018-10-13T21:42:06-03:00</updated>
   <id>http://localhost:4000//</id>
 
   
@@ -23,11 +23,61 @@
   
     <entry>
       
+      <title type="html">操作数字货币的一些碎碎念(比特币、区块链、一致性、etc)</title>
+      
+      <link href="http://localhost:4000/2017/11/07/blockchain-bitcoin-talk/" rel="alternate" type="text/html" title="操作数字货币的一些碎碎念(比特币、区块链、一致性、etc)" />
+      <published>2017-11-07T09:12:57-04:00</published>
+      <updated>2017-11-07T09:12:57-04:00</updated>
+      <id>http://localhost:4000/2017/11/07/blockchain-bitcoin-talk</id>
+      <content type="html" xml:base="http://localhost:4000/2017/11/07/blockchain-bitcoin-talk/">&lt;ol&gt;
+  &lt;li&gt;讨论 BTC 的套利性是否真的有必要&lt;/li&gt;
+  &lt;li&gt;讨论比特币的存储，外部交易所的不稳定性&lt;/li&gt;
+  &lt;li&gt;讨论数字货币的不靠谱性，白皮书，代码&lt;/li&gt;
+  &lt;li&gt;讨论长期持有与其他理财方式(美股)的关系&lt;/li&gt;
+  &lt;li&gt;讨论如何在一个自己完全陌生的环境中不被割韭菜&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;讨论 EOS 的图片&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/EOS.jpg&quot; alt=&quot;EOS.png&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;讨论比特币打赏：&lt;/p&gt;
+
+&lt;p&gt;欢迎大家：&lt;strong&gt;1KAYM9K6M6Cp7RJwwr4K1m59ETPxB6o8n4&lt;/strong&gt;&lt;/p&gt;</content>
+
+      
+      
+      
+      
+      
+
+      
+
+      
+        <category term="tech" />
+      
+
+      
+
+      
+        <summary type="html">讨论 BTC 的套利性是否真的有必要 讨论比特币的存储，外部交易所的不稳定性 讨论数字货币的不靠谱性，白皮书，代码 讨论长期持有与其他理财方式(美股)的关系 讨论如何在一个自己完全陌生的环境中不被割韭菜 讨论 EOS 的图片 讨论比特币打赏： 欢迎大家：1KAYM9K6M6Cp7RJwwr4K1m59ETPxB6o8n4</summary>
+      
+
+      
+      
+    </entry>
+  
+  
+  
+    <entry>
+      
       <title type="html">ScalaTest 和 JUnit 集成，使用 Sbt 不执行测试的解决办法</title>
       
       <link href="http://localhost:4000/2017/05/21/Scala-Test-Junit-Sbt-Problem/" rel="alternate" type="text/html" title="ScalaTest 和 JUnit 集成，使用 Sbt 不执行测试的解决办法" />
-      <published>2017-05-22T00:29:10+08:00</published>
-      <updated>2017-05-22T00:29:10+08:00</updated>
+      <published>2017-05-21T13:29:10-03:00</published>
+      <updated>2017-05-21T13:29:10-03:00</updated>
       <id>http://localhost:4000/2017/05/21/Scala-Test-Junit-Sbt-Problem</id>
       <content type="html" xml:base="http://localhost:4000/2017/05/21/Scala-Test-Junit-Sbt-Problem/">&lt;p&gt;ScalaTest 与 JUnit 集成后，执行 &lt;code class=&quot;highlighter-rouge&quot;&gt;sbt test&lt;/code&gt; 提示 &lt;code class=&quot;highlighter-rouge&quot;&gt;no tests are executed&lt;/code&gt; 的解决办法&lt;/p&gt;
 
@@ -99,7 +149,7 @@
       
 
       
-        <summary type="html">ScalaTest 与 JUnit 集成后，执行 sbt test 提示 no tests are executed 的解决办法</summary>
+        <summary type="html">ScalaTest 与 JUnit 集成后，执行 sbt test 提示 no tests are executed 的解决办法 最近在试着写一个用 Scala 解决 LeetCode 的 集合，Scala 里的单元测试一般推荐使用 ScalaTest，而大部分 Scala 使用者都有 Java 背景，所以 ScalaTest 也可以与 Junit 集成使用，参见 链接 遇到了什么问题 首先定义如下的测试代码： import org.scalatest.{BeforeAndAfterEach, FunSpec, FunSuite} class FileUtilTest extends FunSpec with BeforeAndAfterEach { it(&quot;should be equal&quot;) { assert(xx.max(1,2) == 2) } } 然后定义如下的 build.sbt 文件： libraryDependencies += &quot;org.scalatest&quot; % &quot;scalatest_2.12&quot; % &quot;3.0.1&quot; % &quot;test&quot; libraryDependencies += &quot;junit&quot; % &quot;junit&quot; % &quot;4.8.1&quot; % &quot;test&quot; 上面是 Scala-Test 最标准的代码 同时用 IDEA 和 sbt test 来跑测试用例都没有问题 那么如果想要引入 JUnit 的话则如下： import org.junit.Assert._ import org.scalatest.junit.{AssertionsForJUnit} import com.leetcode.util.{FileUtil =&amp;gt; xx} import org.junit.Test class FileUtilTest extends AssertionsForJUnit { @Test def test_max()={ assertTrue(xx.max(1,2)==2) } } 在这种情况下用 IDEA 可以跑测试用例，但用 sbt test 的话会提示 no tests are executed 参考：http://stackoverflow.com/questions/28174243/run-junit-tests-with-sbt 需要在原有 sbt 的基础上加上： crossPaths := false libraryDependencies += &quot;com.novocode&quot; % &quot;junit-interface&quot; % &quot;0.11&quot; % Test testOptions += Tests.Argument(TestFrameworks.JUnit, &quot;-q&quot;, &quot;-v&quot;) 出现这个问题的原因还是在于 Scala 和 Java 最后编译出来的是两套不同的字节码 看了一下，Spark 里面的测试用例都是用的纯 ScalaTest 框架，而没有用 JUnit ：-D</summary>
       
 
       
@@ -113,8 +163,8 @@
       <title type="html">《Scala For Impatient》的习题和 Scala 99 的一些题解记录</title>
       
       <link href="http://localhost:4000/2017/05/21/Scala-99-Solution/" rel="alternate" type="text/html" title="《Scala For Impatient》的习题和 Scala 99 的一些题解记录" />
-      <published>2017-05-21T21:29:10+08:00</published>
-      <updated>2017-05-21T21:29:10+08:00</updated>
+      <published>2017-05-21T10:29:10-03:00</published>
+      <updated>2017-05-21T10:29:10-03:00</updated>
       <id>http://localhost:4000/2017/05/21/Scala-99-Solution</id>
       <content type="html" xml:base="http://localhost:4000/2017/05/21/Scala-99-Solution/">&lt;p&gt;《Scala For Impatient》的习题和 Scala 99 的一些题解记录&lt;/p&gt;
 
@@ -251,7 +301,7 @@
       
 
       
-        <summary type="html">《Scala For Impatient》的习题和 Scala 99 的一些题解记录</summary>
+        <summary type="html">《Scala For Impatient》的习题和 Scala 99 的一些题解记录 Scala 的语法的复杂度堪比 C++ …… 《Scala CookBook》的作者评价 Java 这门语法的特性是 Verbose yet obvious，这是见过的最好对 Java 这门语言的描述了。正是因为 obvious 的特性，才能在工业级开发领域中遥遥领先，Web 开发/Android/数据领域都占据主要地位。也正是因为 verbose 的特性，让写 Java 写多的人很容易产生啰嗦的感觉，相比于 Python 的话对比感就更强烈了。 现在来看 Kotlin 的定位更像是 Better Java，字节码被翻译成 Java 类型，无缝调用 Java 的所有库，语法更简洁。 Scala 则是对 Java 很好的一个改进，同样基于 JVM 平台。Scala 的官网上宣传 OO meets FP，它同时融合了面向对象和函数式编程的优点。就像很多人说的，没有必要把 Scala 的语法完全了解以后再去用它。要用 Spark，要看 Kafka，直接看就好了：-D Scala 学习的时候主要分为两方面吧： Array/List/Seq 等一系列 Immutable 与 Mutable 对象，对应的 take/filter/map/flatMap/reduce/head/tail/init 等可以提高开发效率的方法 class/case class/object/trait 等新的 OO 相关内容 关于水平掌握，达到 A3/L2 。 最近做了 Scala99 里面的一些题目，试着做一些摘抄，里面有些题目提出了和原来的一些不一样的方法 第 17 题： ** 要求 ** 把一个 List 分为两个部分 网站上提供了 ls.splitAt(n) 和直接返回 (ls.take(n),ls.drop(n)) 两种方法 自己的实现： def splitToTwoPart[A](n: Int, ls: List[A]) = { val s = ls.zipWithIndex.partition(elem =&amp;gt; elem._2 + 1 &amp;lt;= n) (s._1.map(x =&amp;gt; x._1), s._2.map(x =&amp;gt; x._1)) } 关于类的部分：算是实现了一个小的 demo 吧 import collection.mutable.ArrayBuffer case class Record(var event: String, var money: Int) { def this() = this(&quot;sample&quot;, 1) } trait People { var name: String var age: Int var activity: ArrayBuffer[Record] def addRecord(newEvent: String, newMoney: Int) def removeRecord(deleteName: String, deleteMoney: Int) // 这也行，也就是说 def getAllCost } class User(userName: String, userAge: Int) extends People { var name = userName var age = userAge var activity = new ArrayBuffer[Record] def addRecord(newEvent: String, newMoney: Int) = { this.activity += Record(newEvent, newMoney) } /*def addRecord={ }*/ def removeRecord(deleteName: String, deleteMoney: Int) = { val targetRecord = Record(deleteName, deleteMoney) /*if this.activity.exists(_ == targetRecord) this.activity -= targetRecord*/ } def getAllCost() = { this.activity.foreach(x=&amp;gt;println(x.money)) println(&quot;money &quot; + this.activity.map(_.money).reduceLeft(_+_)) this.activity.map(_.money).reduceLeft(_+_) //所以自己一开始的 reduce((x,y)=&amp;gt;x.money+y.money)) 思路是错的，你看，前两个得到的结果是 Record,但之后得到的是 Int // 再之后就会在 Record 和 Int 之间产生冲突 } def getActivity(): List[Record] = { // 返回的 Array 必须是有类型的，而不能是 Array // List 也是一样的道理。并且 List 的可读性更好 this.activity.toList } override def toString = s&quot;$name $age&quot; } object testApplication extends App { val u = new User(&quot;Tom&quot;, 18) u.addRecord(&quot;Buy Clothes&quot;, 10) println(u) println(&quot;用户的活动为 &quot; + u.getActivity()) println(u.activity.toList) println(u.getActivity()) println(u.getAllCost()) } 在附录部分再总结一下 Scala 方法的集合：</summary>
       
 
       
@@ -265,8 +315,8 @@
       <title type="html">用 Spring Boot 来构建一个 Rest 服务</title>
       
       <link href="http://localhost:4000/2017/05/07/Create-Rest-API-With-Sprint-Boot/" rel="alternate" type="text/html" title="用 Spring Boot 来构建一个 Rest 服务" />
-      <published>2017-05-08T00:59:20+08:00</published>
-      <updated>2017-05-08T00:59:20+08:00</updated>
+      <published>2017-05-07T13:59:20-03:00</published>
+      <updated>2017-05-07T13:59:20-03:00</updated>
       <id>http://localhost:4000/2017/05/07/Create-Rest-API-With-Sprint-Boot</id>
       <content type="html" xml:base="http://localhost:4000/2017/05/07/Create-Rest-API-With-Sprint-Boot/">&lt;p&gt;使用 spring 来从 &lt;code class=&quot;highlighter-rouge&quot;&gt;redis/MySQL/HBase/ES&lt;/code&gt; 中读取数据，并对外提供 Restful 接口&lt;/p&gt;
 
@@ -289,7 +339,7 @@
       
 
       
-        <summary type="html">使用 spring 来从 redis/MySQL/HBase/ES 中读取数据，并对外提供 Restful 接口</summary>
+        <summary type="html">使用 spring 来从 redis/MySQL/HBase/ES 中读取数据，并对外提供 Restful 接口 ETL 工作的最终落地</summary>
       
 
       
@@ -303,8 +353,8 @@
       <title type="html">阅读 HBase 源代码</title>
       
       <link href="http://localhost:4000/2017/05/01/read-HBase-source-code/" rel="alternate" type="text/html" title="阅读 HBase 源代码" />
-      <published>2017-05-01T21:29:10+08:00</published>
-      <updated>2017-05-01T21:29:10+08:00</updated>
+      <published>2017-05-01T10:29:10-03:00</published>
+      <updated>2017-05-01T10:29:10-03:00</updated>
       <id>http://localhost:4000/2017/05/01/read-HBase-source-code</id>
       <content type="html" xml:base="http://localhost:4000/2017/05/01/read-HBase-source-code/">&lt;p&gt;开始阅读 HBase 源代码&lt;/p&gt;
 
@@ -378,7 +428,7 @@ callers 查看该方法被哪个方法调用，callee 查看该方法调用了�
       
 
       
-        <summary type="html">开始阅读 HBase 源代码</summary>
+        <summary type="html">开始阅读 HBase 源代码 HBase 的特点： 实现比 redis 持久化存储效果更好的 key-value 键值对 实现需要有历史版本的增量存储 阅读代码主要包括以下几个方面： 在实际编写程序时，通过有关 API 及 IDEA 跳转到源代码的功能，查看具体功能实现 在 debug 应用时，了解整个 Hbase 执行应用的业务逻辑 通读整个源代码，了解各块的实现 在这里首先看第一部分，执行一个小的应用，看它是怎么执行下来的 读取配置文件 reloadConfig()，重新记载配置文件 checkDefaultVersion():检查配置文件的版本和应用所读取的版本是否相等。可以用一个配置文件来跳过这项配置 set(String name,String value) // 这里用 Guava 的 Preconditions.checkArgument() 来判断配置是否为 null 同时还有 updateSource() 关于 HConnection connection = HConnectionManager.create IDEA 为分析项目的整体结构提供了非常强大的功能 几个常用的如下： 光标选中某个类：在 Navigate-&amp;gt;call call Hierarchy 查看该 callers 查看该方法被哪个方法调用，callee 查看该方法调用了哪些方法 选中某个方法，类，查看该类被哪些类引用，生成用例图， ctrl+alt+H 方便开发</summary>
       
 
       
@@ -392,8 +442,8 @@ callers 查看该方法被哪个方法调用，callee 查看该方法调用了�
       <title type="html">Jvm Tuning Tips</title>
       
       <link href="http://localhost:4000/2017/04/27/JVM-tuning-Tips/" rel="alternate" type="text/html" title="Jvm Tuning Tips" />
-      <published>2017-04-27T00:00:00+08:00</published>
-      <updated>2017-04-27T00:00:00+08:00</updated>
+      <published>2017-04-27T00:00:00-03:00</published>
+      <updated>2017-04-27T00:00:00-03:00</updated>
       <id>http://localhost:4000/2017/04/27/JVM-tuning-Tips</id>
       <content type="html" xml:base="http://localhost:4000/2017/04/27/JVM-tuning-Tips/"></content>
 
@@ -424,8 +474,8 @@ callers 查看该方法被哪个方法调用，callee 查看该方法调用了�
       <title type="html">Jvm Performance Snippets</title>
       
       <link href="http://localhost:4000/2017/04/27/JVM-performance-snippets/" rel="alternate" type="text/html" title="Jvm Performance Snippets" />
-      <published>2017-04-27T00:00:00+08:00</published>
-      <updated>2017-04-27T00:00:00+08:00</updated>
+      <published>2017-04-27T00:00:00-03:00</published>
+      <updated>2017-04-27T00:00:00-03:00</updated>
       <id>http://localhost:4000/2017/04/27/JVM-performance-snippets</id>
       <content type="html" xml:base="http://localhost:4000/2017/04/27/JVM-performance-snippets/"></content>
 
@@ -456,8 +506,8 @@ callers 查看该方法被哪个方法调用，callee 查看该方法调用了�
       <title type="html">关于 MapReduce 设计模式</title>
       
       <link href="http://localhost:4000/2017/04/25/Mapreduce-Design-Pattern/" rel="alternate" type="text/html" title="关于 MapReduce 设计模式" />
-      <published>2017-04-26T01:03:40+08:00</published>
-      <updated>2017-04-26T01:03:40+08:00</updated>
+      <published>2017-04-25T14:03:40-03:00</published>
+      <updated>2017-04-25T14:03:40-03:00</updated>
       <id>http://localhost:4000/2017/04/25/Mapreduce-Design-Pattern</id>
       <content type="html" xml:base="http://localhost:4000/2017/04/25/Mapreduce-Design-Pattern/">&lt;h4 id=&quot;实现统计-uv&quot;&gt;实现统计 UV&lt;/h4&gt;
 
@@ -511,7 +561,7 @@ reduce:迭代任意一个 Iterrator 时只需要 O(1) 操作&lt;/p&gt;
       
 
       
-        <summary type="html">实现统计 UV</summary>
+        <summary type="html">实现统计 UV 类似于 SQL 中的 count(distinct *) 我所实现的第一种： map:emit(null,key) reduce:TreeSet 存储元素，cleanup():写入，得到 length 优势：跑一次 MapReduce Job 即可得到最终结果 劣势：只能有一个 reduce 待优化：在 combiner 阶段可以写一个处理类来减少 shuffle 的数量 书中的第二种： map:emit(key,null) reduce:迭代任意一个 Iterrator 时只需要 O(1) 操作 优势：利用 MR 框架自带的去重特性，在处理大量数据时有优势 劣势：需要跑两次 MR 来得到最终的统计结果 实现数据库 left/inner/right join 这里可以参考 Quora 的这个问题：https://www.quora.com/How-does-Hive-implement-joins-in-Map-Reduce 存在 Map-side 和 Reduce-side 两种情况来区分讨论 MultiInput 用 ArrayList 存储 劣势：在一个表中有上千万数据时可能会 OOM ####</summary>
       
 
       
@@ -525,8 +575,8 @@ reduce:迭代任意一个 Iterrator 时只需要 O(1) 操作&lt;/p&gt;
       <title type="html">一些有趣的逻辑问题</title>
       
       <link href="http://localhost:4000/2017/04/08/Some-Interesting-Logical-Problem/" rel="alternate" type="text/html" title="一些有趣的逻辑问题" />
-      <published>2017-04-08T21:12:57+08:00</published>
-      <updated>2017-04-08T21:12:57+08:00</updated>
+      <published>2017-04-08T10:12:57-03:00</published>
+      <updated>2017-04-08T10:12:57-03:00</updated>
       <id>http://localhost:4000/2017/04/08/Some-Interesting-Logical-Problem</id>
       <content type="html" xml:base="http://localhost:4000/2017/04/08/Some-Interesting-Logical-Problem/">&lt;p&gt;逻辑问题……
 &lt;!-- more --&gt;&lt;/p&gt;
@@ -539,7 +589,8 @@ reduce:迭代任意一个 Iterrator 时只需要 O(1) 操作&lt;/p&gt;
 
 &lt;p&gt;来写一个程序验证一下：&lt;/p&gt;
 
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;__future__&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;division&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;print_function&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;# compatible with Py2&lt;/span&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;__future__&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;division&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;print_function&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;# compatible with Py2
+&lt;/span&gt;
 &lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;random&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;randint&lt;/span&gt;
 
 
@@ -655,7 +706,7 @@ if __name__ == '__main__':
       
 
       
-        <summary type="html">逻辑问题……</summary>
+        <summary type="html">逻辑问题…… 第一个问题是在已有的一个随机数基础上再生成一个随机数，确保生成 0 和 1 的概率是相等的 思路也很直接啦。 来写一个程序验证一下： from __future__ import division, print_function # compatible with Py2 from random import randint def rand(p=0.3): p = p * 10 num = randint(1, 10) return 0 if (num &amp;lt;= p) else 1 def new_rand(): _prev, _next = -1, -1 while True: if(_prev == 0 and _next == 1): return 0 if(_prev == 1 and _next == 0): return 1 _prev = rand() _next = rand() def check(): sum_zero, sum_one = 0, 0 for _ in xrange(10000): gen_num = new_rand() if(gen_num == 0): sum_zero += 1 else: sum_one += 1 print(&quot;rate is {}&quot;.format(sum_one / sum_zero)) if __name__ == '__main__': check() # 3 sample results: 1.00320512821,1.01938610662,0.982160555005 第二个问题其实就是数据可用性的问题 最后抽象出黑盒问题： # -*- coding:utf-8 -*- from __future__ import division from random import randint def gen_unique_list(): i = 0 res = set() while i &amp;lt; 100000: temp = [1] * 5 while True: r1, r2, r3 = randint(0, 4), randint(0, 4), randint(0, 4) if(r1 != r2 and r1 != r3 and r2 != r3): temp[r1] = 0 temp[r2] = 0 temp[r3] = 0 break if tuple(temp) not in res: res.add(tuple(temp)) i += 1 return res def gen_probability(): res = gen_unique_list() prob = 0 for elem in res: # find last occurence print elem ind = 4 - list(reversed(elem)).index(0) red_cnt, green_cnt = 3, 2 x = 1 # for in in range(0,ind) 这句话就是另一种思路了，显然不应该，最后得出的和都大于 1 了 for i in range(0, 5): if(elem[i] == 0): # means red x *= (red_cnt / (red_cnt + green_cnt)) red_cnt -= 1 else: # means green x *= (green_cnt / (red_cnt + green_cnt)) green_cnt -= 1 prob += x print x print prob if __name__ == '__main__': gen_probability() 但实际上直接 C(5,3) 就足够了……自己想的太复杂 这还只是一份数据，那么如果有两份数据呢。是在第一份数据可用的前提下 * 第二份数据可用，那么这两个问题就应该是独立的。 因为前提是机器损坏已经发生了</summary>
       
 
       
@@ -669,8 +720,8 @@ if __name__ == '__main__':
       <title type="html">一个 Java 多线程程序实例——JStorm 处理逻辑</title>
       
       <link href="http://localhost:4000/2017/03/06/Write-A-Multithreading-Application/" rel="alternate" type="text/html" title="一个 Java 多线程程序实例——JStorm 处理逻辑" />
-      <published>2017-03-06T22:23:38+08:00</published>
-      <updated>2017-03-06T22:23:38+08:00</updated>
+      <published>2017-03-06T10:23:38-04:00</published>
+      <updated>2017-03-06T10:23:38-04:00</updated>
       <id>http://localhost:4000/2017/03/06/Write-A-Multithreading-Application</id>
       <content type="html" xml:base="http://localhost:4000/2017/03/06/Write-A-Multithreading-Application/">&lt;p&gt;在实时流 JStorm 中处理一个多线程的程序
 &lt;!-- more --&gt;&lt;/p&gt;
@@ -731,7 +782,7 @@ if __name__ == '__main__':
       
 
       
-        <summary type="html">在实时流 JStorm 中处理一个多线程的程序</summary>
+        <summary type="html">在实时流 JStorm 中处理一个多线程的程序 Update：最近又遇到了这个问题。具体的原因就是最近在处理的程序用了一个自建的 redis pool。 它在 getInstance() 方法这里用了 synchronized 关键字来加锁。 但我们看一下 redis 是怎么实现这一点的。它继承了 Apache.commons.pool ，里面调用了 super.getResource() 方法，而它又调用了 pool 里面的 borrowObject 方法。 在 borrowObject 方法里，它已经实现了对多线程的考虑： long starttime = System.currentTimeMillis(); 1060 Latch latch = new Latch(); 1061 byte whenExhaustedAction; 1062 long maxWait; 1063 synchronized (this) { 1064 // Get local copy of current config. Can't sync when used later as 1065 // it can result in a deadlock. Has the added advantage that config 1066 // is consistent for entire method execution 1067 whenExhaustedAction = _whenExhaustedAction; 1068 maxWait = _maxWait; 1069 // activate &amp;amp; validate the object 1203 try { 1204 _factory.activateObject(latch.getPair().value); 1205 if(_testOnBorrow &amp;amp;&amp;amp; 1206 !_factory.validateObject(latch.getPair().value)) { 1207 throw new Exception(&quot;ValidateObject failed&quot;); 1208 } 1209 synchronized(this) { 1210 _numInternalProcessing--; 1211 _numActive++; 1212 } 1213 return latch.getPair().value; 1214 } 1215 catch (Throwable e) { ...... }</summary>
       
 
       
@@ -745,8 +796,8 @@ if __name__ == '__main__':
       <title type="html">Hbase Definitions</title>
       
       <link href="http://localhost:4000/2017/03/01/HBase-Definitions/" rel="alternate" type="text/html" title="Hbase Definitions" />
-      <published>2017-03-01T00:00:00+08:00</published>
-      <updated>2017-03-01T00:00:00+08:00</updated>
+      <published>2017-03-01T00:00:00-04:00</published>
+      <updated>2017-03-01T00:00:00-04:00</updated>
       <id>http://localhost:4000/2017/03/01/HBase-Definitions</id>
       <content type="html" xml:base="http://localhost:4000/2017/03/01/HBase-Definitions/"></content>
 
@@ -777,8 +828,8 @@ if __name__ == '__main__':
       <title type="html">译—利用 MapReduce 来探寻好友关系</title>
       
       <link href="http://localhost:4000/2016/12/16/Hadoop-Mapreduce-Tutorial/" rel="alternate" type="text/html" title="译—利用 MapReduce 来探寻好友关系" />
-      <published>2016-12-17T02:52:22+08:00</published>
-      <updated>2016-12-17T02:52:22+08:00</updated>
+      <published>2016-12-16T14:52:22-04:00</published>
+      <updated>2016-12-16T14:52:22-04:00</updated>
       <id>http://localhost:4000/2016/12/16/Hadoop-Mapreduce-Tutorial</id>
       <content type="html" xml:base="http://localhost:4000/2016/12/16/Hadoop-Mapreduce-Tutorial/">&lt;p&gt;一篇译文，介绍 MapReduce 在实际中的应用
 &lt;!-- more --&gt;&lt;/p&gt;
@@ -922,7 +973,7 @@ And finally for map(E -&amp;gt; B C D):
       
 
       
-        <summary type="html">一篇译文，介绍 MapReduce 在实际中的应用</summary>
+        <summary type="html">一篇译文，介绍 MapReduce 在实际中的应用 原文链接在 finding-friends-with-mapreduce，稍有改动。 MapReduce 程序通常包括两部分函数：一个 Map 函数与一个 Reduce 函数。Map 函数会接受一个输入值(value) 并返回一个键值对(key:value pairs)。比如说，如果我们定义了一个接受字符串作为输入并输出该字符长度作为输出的 Map 函数，那么 Map(steve) 将会返回 5:steve 并且 Map(savannah) 会返回 8:savannah。你也会注意到 Map 函数是无状态(stateless) 的并且只会要求输入值来确定输出值。这就使得我们可以并行运行多个 Map 函数从而取得巨大的性能优势。在进入到 Reduce 函数之前，MapReduce 框架会把所有的输出值(values)按照键(key)来进行分组。所以说如果 Map 函数输出的结果如下： 3 : the 3 : and 3 : you 4 : then 4 : what 4 : when 5 : steve 5 : where 8 : savannah 8 : research 那么他们会被排类为如下的形式： 3 : [the, and, you] 4 : [then, what, when] 5 : [steve, where] 8 : [savannah, research] 接下来每一行都会作为一个参数被传递进 reduce 函数中，reduce 函数接受一个 key 和一系列的 values。在这个例子中，我们想要探寻包含特定长度的单词的数量，所以 reduce 函数将会仅仅计算列表中的单词数量并且将它与 key 一起进行输出，产生如下的形式： 3 : 3 4 : 3 5 : 2 8 : 2 reduce 函数仍然可以并行工作。我们可以看到这里长度为 5 的单词只有 2 个，诸如此类… 上面所说的 wordcount 例子是 MapReduce 版的 Hello World，下面我们将要介绍一个真实世界中的使用（FaceBook 或许不是真的这样去做的，这里只是举一个例子）： FackBook 上存在着朋友列表（注意，在 FaceBook 中好友关系是双向的，如果我是你的朋友，那么你也是我的朋友）。同时 FaceBook 拥有大量的磁盘存储空间与海量访问请求。FaceBook 决定提前计算这样他们就可以减少请求的访问时间。一个常见的处理操作是“你和 Joe 有 230 个共同好友”。当你访问某人的资料页时，你可以看到你们所共同拥有的好友。这个列表不会频繁改动所以如果每次访问页面都重新计算的话就太浪费了（当然你可以使用缓存来做，但这样的话我就不会讲述用 MapReduce 来解决这个问题了）。我们将要使用 MapReduce 在一天内 来计算并储存这些结果。 假设朋友是以 Person-&amp;gt;[List of Friends] 的形式存储的，我们的朋友列表为： A -&amp;gt; B C D B -&amp;gt; A C D E C -&amp;gt; A B D E D -&amp;gt; A B C E E -&amp;gt; B C D mappper 会将每一行作为参数来处理。同样 mapper 函数会输出一个键值对，键（key）会是一对朋友（a friend along with the person），值（value）会是朋友列表（list of firends）。并且键（key）会是一对已经经过排序的值，这样在 reducer 函数里会形成相同的 pairs。这用语言很难解释，所以让我们直接去做吧。经过 mapper 函数，你会得到如下的输出结果： For map(A -&amp;gt; B C D) : (A B) -&amp;gt; B C D (A C) -&amp;gt; B C D (A D) -&amp;gt; B C D For map(B -&amp;gt; A C D E) : (Note that A comes before B in the key) (A B) -&amp;gt; A C D E (B C) -&amp;gt; A C D E (B D) -&amp;gt; A C D E (B E) -&amp;gt; A C D E For map(C -&amp;gt; A B D E) : (A C) -&amp;gt; A B D E (B C) -&amp;gt; A B D E (C D) -&amp;gt; A B D E (C E) -&amp;gt; A B D E For map(D -&amp;gt; A B C E) : (A D) -&amp;gt; A B C E (B D) -&amp;gt; A B C E (C D) -&amp;gt; A B C E (D E) -&amp;gt; A B C E And finally for map(E -&amp;gt; B C D): (B E) -&amp;gt; B C D (C E) -&amp;gt; B C D (D E) -&amp;gt; B C D 在把它们送往 reduce 函数前，我们根据 key 来把它们进行分类并且得到 (A B) -&amp;gt; (A C D E) (B C D) (A C) -&amp;gt; (A B D E) (B C D) (A D) -&amp;gt; (A B C E) (B C D) (B C) -&amp;gt; (A B D E) (A C D E) (B D) -&amp;gt; (A B C E) (A C D E) (B E) -&amp;gt; (A C D E) (B C D) (C D) -&amp;gt; (A B C E) (A B D E) (C E) -&amp;gt; (A B D E) (B C D) (D E) -&amp;gt; (A B C E) (B C D) reduce 函数将会取每一个键对应的值的交集并输出。比如 reduce((A B) -&amp;gt; (A C D E)(B C D)) 将会输出 (A B):(C D) ，这意味着 A 和 B 有共同好友 C 和 D 。 最终的结果为： (A B) -&amp;gt; (C D) (A C) -&amp;gt; (B D) (A D) -&amp;gt; (B C) (B C) -&amp;gt; (A D E) (B D) -&amp;gt; (A C E) (B E) -&amp;gt; (C D) (C D) -&amp;gt; (A B E) (C E) -&amp;gt; (B D) (D E) -&amp;gt; (B C) 这样当 D 访问 B 的资料页时，我们可以快速查询 (B D) 并且看到他们的共同好友 (A C E)。</summary>
       
 
       
@@ -936,8 +987,8 @@ And finally for map(E -&amp;gt; B C D):
       <title type="html">urlencode 的 space 问题，又是大坑</title>
       
       <link href="http://localhost:4000/2016/12/15/urldecode-20-space/" rel="alternate" type="text/html" title="urlencode 的 space 问题，又是大坑" />
-      <published>2016-12-16T01:59:20+08:00</published>
-      <updated>2016-12-16T01:59:20+08:00</updated>
+      <published>2016-12-15T13:59:20-04:00</published>
+      <updated>2016-12-15T13:59:20-04:00</updated>
       <id>http://localhost:4000/2016/12/15/urldecode-20-space</id>
       <content type="html" xml:base="http://localhost:4000/2016/12/15/urldecode-20-space/">&lt;p&gt;所以在 url 编/解码的时候，什么时候用 + ，什么时候用 %20 啊…….
 &lt;!-- more --&gt;&lt;/p&gt;
@@ -985,7 +1036,7 @@ When HTML form data is sent in an HTTP GET request, it is included in the query 
       
 
       
-        <summary type="html">所以在 url 编/解码的时候，什么时候用 + ，什么时候用 %20 啊…….</summary>
+        <summary type="html">所以在 url 编/解码的时候，什么时候用 + ，什么时候用 %20 啊……. 背景 简而言之是这样的，我司(写上这个词瞬间感觉逼格高了好多…….)的移动端打码是用 Nginx 收集， 用 urlencode 编码。日常比较懒的话都是 tail -F | grep *** 后用在线工具解析的，但最近要对日志进行处理，就不能这么做了。喜闻乐见爆栈站上就有这个 解析方法，那就直接 urllib.unquote ，然后传进去。 发展 但很快就发现不对劲啊，，，，如果说给的时间格式是 2016-12-15 12:02:22，在处理写进去之后的结果为 2016-12-15+12:02:22。这么下去根本无法按照最近发生的时间来进行排序，连最基本的搜索功能都 做不了，就更不要说进一步的处理了。 What Happened SO 上仍然有关于这个问题的 讨论，就直接摘录 wikipedia 了： When data that has been entered into HTML forms is submitted, the form field names and values are encoded and sent to the server in an HTTP request message using method GET or POST, or, historically, via email.[2] The encoding used by default is based on an early version of the general URI percent-encoding rules,[3] with a number of modifications such as newline normalization and replacing spaces with + instead of %20. The media type of data encoded this way is application/x-www-form-urlencoded, and it is currently defined (still in a very outdated manner) in the HTML and XForms specifications. In addition, the CGI specification contains rules for how web servers decode data of this type and make it available to applications. When HTML form data is sent in an HTTP GET request, it is included in the query component of the request URI using the same syntax described above. When sent in an HTTP POST request or via email, the data is placed in the body of the message, and application/x-www-form-urlencoded is included in the message’s Content-Type header. 发生的原因是 URL 编码是分裂的，老式的 application/x-www-form-urlencoded 空格被表示为 + ，而 + 被表示为 “%2B”。比如在 Google 里搜索”Python urlencode+20”，query url 为 https://www.google.com/search?q=Python+urlencode%2B20 在现代的 url 的 HTTP URLs 中，空格被编码为”%20”，而 + 不被编码。 在给的日志中空格仍然是按照 “+” 来传递的，而 unquote() 是按照现代方式解码的，所以造成结果的差异。解决办法就是在解码前用 raw_data.replace('+','%20')来把空格给转回去(因为日志包含内容里没有 + 号，所以这么做不会影响日志的表达性)。 关于 urlencode 编码中各种对应关系，可以参考 这个列表</summary>
       
 
       
@@ -999,8 +1050,8 @@ When HTML form data is sent in an HTTP GET request, it is included in the query 
       <title type="html">记录一次用 Flask 和 Highcharts 实现的数据可视化</title>
       
       <link href="http://localhost:4000/2016/09/08/Data-Visualize-With-Flask-And-Highcharts/" rel="alternate" type="text/html" title="记录一次用 Flask 和 Highcharts 实现的数据可视化" />
-      <published>2016-09-08T22:30:05+08:00</published>
-      <updated>2016-09-08T22:30:05+08:00</updated>
+      <published>2016-09-08T11:30:05-03:00</published>
+      <updated>2016-09-08T11:30:05-03:00</updated>
       <id>http://localhost:4000/2016/09/08/Data-Visualize-With-Flask-And-Highcharts</id>
       <content type="html" xml:base="http://localhost:4000/2016/09/08/Data-Visualize-With-Flask-And-Highcharts/">&lt;p&gt;数据可视化。后端：Flask，前端：Highcharts，可以做的更好的啊……
 &lt;!-- more --&gt;&lt;/p&gt;
@@ -1037,7 +1088,8 @@ When HTML form data is sent in an HTTP GET request, it is included in the query 
 
 &lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;nd&quot;&gt;@app.route&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'/timeserialize'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;methods&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'GET'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'POST'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
 &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;get_json&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;():&lt;/span&gt;
-    &lt;span class=&quot;c&quot;&gt;# calculate some data&lt;/span&gt;
+    &lt;span class=&quot;c&quot;&gt;# calculate some data
+&lt;/span&gt;
     &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;jsonify&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;result&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;h5 id=&quot;highcharts-前端框架&quot;&gt;Highcharts 前端框架&lt;/h5&gt;
@@ -1153,7 +1205,7 @@ tempArray.push(parseInt(jsonData[i].startTime) + 28800000,parseInt(jsonData[i].s
       
 
       
-        <summary type="html">数据可视化。后端：Flask，前端：Highcharts，可以做的更好的啊……</summary>
+        <summary type="html">数据可视化。后端：Flask，前端：Highcharts，可以做的更好的啊…… What Happened 我司采用的是阿里巴巴开源的 zeus ，结合脚本来进行业务系统的调度。有过一段时间突然晚上调度业务连续崩的现象(预警短信连发)，只能白天重新洗数据。经过研究发现是在某段时间内任务运行过多造成并行压力过大造成的，需要合理分布 ods/mds/ads 表的时间。但 zeus 系统本身没有提供查询调度任务的时间分布功能，所以需要来实现一个任务分布的可视化。 Flask 后端框架 虽然用 Django 用的多，但 Django 作为一个 Full-Stack Framework 实在太重了，里面的注册、登陆功能都不会用到。所以换为 Flask ，实时从 MySQL 中查询，将查询的结果用自带的 jsonify 转化后返回给前端页面。 Zeus 的调度时间格式类似 crontab，所以为了能在后端直接生成需要的数据，就决定将时间统一折合为 int 值。比如： 原始时间 对应展示 0 10 1（表示 1:10） 110 0 16 0 （表示 12:16） 16 0 30 23（表示晚上 11:30） 2330 在看的时候如果不满足四位，需要补全前导零来去看。 时间的核心计算如下： for row in cur.fetchall(): key = row[1].split() if key[2]!='0' and key[1]=='0': key=10*int(key[2]+key[1]) else: key = int(key[2] + key[1]) 配置 post 数据 @app.route('/timeserialize', methods=['GET', 'POST']) def get_json(): # calculate some data return jsonify(result) Highcharts 前端框架 在前端框架里比较出名的就是百度的 Echarts 和 Google 的 HighCharts(还有 D3.js，但怎么都用不到啊…)。就选择后者啦。 首先加入资源文件。 &amp;lt;script src=&quot;http://cdn.bootcss.com/bootstrap/3.3.0/js/bootstrap.min.js&quot;&amp;gt;&amp;lt;/script&amp;gt; &amp;lt;link rel=&quot;stylesheet&quot; type=&quot;text/css&quot; href=&quot;&quot;&amp;gt; &amp;lt;!-- jquery.min.js 顺序应该在 highcharts.js 之前 --&amp;gt; &amp;lt;script src=&quot;&quot;&amp;gt;&amp;lt;/script&amp;gt; &amp;lt;script src=&quot;&quot;&amp;gt;&amp;lt;/script&amp;gt; 之后用 jquery 来配置 POST 格式的 JSON 数据。 &amp;lt;script&amp;gt; $(function () { $.getJSON('/timeserialize', function (data) { /*$.getJSON('/configure', function (data) {*/ $('#container').highcharts({ // legend,option 等数据 }); }); }); &amp;lt;/script&amp;gt; 第一个版本 做完第一个版本后的显示效果如下所示： 点的数量指代了在当前时间点运行的 job 数量。拖拽放大能看到更细的时间维度内的变化。 第二个版本 第二个版本要感谢 @吴波 同学的贡献。自己当时实现的还是有些太粗糙了。实际上将得到的时间格式和具体的秒数进行字符串组合后是 可以得到任务的具体执行时间，转为 unixtime 后传给前端，再转为具体时间，可视化的效果会更好。 其中的关键就是在 $function() 里再添加一个对 JSON 格式处理的函数。 var jsonData = data; var jsonDataSuccess = new Array(); var jsonDataFailed = new Array(); # ... tempArray.push(parseInt(jsonData[i].startTime) + 28800000,parseInt(jsonData[i].spendTime)); # ... 在 series 里分别用两种类型来标注： series:[{ name:'success', color:'rgb(119,152,191)', data:jsonDataSuccess, },{ name:'failed', color:'rgb(255,0,0)', data:jsonDataFailed } ] 在 tooltip 里用 formatter() 选项来返回更友好的表达式： tooltip:{ formatter: function() { //... return 'jobid :' + jobId + '&amp;lt;br&amp;gt;' + &quot;jobName:&quot; + jobName + '&amp;lt;br&amp;gt;' + 'starttime :' + startTime } } 最后得到的可视化结果如下所示： 感觉好漂亮(捂脸) 在一开始做到时候有些太追求开发速度了…可以慢一点来让可视化效果更好:-D。同时学一下 js 的语法，有很多功能是不能用 jquery 代替的～～</summary>
       
 
       
@@ -1167,8 +1219,8 @@ tempArray.push(parseInt(jsonData[i].startTime) + 28800000,parseInt(jsonData[i].s
       <title type="html">最近做的一些事——Hive+Sqoop 与 调度系统选型</title>
       
       <link href="http://localhost:4000/2016/07/03/hive-and-sqoop/" rel="alternate" type="text/html" title="最近做的一些事——Hive+Sqoop 与 调度系统选型" />
-      <published>2016-07-04T03:46:30+08:00</published>
-      <updated>2016-07-04T03:46:30+08:00</updated>
+      <published>2016-07-03T16:46:30-03:00</published>
+      <updated>2016-07-03T16:46:30-03:00</updated>
       <id>http://localhost:4000/2016/07/03/hive-and-sqoop</id>
       <content type="html" xml:base="http://localhost:4000/2016/07/03/hive-and-sqoop/">&lt;p&gt;用 &lt;code class=&quot;highlighter-rouge&quot;&gt;Hive&lt;/code&gt; 与 &lt;code class=&quot;highlighter-rouge&quot;&gt;Sqoop&lt;/code&gt; 实现 ETL，以及对 &lt;strong&gt;Ozzie/Azkaban/Airflow/Zeus/Kettle&lt;/strong&gt; 的调研&lt;/p&gt;
 
@@ -1246,7 +1298,7 @@ tempArray.push(parseInt(jsonData[i].startTime) + 28800000,parseInt(jsonData[i].s
       
 
       
-        <summary type="html">用 Hive 与 Sqoop 实现 ETL，以及对 Ozzie/Azkaban/Airflow/Zeus/Kettle 的调研</summary>
+        <summary type="html">用 Hive 与 Sqoop 实现 ETL，以及对 Ozzie/Azkaban/Airflow/Zeus/Kettle 的调研 What Happened 最近所做的一些事。还是挺有趣的。 ETL 过程，代指 Extract-&amp;gt;Transform-&amp;gt;Load，进行数据抽取处理的过程 HDFS 文件路径下面的数据来源一般有以下几种： 从已有的 RDBMS 数据库中导入，方便和业务进行分析 从已有的 HDFS 数据中进行连接和抽样，生成新的复合需求的数据 一些其他的路径，包括从 Flume 中用 HDFS Sink 写入，或者用 hadoop fs -put 来把本地的文件导入到 HDFS 中。 第一种工具包括 Apache 出品的 Sqoop 和阿里出品的 DataX(京东是根据 DataX 的原理自己搞了一套)。二者的对比可以查看这个 链接。 第二种工具则在大多数情况下都是在用 Hive 来解决需求。Hive 是 FaceBook 出品的可以把 HQL(类 SQL 语法)转化为 MapReduce 执行的工具，方便数据分析师进行操作。 同时还调研了调度系统。从原理上来说只要写好执行脚本，直接用 crontab 设置好定时任务就好。但一方面随着业务量上升我们要管理多个脚本，另一方面还想要添加进度提醒、查看日志、失败重试、邮件预警、管理多个相互依赖任务等功能。在这种情况下调研了 Ozzie/Azkaban/Airflow/Zeus/Kettle 等项目。 关于 sqoop 关于 Hive 调度系统 关于 Airflow 要求团队里至少有一个人会 Python。严格来说这不算是什么多的要求，特别是在 ML/DL/AI 如火如荼的当下，上手 Python 可能也就是一两天的事情。但总归是多了一些成本。 附录 A 里补充了 Airflow 的安装和使用 关于 Zeus 其实我司之前用的就是 Zeus：-D 但如果要重新开始选型的话，可以有更多的选择。 更新缓慢。最近一次和代码有关的提交是在 2013 年，源代码长时间没有进行更新，一个非常明显的 Bug Fix PR 有一个月没有合并到主分支里 部署和运维相对于其他调度工具偏难，参考它的 安装文档 zeus2 但上一次更新是在 2014 年… 附录A</summary>
       
 
       
@@ -1260,8 +1312,8 @@ tempArray.push(parseInt(jsonData[i].startTime) + 28800000,parseInt(jsonData[i].s
       <title type="html">阅读过的一些 Python 开源项目…</title>
       
       <link href="http://localhost:4000/2016/05/23/Read-Python-Open-Source-Project/" rel="alternate" type="text/html" title="阅读过的一些 Python 开源项目..." />
-      <published>2016-05-23T23:01:33+08:00</published>
-      <updated>2016-05-23T23:01:33+08:00</updated>
+      <published>2016-05-23T12:01:33-03:00</published>
+      <updated>2016-05-23T12:01:33-03:00</updated>
       <id>http://localhost:4000/2016/05/23/Read-Python-Open-Source-Project</id>
       <content type="html" xml:base="http://localhost:4000/2016/05/23/Read-Python-Open-Source-Project/">&lt;p&gt;写出 &lt;code class=&quot;highlighter-rouge&quot;&gt;fluent/pythonic/elegant/idiomatic&lt;/code&gt; 的代码～～～～～～
 &lt;!-- more --&gt;&lt;/p&gt;
@@ -1316,26 +1368,32 @@ tempArray.push(parseInt(jsonData[i].startTime) + 28800000,parseInt(jsonData[i].s
 
 &lt;p&gt;a. 对 OOP 贯彻的非常彻底，以下为例：&lt;/p&gt;
 
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;c&quot;&gt;# 在 models 模型里定义了保存的方法&lt;/span&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;c&quot;&gt;# 在 models 模型里定义了保存的方法
+&lt;/span&gt;
 &lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Topic&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;db&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Model&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
-    &lt;span class=&quot;c&quot;&gt;#...&lt;/span&gt;
+    &lt;span class=&quot;c&quot;&gt;#...
+&lt;/span&gt;
     &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;save&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;user&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;None&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;node&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;None&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
         &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;id&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
             &lt;span class=&quot;n&quot;&gt;db&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;session&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;add&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
             &lt;span class=&quot;n&quot;&gt;db&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;session&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;commit&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
             &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;
 
-&lt;span class=&quot;c&quot;&gt;# 在 forms 表单里调用了 models 里的保存方法&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# 在 forms 表单里调用了 models 里的保存方法
+&lt;/span&gt;
 &lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;TopicForm&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;BaseForm&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
-    &lt;span class=&quot;c&quot;&gt;#...&lt;/span&gt;
+    &lt;span class=&quot;c&quot;&gt;#...
+&lt;/span&gt;
     &lt;span class=&quot;n&quot;&gt;topic&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Topic&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;**&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
     &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Topic&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;save&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;user&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;user&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;node&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;node&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
 
-&lt;span class=&quot;c&quot;&gt;# 在 views 视图里调用了 forms 里的方法&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# 在 views 视图里调用了 forms 里的方法
+&lt;/span&gt;
 &lt;span class=&quot;nd&quot;&gt;@bp.route&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'/create/&amp;lt;int:id&amp;gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;methods&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'GET'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'POST'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
 &lt;span class=&quot;nd&quot;&gt;@require_user&lt;/span&gt;
 &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;create&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;url_name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
-    &lt;span class=&quot;c&quot;&gt;#...&lt;/span&gt;
+    &lt;span class=&quot;c&quot;&gt;#...
+&lt;/span&gt;
     &lt;span class=&quot;n&quot;&gt;form&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TopicForm&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
     &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;form&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;validate_on_submit&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;():&lt;/span&gt;
         &lt;span class=&quot;n&quot;&gt;topic&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;form&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;save&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;g&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;user&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;node&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
@@ -1346,7 +1404,8 @@ tempArray.push(parseInt(jsonData[i].startTime) + 28800000,parseInt(jsonData[i].s
 
 &lt;p&gt;b. 在上面看到了有一个装饰器 &lt;code class=&quot;highlighter-rouge&quot;&gt;@require_user&lt;/code&gt;,这是对用户进行的权限管理。实际上试着想一下，一名用户可能会有多个角色，如果对这些角色每个都定义一个装饰器，就会有太多的重复了。在这种情况下我们来看看作者是怎么做的：&lt;/p&gt;
 
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;c&quot;&gt;# 定义了一个基本类&lt;/span&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;c&quot;&gt;# 定义了一个基本类
+&lt;/span&gt;
 
 &lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;require_role&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;object&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
     &lt;span class=&quot;n&quot;&gt;roles&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
@@ -1371,7 +1430,8 @@ tempArray.push(parseInt(jsonData[i].startTime) + 28800000,parseInt(jsonData[i].s
             &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;role&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;is&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;None&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
                 &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;method&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;args&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;**&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;kwargs&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
             &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;g&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;user&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;id&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
-                &lt;span class=&quot;c&quot;&gt;# this is superuser, have no limitation&lt;/span&gt;
+                &lt;span class=&quot;c&quot;&gt;# this is superuser, have no limitation
+&lt;/span&gt;
                 &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;method&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;args&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;**&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;kwargs&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
             &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;g&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;user&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;role&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'new'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
                 &lt;span class=&quot;n&quot;&gt;flash&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'Please verify your email'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'warn'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
@@ -1384,7 +1444,8 @@ tempArray.push(parseInt(jsonData[i].startTime) + 28800000,parseInt(jsonData[i].s
             &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;method&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;args&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;**&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;kwargs&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
         &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;wrapper&lt;/span&gt;
 
-&lt;span class=&quot;c&quot;&gt;# 之后定义不同的权限限制&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# 之后定义不同的权限限制
+&lt;/span&gt;
 
 &lt;span class=&quot;n&quot;&gt;require_login&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;require_role&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;None&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
 &lt;span class=&quot;n&quot;&gt;require_user&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;require_role&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'user'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
@@ -1446,7 +1507,8 @@ tempArray.push(parseInt(jsonData[i].startTime) + 28800000,parseInt(jsonData[i].s
     &lt;span class=&quot;nd&quot;&gt;@staticmethod&lt;/span&gt;
     &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;from_file&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;filename&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
         &lt;span class=&quot;k&quot;&gt;with&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;open&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;filename&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'rb'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
-            &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pickle&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;load&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;# 本地持久化存储&lt;/span&gt;
+            &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pickle&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;load&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;# 本地持久化存储
+&lt;/span&gt;
 
     &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;save&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;filename&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
         &lt;span class=&quot;s&quot;&gt;&quot;&quot;&quot;
@@ -1471,8 +1533,10 @@ tempArray.push(parseInt(jsonData[i].startTime) + 28800000,parseInt(jsonData[i].s
 &lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;__call__&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;r&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
     &lt;span class=&quot;n&quot;&gt;r&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;super&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ZhihuOAuth&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;__call__&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;r&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
     &lt;span class=&quot;n&quot;&gt;r&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;headers&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'Authorization'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'{type} {token}'&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;format&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
-        &lt;span class=&quot;nb&quot;&gt;type&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;str&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_token&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;type&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;capitialize&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()),&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;# self._token 是在 __init__ 里定义的&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;token&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;str&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_token&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;type&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;# self._token.type 就再次看到了 OOP 的存在&lt;/span&gt;
+        &lt;span class=&quot;nb&quot;&gt;type&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;str&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_token&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;type&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;capitialize&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()),&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;# self._token 是在 __init__ 里定义的
+&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;token&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;str&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_token&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;type&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;# self._token.type 就再次看到了 OOP 的存在
+&lt;/span&gt;
         &lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
     &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;r&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
@@ -1726,7 +1790,7 @@ def generator_of(url_pattern, class_name=None):
       
 
       
-        <summary type="html">写出 fluent/pythonic/elegant/idiomatic 的代码～～～～～～</summary>
+        <summary type="html">写出 fluent/pythonic/elegant/idiomatic 的代码～～～～～～ 前言 阅读开源项目的好处不止一个人说过，无论是为了增加对自己使用工具的理解，还是为了能学会更好地划分项目结构和提高代码质量，阅读开源项目都必不可少。 做毕设的时候就被老师说过之前师兄看过 Apache 服务器源码，这个目标虽然很难……但一些更易读的项目还是可以做到的：-D。阅读有的时候会有一些奇怪的东西，比如 requests 在 github 上列出的第一个版本 v0.2.3 里有一个文件(core.py)是用 tab 作为 whitespace 的……，想到这么牛逼的项目在一开始也是这样……自己现在的代码写的没那么好好像也没有什么…… 什么是 Pythonic 的代码 Pythonic 代码，就是能够把代码逻辑 Pythonic 地实现，试着进行一些小的总结： OOP,考虑代码复用和扩展，很多都是可以用一个基本类/ABC 来提供接口，其他子类自定义实现方法不要想着写一个大而全的类实现所有功能。 自定义 BaseException，如 class ProjectBasedException(Exception),然后用各种继承共有异常类的代码来处理具体异常，从而能够更有针对性地报出提示信息 在 utils 里定义一些小的和公用的函数，将复用的代码抽象成 @decorators；在 settings 里定义会被使用的配置文件，如 url 等，避免硬编码（hard-coded） 防御性编码（defensive programming），虽然可以用 _prefix 来做到某种程度的定义 private 属性，但对 API 传入的参数必须要做类型检测。用合理的数据结构或者其他工具（redis/celery）来限制资源的使用。发现这个时候正向逻辑的代码在整个代码的占比中会大幅下降) meta-programming 实现 User-defined behaviour 行为。实际上所有优秀的 Python 代码都有这一部分 docstring 的标准注释以及自己编写单测，logging 保留日志 在完成以上的基础上，一些细节，像用 ''.join[] 来取代字符串拼接，用 list-comprehension 来取代循环等 阅读列表集合 并不是所有的 Github 上高 star 项目都具有借鉴性，比如说某个 1000+ star 的项目的代码风格并不好，有大量的代码不符合 DRY(Don't Repeat Yourself) 的原则。还有许多项目直接 Hack 了 Python 本身，看到那么多以 __ 开头的变量和函数，很难理清背后的逻辑到底是什么（说的就是 Django…….）最后主要看了以下的一些代码： @lepture 所写的 june 虽然项目在描述上已经被废弃（deprecated），但还是可以顺利运行。一个论坛项目，包含了常见的 Node/Topic/Reply 三级主题。 a. 对 OOP 贯彻的非常彻底，以下为例： # 在 models 模型里定义了保存的方法 class Topic(db.Model): #... def save(self,user=None,node=None): if self.id: db.session.add(self) db.session.commit() return self # 在 forms 表单里调用了 models 里的保存方法 class TopicForm(BaseForm): #... topic = Topic(**self.data) return Topic.save(user=user,node=node) # 在 views 视图里调用了 forms 里的方法 @bp.route('/create/&amp;lt;int:id&amp;gt;',methods=['GET','POST']) @require_user def create(url_name): #... form = TopicForm() if form.validate_on_submit(): topic = form.save(g.user,node) return redirect(url_for('.view',uid=topic.id)) return render_template('topic/create.html', node=node, form=form) # 这样就避免了在 views 里调用模型和 db.session.add(topic) 的麻烦 b. 在上面看到了有一个装饰器 @require_user,这是对用户进行的权限管理。实际上试着想一下，一名用户可能会有多个角色，如果对这些角色每个都定义一个装饰器，就会有太多的重复了。在这种情况下我们来看看作者是怎么做的： # 定义了一个基本类 class require_role(object): roles = { 'spam': 0, 'new': 1, 'user': 2, 'staff': 3, 'admin': 4, } def __init__(self, role): self.role = role def __call__(self, method): @functools.wraps(method) def wrapper(*args, **kwargs): if not g.user: url = url_for('account.signin') if '?' not in url: url += '?next=' + request.url return redirect(url) if self.role is None: return method(*args, **kwargs) if g.user.id == 1: # this is superuser, have no limitation return method(*args, **kwargs) if g.user.role == 'new': flash(_('Please verify your email'), 'warn') return redirect(url_for('account.setting')) if g.user.role == 'spam': flash(_('You are a spammer'), 'error') return redirect('/') if self.roles[g.user.role] &amp;lt; self.roles[self.role]: return abort(403) return method(*args, **kwargs) return wrapper # 之后定义不同的权限限制 require_login = require_role(None) require_user = require_role('user') require_staff = require_role('staff') require_admin = require_role('admin') @7sDream(七秒不觉梦) 所写的 zhihu-oauth 第二个项目是 @7sDream(七秒不觉梦) 所写的 zhihu-oauth。整体结构非常漂亮，meta-programming 也做的非常好。特别是考虑到作者和我是同龄人，真的是厉害厉害。顺便提了两个 PR:pull-27 和 pull-28 ~ 整体项目是这样的，作者逆解析了知乎的安卓客户端，将其中的 oauth 接口进行了封装，不同于其他的利用模拟登陆和 BeautifuoSoup 解析网页内容的库，zhihu-oauth 能提供更加稳定的接口，也更不容易被封 ip ⊙﹏⊙b 整个项目分为三部分：oauth 进行验证，zhcls 进行类的描述，client 将两者结合起来提供登陆的接口 对 oauth 部分： 在 im_android.py 中定义了 imZhihuAndroidClient 类，继承了 requests.authbase 。在 __init__ 中定义了 api_version/app_version/zpp_za/ua 等在构建参数时会用到的方法。同时用 self._api_version=api_version or API_VERSION(来自 setting.py) 的方法来允许用户自定义一些参数。之后的 __call__(self,r) 则是 authbase 的机制，会在 requests 时自动调用。 在 before_login_auth.py 中则定义了 BeforeLoginAuth 类，继承了上面的 imZhihuAndroidClient 类，在 imZhihuAndroidClient 的基础上增加了 client_id,用 self._client_id=client_id 来进行登陆之前的基础验证。而 __call__ 的实现如下： def __call__(self,r): r = super(BeforeLoginAuth,self).__call__() r.headers['Authorization'] = 'oauth{0}'.format(str(self._client_id)) return r 在 setting.py 中则定义了一些会用到的参数，如 ZHIHU_API_ROOT,LOGIN_URL=ZHIHU_API_ROOT+’/signin’,全部用大写 在 token.py 中则定义了 ZhihuToken 类，访问知乎后所产生的 token。所以很显然根据 OOP 的思想，可以做如下工作： 在 __init__ 中定义了 self._cretate_at=time.time(),self._expires_in=expires_in 初始化工具，同时还提供了这些： class ZhihuToken: @staticmethod def from_dict(json_dict): try: return ZhihuToken(**json_dict) except TypeError: raise ValueError('{} is not a valid zhihu token json'.format(json_dict)) @staticmethod def from_str(json_str): try: return ZhihuToken.from_dict(json.loads(json_str)) except TypeError: raise ValueError('{} is not a valid zhihu token str'.format(json_str)) @staticmethod def from_file(filename): with open(filename,'rb') as f: return pickle.load(f) # 本地持久化存储 def save(self,filename): &quot;&quot;&quot; 将 token 保存为文件 &quot;&quot;&quot; with open(filename,'wb') as f: pickle.dump(self,f) @property def user_id(self): return self._user_id 在 utils.py 中则定义了 login_signature(data,secret) 函数，为经过签名后的 dict 添加了 timestamp 和 signature 两项（这就是业务相关了，将签名和主体的验证函数分开） 在 zhihu_oauth.py 中定义了 ZhihuOAuth,相比于 BeforeLoginAuth,这个类同样继承了 imZhihuAndroidClient,所不同的是增加了发送 token 的功能，参见： def __call__(self,r): r = super(ZhihuOAuth,self).__call__(r) r.headers['Authorization'] = '{type} {token}'.format( type = str(self._token.type.capitialize()), # self._token 是在 __init__ 里定义的 token = str(self._token.type) # self._token.type 就再次看到了 OOP 的存在 ) return r 下面进行 zhcls 的分析，在分析之前先看一下 exception.py 的实现。正如前面所说，exception 应该提供一个整个项目的错误。 try: from json import JSONDecodeError as MyJSONDecodeError except ImportError: MyJSONDecodeError = Exception # 对 py3 用 JSONDecodeError,而用 py2 每次都用纯 exception 来处理 JSON 格式解析错误也 # 太不 Pythonic 了 在实现的各种异常里最有通用性的还是 UnexpectedResponseException: class UnexpectedResponseException(Exception): def __init__(self,url,res): &quot;&quot;&quot; 此处做了适当演绎 对于所有 JSON 没有符合预期的错误，都可以用该异常来处理 &quot;&quot;&quot; self.url = url self.res = res def __repr__(self): return &quot;when visit {self.url},get an unexpected response {self.res.text}&quot;. format(self=self) __str__ = __repr__ 在 zhcls 中，Base.py 定义了基本类，从而可以被各种类来继承： class Base(object): def __init__(self,zhihu_obj_id,cache,session): &quot;&quot;&quot; Base 中的 cache 类表示已知的属性值，一般由另一个对象的 JSON 数据中的一个属性充当 比如 :any:`Answer.author` 方法，由于在请求 :any:`Answer` 的数据时， 原始 JSON 数据中就有关于作者的一些简单信息。比如 name，id，headline。 在使用此方法时就会将这些不完整的数据传递到 ``answer`` 对象 （类型为 :any:`People`）的 ``cache`` 中。这样一来，在执行 ``answer.author.name`` 时，取出名字的操作可以省去一次网络请求。 在使用 @normal_attr,@other_obj,@streaming 时都会优先使用 cache 中的数据，在获取失败时 才会调用 _get_data 方法请求数据 // 这里的 cache 还是挺复杂的,相比之下 session 还是好理解的～ &quot;&quot;&quot; self._id = zhihu_obj_id self._cache = cache self._session = session def _get_data(self): &quot;&quot;&quot; 它需要用到 4 个方法，都是类里面的 &quot;&quot;&quot; if self._data is None: url = self._build_url() res = self._session.request( method = self._method(), url = url, params = self._build_params, data = self._build_data()) e=GetDataErrorException( url,res,'valid zhihu {0} JSON data'.format(self.__class__.__name__)) try: json_dict = res.json() if 'error' in json_dict: raise e self._data = json_dict except JSONDecodedError: raise e @abc.abstractmethod def _build_url(self): &quot;&quot;&quot; 子类必须重载这一方法 &quot;&quot;&quot; return '' def _build_params(self): return None def _build_data(self): return None def _method(self): return 'GET' 对于很多像同一问题下的答案，answers，需要用 generator.py 来定义并生成了一系列的生成器 class BaseGenerator(object): def __init__(self,url,session): self._url = url self._session = session self._index = 0 self._data = [] self._up = 0 self._next_url = self._url self._need_sleep = 0.5 self._extra_params = {} def _fetch_more(self): # 这一部分是关于具体的实现，就不多写了 # 大概就是说要设置一个 wait_time 如果不大于 MAX_WAITTIME 就 @abc.abstractmethod def _build_obj(self,data): &quot;&quot;&quot; 进行构造对象 &quot;&quot;&quot; return None def __getitem__(self,item): &quot;&quot;&quot; 对　范围进行迭代 &quot;&quot;&quot; if not isinstance(item,int): raise TypeError('{0} must be int'.format(item)) while item&amp;gt;=self._up: if self._next_url is nont None: self._fetch_more() # 在 fetch_more 的过程中会使得 self._up 增加 else: raise IndexError('Index out of range') # 写代码的时候先写下面的，再写上面的，对异常处理 return self._build_obj(self._data[item]) def __iter__(self): return self # 默认进行迭代的方式，可以直接用 yield 直接生成 def __next__(self): &quot;&quot;&quot; 提供迭代方式访问数据，for xx in obj.xxxs　 用 self._index 来存储下一次迭代的下标&quot;&quot;&quot; try: obj=self._data[self._index] # 突然意识到它和 obj=self[self._index] # 效果是一样的，可以可以，非常 Pythonic except IndexError: self._idnex=0 raise StopIteration # 学以致用 self._index+=1 return obj next=__next__ # 适配 Py2 和 Py3 下面以生成答案 AnswerGenerator 为例： class AnswerGenerator(BaseGenerator): def __init__(self,url,session): super(AnswerGenerator,self).__init__(url,session) def _build_obj(self): from .answer imoprt Answer # 避免循环引用还有其他 return Answer(data['id'],data,self._session) # 哪来的 data。。。这个变量是怎么来的 下面就是一个装饰器，用来循环生成列表： def generator_of(url_pattern, class_name=None): def wrappers_wrapper(func): @functools.wraps(func) def wrapper(self, *args, **kwargs): cls_name = class_name or func.__name__ if cls_name.endswith('s'): cls_name = cls_name[:-1] cls_name = cls_name.capitalize() gen_cls_name = cls_name + 'Generator' try: gen_cls = getattr(sys.modules[__name__], gen_cls_name) except AttributeError: return func(*args, **kwargs) self._get_data() return gen_cls(url_pattern.format(self.id), self._session) return wrapper return wrappers_wrapper 还用到了一个装饰器是 normal_attr,直接从 data 中提取属性并返回： def normal_attr(name_in_json=None): &quot;&quot;&quot; 标志这个属性为常规属性，自动从对象的数据中提取对应属性返回 &quot;&quot;&quot; def wrappers(func): @functools.wraps(func) def wrapped_func(self,*args,**kwargs): def use_data_or_func(name,data): if can_get_from(the_name,data): return data[name] else: return func(*args,**kwargs) name=name_in_json if name_in_json else func.__name__ if self._data: return use_data_or_func(name,self._data) elif self._cache and can_get_from(name,self._cache): return self._cache[name] else: # 对于 id ,需要特殊对待 if name=='id': return func(self,*args,**kwargs) self._get_data() # 来取得数据 if self._data: return use_data_or_func(name,self._data) return wrapped_func return wrappers 关于 StreamingJSON 数据这里就不详细写了</summary>
       
 
       
@@ -1740,8 +1804,8 @@ def generator_of(url_pattern, class_name=None):
       <title type="html">Django 学习及 cortexForum</title>
       
       <link href="http://localhost:4000/2015/10/21/Django-And-CortexForum/" rel="alternate" type="text/html" title="Django 学习及 cortexForum" />
-      <published>2015-10-22T04:39:49+08:00</published>
-      <updated>2015-10-22T04:39:49+08:00</updated>
+      <published>2015-10-21T17:39:49-03:00</published>
+      <updated>2015-10-21T17:39:49-03:00</updated>
       <id>http://localhost:4000/2015/10/21/Django-And-CortexForum</id>
       <content type="html" xml:base="http://localhost:4000/2015/10/21/Django-And-CortexForum/">&lt;p&gt;关于 Django 的学习资料以及 cortexForum&lt;/p&gt;
 
@@ -1848,7 +1912,7 @@ def generator_of(url_pattern, class_name=None):
       
 
       
-        <summary type="html">关于 Django 的学习资料以及 cortexForum</summary>
+        <summary type="html">关于 Django 的学习资料以及 cortexForum 学习资料 主要看的是 Django 的官方 tutorial 和 tango with Django 进阶的书包括： 《Two Scopes of Django》:Django 作者是 Django 的社区开发者，汇聚了一大批的最佳实践 《Test Driven Web Development》:以 TDD(测试驱动开发) 方式所写的关于 Django 开发的一本书，非常漂亮啊 cortexForum 在文档的学习过程中所有遇到的问题和有必要的记录都在 Wiznote 里保存，方便进行复习balabala 最近在做毕设的过程中实在是看不下去论文了，便有了写一个有 Django 最佳实践的论坛的想法。在写 cortexForum 的过程中，自己尽量实现了以下几点： 在代码中将所用到的文档模块和对应的具体用法进行标志，方便查找 标注中有 SO 的部分说明它很常用，并且 stackoverflow 上有相关的问题(比如query_set() 里的 lookup field) 对于有多种解决方法的部分都在注释里写了出来(比如 objects.filer().update 和 instance.save()) 用 gitbook 的格式作为 wiki，对于 forum 的设计有这样一个总体的概述 Django 的 models 模型里有一个 Manager 对象，非常方便实现 OOP(实现 HighLevel 而不仅仅是具体实例的行为)，以发帖的单位 Topic 为例，定义发帖的 title 和 content 之后，再定义两个外键，一个是 node,定义帖子发表的节点；一个是 author，定义帖子发表的作者。对于一个帖子来说，我希望能通过一个 node 的名称(这里可以理解为 slug )，或者一个作者的名称(username)，就能得到所有主题的信息，所以你就需要定义： def get_all_topic_by_node_slug(self, node_slug): query = self.get_queryset().filter(node__slug=node_slug). \ select_related('node', 'author', 'last_replied_by'). \ order_by('-last_replied_time', '-reply_count', '-created_at') return query 通过 queryset() 的重定义，你可以用 Node.objects.get_all_topic_by_node_slug('slug-example') 来获取主题信息。而如果你不这样做的话，就需要在每个 views 的函数里来多次重新定义，并且一旦模型发生更改就很难再修正过来了，比 hard-coded 还复杂的重写。 而 form 里没有为我们定义更高层次的抽象，但并不妨碍我们进行 OOP，以 authen 的 registrationForm 为例，我们在 forms 里进行了 clean_username,clean_mail,重写了默认的 clean 方法，在进行 is_valid() 验证的时候就会直接提出错误信息。 在前端方面，自己完全采用 bootstrap 的架构。 关于手写 HTML 还是用 Crispyforms/Django-bootstrap3 ，这种东西见仁见智，我觉得还是用纯粹的手写 HTML 比较好，因为这样的解决方式是前后端分离的，在下次学习其他框架的时候也能用到，你只需要传给前端需要用到的 API 就行。 比如 &amp;lt;label for=&quot;id_&quot; class=&quot;col-md-3 control-label&quot;&amp;gt;&amp;lt;/label&amp;gt; &amp;lt;div class=&quot;col-md-9&quot;&amp;gt; &amp;lt;input type=&quot;text&quot; class=&quot;form-control&quot; id=&quot;id_&quot; required name=&quot;&quot; autofocus&amp;gt; &amp;lt;p class=&quot;help-block&quot;&amp;gt;请输入你的用户名&amp;lt;/p&amp;gt; ```&amp;lt;label for=&quot;id_&quot; class=&quot;col-md-3 control-label&quot;&amp;gt;&amp;lt;/label&amp;gt; &amp;lt;div class=&quot;col-md-9&quot;&amp;gt; &amp;lt;input type=&quot;text&quot; class=&quot;form-control&quot; id=&quot;id_&quot; required name=&quot;&quot; autofocus&amp;gt; &amp;lt;p class=&quot;help-block&quot;&amp;gt;请输入你的用户名&amp;lt;/p&amp;gt; 就要比 { form.as_p } 或者 { crispy form } 更能实现定制化，crispy-forms 的思想是在 forms 里设置 layout 和对应的 label，想要更新前端显示需要在后端修改代码而不是 CSS 文件…… Mysql 问题还是挺多的。一开始的情况下，英文发帖是正常的。之后按照 mysql-utf-8 里的方法采用 utf-8 编码之后就会发生只有管理员可以正常发帖，而其他用户在发帖时会提醒 second column not exists ,SO 上的解决方法都没有效果，最后分析下觉得有可能是因为 user 和 forumUser 对应的 id 不对其造成的，所以手动添加一个 request.User 后解决问题。 下次还是用 PG 吧……为什么第一次用 onetooneField 的时候就没有这种错误？要用 abstractUser 去扩展 User 模型去……</summary>
       
 
       
@@ -1862,8 +1926,8 @@ def generator_of(url_pattern, class_name=None):
       <title type="html">使用 PyQT 来开发一个桌面客户端</title>
       
       <link href="http://localhost:4000/2015/09/14/Use-PyQt-Develop-Desktop-Web-GUI/" rel="alternate" type="text/html" title="使用 PyQT 来开发一个桌面客户端" />
-      <published>2015-09-15T03:46:30+08:00</published>
-      <updated>2015-09-15T03:46:30+08:00</updated>
+      <published>2015-09-14T16:46:30-03:00</published>
+      <updated>2015-09-14T16:46:30-03:00</updated>
       <id>http://localhost:4000/2015/09/14/Use-PyQt-Develop-Desktop-Web-GUI</id>
       <content type="html" xml:base="http://localhost:4000/2015/09/14/Use-PyQt-Develop-Desktop-Web-GUI/">&lt;p&gt;Python 的动态机制结合 Qt 的信号槽；读取数据库并展示
 &lt;!-- more --&gt;&lt;/p&gt;
@@ -1924,7 +1988,8 @@ def generator_of(url_pattern, class_name=None):
 &lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;show_view&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
     &lt;span class=&quot;n&quot;&gt;model&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;QSqlTableModel&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
     &lt;span class=&quot;n&quot;&gt;initialize_model&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;model&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-    &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ui&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;url_list&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;setModel&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;model&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;# self.ui.url_list 是一个 listview&lt;/span&gt;
+    &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ui&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;url_list&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;setModel&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;model&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;# self.ui.url_list 是一个 listview
+&lt;/span&gt;
     &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ui&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;url_list&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;show&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;p&gt;每次在进行增删改查之后只要调用 self.show_view() 方法，就能看到最新的数据库，等效于刷新～&lt;/p&gt;
@@ -1972,7 +2037,8 @@ def generator_of(url_pattern, class_name=None):
 &lt;span class=&quot;s&quot;&gt;&quot;&quot;&quot; 接下来在主线程中调用即可 &quot;&quot;&quot;&lt;/span&gt;
 
 &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pingThread&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;PingThread&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;target_url&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;c&quot;&gt;# self.connect(self.pingThread, SIGNAL('ping url'), self.show_messagebox) 可选&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# self.connect(self.pingThread, SIGNAL('ping url'), self.show_messagebox) 可选
+&lt;/span&gt;
 &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pingThread&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;start&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;h4 id=&quot;进度条&quot;&gt;进度条&lt;/h4&gt;
@@ -1980,7 +2046,8 @@ def generator_of(url_pattern, class_name=None):
 &lt;p&gt;PyQt 中进度条使用 QProgressBar 来展现。在 ui 中设置时会有最小值（默认为 0 ）和最大值（默认为 100 ）。
 在更新时只要设置&lt;/p&gt;
 
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ui&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;click_progrress&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;setValue&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;30&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;# 进度条进展到 30% 程度&lt;/span&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ui&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;click_progrress&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;setValue&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;30&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;# 进度条进展到 30% 程度
+&lt;/span&gt;
 &lt;span class=&quot;c&quot;&gt;# click_progress 是 ui 里对应的 ProgressBar&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;h4 id=&quot;其他&quot;&gt;其他&lt;/h4&gt;
@@ -2019,7 +2086,7 @@ def generator_of(url_pattern, class_name=None):
       
 
       
-        <summary type="html">Python 的动态机制结合 Qt 的信号槽；读取数据库并展示</summary>
+        <summary type="html">Python 的动态机制结合 Qt 的信号槽；读取数据库并展示 写了一个能检测网络连接的程序。界面截图如下： 以后写客户端的机会还是挺少的…就不过多地追求最佳实践了，只需要能做出一个“能戳戳点点的 GUI ”就够了⊙﹏⊙b ui 和界面对应 PyQt 本身和 Qt 的信号槽机制是类似的。点击一个按钮后会发送出一个信号，需要定义该信号的处理机制。 设计界面直接用 designer 来设计。拖动 button/listview/model，然后自定义名称。 生成 .ui 文件后，用 pyuic4 –x ping_ui.ui –o ping_ui.py 就可以看到 ping_ui.py 文件里包含了 class Ui_Form(object),里面已经定义好了各种长度/位置，比手写方便多了。 再自定义一个 pyqt_example2.py ，里面包含了如下文件： class CalculateForm(QWidget): def __init__(self, parent=None): super(CalculateForm, self).__init__(parent) self.ui = Ui_Form() self.ui.setupUi(self) 再定义执行函数： if __name__ == '__main__': app = QApplication(sys.argv) calculator = CalculateForm() calculator.show() sys.exit(app.exec_()) 执行后就可以看到界面已经成功显示。 接下来就是要建立信号槽机制，比如在当初定义 ui 的 button 时有一个 button 的名称为 add_url 。我们希望将它与 add_url 的函数对应在一起，只需定义如下（最好在 init 里）： self.ui.add_url.clicked.connect(self.add_url_func) # 点击函数 数据库的增删改查以及显示 在 PyQt 中定义的　model 的是 QSqlTableModel,定义显示 table 的是　listview。 比如说定义 initialize_model() 的方法： db = QtSql.QSqlDatabase.addDatabase('QSQLITE') db.setDatabaseName('test_ping.db') def initialize_model(model): model.setTable('url_ping') model.setEditStrategy(QtSql.QSqlTableModel.OnManualSubmit) model.select() model.setHeaderData(0, QtCore.Qt.Horizontal, u&quot;网址&quot;) # 对应的 url 链接 而要进行显示，只需要将 listview 和对应的 model 连接起来: def show_view(self): model = QSqlTableModel() initialize_model(model) self.ui.url_list.setModel(model) # self.ui.url_list 是一个 listview self.ui.url_list.show() 每次在进行增删改查之后只要调用 self.show_view() 方法，就能看到最新的数据库，等效于刷新～ 如何执行查询 比如要查找包含 ‘test’的内容： query = QtSql.QSqlQuery() query.exec_(&quot;select * from test where value like '%test%'&quot;) 而如果要展示，更好的方法是重新定义 QSqlQueryModel sqlQueryModel.setQuery(&quot;select * from test where value like '%test%' &quot;) self.ui.url_list.setModel(sqlQueryModel) self.ui.url_list.show() 定义弹出框：使用最简单的如下函数就可以了： def show_messagebox(self): msg = QMessageBox() msg.setText(u'检测成功') msg.setStandardButtons(QMessageBox.Ok) msg.exec_() ui 和执行线程分离 如何设置 ui 和执行任务线程分离，使得界面不会阻塞卡死： 这个有很多方法来去做，我选择的是如下方法： from PyQt4.QtCore import QThread class PingThread(QThread): &quot;&quot;&quot; 定义 PingThread &quot;&quot;&quot; def __init__(self, url): QThread.__init__(self) self._url = url def run(self): ping_url(self._url) self.emit(SIGNAL('ping url')) return &quot;&quot;&quot; 接下来在主线程中调用即可 &quot;&quot;&quot; self.pingThread = PingThread(target_url) # self.connect(self.pingThread, SIGNAL('ping url'), self.show_messagebox) 可选 self.pingThread.start() 进度条 PyQt 中进度条使用 QProgressBar 来展现。在 ui 中设置时会有最小值（默认为 0 ）和最大值（默认为 100 ）。 在更新时只要设置 self.ui.click_progrress.setValue(30) # 进度条进展到 30% 程度 # click_progress 是 ui 里对应的 ProgressBar 其他 ping 调用的是系统自带的 ping 接口 tracert 则调用的是 windows 里的 tracert 接口（Linux 下对应的是 traceroute） telnet 是检测端口是否打开。然后直接调用系统命令的话有两个弊端： ① Windows 需要用户手动开启配置 ② telnet 采用的是光标是否闪烁去判断端口状况，没有返回值，不方便程序处理。 所以最后采用 socket 来连接： sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM) result = sock.connect_ex((url_name, 80)) port_open = True if result == 0 else False PyQt 自带的在 site-packages 里的好多 demo 都非常好，直接要用的话看代码比文档会更快～ 在学的时候写了一个增正版的计算器 demo，当输入的数字或者选择的计算符号发生变化时，会自动改变计算结果（嗯，用的就是 eval()～），用的是 Python 的 装饰器特性。</summary>
       
 
       
@@ -2033,8 +2100,8 @@ def generator_of(url_pattern, class_name=None):
       <title type="html">Python 中的引用机制</title>
       
       <link href="http://localhost:4000/2015/03/11/Python-Import-Mechanism/" rel="alternate" type="text/html" title="Python 中的引用机制" />
-      <published>2015-03-11T21:29:10+08:00</published>
-      <updated>2015-03-11T21:29:10+08:00</updated>
+      <published>2015-03-11T10:29:10-03:00</published>
+      <updated>2015-03-11T10:29:10-03:00</updated>
       <id>http://localhost:4000/2015/03/11/Python-Import-Mechanism</id>
       <content type="html" xml:base="http://localhost:4000/2015/03/11/Python-Import-Mechanism/">&lt;p&gt;解决 &lt;code class=&quot;highlighter-rouge&quot;&gt;No module named&lt;/code&gt; 和 &lt;code class=&quot;highlighter-rouge&quot;&gt;Attempted relative import&lt;/code&gt; 这两个问题
 &lt;!-- more --&gt;&lt;/p&gt;
@@ -2067,7 +2134,8 @@ def generator_of(url_pattern, class_name=None):
     &lt;span class=&quot;err&quot;&gt;├──&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;exceptions&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;py&lt;/span&gt;
     &lt;span class=&quot;err&quot;&gt;├──&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;__init__&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;py&lt;/span&gt;
 
-&lt;span class=&quot;c&quot;&gt;# utils.py&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# utils.py
+&lt;/span&gt;
  &lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;.exceptions&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;NotSupprotedYetException&lt;/span&gt;
 
 &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;check_before&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;attr&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'name'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
@@ -2075,7 +2143,8 @@ def generator_of(url_pattern, class_name=None):
     &lt;span class=&quot;k&quot;&gt;raise&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;NotSupprotedYetException&lt;/span&gt;
     &lt;span class=&quot;o&quot;&gt;...&lt;/span&gt;
 
-&lt;span class=&quot;c&quot;&gt;# exceptions.py&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# exceptions.py
+&lt;/span&gt;
 &lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;.utils&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;github_url&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;connect_url&lt;/span&gt;
 
 &lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;NotSupprotedYetException&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;FBRankException&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
@@ -2096,7 +2165,8 @@ ImportError: cannot import name 'NotSupprotedYetException'
 &lt;/div&gt;
 &lt;p&gt;自上而下看调用的顺序，在 /exceptions.py 里从 .utils.py 调用了 &lt;code class=&quot;highlighter-rouge&quot;&gt;github_url, connect_url&lt;/code&gt; 这两个变量，而在调用 .utils.py 时又从 /exceptions.py 调用了 NotSupprotedYetException，这样就互相循环，永远都无法解决引入。解决办法就是只在需要使用的函数时再加载：&lt;/p&gt;
 
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;c&quot;&gt;# utils.py&lt;/span&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;c&quot;&gt;# utils.py
+&lt;/span&gt;
 
 &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;check_before&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;attr&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'name'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
     &lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;.exceptions&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;NotSupprotedYetException&lt;/span&gt;
@@ -2156,13 +2226,16 @@ ImportError: cannot import name 'NotSupprotedYetException'
   &lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;  &lt;span class=&quot;c&quot;&gt;# 想要引入某个异常，需要具体到对应的文件&lt;/span&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;  &lt;span class=&quot;c&quot;&gt;# 想要引入某个异常，需要具体到对应的文件
+&lt;/span&gt;
   &lt;span class=&quot;n&quot;&gt;In&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]:&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;FBRank.utils.exceptions&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;IllegalArgumentException&lt;/span&gt;
 
-  &lt;span class=&quot;c&quot;&gt;# 但想要引入某个类，只要具体到对应的 package 就可以了&lt;/span&gt;
+  &lt;span class=&quot;c&quot;&gt;# 但想要引入某个类，只要具体到对应的 package 就可以了
+&lt;/span&gt;
   &lt;span class=&quot;n&quot;&gt;In&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]:&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;FBRank.object&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Club&lt;/span&gt;
 
-  &lt;span class=&quot;c&quot;&gt;# 具体原因是在 FBRank/object 下的 __init__.py 里有如下代码&lt;/span&gt;
+  &lt;span class=&quot;c&quot;&gt;# 具体原因是在 FBRank/object 下的 __init__.py 里有如下代码
+&lt;/span&gt;
   &lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;.League&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;League&lt;/span&gt;
   &lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;.Club&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Club&lt;/span&gt;
   &lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;.Player&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Player&lt;/span&gt;
@@ -2183,7 +2256,7 @@ ImportError: cannot import name 'NotSupprotedYetException'
       
 
       
-        <summary type="html">解决 No module named 和 Attempted relative import 这两个问题</summary>
+        <summary type="html">解决 No module named 和 Attempted relative import 这两个问题 两个引用时最常见的问题 No module named XXXz 在编译时遇到 No Module Named XX 。这个问题曾经遇到过，并且用命令行执行时会报错，但用 Pycharm 的运行按钮就可以顺利执行。最后发现错误的过程也很简&amp;gt;单，在编辑配置一项里勾选 “show command line afterwards”，然后执行　import sys;sys.path 命令，和在命令行里的选项进行对比，发现前者多了一个 /home/hzcortex/projects... 的模块。也就是说 Python 并没有把执行命令的这个脚本所在的目录加入 sys.path 中。 解决方法是在报错的文件目录下加入： import sys from os import path sys.path.append(path.dirname(path.dirname(path.abspath(__file__)))) import sys from os import path sys.path.append(path.dirname(path.dirname(path.abspath(__file__)))) Attempted relative import in non package 这个问题要分两类来进行讨论： ① 在引用的时候确实发生了循环引用，A 要引用 B，B 要引用 C，而 C 同时要引用 B 里的一个函数。这时通常的解决办法是修改 C 文件的引用顺序，把 import 语句放到需要使用引用对象的语句前(参考 《Python 核心编程》 的说法)。最近在开发 FBRank 的时候确实遇到了这个问题，项目结构是这样的： └── utils ├── exceptions.py ├── __init__.py # utils.py from .exceptions import NotSupprotedYetException def check_before(attr='name'): ... raise NotSupprotedYetException ... # exceptions.py from .utils import github_url, connect_url class NotSupprotedYetException(FBRankException): &quot;&quot;&quot;still not supprt &quot;&quot;&quot; 之后在执行程序的时候出现了这样的错误： File &quot;/home/hzcortex/FBRank/FBRank/parse/League.py&quot;, line 13, in &amp;lt;module&amp;gt; from FBRank.utils.exceptions import IllegalArgumentException, NotSupprotedYetException File &quot;/home/hzcortex/FBRank/FBRank/utils/exceptions.py&quot;, line 2, in &amp;lt;module&amp;gt; from .utils import github_url, connect_url File &quot;/home/hzcortex/FBRank/FBRank/utils/utils.py&quot;, line 5, in &amp;lt;module&amp;gt; from .exceptions import NotSupprotedYetException ImportError: cannot import name 'NotSupprotedYetException' 自上而下看调用的顺序，在 /exceptions.py 里从 .utils.py 调用了 github_url, connect_url 这两个变量，而在调用 .utils.py 时又从 /exceptions.py 调用了 NotSupprotedYetException，这样就互相循环，永远都无法解决引入。解决办法就是只在需要使用的函数时再加载： # utils.py def check_before(attr='name'): from .exceptions import NotSupprotedYetException # ...... 因为 Python 的引用机制并不会重新引入之前已经引入的包(需要的话要用 imp.reaload())，所以不用担心这种引入会对性能产生影响 ② 如果确实没有循环引用，那么通常是如下的情况： 拿之前写的一个从 Kafka 向 ES 导数据的程序来举例子。整个程序的结构如下(好像紫色对比度比较高…)： 在主程序 RealtimeLogToES.py 里有如下的引用： 如果在这种情况下进入到 RLTES 目录里直接执行 python RealtimeLogToES.py，那么就会报上面的循环引用的错。 解决方法再有以下两种： ① 将 from .config import 改为和下面一样的绝对引用，from RLTES.config import ② 不修改代码，退回到上一层目录,cd ..，之后执行 python -m RLTES.RealtimeLogToES Python 在进行相对引入的时候，判断的根据是当前文件的 name 属性。而当你执行一个文件的时候，该文件原有的 name 属性被替代为了固定的 ‘main‘,所以相对引入就无法工作，而绝对引入是没有问题的。在命令行里加入-m 后，告诉 Python 解释器应该将这个文件作为一个脚本来运行。 为什么会发生这种问题 要真正理解 Python 的 import 机制是如何查找变量的。 到底怎么引用 PEP8 里建议是一直用绝对引用，但就像那个 annoying double underscore 一样，不喜欢绝对引用的也大有人在。 团队里面保持一致即可。就个人开发来说，还是更喜欢单层采用用 .import，其他用绝对引用。 在 《Two Scopes Of Django》 一书里明确说明了禁止使用如 from A import a 这样的 implicit import 语句，但考虑到很多时候写脚本并不会具体到一个大的工程，而是在服务器上建立一个目录去完成一个特定的功能，如果这么写能方便调试和部署，那么也没有大的问题。 __init__.py 的作用 __init__.py 最重要的作用就是标记含有该 __init__.py 目录的文件夹为一个 package ，从而完成对应的引入。 大部分情况下 __init__.py 里什么内容也不用写，如果一定要写的话基本有以下三个作用： 写 __author__ 等有关信息 写一个 __all__ 的配置，精确定义在 from x import * 时候会引入的内容 如果说前两个都无关紧要的话，那么最后一个就比较多了，可以简化引入方式，用来控制 API 的稳定性。 还是拿写的 FBRank 来举例子。虽然你看在 README 里写的是只支持命令行工具，但其实它也提供了在代码里引入的能力。举个例子： # 想要引入某个异常，需要具体到对应的文件 In [1]: from FBRank.utils.exceptions import IllegalArgumentException # 但想要引入某个类，只要具体到对应的 package 就可以了 In [2]: from FBRank.object import Club # 具体原因是在 FBRank/object 下的 __init__.py 里有如下代码 from .League import League from .Club import Club from .Player import Player</summary>
       
 
       
@@ -2197,8 +2270,8 @@ ImportError: cannot import name 'NotSupprotedYetException'
       <title type="html">DP 解题思路</title>
       
       <link href="http://localhost:4000/2015/03/11/Dynamic-Programming-Explanation/" rel="alternate" type="text/html" title="DP 解题思路" />
-      <published>2015-03-11T21:22:10+08:00</published>
-      <updated>2015-03-11T21:22:10+08:00</updated>
+      <published>2015-03-11T10:22:10-03:00</published>
+      <updated>2015-03-11T10:22:10-03:00</updated>
       <id>http://localhost:4000/2015/03/11/Dynamic-Programming-Explanation</id>
       <content type="html" xml:base="http://localhost:4000/2015/03/11/Dynamic-Programming-Explanation/">&lt;p&gt;动态规划例题及 Leetcode 题解
 &lt;!-- more --&gt;&lt;/p&gt;
@@ -2252,9 +2325,11 @@ ImportError: cannot import name 'NotSupprotedYetException'
 &lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;LIS&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[]&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;arr&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
         &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;j&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;max&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
         &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;arr&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;length&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-        &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[]&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;list&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;];&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// 存储长度&lt;/span&gt;
+        &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[]&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;list&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;];&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// 存储长度
+&lt;/span&gt;
         &lt;span class=&quot;n&quot;&gt;Arrays&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;fill&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;list&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
-        &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[]&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;index&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;];&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// 存储距离&lt;/span&gt;
+        &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[]&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;index&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;];&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// 存储距离
+&lt;/span&gt;
         &lt;span class=&quot;n&quot;&gt;Arrays&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;fill&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;index&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
 
 
@@ -2266,7 +2341,8 @@ ImportError: cannot import name 'NotSupprotedYetException'
                 &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
             &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
 
-        &lt;span class=&quot;c1&quot;&gt;// 选择出最大的&lt;/span&gt;
+        &lt;span class=&quot;c1&quot;&gt;// 选择出最大的
+&lt;/span&gt;
         &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;max_index&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
 
         &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;++)&lt;/span&gt;
@@ -2283,7 +2359,8 @@ ImportError: cannot import name 'NotSupprotedYetException'
             &lt;span class=&quot;n&quot;&gt;builder&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;insert&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;arr&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;next_index&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot; &quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
             &lt;span class=&quot;n&quot;&gt;next_index&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;index&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;next_index&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;];&lt;/span&gt;
         &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;System&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;out&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;println&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;builder&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;toString&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;());&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// 输出子序列&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;System&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;out&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;println&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;builder&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;toString&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;());&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// 输出子序列
+&lt;/span&gt;
         &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;max&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;hr /&gt;
@@ -2370,12 +2447,14 @@ ImportError: cannot import name 'NotSupprotedYetException'
                     &lt;span class=&quot;n&quot;&gt;Knapsack2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;value&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;weight&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;capacity&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;index&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;));&lt;/span&gt;
     &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
 
-        &lt;span class=&quot;c1&quot;&gt;// KnapSack 问题，两种调用&lt;/span&gt;
+        &lt;span class=&quot;c1&quot;&gt;// KnapSack 问题，两种调用
+&lt;/span&gt;
         &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[]&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;value&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;60&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;100&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;120&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;};&lt;/span&gt;
         &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[]&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;weight&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;20&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;30&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;};&lt;/span&gt;
         &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;capacity&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;50&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
         &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;number&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;value&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;length&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;System&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;out&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;println&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dp&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;Knapsack1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;value&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;weight&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;capacity&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;number&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;));&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// 220&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;System&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;out&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;println&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dp&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;Knapsack1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;value&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;weight&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;capacity&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;number&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;));&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// 220
+&lt;/span&gt;
         &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;index&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
         &lt;span class=&quot;n&quot;&gt;System&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;out&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;println&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dp&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;Knapsack2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;value&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;weight&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;capacity&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;index&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;));&lt;/span&gt;  &lt;span class=&quot;c1&quot;&gt;// 220&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
@@ -2544,258 +2623,7 @@ C++ 版：&lt;/p&gt;
       
 
       
-        <summary type="html">动态规划例题及 Leetcode 题解</summary>
-      
-
-      
-      
-    </entry>
-  
-  
-  
-    <entry>
-      
-      <title type="html">如何利用 Jekyll 来搭建个人博客</title>
-      
-      <link href="http://localhost:4000/2015/01/07/Person-Blog-Build-And-Modify/" rel="alternate" type="text/html" title="如何利用 Jekyll 来搭建个人博客" />
-      <published>2015-01-07T21:12:57+08:00</published>
-      <updated>2015-01-07T21:12:57+08:00</updated>
-      <id>http://localhost:4000/2015/01/07/Person-Blog-Build-And-Modify</id>
-      <content type="html" xml:base="http://localhost:4000/2015/01/07/Person-Blog-Build-And-Modify/">&lt;p&gt;利用 Jekyll 来搭建个人博客&lt;/p&gt;
-
-&lt;!-- more --&gt;
-
-&lt;h3 id=&quot;博客现状&quot;&gt;博客现状&lt;/h3&gt;
-
-&lt;p&gt;博客最早是由 &lt;code class=&quot;highlighter-rouge&quot;&gt;Jekyll&lt;/code&gt; 搭建的，中间更换过两个主题—&amp;gt;之后换成 &lt;code class=&quot;highlighter-rouge&quot;&gt;Octopress&lt;/code&gt;，但对中文字体的渲染支持不是特别良好-&amp;gt;再之后更换为 &lt;code class=&quot;highlighter-rouge&quot;&gt;hexo&lt;/code&gt;，主题也变成 &lt;code class=&quot;highlighter-rouge&quot;&gt;Next&lt;/code&gt;—&amp;gt;最后又回到 &lt;code class=&quot;highlighter-rouge&quot;&gt;Jekyll&lt;/code&gt;，更换成了 &lt;code class=&quot;highlighter-rouge&quot;&gt;WhiteGlass&lt;/code&gt; 主题。这种粗墨渲染式的风格非常有感觉，应该不会再更换主题风格了：- D&lt;/p&gt;
-
-&lt;h3 id=&quot;搭建过程&quot;&gt;搭建过程&lt;/h3&gt;
-&lt;p&gt;这里以&lt;a href=&quot;https://pages.github.com/&quot;&gt;官方教程&lt;/a&gt; 为例进行说明。&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;
-    &lt;p&gt;首先需要有一个github的账号并创建一个名为 username.github.io 的 repository 。其中 username 就是你注册github使用的名称，进行替换即可。&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;其次将该仓库 clone 至本地。github-pages 将每一个页面的初始配置文件都默认命名为为 index.html。所以创建一个名为index.html的文件。里面的文件随意填写，内容就是你首页的内容。并同步到终端。&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;这时就能在网页：&lt;strong&gt;username.github.io&lt;/strong&gt; 上看到你所想看到的页面了。&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;hr /&gt;
-
-&lt;p&gt;但一个静态页面肯定无法满足我们的需求。还好，我们有Jekyll来搭建更为丰富、更加可定制化的网站。请参见
-&lt;a href=&quot;https://help.github.com/articles/using-jekyll-with-pages/&quot;&gt;blogging with jekyll&lt;/a&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;因为之后自己又安装了Windows平台下的jekyll，根据 &lt;a href=&quot;http://jekyll-windows.juthilo.com/5-running-jekyll/&quot;&gt;jekyll-windows&lt;/a&gt;来一步步实现就可以(简而言之就是 jekyll 官方文档推荐了一个非官方的 windows 实现……)&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;根据自己踩坑的过程，新的 jekyll 和 ruby gem 刚好差了一层依赖关系。换句话说想要部署新版的 github-pages，就必须用 ruby 2.x 版本，即不能用 &lt;code class=&quot;highlighter-rouge&quot;&gt;sudo apt-get install ruby&lt;/code&gt; 的方式来安装，而是推荐从官方下载源代码后用 &lt;code class=&quot;highlighter-rouge&quot;&gt;./configure &amp;amp;&amp;amp; make &amp;amp;&amp;amp; sudo make install&lt;/code&gt; 三部曲来编译。&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;首先需要安装Ruby.OSx下已默认安装好&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;安装bundler来进行包管理。&lt;code class=&quot;highlighter-rouge&quot;&gt;gem install bundler&lt;/code&gt;&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;接下来根据github官方教程是安装gem，使用&lt;/p&gt;
-
-    &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;source 'https://rubygems.org'&lt;/code&gt;&lt;/p&gt;
-
-    &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;gem 'github-pages'&lt;/code&gt;&lt;/p&gt;
-
-    &lt;p&gt;来安装。但大部分情况下只会发生连接超时或者下载不下来的情况。所以请先&lt;/p&gt;
-
-    &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;gem sources --remove https://rubygems.org/&lt;/code&gt;&lt;/p&gt;
-
-    &lt;p&gt;移除默认的选项。&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;这时候输入&lt;code class=&quot;highlighter-rouge&quot;&gt;jekyll server&lt;/code&gt; 会显示网页地址&lt;/p&gt;
-    &lt;blockquote&gt;
-      &lt;p&gt;http://127.0.0.1:4000&lt;/p&gt;
-    &lt;/blockquote&gt;
-
-    &lt;p&gt;在浏览器中打开，就能看到在本地生成的默认网页。&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;hr /&gt;
-
-&lt;p&gt;下面是关于网页的配置情况。这里我希望能够将整个jekyll的网页结构讲清楚，方便大家进行fork和修改&lt;/p&gt;
-
-&lt;p&gt;首先是查看&lt;a href=&quot;http://jekyllrb.com/docs/home/&quot;&gt;jekyll文档&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;jekyll的结构图如下：&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;http://7xk19m.com1.z0.glb.clouddn.com/屏幕快照 2015-06-30 下午8.51.56.png&quot; alt=&quot;结构图&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;这里先不要急着往下看，一个一个来讲解它的作用。&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;首先是&lt;strong&gt;_config.yml&lt;/strong&gt;，它定义了你的博客整体所需要的构件。包括：博客名称、是否采用markdown语法、是否需要评论。它的注释将它的每一项作用表达的很清楚。&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;_includes&lt;/strong&gt;,多数情况下我们不需要处理它。&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;其次是&lt;strong&gt;layouts&lt;/strong&gt;，它定义了你文章的表现形式。&lt;strong&gt;default.html&lt;/strong&gt;是定义了首页的内容，你看，如果你想要在首页栏上添加一个新的标题，只需插入如下语句：&lt;/p&gt;
-
-    &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt; &amp;lt;li&amp;gt;&amp;lt;a href=&quot;/Y_o_m/&quot;&amp;gt;Y_o_m&amp;lt;/a&amp;gt;&amp;lt;/li&amp;gt;&lt;/code&gt;&lt;/p&gt;
-
-    &lt;p&gt;以后在每一个打开的页面上都可以看见你的最上方黑色一栏里多出了&lt;strong&gt;Y_o_m&lt;/strong&gt;。&lt;/p&gt;
-
-    &lt;p&gt;而还有两个分别是&lt;strong&gt;post.html&lt;/strong&gt;,&lt;strong&gt;page.html&lt;/strong&gt;。OK，打开后会看到它们都是以&lt;strong&gt;default.html&lt;/strong&gt;作为模板。在我的博客里这两个.html的区别就是&lt;strong&gt;page.html&lt;/strong&gt;多了一个评论功能。&lt;/p&gt;
-
-    &lt;p&gt;比如说我的Y_o_m主题的index.html文件我只希望它显示文件列表，所以就用post.html;而我想要2015-06文章里提供评论功能，就用page.html；&lt;/p&gt;
-
-    &lt;p&gt;可以在每篇文站里的&lt;strong&gt;layout&lt;/strong&gt;里配置&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;_posts&lt;/strong&gt;.它的作用就是存放你每次写的文章.注意名称必须为&lt;strong&gt;YEAR-MONTH-DAY-title.md&lt;/strong&gt;.
-并且在文件里必须用&lt;code class=&quot;highlighter-rouge&quot;&gt;---&lt;/code&gt;+&lt;code class=&quot;highlighter-rouge&quot;&gt;---&lt;/code&gt;来确定date、title、layout。并且为方便分类，categories也是常备的。&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;_sites&lt;/strong&gt;,很多时候你会发现它是最复杂的。因为你所有最后用到的.html、.png都出现在里面。不过~，我们不用管它。就交给jekyll来做吧。&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;好了，相信有了上面的一些东西，就可以做出最基本的一个博客了。&lt;/p&gt;
-
-&lt;hr /&gt;
-
-&lt;p&gt;最后再补充说明一些东西：&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&quot;http://jekyllrb.com/docs/variables/&quot;&gt;variables&lt;/a&gt;是我们要做出优美的jekyll博客必不可少的元素。具体内容可以看w3cschool的教程。&lt;/p&gt;
-
-&lt;p&gt;说一些值得注意的因素吧：&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;在设置paginator的时候要注意设置路径,&lt;/p&gt;
-
-    &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;paginate_path: &quot;blog/page:num&quot;&lt;/code&gt;&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;呃，不知道应该怎么说，jekyll发展到现在竟然还不支持在categories下生成页码。&lt;/p&gt;
-
-    &lt;p&gt;所以就只好展开所有的categories:&lt;/p&gt;
-
-    &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt; for post in site.categories.book &lt;/code&gt;&lt;/p&gt;
-
-    &lt;p&gt;当然，这取决于你准备怎样设置你的博客类型。我喜欢横向一目了然，但纵向的抽屉型也很漂亮。&lt;/p&gt;
-
-    &lt;p&gt;祝开心。&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;hr /&gt;
-
-&lt;p&gt;关于一些配置修改&lt;/p&gt;
-
-&lt;p&gt;这篇文章主要的目的是记录自己在修改jekyll博客主题过程的整体思路。如果大家有需要类似的 theme 的话，也可以以此来作为参考。&lt;/p&gt;
-
-&lt;hr /&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;博客思路&lt;/strong&gt;：&lt;/p&gt;
-
-    &lt;p&gt;在default模板里顶部采用 &lt;strong&gt;留白+图片+导航栏&lt;/strong&gt; 的模式，具体板式采用最常见的两列式：左列作为文章内容，右列分配Archives/Categories/Tags。其中在主页只推送和技术有关的文章，用 &lt;code class=&quot;highlighter-rouge&quot;&gt;for post in site.tags.tech&lt;/code&gt; 来实现，其他放在导航栏的其他栏目里分别展示&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;导航栏实现&lt;/strong&gt;：&lt;/p&gt;
-
-    &lt;p&gt;导航栏默认采用 bootstrap 的 navbar-inverse 样式，每个导航栏目都有对应的同名文件夹，在文件夹里对应有index.html，显示打开后的网页。根据需要选择page/post模板，以及显示的文章列表是简略型/详细型。其中About里要显示的是纯粹的静态网页，所以选择的文件为index.md。&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;侧边栏实现&lt;/strong&gt;：&lt;/p&gt;
-
-    &lt;ul&gt;
-      &lt;li&gt;
-        &lt;p&gt;Archives显示了在不同时间创建的文章，用 captue 提取出对应的日期后根据年份/月份来生成目录。&lt;/p&gt;
-      &lt;/li&gt;
-      &lt;li&gt;
-        &lt;p&gt;Categories显示了在不同目录下创建的文章。用
-  &lt;code class=&quot;highlighter-rouge&quot;&gt;for post in site.categories.CATEGORIES&lt;/code&gt; 来生成文章列表，之后为每个链接创建不同的id，在idnex.html(主页面)里进行对应的链接。Categories是用列表实现的，jekyll对树形表支持的不是太好。同时考虑对某些 categories 增加对应的  &lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;span class=&quot;badge&quot;&amp;gt;&lt;/code&gt; 来显文章数量。但现在为止之只能手动进行添加。&lt;/p&gt;
-      &lt;/li&gt;
-      &lt;li&gt;
-        &lt;p&gt;tags显示在不同标签下对应的文章。遍历所有标签从而生成index页面。如果一篇文章有多个标签的话，将它加入第一个标签所在的列表&lt;/p&gt;
-      &lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;hr /&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;如何修改：&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;ul&gt;
-      &lt;li&gt;
-        &lt;p&gt;用F12在chrome中打开控制栏后，可以看到该页面所对应的所有板式。但直接修改在 _site 里的html文件是不可行的，jekyll会重新直接生成。可以在_layout和_include文件夹里进行修改。&lt;/p&gt;
-      &lt;/li&gt;
-      &lt;li&gt;
-        &lt;p&gt;要修改对应的版式，可以修改 page 和 post 里的栅格版式。bootstrap所采取的这种样式非常便于修改:比如我们可以看到我们是在用:&lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;div class=&quot;col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 &quot;&amp;gt;&lt;/code&gt;来定义page页面的主体内容，用 &lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;div class=&quot; col-lg-8 col-lg-offset-1 col-md-8 col-md-offset-1 col-sm-12 col-xs-12 post-container&quot;&amp;gt;&lt;/code&gt;来定义右侧导航栏。只需要修改对应列的大小和偏移量，就可以修改版式。&lt;/p&gt;
-      &lt;/li&gt;
-      &lt;li&gt;
-        &lt;p&gt;但导航栏我并没有采用 &lt;code class=&quot;highlighter-rouge&quot;&gt;collapse&lt;/code&gt; 的响应式布局，因为直接用 col-sm 来配置在移动端的响应更好。&lt;/p&gt;
-      &lt;/li&gt;
-      &lt;li&gt;
-        &lt;p&gt;但非常奇怪的一点是我所自定义的 css 没有覆盖 bootstrap.min.css,但到目前为止也没有找到问题所在。因为并不是专业的前端工程师，所以就直接用修改 bootstrap.min.css 这样非常 tricky 的方式来解决。&lt;/p&gt;
-      &lt;/li&gt;
-      &lt;li&gt;
-        &lt;p&gt;要修改文章字体大小的话，如果不了解前端的编译及压缩，可以直接在 &lt;code class=&quot;highlighter-rouge&quot;&gt;css/bootstrap.min.css&lt;/code&gt; 里修改 &lt;code class=&quot;highlighter-rouge&quot;&gt;font-size&lt;/code&gt; 所对应的值，原值为 15px。&lt;/p&gt;
-      &lt;/li&gt;
-      &lt;li&gt;
-        &lt;p&gt;字体选择我优先选用的是微软雅黑&lt;/p&gt;
-      &lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;hr /&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;其他配置：&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;ul&gt;
-      &lt;li&gt;
-        &lt;p&gt;采用多说评论，在 Board 和每篇文章列表里进行加载。&lt;/p&gt;
-      &lt;/li&gt;
-      &lt;li&gt;
-        &lt;p&gt;一部分文章图片存储在 img 里，另一部分存储在 &lt;strong&gt;七牛云存储&lt;/strong&gt; 里，用外链加载。&lt;/p&gt;
-      &lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;hr /&gt;</content>
-
-      
-      
-      
-      
-      
-
-      
-
-      
-        <category term="Blog" />
-      
-
-      
-
-      
-        <summary type="html">利用 Jekyll 来搭建个人博客</summary>
+        <summary type="html">动态规划例题及 Leetcode 题解 关于 DP 动态规划是一门非常重要的算法，对它的掌握应该是计算机科学专业学生的基本功 下面来把对这类算法的理解进行尽可能多的解释 关键是 状态定义 和 状态转移方程 最长递增子序列 给定K个整数的序列{ N1, N2, …, NK }，其任意连续子序列可表示为{ Ni, Ni+1, …, Nj }，其中 1 &amp;lt;= i &amp;lt;= j &amp;lt;= K。最大连续子序列是所有连续子序中元素和最大的一个， 例如给定序列{ -2, 11, -4, 13, -5, -2 }，其最大连续子序列为{ 11, -4, 13 }，最大和为20。 定义sum[i]为’以A[i]作为最后一个结尾的连续子序列的最大值’ 状态转移方程为：sum[i]=max(sum[i-1]+a[i],a[i]) 实际求解的时候则是，只要sum&amp;gt;0，那么加上之后的a[i]都还是有可能使max增大的；但如果sum&amp;lt;0，则应该立即抛弃，从0开始计算下一个 a = {4, 8, -12, 3, 7, 9} n = len(a) sum = 0 max = 0 for i in range(n): sum += a[i] if sum &amp;gt; max: max = sum if sum &amp;lt; 0: sum = a[i] return sum public int LIS(int[] arr) { int i, j, max = 0; int n = arr.length; int[] list = new int[n]; // 存储长度 Arrays.fill(list, 1); int[] index = new int[n]; // 存储距离 Arrays.fill(index, -1); for (i = 1; i &amp;lt; n; i++) for (j = 0; j &amp;lt; i; j++) { if (arr[i] &amp;gt; arr[j] &amp;amp;&amp;amp; list[i] &amp;lt; list[j] + 1) { list[i] = list[j] + 1; index[i] = j; } } // 选择出最大的 int max_index = 0; for (i = 0; i &amp;lt; n; i++) if (list[i] &amp;gt; max) { max = list[i]; max_index = i; } StringBuilder builder = new StringBuilder(); builder.insert(0, arr[max_index]); int next_index = index[max_index]; while (next_index != -1) { builder.insert(0, arr[next_index] + &quot; &quot;); next_index = index[next_index]; } System.out.println(builder.toString()); // 输出子序列 return max; 数塔问题 要求从顶层到底层，每一层只能走到相邻节点，求经过的数字之和是多少 定义状态方程：max[i,j] 表示以 [i,j] 作为起始点，所经过的最大的数字之和。则 max[1,1] 是我们要求的目标 定义状态转移方程：max[i,j]=num[i,j]+max(max(i+1,j),max(i+1,j+1)) 接下来可以自底向上，也可以自顶向下，具体参见之前所写的关于hdu2084的博文 #include&amp;lt;iostream&amp;gt; #include&amp;lt;cstring&amp;gt; using namespace std; #define maxnum 1000 int num[maxnum][maxnum]; int d[maxnum][maxnum]; int main(void) { int i,j,k; int n,m; cin&amp;gt;&amp;gt;n; while(n--){ cin&amp;gt;&amp;gt;m; for(i=1;i&amp;lt;=m;i++) for(j=1;j&amp;lt;=i;j++) cin&amp;gt;&amp;gt;num[i][j]; for(j=1;j&amp;lt;=m;j++) d[m][j]=num[m][j]; for(i=m-1;i&amp;gt;=1;i--) for(j=1;j&amp;lt;=i;j++) d[i][j]=num[i][j]+max(d[i+1][j+1],d[i+1][j]); cout&amp;lt;&amp;lt;d[1][1]&amp;lt;&amp;lt;endl; memset(d,0,sizeof(d)); } } 背包问题 有著名的背包问题九讲，这里自己先写最基本的 有N件物品和一个容量为V的背包。第i件物品的费用是c[i]，价值是w[i]。求解将哪些物品装入背包可使价值总和最大 如果单纯使用递归来求解 DP 的话有两种思路 public int Knapsack1(int[] value, int[] weight, int capacity, int number) { if (capacity &amp;lt;= 0 || number == 0) return 0; if (weight[number - 1] &amp;gt; capacity) return Knapsack1(value, weight, capacity, number - 1); else return max(value[number - 1] + Knapsack1(value, weight, capacity - weight[number - 1], number - 1), Knapsack1(value, weight, capacity, number - 1)); } public int Knapsack2(int[] value, int[] weight, int capacity, int index) { if (capacity &amp;lt;= 0 || index &amp;gt;= value.length) return 0; if (weight[index] &amp;gt; capacity) return Knapsack2(value, weight, capacity, index + 1); else return max(value[index] + Knapsack2(value, weight, capacity - weight[index], index + 1), Knapsack2(value, weight, capacity, index + 1)); } // KnapSack 问题，两种调用 int[] value = {60, 100, 120}; int[] weight = {10, 20, 30}; int capacity = 50; int number = value.length; System.out.println(dp.Knapsack1(value, weight, capacity, number)); // 220 int index = 0; System.out.println(dp.Knapsack2(value, weight, capacity, index)); // 220 Leetcode 上相关题目 303 Range Sum Quwey - Immutable 链接 大意：给出一个数组，要求返回任意两个区间范围的的值 思路：题目中说到many calls to function，所以多次遍历求解肯定会TLE；而sum[i,j]=sum[j]-sum[i-1]，所以一次遍历求出所有的sum值之后做减法就可以。注意要用全局变量 代码： // c++版 //用vector&amp;lt;int&amp;gt; 来存储状态会更好 class NumArray { int dp[100000]; public: NumArray(vector&amp;lt;int&amp;gt; &amp;amp;nums) { if (nums.empty()) return ; int length=nums.size(); memset(dp,0,sizeof(dp)); dp[0]=nums[0]; for(int i=1;i&amp;lt;length;i++) dp[i]=dp[i-1]+nums[i]; } int sumRange(int i, int j) { if (i==0) return dp[j]; else return dp[j]-dp[i-1]; } }; python版： class NumArray(object): def __init__(self, nums): self.dp = nums for i in range(1,len(nums)): self.dp[i] += self.dp[i-1] def sumRange(self, i, j): return self.dp[j] - (self.dp[i-1] if i &amp;gt; 0 else 0) 70 climbStatirs 链接 大意：登上一个楼梯，可以走1步，可以走两步，问走到n步有几种解法 思路：用dp[n]来表示走到n步的方法数。对dp[n-1],只能选择走1步；对dp[n-2]， 如果选择1+1，就会和dp[n-1]有重叠，只能选择2步 代码： C++版： class Solution { public: int climbStairs(int n) { int dp[n]={0}; dp[0]=0; dp[1]=1; dp[2]=2; for(int i=3;i&amp;lt;=n;i++) dp[i]=(dp[i-1]+dp[i-2]); return dp[n]; } }; python版： class Solution(object): def __init__(self): self.dp={} def climbStairs(self, n): self.dp[1]=1 self.dp[2]=2 for i in range(3,n+1): self.dp[i]=self.dp[i-1]+self.dp[i-2] return self.dp[n] 64 Minimum Path Sum 链接 大意：m*n的全为正数的矩阵，可以向右向下移动，求从左上到右下经过的距离之和最小值 思路：动态规划，用dp[i][j]表示以i,j作为最后一个方块所经过的最短步数 则 dp[i][j]=max(dp[i-1][j]+grid[i][j],dp[i][j-1]+gird[i][j] 代码： C++ 版： class Solution { public: int minPathSum(vector&amp;lt;vector&amp;lt;int&amp;gt;&amp;gt;&amp;amp; grid) { if (grid.empty()) return 0; int m=grid.size(); int n=grid[0].size(); int dp[m][n]={0}; int i,j,k; dp[0][0]=grid[0][0]; for(i=1;i&amp;lt;m;i++) dp[i][0]=(dp[i-1][0]+grid[i][0]); for(i=1;i&amp;lt;n;i++) dp[0][i]=(dp[0][i-1]+grid[0][i]); for(i=1;i&amp;lt;m;i++) for(j=1;j&amp;lt;n;j++) dp[i][j]=min(dp[i-1][j]+grid[i][j],dp[i][j-1]+grid[i][j]); return dp[m-1][n-1]; } };</summary>
       
 
       

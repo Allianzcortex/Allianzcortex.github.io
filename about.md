@@ -17,9 +17,10 @@ permalink: /about/
 - 三年 `ubuntu` 党，`Visual Studio Code` 使用者，`WizNote` 使用者，`ThinkPad` 用户（键盘手感一直没有入 Mac 坑啦～）
 - `Across the Great Wall, we can reach every corner in the world`
 - 电子邮件是: `iamwanghz#gmail.com`
-- 目前就职于 [百分点](http://www.baifendian.com/)，从事标签与推荐，Data Engineer
 - biubiu，动感光波～～
 <!-- 简历：Web版：<a href="/resume.html">点击查看</a>，PDF版：<a href="/resume.pdf">点击查看</a> <del> -->
+
+cc
 
 
 ---
