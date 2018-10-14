@@ -1848,7 +1848,7 @@ def generator_of(url_pattern, class_name=None):
       <li>
         <header class="post-header">
           <h1 class="post-title">
-            <a class="post-link" href="/2015/09/14/Use-PyQt-Develop-Desktop-Web-GUI/">使用 PyQT 来开发一个桌面客户端</a>
+            <a class="post-link" href="/2015/09/14/Use-PyQt-Develop-Desktop-Web-GUI/">Develop a desktop client with PyQT</a>
           </h1>
 
           <p class="post-meta">Sep 14, 2015 • 
@@ -1859,24 +1859,28 @@ def generator_of(url_pattern, class_name=None):
         </header>
 
         <div class="post-content">
-          <p>Python 的动态机制结合 Qt 的信号槽；读取数据库并展示
-<!-- more --></p>
+          <p><a href="/../translation/2015-09-14-Use-PyQt-Develop-Desktop-Web-GUI.html">这篇文章对应的中文版</a></p>
 
-<p>写了一个能检测网络连接的程序。界面截图如下：</p>
+<hr />
+<p>In this novel,I’ll demonstrate how to read the database and display it , with Python’s dynamic mechanism and Qt’s signal slot.</p>
+
+<!-- more -->
+
+<p>This is a program that can detect network connections. The screenshot of the interface is as follows</p>
 
 <p><img src="/images/pyqt-example.png" alt="PyQt" /></p>
 
-<p>以后写客户端的机会还是挺少的…就不过多地追求最佳实践了，只需要能做出一个“能戳戳点点的 GUI ”就够了⊙﹏⊙b</p>
+<p>There will be very few opportunities to write the client in the future(I mean many professional clients are mainly developed by C#/.net,although actually dropbox developed its’ client with PyQT)… So I won’t pursue the best practices. I just need to make a <strong>poke-marked GUI</strong> .⊙﹏⊙b</p>
 
-<h4 id="ui-和界面对应">ui 和界面对应</h4>
+<h4 id="ui-and-interface-corresponding">UI and interface corresponding</h4>
 
-<p>PyQt 本身和 Qt 的信号槽机制是类似的。点击一个按钮后会发送出一个信号，需要定义该信号的处理机制。</p>
+<p>PyQt itself is similar to Qt’s signal slot mechanism. When a button is clicked, a signal is sent and the processing mechanism of the signal needs to be defined.</p>
 
-<p>设计界面直接用 designer 来设计。拖动 button/listview/model，然后自定义名称。</p>
+<p>The design interface is designed directly with the <strong>designer</strong>. Drag <code class="highlighter-rouge">button/listview/model</code> and customize the name.</p>
 
-<p>生成 .ui 文件后，用 <code class="highlighter-rouge">pyuic4 –x ping_ui.ui –o ping_ui.py</code> 就可以看到 ping_ui.py 文件里包含了 <code class="highlighter-rouge">class Ui_Form(object)</code>,里面已经定义好了各种长度/位置，比手写方便多了。</p>
+<p>After generating the .ui file, use <code class="highlighter-rouge">pyuic4 –x ping_ui.ui –o ping_ui.py</code> to see that the ping_ui.py file contains <code class="highlighter-rouge">class Ui_Form(object)</code>, which has various lengths/locations defined. It’s More convenient than handwriting</p>
 
-<p>再自定义一个 <code class="highlighter-rouge">pyqt_example2.py</code> ，里面包含了如下文件：</p>
+<p>Then define a <code class="highlighter-rouge">pyqt_example2.py</code> which contains the following files:</p>
 
 <figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">class</span> <span class="nc">CalculateForm</span><span class="p">(</span><span class="n">QWidget</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
@@ -1885,7 +1889,7 @@ def generator_of(url_pattern, class_name=None):
         <span class="bp">self</span><span class="o">.</span><span class="n">ui</span> <span class="o">=</span> <span class="n">Ui_Form</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">setupUi</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></code></pre></figure>
 
-<p>再定义执行函数：</p>
+<p>then define the execution function：</p>
 
 <figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">'__main__'</span><span class="p">:</span>
     <span class="n">app</span> <span class="o">=</span> <span class="n">QApplication</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span>
@@ -1893,16 +1897,16 @@ def generator_of(url_pattern, class_name=None):
     <span class="n">calculator</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
     <span class="n">sys</span><span class="o">.</span><span class="nb">exit</span><span class="p">(</span><span class="n">app</span><span class="o">.</span><span class="n">exec_</span><span class="p">())</span></code></pre></figure>
 
-<p>执行后就可以看到界面已经成功显示。</p>
+<p>After execution, you can see that the interface has been successfully displayed.</p>
 
-<p>接下来就是要建立信号槽机制，比如在当初定义 ui 的 button 时有一个 button 的名称为 add_url 。我们希望将它与 add_url 的函数对应在一起，只需定义如下（最好在 <strong>init</strong> 里）：</p>
+<p>The next step is to establish a signal slot mechanism. For example, when the button of the ui was originally defined, there is a button named <code class="highlighter-rouge">add_url</code> . We want to associate it with the function of <code class="highlighter-rouge">add_url</code> , just define it as follows (preferably in <strong>init</strong> ):</p>
 
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">add_url</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">add_url_func</span><span class="p">)</span> <span class="c"># 点击函数</span></code></pre></figure>
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">add_url</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">add_url_func</span><span class="p">)</span> <span class="c"># click function</span></code></pre></figure>
 
-<h4 id="数据库的增删改查以及显示">数据库的增删改查以及显示</h4>
+<h4 id="crud-and-display">CRUD and Display</h4>
 
-<p>在 PyQt 中定义的　model 的是 QSqlTableModel,定义显示 table 的是　listview。
-比如说定义 initialize_model() 的方法：</p>
+<p>The model defined in PyQt is <code class="highlighter-rouge">QSqlTableModel</code>, and the definition of table is <code class="highlighter-rouge">listview</code>.
+For example, define the method of initialize_model() :</p>
 
 <figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">db</span> <span class="o">=</span> <span class="n">QtSql</span><span class="o">.</span><span class="n">QSqlDatabase</span><span class="o">.</span><span class="n">addDatabase</span><span class="p">(</span><span class="s">'QSQLITE'</span><span class="p">)</span>
 <span class="n">db</span><span class="o">.</span><span class="n">setDatabaseName</span><span class="p">(</span><span class="s">'test_ping.db'</span><span class="p">)</span>
@@ -2790,9 +2794,11 @@ C++ 版：</p>
         </header>
 
         <div class="post-content">
-          <p>一些碎碎念…</p>
+          <p>Actually I’m trying to express some light knowledge about coding and interesting experience in my daily life.And this post will be divided into 2 parts: the 1st part will be written in english,and the corresponding Chinese translation can be found in <a href="/Chinese_translation.html">chinese</a></p>
 
-<!-- more -->
+<p>一些碎碎念…
+<img src="/images/HBase-source-code.png" alt="HBase-source-code.png" />
+<!-- more --></p>
 
 <ul>
   <li>之前代码是这样的：

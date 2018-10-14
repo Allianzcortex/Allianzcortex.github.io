@@ -6,8 +6,10 @@ categories: techniques
 comments: true
 ---
 
-一些碎碎念...
+Actually I'm trying to express some light knowledge about coding and interesting experience in my daily life.And this post will be divided into 2 parts: the 1st part will be written in english,and the corresponding Chinese translation can be found in [chinese](/Chinese_translation.html)
 
+一些碎碎念...
+![HBase-source-code.png](/images/HBase-source-code.png)
 <!-- more -->
 
 - 之前代码是这样的：

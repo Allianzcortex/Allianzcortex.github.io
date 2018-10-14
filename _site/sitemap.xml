@@ -108,7 +108,15 @@
 <loc>http://localhost:4000/projects/</loc>
 </url>
 <url>
+<loc>http://localhost:4000/Chinese_translation.html</loc>
+<lastmod>2018-10-13T22:11:52-03:00</lastmod>
+</url>
+<url>
 <loc>http://localhost:4000/images/resume.html</loc>
 <lastmod>2018-01-08T22:15:32-04:00</lastmod>
+</url>
+<url>
+<loc>http://localhost:4000/translation/2015-09-14-Use-PyQt-Develop-Desktop-Web-GUI.html</loc>
+<lastmod>2018-10-13T22:15:47-03:00</lastmod>
 </url>
 </urlset>

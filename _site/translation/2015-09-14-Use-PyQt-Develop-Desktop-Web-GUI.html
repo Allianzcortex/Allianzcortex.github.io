@@ -10,8 +10,8 @@
   
   
   
-  <title>Develop a desktop client with PyQT</title>
-  <meta name="description" content="这篇文章对应的中文版 In this novel,I’ll demonstrate how to read the database and display it , with Python’s dynamic mechanism and Qt’s signal slot. This is a program that can detect network connections. The screenshot of the interface is as follows There will be very few opportunities to write the client in the future(I mean many professional clients are mainly developed by C#/.net,although actually dropbox developed its’ client with PyQT)… So I won’t pursue the best practices. I just need to make a poke-marked GUI .⊙﹏⊙b UI and interface corresponding PyQt itself is similar to Qt’s signal slot mechanism. When a button is clicked, a signal is sent and the processing mechanism of the signal needs to be defined. The design interface is designed directly with the designer. Drag button/listview/model and customize the name. After generating the .ui file, use pyuic4 –x ping_ui.ui –o ping_ui.py to see that the ping_ui.py file contains class Ui_Form(object), which has various lengths/locations defined. It’s More convenient than handwriting Then define a pyqt_example2.py which contains the following files: class CalculateForm(QWidget): def __init__(self, parent=None): super(CalculateForm, self).__init__(parent) self.ui = Ui_Form() self.ui.setupUi(self) then define the execution function： if __name__ == &#39;__main__&#39;: app = QApplication(sys.argv) calculator = CalculateForm() calculator.show() sys.exit(app.exec_()) After execution, you can see that the interface has been successfully displayed. The next step is to establish a signal slot mechanism. For example, when the button of the ui was originally defined, there is a button named add_url . We want to associate it with the function of add_url , just define it as follows (preferably in init ): self.ui.add_url.clicked.connect(self.add_url_func) # click function CRUD and Display The model defined in PyQt is QSqlTableModel, and the definition of table is listview. For example, define the method of initialize_model() : db = QtSql.QSqlDatabase.addDatabase(&#39;QSQLITE&#39;) db.setDatabaseName(&#39;test_ping.db&#39;) def initialize_model(model): model.setTable(&#39;url_ping&#39;) model.setEditStrategy(QtSql.QSqlTableModel.OnManualSubmit) model.select() model.setHeaderData(0, QtCore.Qt.Horizontal, u&quot;网址&quot;) # 对应的 url 链接 而要进行显示，只需要将 listview 和对应的 model 连接起来: def show_view(self): model = QSqlTableModel() initialize_model(model) self.ui.url_list.setModel(model) # self.ui.url_list 是一个 listview self.ui.url_list.show() 每次在进行增删改查之后只要调用 self.show_view() 方法，就能看到最新的数据库，等效于刷新～ 如何执行查询 比如要查找包含 ‘test’的内容： query = QtSql.QSqlQuery() query.exec_(&quot;select * from test where value like &#39;%test%&#39;&quot;) 而如果要展示，更好的方法是重新定义 QSqlQueryModel sqlQueryModel.setQuery(&quot;select * from test where value like &#39;%test%&#39; &quot;) self.ui.url_list.setModel(sqlQueryModel) self.ui.url_list.show() 定义弹出框：使用最简单的如下函数就可以了： def show_messagebox(self): msg = QMessageBox() msg.setText(u&#39;检测成功&#39;) msg.setStandardButtons(QMessageBox.Ok) msg.exec_() ui 和执行线程分离 如何设置 ui 和执行任务线程分离，使得界面不会阻塞卡死： 这个有很多方法来去做，我选择的是如下方法： from PyQt4.QtCore import QThread class PingThread(QThread): &quot;&quot;&quot; 定义 PingThread &quot;&quot;&quot; def __init__(self, url): QThread.__init__(self) self._url = url def run(self): ping_url(self._url) self.emit(SIGNAL(&#39;ping url&#39;)) return &quot;&quot;&quot; 接下来在主线程中调用即可 &quot;&quot;&quot; self.pingThread = PingThread(target_url) # self.connect(self.pingThread, SIGNAL(&#39;ping url&#39;), self.show_messagebox) 可选 self.pingThread.start() 进度条 PyQt 中进度条使用 QProgressBar 来展现。在 ui 中设置时会有最小值（默认为 0 ）和最大值（默认为 100 ）。 在更新时只要设置 self.ui.click_progrress.setValue(30) # 进度条进展到 30% 程度 # click_progress 是 ui 里对应的 ProgressBar 其他 ping 调用的是系统自带的 ping 接口 tracert 则调用的是 windows 里的 tracert 接口（Linux 下对应的是 traceroute） telnet 是检测端口是否打开。然后直接调用系统命令的话有两个弊端： ① Windows 需要用户手动开启配置 ② telnet 采用的是光标是否闪烁去判断端口状况，没有返回值，不方便程序处理。 所以最后采用 socket 来连接： sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM) result = sock.connect_ex((url_name, 80)) port_open = True if result == 0 else False PyQt 自带的在 site-packages 里的好多 demo 都非常好，直接要用的话看代码比文档会更快～ 在学的时候写了一个增正版的计算器 demo，当输入的数字或者选择的计算符号发生变化时，会自动改变计算结果（嗯，用的就是 eval()～），用的是 Python 的 装饰器特性。">
+  <title>使用 PyQT 来开发一个桌面客户端</title>
+  <meta name="description" content="Python 的动态机制结合 Qt 的信号槽；读取数据库并展示 写了一个能检测网络连接的程序。界面截图如下： 以后写客户端的机会还是挺少的…就不过多地追求最佳实践了，只需要能做出一个“能戳戳点点的 GUI ”就够了⊙﹏⊙b ui 和界面对应 PyQt 本身和 Qt 的信号槽机制是类似的。点击一个按钮后会发送出一个信号，需要定义该信号的处理机制。 设计界面直接用 designer 来设计。拖动 button/listview/model，然后自定义名称。 生成 .ui 文件后，用 pyuic4 –x ping_ui.ui –o ping_ui.py 就可以看到 ping_ui.py 文件里包含了 class Ui_Form(object),里面已经定义好了各种长度/位置，比手写方便多了。 再自定义一个 pyqt_example2.py ，里面包含了如下文件： class CalculateForm(QWidget): def __init__(self, parent=None): super(CalculateForm, self).__init__(parent) self.ui = Ui_Form() self.ui.setupUi(self) 再定义执行函数： if __name__ == &#39;__main__&#39;: app = QApplication(sys.argv) calculator = CalculateForm() calculator.show() sys.exit(app.exec_()) 执行后就可以看到界面已经成功显示。 接下来就是要建立信号槽机制，比如在当初定义 ui 的 button 时有一个 button 的名称为 add_url 。我们希望将它与 add_url 的函数对应在一起，只需定义如下（最好在 init 里）： self.ui.add_url.clicked.connect(self.add_url_func) # 点击函数 数据库的增删改查以及显示 在 PyQt 中定义的　model 的是 QSqlTableModel,定义显示 table 的是　listview。 比如说定义 initialize_model() 的方法： db = QtSql.QSqlDatabase.addDatabase(&#39;QSQLITE&#39;) db.setDatabaseName(&#39;test_ping.db&#39;) def initialize_model(model): model.setTable(&#39;url_ping&#39;) model.setEditStrategy(QtSql.QSqlTableModel.OnManualSubmit) model.select() model.setHeaderData(0, QtCore.Qt.Horizontal, u&quot;网址&quot;) # 对应的 url 链接 而要进行显示，只需要将 listview 和对应的 model 连接起来: def show_view(self): model = QSqlTableModel() initialize_model(model) self.ui.url_list.setModel(model) # self.ui.url_list 是一个 listview self.ui.url_list.show() 每次在进行增删改查之后只要调用 self.show_view() 方法，就能看到最新的数据库，等效于刷新～ 如何执行查询 比如要查找包含 ‘test’的内容： query = QtSql.QSqlQuery() query.exec_(&quot;select * from test where value like &#39;%test%&#39;&quot;) 而如果要展示，更好的方法是重新定义 QSqlQueryModel sqlQueryModel.setQuery(&quot;select * from test where value like &#39;%test%&#39; &quot;) self.ui.url_list.setModel(sqlQueryModel) self.ui.url_list.show() 定义弹出框：使用最简单的如下函数就可以了： def show_messagebox(self): msg = QMessageBox() msg.setText(u&#39;检测成功&#39;) msg.setStandardButtons(QMessageBox.Ok) msg.exec_() ui 和执行线程分离 如何设置 ui 和执行任务线程分离，使得界面不会阻塞卡死： 这个有很多方法来去做，我选择的是如下方法： from PyQt4.QtCore import QThread class PingThread(QThread): &quot;&quot;&quot; 定义 PingThread &quot;&quot;&quot; def __init__(self, url): QThread.__init__(self) self._url = url def run(self): ping_url(self._url) self.emit(SIGNAL(&#39;ping url&#39;)) return &quot;&quot;&quot; 接下来在主线程中调用即可 &quot;&quot;&quot; self.pingThread = PingThread(target_url) # self.connect(self.pingThread, SIGNAL(&#39;ping url&#39;), self.show_messagebox) 可选 self.pingThread.start() 进度条 PyQt 中进度条使用 QProgressBar 来展现。在 ui 中设置时会有最小值（默认为 0 ）和最大值（默认为 100 ）。 在更新时只要设置 self.ui.click_progrress.setValue(30) # 进度条进展到 30% 程度 # click_progress 是 ui 里对应的 ProgressBar 其他 ping 调用的是系统自带的 ping 接口 tracert 则调用的是 windows 里的 tracert 接口（Linux 下对应的是 traceroute） telnet 是检测端口是否打开。然后直接调用系统命令的话有两个弊端： ① Windows 需要用户手动开启配置 ② telnet 采用的是光标是否闪烁去判断端口状况，没有返回值，不方便程序处理。 所以最后采用 socket 来连接： sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM) result = sock.connect_ex((url_name, 80)) port_open = True if result == 0 else False PyQt 自带的在 site-packages 里的好多 demo 都非常好，直接要用的话看代码比文档会更快～ 在学的时候写了一个增正版的计算器 demo，当输入的数字或者选择的计算符号发生变化时，会自动改变计算结果（嗯，用的就是 eval()～），用的是 Python 的 装饰器特性。">
   
 
   <link rel="stylesheet" href="/assets/main.css">
@@ -25,8 +25,8 @@
   
   <meta name="twitter:card" content="summary">
   <meta name="twitter:site" content="hzcortex">
-  <meta name="twitter:title" content="Develop a desktop client with PyQT">
-  <meta name="twitter:description" content="这篇文章对应的中文版 In this novel,I’ll demonstrate how to read the database and display it , with Python’s dynamic mechanism and Qt’s signal slot. This is a program that can detect network connections. The ...">
+  <meta name="twitter:title" content="使用 PyQT 来开发一个桌面客户端">
+  <meta name="twitter:description" content="Python 的动态机制结合 Qt 的信号槽；读取数据库并展示 写了一个能检测网络连接的程序。界面截图如下： 以后写客户端的机会还是挺少的…就不过多地追求最佳实践了，只需要能做出一个“能戳戳点点的 GUI ”就够了⊙﹏⊙b ui 和界面对应 PyQt 本身和 Qt 的信号槽机制是类似的。点击一个按钮后会发送出一个信号，需要定义该信号的处理机制。 设计界面直接用 designer 来设计。拖动...">
   
     <meta name="twitter:creator" content="hzcortex">
   
@@ -90,7 +90,7 @@
 
   <header class="post-header">
     
-      <h1 class="post-title" itemprop="name headline">Develop a desktop client with PyQT</h1>
+      <h1 class="post-title" itemprop="name headline">使用 PyQT 来开发一个桌面客户端</h1>
     
     <p class="post-meta"><time datetime="2015-09-14T16:46:30-03:00" itemprop="datePublished">Sep 14, 2015</time> • 
   
@@ -100,28 +100,24 @@
   </header>
 
   <div class="post-content" itemprop="articleBody">
-    <p><a href="/../translation/2015-09-14-Use-PyQt-Develop-Desktop-Web-GUI.html">这篇文章对应的中文版</a></p>
+    <p>Python 的动态机制结合 Qt 的信号槽；读取数据库并展示
+<!-- more --></p>
 
-<hr />
-<p>In this novel,I’ll demonstrate how to read the database and display it , with Python’s dynamic mechanism and Qt’s signal slot.</p>
-
-<!-- more -->
-
-<p>This is a program that can detect network connections. The screenshot of the interface is as follows</p>
+<p>写了一个能检测网络连接的程序。界面截图如下：</p>
 
 <p><img src="/images/pyqt-example.png" alt="PyQt" /></p>
 
-<p>There will be very few opportunities to write the client in the future(I mean many professional clients are mainly developed by C#/.net,although actually dropbox developed its’ client with PyQT)… So I won’t pursue the best practices. I just need to make a <strong>poke-marked GUI</strong> .⊙﹏⊙b</p>
+<p>以后写客户端的机会还是挺少的…就不过多地追求最佳实践了，只需要能做出一个“能戳戳点点的 GUI ”就够了⊙﹏⊙b</p>
 
-<h4 id="ui-and-interface-corresponding">UI and interface corresponding</h4>
+<h4 id="ui-和界面对应">ui 和界面对应</h4>
 
-<p>PyQt itself is similar to Qt’s signal slot mechanism. When a button is clicked, a signal is sent and the processing mechanism of the signal needs to be defined.</p>
+<p>PyQt 本身和 Qt 的信号槽机制是类似的。点击一个按钮后会发送出一个信号，需要定义该信号的处理机制。</p>
 
-<p>The design interface is designed directly with the <strong>designer</strong>. Drag <code class="highlighter-rouge">button/listview/model</code> and customize the name.</p>
+<p>设计界面直接用 designer 来设计。拖动 button/listview/model，然后自定义名称。</p>
 
-<p>After generating the .ui file, use <code class="highlighter-rouge">pyuic4 –x ping_ui.ui –o ping_ui.py</code> to see that the ping_ui.py file contains <code class="highlighter-rouge">class Ui_Form(object)</code>, which has various lengths/locations defined. It’s More convenient than handwriting</p>
+<p>生成 .ui 文件后，用 <code class="highlighter-rouge">pyuic4 –x ping_ui.ui –o ping_ui.py</code> 就可以看到 ping_ui.py 文件里包含了 <code class="highlighter-rouge">class Ui_Form(object)</code>,里面已经定义好了各种长度/位置，比手写方便多了。</p>
 
-<p>Then define a <code class="highlighter-rouge">pyqt_example2.py</code> which contains the following files:</p>
+<p>再自定义一个 <code class="highlighter-rouge">pyqt_example2.py</code> ，里面包含了如下文件：</p>
 
 <figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">class</span> <span class="nc">CalculateForm</span><span class="p">(</span><span class="n">QWidget</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
@@ -130,7 +126,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">ui</span> <span class="o">=</span> <span class="n">Ui_Form</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">setupUi</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></code></pre></figure>
 
-<p>then define the execution function：</p>
+<p>再定义执行函数：</p>
 
 <figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">'__main__'</span><span class="p">:</span>
     <span class="n">app</span> <span class="o">=</span> <span class="n">QApplication</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span>
@@ -138,16 +134,16 @@
     <span class="n">calculator</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
     <span class="n">sys</span><span class="o">.</span><span class="nb">exit</span><span class="p">(</span><span class="n">app</span><span class="o">.</span><span class="n">exec_</span><span class="p">())</span></code></pre></figure>
 
-<p>After execution, you can see that the interface has been successfully displayed.</p>
+<p>执行后就可以看到界面已经成功显示。</p>
 
-<p>The next step is to establish a signal slot mechanism. For example, when the button of the ui was originally defined, there is a button named <code class="highlighter-rouge">add_url</code> . We want to associate it with the function of <code class="highlighter-rouge">add_url</code> , just define it as follows (preferably in <strong>init</strong> ):</p>
+<p>接下来就是要建立信号槽机制，比如在当初定义 ui 的 button 时有一个 button 的名称为 add_url 。我们希望将它与 add_url 的函数对应在一起，只需定义如下（最好在 <strong>init</strong> 里）：</p>
 
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">add_url</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">add_url_func</span><span class="p">)</span> <span class="c"># click function</span></code></pre></figure>
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">add_url</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">add_url_func</span><span class="p">)</span> <span class="c"># 点击函数</span></code></pre></figure>
 
-<h4 id="crud-and-display">CRUD and Display</h4>
+<h4 id="数据库的增删改查以及显示">数据库的增删改查以及显示</h4>
 
-<p>The model defined in PyQt is <code class="highlighter-rouge">QSqlTableModel</code>, and the definition of table is <code class="highlighter-rouge">listview</code>.
-For example, define the method of initialize_model() :</p>
+<p>在 PyQt 中定义的　model 的是 QSqlTableModel,定义显示 table 的是　listview。
+比如说定义 initialize_model() 的方法：</p>
 
 <figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">db</span> <span class="o">=</span> <span class="n">QtSql</span><span class="o">.</span><span class="n">QSqlDatabase</span><span class="o">.</span><span class="n">addDatabase</span><span class="p">(</span><span class="s">'QSQLITE'</span><span class="p">)</span>
 <span class="n">db</span><span class="o">.</span><span class="n">setDatabaseName</span><span class="p">(</span><span class="s">'test_ping.db'</span><span class="p">)</span>
