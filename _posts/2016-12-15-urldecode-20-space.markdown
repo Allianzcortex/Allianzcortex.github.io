@@ -1,27 +1,30 @@
 ---
 layout: post
-title: urlencode 的 space 问题，又是大坑
+title: A Problem about urlencode,space and 20%
 date: 2016-12-15 17:59:20
 categories: urlencode
 comments: true
 ---
-所以在 url 编/解码的时候，什么时候用 + ，什么时候用 %20 啊.......
+So when url is encoded/decoded, when to use + and when to use %20?
 <!-- more -->
 
-#### 背景
 
-简而言之是这样的，我司(写上这个词瞬间感觉逼格高了好多.......)的移动端打码是用 Nginx 收集，
-用 `urlencode` 编码。日常比较懒的话都是 tail -F | grep *** 后用在线工具解析的，但最近要对日志进行处理，就不能这么做了。喜闻乐见爆栈站上就有这个 [解析方法](http://stackoverflow.com/questions/28431359/how-to-decode-a-url-encoded-string-in-python)，那就直接 `urllib.unquote` ，然后传进去。
+[这篇文章对应的中文版](/../translation/2016-12-15-urldecode-20-space.html)
 
-#### 发展
+#### Background
 
-但很快就发现不对劲啊，，，，如果说给的时间格式是 `2016-12-15 12:02:22`，在处理写进去之后的结果为
-`2016-12-15+12:02:22`。这么下去根本无法按照最近发生的时间来进行排序，连最基本的搜索功能都
-做不了，就更不要说进一步的处理了。
+In short, this is the case. The mobile application logs of company is collected by Nginx.
+Encode with `urlencode`. tricky method is to us `tail -F | grep ***` to find the target line and then parse it with pratical tools, but recently we have to deal with the logs, so there must be one way to do it automatically. gland to find [method](http://stackoverflow.com/questions/28431359/how-to-decode-a-url-encoded-string-in-python) on **StackOverFlow**, so directly import `urllib. Unquote` to the code .
+
+
+#### Development
+
+But soon something wrong happened, if the time format given is `2016-12-15 12:02:22`, the result after processing is formatted as
+`2016-12-15+12:02:22`. It’s impossible to sort by the time of the recent occurrence, even the most basic search functions will be a big problem,let alone further processing.
 
 #### What Happened
 
-SO 上仍然有关于这个问题的 [讨论](http://stackoverflow.com/questions/1634271/url-encoding-the-space-character-or-20)，就直接摘录 wikipedia 了：
+There is still [discussion](http://stackoverflow.com/questions/1634271/url-encoding-the-space-character-or-20) about this problem on SO，and quote the wikipedia：
 
 
 > When data that has been entered into HTML forms is submitted, the form field names and values are encoded and sent to the server in an HTTP request message using method GET or POST, or, historically, via email.[2] The encoding used by default is based on an early version of the general URI percent-encoding rules,[3] with a number of modifications such as newline normalization and replacing spaces with + instead of %20. The media type of data encoded this way is application/x-www-form-urlencoded, and it is currently defined (still in a very outdated manner) in the HTML and XForms specifications. In addition, the CGI specification contains rules for how web servers decode data of this type and make it available to applications.

@@ -6,12 +6,13 @@ categories: Python
 comments: true
 ---
 
-[这篇文章对应的中文版](/../translation/2015-09-14-Use-PyQt-Develop-Desktop-Web-GUI.html)
-
----
 In this novel,I'll demonstrate how to read the database and display it , with Python's dynamic mechanism and Qt's signal slot.
 
 <!-- more -->
+
+[这篇文章对应的中文版](/../translation/2015-09-14-Use-PyQt-Develop-Desktop-Web-GUI.html)
+
+---
 
 This is a program that can detect network connections. The screenshot of the interface is as follows
 
@@ -72,30 +73,31 @@ def initialize_model(model):
     model.setTable('url_ping')
     model.setEditStrategy(QtSql.QSqlTableModel.OnManualSubmit)
     model.select()
-    model.setHeaderData(0, QtCore.Qt.Horizontal, u"网址") # 对应的 url 链接
+    model.setHeaderData(0, QtCore.Qt.Horizontal, u"url") # url link
 {% endhighlight %}
 
-而要进行显示，只需要将 listview 和对应的 model 连接起来:
+To display, just connect the listview with the corresponding model:
 
 {% highlight Python %}
 def show_view(self):
     model = QSqlTableModel()
     initialize_model(model)
-    self.ui.url_list.setModel(model) # self.ui.url_list 是一个 listview
+    self.ui.url_list.setModel(model) # self.ui.url_list is  listview
     self.ui.url_list.show()
 {% endhighlight %}
-每次在进行增删改查之后只要调用 self.show_view() 方法，就能看到最新的数据库，等效于刷新～
 
-##### 如何执行查询
+You can see the latest database, equivalent to refreshing, by calling the self.show_view() method after each addition, deletion, and change.
 
-比如要查找包含 'test'的内容：
+##### How to execute a query
+
+For example, to find the content containing 'test', the code is as follows:
 
 {% highlight Python %}
 query = QtSql.QSqlQuery()
 query.exec_("select * from test where value like '%test%'")
 {% endhighlight %}
 
-而如果要展示，更好的方法是重新定义 QSqlQueryModel
+And if you want to show with a better way,then redefine QSqlQueryModel
 
 {% highlight Python %}
 sqlQueryModel.setQuery("select * from test where value like '%test%' ")
@@ -103,27 +105,27 @@ self.ui.url_list.setModel(sqlQueryModel)
 self.ui.url_list.show()
 {% endhighlight %}
 
-定义弹出框：使用最简单的如下函数就可以了：
+Define the popup: Use the simplest of the following functions:
 
 {% highlight Python %}
 def show_messagebox(self):
     msg = QMessageBox()
-    msg.setText(u'检测成功')
+    msg.setText(u'detect successfully')
     msg.setStandardButtons(QMessageBox.Ok)
     msg.exec_()
 {% endhighlight %}
 
-#### ui 和执行线程分离
+#### Ui and execution thread separation
 
-如何设置 ui 和执行任务线程分离，使得界面不会阻塞卡死：
+How to set the ui and execute task thread separation so that the application won't be non-reactive:
 
-这个有很多方法来去做，我选择的是如下方法：
+There are many ways to do this. I chose the following method:
 
 {% highlight Python %}
 from PyQt4.QtCore import QThread
 
 class PingThread(QThread):
-    """ 定义 PingThread """
+    """ define PingThread """
     def __init__(self, url):
         QThread.__init__(self)
         self._url = url
@@ -133,7 +135,7 @@ class PingThread(QThread):
         self.emit(SIGNAL('ping url'))
         return
 
-""" 接下来在主线程中调用即可 """
+""" Then call it in the main thread. """
 
 self.pingThread = PingThread(target_url)
 # self.connect(self.pingThread, SIGNAL('ping url'), self.show_messagebox) 可选
@@ -141,32 +143,31 @@ self.pingThread.start()
 
 {% endhighlight %}
 
-#### 进度条
+#### ProgressBar
 
+The progress bar in PyQt is displayed using QProgressBar. When set in ui, there will be a minimum value (default is 0) and a maximum value (default is 100).
 
-PyQt 中进度条使用 QProgressBar 来展现。在 ui 中设置时会有最小值（默认为 0 ）和最大值（默认为 100 ）。
-在更新时只要设置 
+Just set it when updating
 
 {% highlight Python %}
-self.ui.click_progrress.setValue(30) # 进度条进展到 30% 程度
+self.ui.click_progrress.setValue(30) #  progresses to 30%
 # click_progress 是 ui 里对应的 ProgressBar
 {% endhighlight %}
 
 
-####  其他
+####  Other Stuffs
 
+The ping calls the ping API that comes with the system.
 
-ping 调用的是系统自带的 ping 接口
+Tracert calls the tracert API in windows (the corresponding Linux command is traceroute)
 
-tracert 则调用的是 windows 里的 tracert 接口（Linux 下对应的是 traceroute）
+Telnet is to detect if the port is open. Directly calling the system command has two drawbacks:
 
-telnet 是检测端口是否打开。然后直接调用系统命令的话有两个弊端：
+1 Windows requires the user to manually open the configuration
 
-① Windows 需要用户手动开启配置 
+2 telnet uses the cursor to flash to determine the port status with no return value, it is not convenient for program processing.
 
-② telnet 采用的是光标是否闪烁去判断端口状况，没有返回值，不方便程序处理。
-
-所以最后采用 socket 来连接：
+So final decision is to use socket to connect:
 
 {% highlight Python %}
 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -174,5 +175,5 @@ result = sock.connect_ex((url_name, 80))
 port_open = True if result == 0 else False
 {% endhighlight %}
 
-PyQt 自带的在 site-packages 里的好多 demo 都非常好，直接要用的话看代码比文档会更快～
-在学的时候写了一个增正版的计算器 demo，当输入的数字或者选择的计算符号发生变化时，会自动改变计算结果（嗯，用的就是 eval()～），用的是 Python 的 装饰器特性。
+PyQt comes with a lot of demos in site-packages, and it's faster to see the code directly than the documentation.
+At the time of the study, I wrote a calculator demo that adds genuine. When the input number or the selected calculation symbol changes, the calculation result is automatically changed (well, eval()~ and the Python decorator is used. characteristic.
