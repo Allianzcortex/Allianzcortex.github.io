@@ -10,8 +10,8 @@
   
   
   
-  <title>记录一次用 Flask 和 Highcharts 实现的数据可视化</title>
-  <meta name="description" content="数据可视化。后端：Flask，前端：Highcharts，可以做的更好的啊…… What Happened 我司采用的是阿里巴巴开源的 zeus ，结合脚本来进行业务系统的调度。有过一段时间突然晚上调度业务连续崩的现象(预警短信连发)，只能白天重新洗数据。经过研究发现是在某段时间内任务运行过多造成并行压力过大造成的，需要合理分布 ods/mds/ads 表的时间。但 zeus 系统本身没有提供查询调度任务的时间分布功能，所以需要来实现一个任务分布的可视化。 Flask 后端框架 虽然用 Django 用的多，但 Django 作为一个 Full-Stack Framework 实在太重了，里面的注册、登陆功能都不会用到。所以换为 Flask ，实时从 MySQL 中查询，将查询的结果用自带的 jsonify 转化后返回给前端页面。 Zeus 的调度时间格式类似 crontab，所以为了能在后端直接生成需要的数据，就决定将时间统一折合为 int 值。比如： 原始时间 对应展示 0 10 1（表示 1:10） 110 0 16 0 （表示 12:16） 16 0 30 23（表示晚上 11:30） 2330 在看的时候如果不满足四位，需要补全前导零来去看。 时间的核心计算如下： for row in cur.fetchall(): key = row[1].split() if key[2]!=&#39;0&#39; and key[1]==&#39;0&#39;: key=10*int(key[2]+key[1]) else: key = int(key[2] + key[1]) 配置 post 数据 @app.route(&#39;/timeserialize&#39;, methods=[&#39;GET&#39;, &#39;POST&#39;]) def get_json(): # calculate some data return jsonify(result) Highcharts 前端框架 在前端框架里比较出名的就是百度的 Echarts 和 Google 的 HighCharts(还有 D3.js，但怎么都用不到啊…)。就选择后者啦。 首先加入资源文件。 &amp;lt;script src=&quot;http://cdn.bootcss.com/bootstrap/3.3.0/js/bootstrap.min.js&quot;&amp;gt;&amp;lt;/script&amp;gt; &amp;lt;link rel=&quot;stylesheet&quot; type=&quot;text/css&quot; href=&quot;&quot;&amp;gt; &amp;lt;!-- jquery.min.js 顺序应该在 highcharts.js 之前 --&amp;gt; &amp;lt;script src=&quot;&quot;&amp;gt;&amp;lt;/script&amp;gt; &amp;lt;script src=&quot;&quot;&amp;gt;&amp;lt;/script&amp;gt; 之后用 jquery 来配置 POST 格式的 JSON 数据。 &amp;lt;script&amp;gt; $(function () { $.getJSON(&#39;/timeserialize&#39;, function (data) { /*$.getJSON(&#39;/configure&#39;, function (data) {*/ $(&#39;#container&#39;).highcharts({ // legend,option 等数据 }); }); }); &amp;lt;/script&amp;gt; 第一个版本 做完第一个版本后的显示效果如下所示： 点的数量指代了在当前时间点运行的 job 数量。拖拽放大能看到更细的时间维度内的变化。 第二个版本 第二个版本要感谢 @吴波 同学的贡献。自己当时实现的还是有些太粗糙了。实际上将得到的时间格式和具体的秒数进行字符串组合后是 可以得到任务的具体执行时间，转为 unixtime 后传给前端，再转为具体时间，可视化的效果会更好。 其中的关键就是在 $function() 里再添加一个对 JSON 格式处理的函数。 var jsonData = data; var jsonDataSuccess = new Array(); var jsonDataFailed = new Array(); # ... tempArray.push(parseInt(jsonData[i].startTime) + 28800000,parseInt(jsonData[i].spendTime)); # ... 在 series 里分别用两种类型来标注： series:[{ name:&#39;success&#39;, color:&#39;rgb(119,152,191)&#39;, data:jsonDataSuccess, },{ name:&#39;failed&#39;, color:&#39;rgb(255,0,0)&#39;, data:jsonDataFailed } ] 在 tooltip 里用 formatter() 选项来返回更友好的表达式： tooltip:{ formatter: function() { //... return &#39;jobid :&#39; + jobId + &#39;&amp;lt;br&amp;gt;&#39; + &quot;jobName:&quot; + jobName + &#39;&amp;lt;br&amp;gt;&#39; + &#39;starttime :&#39; + startTime } } 最后得到的可视化结果如下所示： 感觉好漂亮(捂脸) 在一开始做到时候有些太追求开发速度了…可以慢一点来让可视化效果更好:-D。同时学一下 js 的语法，有很多功能是不能用 jquery 代替的～～">
+  <title>Data Visualizations With Flask and Highcharts</title>
+  <meta name="description" content="A data visualization using the back-end Flask and front-end Highcharts 这篇文章对应的中文版 What Happened Our company uses Alibaba’s open source zeus and combines scripts to build a schedule system. There was a phenomenon of sudden collapse of the job in the evening (the early warning SMS burst), and the data could only be rewashed during the day. After research, it is found that the task is way too intensive in a certain period of time and excessive parallel pressure is the cause. The time of the ods/mds/ads table needs to be reasonably distributed. However, the zeus system itself does not provide the function of the query scheduling task, so it is necessary to implement the visualization of a task distribution. Flask Backend Framework Although usually I’m used to use Django, but it is too heavy as a Full-Stack Framework,the registration and login functions inside will not be used. So I switch to Flask:query from MySQL in real time, convert the result with the built-in jsonify and return it to the front-end page. Zeus’s scheduling time format is similar to crontab, so in order to generate the required data directly on the backend, it should convert the time into an int value. such as: original time show time 0 10 1（means 1:10） 110 0 16 0 （means 12:16） 16 0 30 23（means evening 11:30） 2330 If the time does not meet the four positions when you look at it, you need to complete the leading zero to see. The core of time is as follows: for row in cur.fetchall(): key = row[1].split() if key[2]!=&#39;0&#39; and key[1]==&#39;0&#39;: key=10*int(key[2]+key[1]) else: key = int(key[2] + key[1]) configuring post data: @app.route(&#39;/timeserialize&#39;, methods=[&#39;GET&#39;, &#39;POST&#39;]) def get_json(): # calculate some data return jsonify(result) Highcharts FrontEnd Framework There are two famous visualization framework,one is Echarts opensourced by Baidu,and the other is Highcharts opensourced by Google(D3.js is mainly for animation).I choose the latter one. Adding the resource files firstly. &amp;lt;script src=&quot;http://cdn.bootcss.com/bootstrap/3.3.0/js/bootstrap.min.js&quot;&amp;gt;&amp;lt;/script&amp;gt; &amp;lt;link rel=&quot;stylesheet&quot; type=&quot;text/css&quot; href=&quot;&quot;&amp;gt; &amp;lt;!-- jquery.min.js must put before highcharts.js 之前 --&amp;gt; &amp;lt;script src=&quot;&quot;&amp;gt;&amp;lt;/script&amp;gt; &amp;lt;script src=&quot;&quot;&amp;gt;&amp;lt;/script&amp;gt; Then use jquery to configure JSON data in POST format. &amp;lt;script&amp;gt; $(function () { $.getJSON(&#39;/timeserialize&#39;, function (data) { /*$.getJSON(&#39;/configure&#39;, function (data) {*/ $(&#39;#container&#39;).highcharts({ // legend,option...data }); }); }); &amp;lt;/script&amp;gt; First Version The display after the first version is as follows： The number of points refers to the number of jobs running at the current point in time. Drag and drop to see changes in a finer time dimension. Second Version After combining the obtained time format and the specific number of seconds, You can get the specific execution time of the task, and transfer it to unixtime and pass it to the front end, then turn it to specific time, the visual effect will be better. The key is to add a function to the JSON format in $function(). var jsonData = data; var jsonDataSuccess = new Array(); var jsonDataFailed = new Array(); # ... tempArray.push(parseInt(jsonData[i].startTime) + 28800000,parseInt(jsonData[i].spendTime)); # ... In the series, use two types to mark: series:[{ name:&#39;success&#39;, color:&#39;rgb(119,152,191)&#39;, data:jsonDataSuccess, },{ name:&#39;failed&#39;, color:&#39;rgb(255,0,0)&#39;, data:jsonDataFailed } ] Using the formatter() option in tooltip to return a more friendly expression: tooltip:{ formatter: function() { //... return &#39;jobid :&#39; + jobId + &#39;&amp;lt;br&amp;gt;&#39; + &quot;jobName:&quot; + jobName + &#39;&amp;lt;br&amp;gt;&#39; + &#39;starttime :&#39; + startTime } } The resulting visualization results are as follows:">
   
 
   <link rel="stylesheet" href="/assets/main.css">
@@ -25,8 +25,8 @@
   
   <meta name="twitter:card" content="summary">
   <meta name="twitter:site" content="hzcortex">
-  <meta name="twitter:title" content="记录一次用 Flask 和 Highcharts 实现的数据可视化">
-  <meta name="twitter:description" content="数据可视化。后端：Flask，前端：Highcharts，可以做的更好的啊…… What Happened 我司采用的是阿里巴巴开源的 zeus ，结合脚本来进行业务系统的调度。有过一段时间突然晚上调度业务连续崩的现象(预警短信连发)，只能白天重新洗数据。经过研究发现是在某段时间内任务运行过多造成并行压力过大造成的，需要合理分布 ods/mds/ads 表的时间。但 zeus 系统本身没有提...">
+  <meta name="twitter:title" content="Data Visualizations With Flask and Highcharts">
+  <meta name="twitter:description" content="A data visualization using the back-end Flask and front-end Highcharts 这篇文章对应的中文版 What Happened Our company uses Alibaba’s open source zeus and combines scripts to build a schedule system. There wa...">
   
     <meta name="twitter:creator" content="hzcortex">
   
@@ -90,7 +90,7 @@
 
   <header class="post-header">
     
-      <h1 class="post-title" itemprop="name headline">记录一次用 Flask 和 Highcharts 实现的数据可视化</h1>
+      <h1 class="post-title" itemprop="name headline">Data Visualizations With Flask and Highcharts</h1>
     
     <p class="post-meta"><time datetime="2016-09-08T11:30:05-03:00" itemprop="datePublished">Sep 8, 2016</time> • 
   
@@ -100,29 +100,30 @@
   </header>
 
   <div class="post-content" itemprop="articleBody">
-    <p>数据可视化。后端：Flask，前端：Highcharts，可以做的更好的啊……
-<!-- more --></p>
+    <p>A data visualization using the back-end Flask and front-end Highcharts</p>
+
+<p><a href="/../translation/2016-09-08-Data-Visualize-With-Flask-And-Highcharts.html">这篇文章对应的中文版</a></p>
+
+<!-- more -->
 
 <h4 id="what-happened">What Happened</h4>
 
-<p>我司采用的是阿里巴巴开源的 <code class="highlighter-rouge">zeus</code> ，结合脚本来进行业务系统的调度。有过一段时间突然晚上调度业务连续崩的现象(预警短信连发)，只能白天重新洗数据。经过研究发现是在某段时间内任务运行过多造成并行压力过大造成的，需要合理分布 <code class="highlighter-rouge">ods/mds/ads</code> 表的时间。但 zeus 系统本身没有提供查询调度任务的时间分布功能，所以需要来实现一个任务分布的可视化。</p>
+<p>Our company uses Alibaba’s open source <code class="highlighter-rouge">zeus</code> and combines scripts to build a schedule system. There was a phenomenon of sudden collapse of the job in the evening (the early warning SMS burst), and the data could only be rewashed during the day. After research, it is found that the task is way too intensive in a certain period of time and excessive parallel pressure is the cause. The time of the <code class="highlighter-rouge">ods/mds/ads</code> table needs to be reasonably distributed. However, the zeus system itself does not provide the function of the query scheduling task, so it is necessary to implement the visualization of a task distribution.</p>
 
-<h5 id="flask-后端框架">Flask 后端框架</h5>
+<h4 id="flask-backend-framework">Flask Backend Framework</h4>
 
-<p>虽然用 <code class="highlighter-rouge">Django</code> 用的多，但 <code class="highlighter-rouge">Django</code> 作为一个 <code class="highlighter-rouge">Full-Stack Framework</code> 实在太重了，里面的注册、登陆功能都不会用到。所以换为 Flask ，实时从 MySQL 中查询，将查询的结果用自带的 <code class="highlighter-rouge">jsonify</code> 转化后返回给前端页面。</p>
+<p>Although usually I’m used to use <code class="highlighter-rouge">Django</code>, but it is too heavy as a <code class="highlighter-rouge">Full-Stack Framework</code>,the registration and login functions inside will not be used. So I switch to Flask:query from MySQL in real time, convert the result with the built-in <code class="highlighter-rouge">jsonify</code> and return it to the front-end page.</p>
 
-<p>Zeus 的调度时间格式类似 crontab，所以为了能在后端直接生成需要的数据，就决定将时间统一折合为 <code class="highlighter-rouge">int</code> 值。比如：</p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>原始时间    对应展示
-0 10 1（表示 1:10） 110
-0 16 0 （表示 12:16）   16
-0 30 23（表示晚上 11:30） 2330
+<p>Zeus’s scheduling time format is similar to <code class="highlighter-rouge">crontab</code>, so in order to generate the required data directly on the backend, it should convert the time into an <code class="highlighter-rouge">int</code> value. such as:</p>
+<div class="highlighter-rouge"><pre class="highlight"><code>original time    show time
+0 10 1（means 1:10） 110
+0 16 0 （means 12:16）   16
+0 30 23（means evening 11:30） 2330
 </code></pre>
 </div>
+<p>If the time does not meet the four positions when you look at it, you need to complete the leading zero to see.</p>
 
-<p>在看的时候如果不满足四位，需要补全前导零来去看。</p>
-
-<p>时间的核心计算如下：</p>
+<p>The core of time is as follows:</p>
 
 <figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">cur</span><span class="o">.</span><span class="n">fetchall</span><span class="p">():</span>
     <span class="n">key</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
@@ -131,7 +132,7 @@
     <span class="k">else</span><span class="p">:</span>
         <span class="n">key</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">key</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">+</span> <span class="n">key</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span></code></pre></figure>
 
-<p>配置 post 数据</p>
+<p>configuring post data:</p>
 
 <figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="nd">@app.route</span><span class="p">(</span><span class="s">'/timeserialize'</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s">'GET'</span><span class="p">,</span> <span class="s">'POST'</span><span class="p">])</span>
 <span class="k">def</span> <span class="nf">get_json</span><span class="p">():</span>
@@ -139,29 +140,29 @@
 </span>
     <span class="k">return</span> <span class="n">jsonify</span><span class="p">(</span><span class="n">result</span><span class="p">)</span></code></pre></figure>
 
-<h5 id="highcharts-前端框架">Highcharts 前端框架</h5>
+<h4 id="highcharts-frontend-framework">Highcharts FrontEnd Framework</h4>
 
-<p>在前端框架里比较出名的就是百度的 <code class="highlighter-rouge">Echarts</code> 和 Google 的 <code class="highlighter-rouge">HighCharts</code>(还有 <code class="highlighter-rouge">D3.js</code>，但怎么都用不到啊…)。就选择后者啦。</p>
+<p>There are two famous visualization framework,one is <a href="https://ecomfe.github.io/echarts-doc/public/en/index.html">Echarts</a> opensourced by Baidu,and the other is <a href="https://www.highcharts.com/">Highcharts</a> opensourced by Google(D3.js is mainly for animation).I choose the latter one.</p>
 
-<p>首先加入资源文件。</p>
+<p>Adding the resource files firstly.</p>
 
 <div class="highlighter-rouge"><pre class="highlight"><code>&lt;script src="http://cdn.bootcss.com/bootstrap/3.3.0/js/bootstrap.min.js"&gt;&lt;/script&gt;
     &lt;link rel="stylesheet" type="text/css" href=""&gt;
-    &lt;!-- jquery.min.js 顺序应该在 highcharts.js 之前 --&gt;
+    &lt;!-- jquery.min.js must put before highcharts.js 之前 --&gt;
     &lt;script src=""&gt;&lt;/script&gt;
     &lt;script src=""&gt;&lt;/script&gt;
 
 </code></pre>
 </div>
 
-<p>之后用 <code class="highlighter-rouge">jquery</code> 来配置 POST 格式的 JSON 数据。</p>
+<p>Then use <code class="highlighter-rouge">jquery</code> to configure JSON data in POST format.</p>
 
 <div class="highlighter-rouge"><pre class="highlight"><code>&lt;script&gt;
 $(function () {
     $.getJSON('/timeserialize', function (data) {
     /*$.getJSON('/configure', function (data) {*/
         $('#container').highcharts({
-            // legend,option 等数据
+            // legend,option...data
         });
     });
 });
@@ -171,22 +172,22 @@ $(function () {
 </code></pre>
 </div>
 
-<h4 id="第一个版本">第一个版本</h4>
+<h4 id="first-version">First Version</h4>
 
-<p>做完第一个版本后的显示效果如下所示：</p>
+<p>The display after the first version is as follows：</p>
 
 <p><img src="/images/figure-1.png" alt="figure-1" /></p>
 
 <p><img src="/images/figure-2.png" alt="figure-2" /></p>
 
-<p>点的数量指代了在当前时间点运行的 job 数量。拖拽放大能看到更细的时间维度内的变化。</p>
+<p>The number of points refers to the number of jobs running at the current point in time. Drag and drop to see changes in a finer time dimension.</p>
 
-<h4 id="第二个版本">第二个版本</h4>
+<h4 id="second-version">Second Version</h4>
 
-<p>第二个版本要感谢 <a href="https://www.zhihu.com/people/wu-bo-72-98/activities">@吴波</a> 同学的贡献。自己当时实现的还是有些太粗糙了。实际上将得到的时间格式和具体的秒数进行字符串组合后是
-可以得到任务的具体执行时间，转为 unixtime 后传给前端，再转为具体时间，可视化的效果会更好。</p>
+<p>After combining the obtained time format and the specific number of seconds,
+You can get the specific execution time of the task, and transfer it to unixtime and pass it to the front end, then turn it to specific time, the visual effect will be better.</p>
 
-<p>其中的关键就是在 <code class="highlighter-rouge">$function()</code> 里再添加一个对 JSON 格式处理的函数。</p>
+<p>The key is to add a function to the JSON format in <code class="highlighter-rouge">$function()</code>.</p>
 
 <div class="highlighter-rouge"><pre class="highlight"><code>var jsonData = data;
 var jsonDataSuccess = new Array();
@@ -197,7 +198,7 @@ tempArray.push(parseInt(jsonData[i].startTime) + 28800000,parseInt(jsonData[i].s
 </code></pre>
 </div>
 
-<p>在 <code class="highlighter-rouge">series</code> 里分别用两种类型来标注：</p>
+<p>In the <code class="highlighter-rouge">series</code>, use two types to mark:</p>
 
 <div class="highlighter-rouge"><pre class="highlight"><code>    series:[{
             name:'success',
@@ -212,7 +213,7 @@ tempArray.push(parseInt(jsonData[i].startTime) + 28800000,parseInt(jsonData[i].s
 </code></pre>
 </div>
 
-<p>在 <code class="highlighter-rouge">tooltip</code> 里用 formatter() 选项来返回更友好的表达式：</p>
+<p>Using the formatter() option in <code class="highlighter-rouge">tooltip</code> to return a more friendly expression:</p>
 
 <div class="highlighter-rouge"><pre class="highlight"><code>tooltip:{
     formatter: function() {
@@ -223,13 +224,9 @@ tempArray.push(parseInt(jsonData[i].startTime) + 28800000,parseInt(jsonData[i].s
 </code></pre>
 </div>
 
-<p>最后得到的可视化结果如下所示：</p>
+<p>The resulting visualization results are as follows:</p>
 
 <p><img src="/images/figure-3.png" alt="figure-3" /></p>
-
-<p>感觉好漂亮(捂脸)</p>
-
-<p>在一开始做到时候有些太追求开发速度了…可以慢一点来让可视化效果更好:-D。同时学一下 js 的语法，有很多功能是不能用 jquery 代替的～～</p>
 
 
   </div>

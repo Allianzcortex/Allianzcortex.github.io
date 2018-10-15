@@ -483,25 +483,6 @@ callers 查看该方法被哪个方法调用，callee 查看该方法调用了�
       <li>
         <header class="post-header">
           <h1 class="post-title">
-            <a class="post-link" href="/2017/04/27/JVM-tuning-Tips/">Jvm Tuning Tips</a>
-          </h1>
-
-          <p class="post-meta">Apr 27, 2017</p>
-        </header>
-
-        <div class="post-content">
-          
-
-        </div>
-        
-      </li>
-    
-      
-      
-
-      <li>
-        <header class="post-header">
-          <h1 class="post-title">
             <a class="post-link" href="/2017/04/27/JVM-performance-snippets/">Jvm Performance Snippets</a>
           </h1>
 
@@ -583,7 +564,7 @@ reduce:迭代任意一个 Iterrator 时只需要 O(1) 操作</p>
       <li>
         <header class="post-header">
           <h1 class="post-title">
-            <a class="post-link" href="/2017/04/08/Some-Interesting-Logical-Problem/">一些有趣的逻辑问题</a>
+            <a class="post-link" href="/2017/04/08/Some-Interesting-Logical-Problem/">Some Interesting Logical Questions</a>
           </h1>
 
           <p class="post-meta">Apr 8, 2017 • 
@@ -594,16 +575,20 @@ reduce:迭代任意一个 Iterrator 时只需要 O(1) 操作</p>
         </header>
 
         <div class="post-content">
-          <p>逻辑问题……
-<!-- more --></p>
+          <p>This novel talks about logical questions</p>
+
+<!-- more -->
+<p><a href="/../translation/2017-04-08-Some-Interesting-Logical-Problem.html">这篇文章对应的中文版</a></p>
 
 <ol>
-  <li>第一个问题是在已有的一个随机数基础上再生成一个随机数，确保生成 0 和 1 的概率是相等的</li>
+  <li></li>
 </ol>
 
-<p>思路也很直接啦。</p>
+<p>The first problem is to generate a random number based on an existing random number, to ensure that the probability of generating 0 and 1 is equal.</p>
 
-<p>来写一个程序验证一下：</p>
+<p>The idea is also very straightforward.</p>
+
+<p>writing a program to verify it:</p>
 
 <figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">division</span><span class="p">,</span> <span class="n">print_function</span> <span class="c"># compatible with Py2
 </span>
@@ -641,311 +626,12 @@ reduce:迭代任意一个 Iterrator 时只需要 O(1) 操作</p>
 <span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">'__main__'</span><span class="p">:</span>
     <span class="n">check</span><span class="p">()</span>  <span class="c"># 3 sample results: 1.00320512821,1.01938610662,0.982160555005</span></code></pre></figure>
 
-<ol>
-  <li>第二个问题其实就是数据可用性的问题</li>
-</ol>
-
-<p>最后抽象出黑盒问题：</p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code># -*- coding:utf-8 -*-
-from __future__ import division
-
-from random import randint
-
-
-def gen_unique_list():
-    i = 0
-    res = set()
-    while i &lt; 100000:
-        temp = [1] * 5
-        while True:
-            r1, r2, r3 = randint(0, 4), randint(0, 4), randint(0, 4)
-            if(r1 != r2 and r1 != r3 and r2 != r3):
-                temp[r1] = 0
-                temp[r2] = 0
-                temp[r3] = 0
-                break
-        if tuple(temp) not in res:
-            res.add(tuple(temp))
-        i += 1
-    return res
-
-
-def gen_probability():
-    res = gen_unique_list()
-    prob = 0
-    for elem in res:
-        # find last occurence
-        print elem
-        ind = 4 - list(reversed(elem)).index(0)
-        red_cnt, green_cnt = 3, 2
-        x = 1
-        # for in in range(0,ind)  这句话就是另一种思路了，显然不应该，最后得出的和都大于 1 了
-        for i in range(0, 5):
-            if(elem[i] == 0):
-                # means red
-                x *= (red_cnt / (red_cnt + green_cnt))
-                red_cnt -= 1
-            else:
-                # means green
-                x *= (green_cnt / (red_cnt + green_cnt))
-                green_cnt -= 1
-        prob += x
-        print x
-    print prob
-
-
-if __name__ == '__main__':
-    gen_probability()
-
-
-</code></pre>
-</div>
-
-<p>但实际上直接 C(5,3) 就足够了……自己想的太复杂</p>
-
-<p>这还只是一份数据，那么如果有两份数据呢。是在第一份数据可用的前提下 * 第二份数据可用，那么这两个问题就应该是独立的。
-因为前提是机器损坏已经发生了</p>
+<p>Exactly!</p>
 
         </div>
         
           <p class="post-continue">
             <a href="/2017/04/08/Some-Interesting-Logical-Problem/">Read on &rarr;</a>
-          </p>
-        
-      </li>
-    
-      
-      
-
-      <li>
-        <header class="post-header">
-          <h1 class="post-title">
-            <a class="post-link" href="/2017/03/06/Write-A-Multithreading-Application/">一个 Java 多线程程序实例——JStorm 处理逻辑</a>
-          </h1>
-
-          <p class="post-meta">Mar 6, 2017 • 
-  
-  
-
-  
-  
-
-</p>
-        </header>
-
-        <div class="post-content">
-          <p>在实时流 JStorm 中处理一个多线程的程序
-<!-- more --></p>
-
-<hr />
-
-<p>Update：最近又遇到了这个问题。具体的原因就是最近在处理的程序用了一个自建的 redis pool。
-它在 getInstance() 方法这里用了 synchronized 关键字来加锁。</p>
-
-<p>但我们看一下 redis 是怎么实现这一点的。它继承了 Apache.commons.pool ，里面调用了
-<code class="highlighter-rouge">super.getResource()</code> 方法，而它又调用了 pool 里面的 <code class="highlighter-rouge">borrowObject</code> 方法。
-在 <code class="highlighter-rouge">borrowObject</code> 方法里，它已经实现了对多线程的考虑：</p>
-
-<p>long starttime = System.currentTimeMillis();
-1060        Latch<T> latch = new Latch<T>();
-1061        byte whenExhaustedAction;
-1062        long maxWait;
-1063        synchronized (this) {
-1064            // Get local copy of current config. Can't sync when used later as
-1065            // it can result in a deadlock. Has the added advantage that config
-1066            // is consistent for entire method execution
-1067            whenExhaustedAction = _whenExhaustedAction;
-1068            maxWait = _maxWait;
-1069
-// activate &amp; validate the object
-1203            try {
-1204                _factory.activateObject(latch.getPair().value);
-1205                if(_testOnBorrow &amp;&amp;
-1206                        !_factory.validateObject(latch.getPair().value)) {
-1207                    throw new Exception("ValidateObject failed");
-1208                }
-1209                synchronized(this) {
-1210                    _numInternalProcessing--;
-1211                    _numActive++;
-1212                }
-1213                return latch.getPair().value;
-1214            }
-1215            catch (Throwable e) {
-                ......
-}</T></T></p>
-
-        </div>
-        
-          <p class="post-continue">
-            <a href="/2017/03/06/Write-A-Multithreading-Application/">Read on &rarr;</a>
-          </p>
-        
-      </li>
-    
-      
-      
-
-      <li>
-        <header class="post-header">
-          <h1 class="post-title">
-            <a class="post-link" href="/2017/03/01/HBase-Definitions/">Hbase Definitions</a>
-          </h1>
-
-          <p class="post-meta">Mar 1, 2017</p>
-        </header>
-
-        <div class="post-content">
-          
-
-        </div>
-        
-      </li>
-    
-      
-      
-
-      <li>
-        <header class="post-header">
-          <h1 class="post-title">
-            <a class="post-link" href="/2016/12/16/Hadoop-Mapreduce-Tutorial/">译—利用 MapReduce 来探寻好友关系</a>
-          </h1>
-
-          <p class="post-meta">Dec 16, 2016 • 
-  
-  
-
-</p>
-        </header>
-
-        <div class="post-content">
-          <p>一篇译文，介绍 MapReduce 在实际中的应用
-<!-- more --></p>
-
-<p>原文链接在 <a href="http://stevekrenzel.com/finding-friends-with-mapreduce">finding-friends-with-mapreduce</a>，稍有改动。</p>
-
-<p>MapReduce 程序通常包括两部分函数：一个 Map 函数与一个 Reduce 函数。Map 函数会接受一个输入值(value) 并返回一个键值对(key:value pairs)。比如说，如果我们定义了一个接受字符串作为输入并输出该字符长度作为输出的 Map 函数，那么 Map(steve) 将会返回 <code class="highlighter-rouge">5:steve</code> 并且 Map(savannah) 会返回 <code class="highlighter-rouge">8:savannah</code>。你也会注意到 Map 函数是无状态(stateless) 的并且只会要求输入值来确定输出值。这就使得我们可以并行运行多个 Map 函数从而取得巨大的性能优势。在进入到 Reduce 函数之前，MapReduce 框架会把所有的输出值(values)按照键(key)来进行分组。所以说如果 Map 函数输出的结果如下：</p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>3 : the
-3 : and
-3 : you
-4 : then
-4 : what
-4 : when
-5 : steve
-5 : where
-8 : savannah
-8 : research
-</code></pre>
-</div>
-
-<p>那么他们会被排类为如下的形式：</p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>3 : [the, and, you]
-4 : [then, what, when]
-5 : [steve, where]
-8 : [savannah, research]
-
-</code></pre>
-</div>
-
-<p>接下来每一行都会作为一个参数被传递进 reduce 函数中，reduce 函数接受一个 key 和一系列的 values。在这个例子中，我们想要探寻包含特定长度的单词的数量，所以 reduce 函数将会仅仅计算列表中的单词数量并且将它与 key 一起进行输出，产生如下的形式：</p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>3 : 3
-4 : 3
-5 : 2
-8 : 2
-
-</code></pre>
-</div>
-
-<p>reduce 函数仍然可以并行工作。我们可以看到这里长度为 5 的单词只有 2 个，诸如此类…</p>
-
-<p>上面所说的 wordcount 例子是 MapReduce 版的 Hello World，下面我们将要介绍一个真实世界中的使用（FaceBook 或许不是真的这样去做的，这里只是举一个例子）：</p>
-
-<p>FackBook 上存在着朋友列表（注意，在 FaceBook 中好友关系是双向的，如果我是你的朋友，那么你也是我的朋友）。同时 FaceBook 拥有大量的磁盘存储空间与海量访问请求。FaceBook 决定提前计算这样他们就可以减少请求的访问时间。一个常见的处理操作是“你和 Joe 有 230 个共同好友”。当你访问某人的资料页时，你可以看到你们所共同拥有的好友。这个列表不会频繁改动所以如果每次访问页面都重新计算的话就太浪费了（当然你可以使用缓存来做，但这样的话我就不会讲述用 MapReduce 来解决这个问题了）。我们将要使用 MapReduce 在一天内 来计算并储存这些结果。</p>
-
-<p>假设朋友是以 <code class="highlighter-rouge">Person-&gt;[List of Friends]</code> 的形式存储的，我们的朋友列表为：</p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>A -&gt; B C D
-B -&gt; A C D E
-C -&gt; A B D E
-D -&gt; A B C E
-E -&gt; B C D
-
-</code></pre>
-</div>
-
-<p>mappper 会将每一行作为参数来处理。同样 mapper 函数会输出一个键值对，键（key）会是一对朋友（a friend along with the person），值（value）会是朋友列表（list of firends）。并且键（key）会是一对已经经过排序的值，这样在 reducer 函数里会形成相同的 pairs。这用语言很难解释，所以让我们直接去做吧。经过 mapper 函数，你会得到如下的输出结果：</p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>For map(A -&gt; B C D) :
-
-(A B) -&gt; B C D
-(A C) -&gt; B C D
-(A D) -&gt; B C D
-For map(B -&gt; A C D E) : (Note that A comes before B in the key)
-
-(A B) -&gt; A C D E
-(B C) -&gt; A C D E
-(B D) -&gt; A C D E
-(B E) -&gt; A C D E
-For map(C -&gt; A B D E) :
-
-(A C) -&gt; A B D E
-(B C) -&gt; A B D E
-(C D) -&gt; A B D E
-(C E) -&gt; A B D E
-For map(D -&gt; A B C E) :
-
-(A D) -&gt; A B C E
-(B D) -&gt; A B C E
-(C D) -&gt; A B C E
-(D E) -&gt; A B C E
-And finally for map(E -&gt; B C D):
-
-(B E) -&gt; B C D
-(C E) -&gt; B C D
-(D E) -&gt; B C D
-</code></pre>
-</div>
-
-<p>在把它们送往 reduce 函数前，我们根据 key 来把它们进行分类并且得到</p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>(A B) -&gt; (A C D E) (B C D)
-(A C) -&gt; (A B D E) (B C D)
-(A D) -&gt; (A B C E) (B C D)
-(B C) -&gt; (A B D E) (A C D E)
-(B D) -&gt; (A B C E) (A C D E)
-(B E) -&gt; (A C D E) (B C D)
-(C D) -&gt; (A B C E) (A B D E)
-(C E) -&gt; (A B D E) (B C D)
-(D E) -&gt; (A B C E) (B C D)
-</code></pre>
-</div>
-
-<p>reduce 函数将会取每一个键对应的值的交集并输出。比如 reduce((A B) -&gt; (A C D E)(B C D)) 将会输出 (A B):(C  D) ，这意味着 A 和 B 有共同好友 C 和 D 。</p>
-
-<p>最终的结果为：</p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>(A B) -&gt; (C D)
-(A C) -&gt; (B D)
-(A D) -&gt; (B C)
-(B C) -&gt; (A D E)
-(B D) -&gt; (A C E)
-(B E) -&gt; (C D)
-(C D) -&gt; (A B E)
-(C E) -&gt; (B D)
-(D E) -&gt; (B C)
-
-</code></pre>
-</div>
-
-<p>这样当 D 访问 B 的资料页时，我们可以快速查询 (B D) 并且看到他们的共同好友 (A C E)。</p>
-
-        </div>
-        
-          <p class="post-continue">
-            <a href="/2016/12/16/Hadoop-Mapreduce-Tutorial/">Read on &rarr;</a>
           </p>
         
       </li>
@@ -972,6 +658,8 @@ And finally for map(E -&gt; B C D):
 
 <p><a href="/../translation/2016-12-15-urldecode-20-space.html">这篇文章对应的中文版</a></p>
 
+<hr />
+
 <h4 id="background">Background</h4>
 
 <p>In short, this is the case. The mobile application logs of company is collected by Nginx.
@@ -991,13 +679,13 @@ Encode with <code class="highlighter-rouge">urlencode</code>. tricky method is t
 When HTML form data is sent in an HTTP GET request, it is included in the query component of the request URI using the same syntax described above. When sent in an HTTP POST request or via email, the data is placed in the body of the message, and application/x-www-form-urlencoded is included in the message’s Content-Type header.</p>
 </blockquote>
 
-<p>发生的原因是 URL 编码是分裂的，老式的 application/x-www-form-urlencoded 空格被表示为 + ，而 + 被表示为 “%2B”。比如在 Google 里搜索”Python urlencode+20”，query url 为 <code class="highlighter-rouge">https://www.google.com/search?q=Python+urlencode%2B20</code></p>
+<p>The reason for this is that the URL encoding is divided into two parts: the old-fashioned <strong>application/x-www-form-url encoded spaces</strong> are represented as + and + is represented as <strong>%2B</strong>. For example, search for “Python urlencode+20” in Google, and the query url is <code class="highlighter-rouge">https://www.google.com/search?q=Python+urlencode%2B20</code></p>
 
-<p>在现代的 url 的 HTTP URLs 中，空格被编码为”%20”，而 + 不被编码。</p>
+<p>As for the HTTP URLs of modern urls, spaces are encoded as <strong>%20</strong> and + is not encoded.</p>
 
-<p>在给的日志中空格仍然是按照 “+” 来传递的，而 unquote() 是按照现代方式解码的，所以造成结果的差异。解决办法就是在解码前用 <code class="highlighter-rouge">raw_data.replace('+','%20')</code>来把空格给转回去(因为日志包含内容里没有 + 号，所以这么做不会影响日志的表达性)。</p>
+<p>In the given log, the space is still passed as “+”, and unquote() is decoded in a modern way, so the result is different. The solution is to use the <code class="highlighter-rouge">raw_data.replace('+', '%20')</code> to convert the space back before decoding (because the log contains no + in the content, so this will not affect the expressiveness of the log).</p>
 
-<p>关于 urlencode 编码中各种对应关系，可以参考 <a href="http://www.degraeve.com/reference/urlencoding.php">这个列表</a></p>
+<p>For various correspondences in urlencode encoding, you can refer to this <a href="http://www.degraeve.com/reference/urlencoding.php">Link</a>.</p>
 
         </div>
         
@@ -1013,7 +701,7 @@ When HTML form data is sent in an HTTP GET request, it is included in the query 
       <li>
         <header class="post-header">
           <h1 class="post-title">
-            <a class="post-link" href="/2016/09/08/Data-Visualize-With-Flask-And-Highcharts/">记录一次用 Flask 和 Highcharts 实现的数据可视化</a>
+            <a class="post-link" href="/2016/09/08/Data-Visualize-With-Flask-And-Highcharts/">Data Visualizations With Flask and Highcharts</a>
           </h1>
 
           <p class="post-meta">Sep 8, 2016 • 
@@ -1024,29 +712,30 @@ When HTML form data is sent in an HTTP GET request, it is included in the query 
         </header>
 
         <div class="post-content">
-          <p>数据可视化。后端：Flask，前端：Highcharts，可以做的更好的啊……
-<!-- more --></p>
+          <p>A data visualization using the back-end Flask and front-end Highcharts</p>
+
+<p><a href="/../translation/2016-09-08-Data-Visualize-With-Flask-And-Highcharts.html">这篇文章对应的中文版</a></p>
+
+<!-- more -->
 
 <h4 id="what-happened">What Happened</h4>
 
-<p>我司采用的是阿里巴巴开源的 <code class="highlighter-rouge">zeus</code> ，结合脚本来进行业务系统的调度。有过一段时间突然晚上调度业务连续崩的现象(预警短信连发)，只能白天重新洗数据。经过研究发现是在某段时间内任务运行过多造成并行压力过大造成的，需要合理分布 <code class="highlighter-rouge">ods/mds/ads</code> 表的时间。但 zeus 系统本身没有提供查询调度任务的时间分布功能，所以需要来实现一个任务分布的可视化。</p>
+<p>Our company uses Alibaba’s open source <code class="highlighter-rouge">zeus</code> and combines scripts to build a schedule system. There was a phenomenon of sudden collapse of the job in the evening (the early warning SMS burst), and the data could only be rewashed during the day. After research, it is found that the task is way too intensive in a certain period of time and excessive parallel pressure is the cause. The time of the <code class="highlighter-rouge">ods/mds/ads</code> table needs to be reasonably distributed. However, the zeus system itself does not provide the function of the query scheduling task, so it is necessary to implement the visualization of a task distribution.</p>
 
-<h5 id="flask-后端框架">Flask 后端框架</h5>
+<h4 id="flask-backend-framework">Flask Backend Framework</h4>
 
-<p>虽然用 <code class="highlighter-rouge">Django</code> 用的多，但 <code class="highlighter-rouge">Django</code> 作为一个 <code class="highlighter-rouge">Full-Stack Framework</code> 实在太重了，里面的注册、登陆功能都不会用到。所以换为 Flask ，实时从 MySQL 中查询，将查询的结果用自带的 <code class="highlighter-rouge">jsonify</code> 转化后返回给前端页面。</p>
+<p>Although usually I’m used to use <code class="highlighter-rouge">Django</code>, but it is too heavy as a <code class="highlighter-rouge">Full-Stack Framework</code>,the registration and login functions inside will not be used. So I switch to Flask:query from MySQL in real time, convert the result with the built-in <code class="highlighter-rouge">jsonify</code> and return it to the front-end page.</p>
 
-<p>Zeus 的调度时间格式类似 crontab，所以为了能在后端直接生成需要的数据，就决定将时间统一折合为 <code class="highlighter-rouge">int</code> 值。比如：</p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>原始时间    对应展示
-0 10 1（表示 1:10） 110
-0 16 0 （表示 12:16）   16
-0 30 23（表示晚上 11:30） 2330
+<p>Zeus’s scheduling time format is similar to <code class="highlighter-rouge">crontab</code>, so in order to generate the required data directly on the backend, it should convert the time into an <code class="highlighter-rouge">int</code> value. such as:</p>
+<div class="highlighter-rouge"><pre class="highlight"><code>original time    show time
+0 10 1（means 1:10） 110
+0 16 0 （means 12:16）   16
+0 30 23（means evening 11:30） 2330
 </code></pre>
 </div>
+<p>If the time does not meet the four positions when you look at it, you need to complete the leading zero to see.</p>
 
-<p>在看的时候如果不满足四位，需要补全前导零来去看。</p>
-
-<p>时间的核心计算如下：</p>
+<p>The core of time is as follows:</p>
 
 <figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">cur</span><span class="o">.</span><span class="n">fetchall</span><span class="p">():</span>
     <span class="n">key</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
@@ -1055,7 +744,7 @@ When HTML form data is sent in an HTTP GET request, it is included in the query 
     <span class="k">else</span><span class="p">:</span>
         <span class="n">key</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">key</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">+</span> <span class="n">key</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span></code></pre></figure>
 
-<p>配置 post 数据</p>
+<p>configuring post data:</p>
 
 <figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="nd">@app.route</span><span class="p">(</span><span class="s">'/timeserialize'</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s">'GET'</span><span class="p">,</span> <span class="s">'POST'</span><span class="p">])</span>
 <span class="k">def</span> <span class="nf">get_json</span><span class="p">():</span>
@@ -1063,29 +752,29 @@ When HTML form data is sent in an HTTP GET request, it is included in the query 
 </span>
     <span class="k">return</span> <span class="n">jsonify</span><span class="p">(</span><span class="n">result</span><span class="p">)</span></code></pre></figure>
 
-<h5 id="highcharts-前端框架">Highcharts 前端框架</h5>
+<h4 id="highcharts-frontend-framework">Highcharts FrontEnd Framework</h4>
 
-<p>在前端框架里比较出名的就是百度的 <code class="highlighter-rouge">Echarts</code> 和 Google 的 <code class="highlighter-rouge">HighCharts</code>(还有 <code class="highlighter-rouge">D3.js</code>，但怎么都用不到啊…)。就选择后者啦。</p>
+<p>There are two famous visualization framework,one is <a href="https://ecomfe.github.io/echarts-doc/public/en/index.html">Echarts</a> opensourced by Baidu,and the other is <a href="https://www.highcharts.com/">Highcharts</a> opensourced by Google(D3.js is mainly for animation).I choose the latter one.</p>
 
-<p>首先加入资源文件。</p>
+<p>Adding the resource files firstly.</p>
 
 <div class="highlighter-rouge"><pre class="highlight"><code>&lt;script src="http://cdn.bootcss.com/bootstrap/3.3.0/js/bootstrap.min.js"&gt;&lt;/script&gt;
     &lt;link rel="stylesheet" type="text/css" href=""&gt;
-    &lt;!-- jquery.min.js 顺序应该在 highcharts.js 之前 --&gt;
+    &lt;!-- jquery.min.js must put before highcharts.js 之前 --&gt;
     &lt;script src=""&gt;&lt;/script&gt;
     &lt;script src=""&gt;&lt;/script&gt;
 
 </code></pre>
 </div>
 
-<p>之后用 <code class="highlighter-rouge">jquery</code> 来配置 POST 格式的 JSON 数据。</p>
+<p>Then use <code class="highlighter-rouge">jquery</code> to configure JSON data in POST format.</p>
 
 <div class="highlighter-rouge"><pre class="highlight"><code>&lt;script&gt;
 $(function () {
     $.getJSON('/timeserialize', function (data) {
     /*$.getJSON('/configure', function (data) {*/
         $('#container').highcharts({
-            // legend,option 等数据
+            // legend,option...data
         });
     });
 });
@@ -1095,22 +784,22 @@ $(function () {
 </code></pre>
 </div>
 
-<h4 id="第一个版本">第一个版本</h4>
+<h4 id="first-version">First Version</h4>
 
-<p>做完第一个版本后的显示效果如下所示：</p>
+<p>The display after the first version is as follows：</p>
 
 <p><img src="/images/figure-1.png" alt="figure-1" /></p>
 
 <p><img src="/images/figure-2.png" alt="figure-2" /></p>
 
-<p>点的数量指代了在当前时间点运行的 job 数量。拖拽放大能看到更细的时间维度内的变化。</p>
+<p>The number of points refers to the number of jobs running at the current point in time. Drag and drop to see changes in a finer time dimension.</p>
 
-<h4 id="第二个版本">第二个版本</h4>
+<h4 id="second-version">Second Version</h4>
 
-<p>第二个版本要感谢 <a href="https://www.zhihu.com/people/wu-bo-72-98/activities">@吴波</a> 同学的贡献。自己当时实现的还是有些太粗糙了。实际上将得到的时间格式和具体的秒数进行字符串组合后是
-可以得到任务的具体执行时间，转为 unixtime 后传给前端，再转为具体时间，可视化的效果会更好。</p>
+<p>After combining the obtained time format and the specific number of seconds,
+You can get the specific execution time of the task, and transfer it to unixtime and pass it to the front end, then turn it to specific time, the visual effect will be better.</p>
 
-<p>其中的关键就是在 <code class="highlighter-rouge">$function()</code> 里再添加一个对 JSON 格式处理的函数。</p>
+<p>The key is to add a function to the JSON format in <code class="highlighter-rouge">$function()</code>.</p>
 
 <div class="highlighter-rouge"><pre class="highlight"><code>var jsonData = data;
 var jsonDataSuccess = new Array();
@@ -1121,7 +810,7 @@ tempArray.push(parseInt(jsonData[i].startTime) + 28800000,parseInt(jsonData[i].s
 </code></pre>
 </div>
 
-<p>在 <code class="highlighter-rouge">series</code> 里分别用两种类型来标注：</p>
+<p>In the <code class="highlighter-rouge">series</code>, use two types to mark:</p>
 
 <div class="highlighter-rouge"><pre class="highlight"><code>    series:[{
             name:'success',
@@ -1136,7 +825,7 @@ tempArray.push(parseInt(jsonData[i].startTime) + 28800000,parseInt(jsonData[i].s
 </code></pre>
 </div>
 
-<p>在 <code class="highlighter-rouge">tooltip</code> 里用 formatter() 选项来返回更友好的表达式：</p>
+<p>Using the formatter() option in <code class="highlighter-rouge">tooltip</code> to return a more friendly expression:</p>
 
 <div class="highlighter-rouge"><pre class="highlight"><code>tooltip:{
     formatter: function() {
@@ -1147,13 +836,9 @@ tempArray.push(parseInt(jsonData[i].startTime) + 28800000,parseInt(jsonData[i].s
 </code></pre>
 </div>
 
-<p>最后得到的可视化结果如下所示：</p>
+<p>The resulting visualization results are as follows:</p>
 
 <p><img src="/images/figure-3.png" alt="figure-3" /></p>
-
-<p>感觉好漂亮(捂脸)</p>
-
-<p>在一开始做到时候有些太追求开发速度了…可以慢一点来让可视化效果更好:-D。同时学一下 js 的语法，有很多功能是不能用 jquery 代替的～～</p>
 
 
         </div>
@@ -1170,94 +855,7 @@ tempArray.push(parseInt(jsonData[i].startTime) + 28800000,parseInt(jsonData[i].s
       <li>
         <header class="post-header">
           <h1 class="post-title">
-            <a class="post-link" href="/2016/07/03/hive-and-sqoop/">最近做的一些事——Hive+Sqoop 与 调度系统选型</a>
-          </h1>
-
-          <p class="post-meta">Jul 3, 2016 • 
-  
-  
-
-</p>
-        </header>
-
-        <div class="post-content">
-          <p>用 <code class="highlighter-rouge">Hive</code> 与 <code class="highlighter-rouge">Sqoop</code> 实现 ETL，以及对 <strong>Ozzie/Azkaban/Airflow/Zeus/Kettle</strong> 的调研</p>
-
-<!-- more -->
-
-<h4 id="what-happened">What Happened</h4>
-
-<p>最近所做的一些事。还是挺有趣的。</p>
-
-<p>ETL 过程，代指 <strong>Extract-&gt;Transform-&gt;Load</strong>，进行数据抽取处理的过程</p>
-
-<p>HDFS 文件路径下面的数据来源一般有以下几种：</p>
-
-<ul>
-  <li>
-    <p>从已有的 RDBMS 数据库中导入，方便和业务进行分析</p>
-  </li>
-  <li>
-    <p>从已有的 HDFS 数据中进行连接和抽样，生成新的复合需求的数据</p>
-  </li>
-  <li>
-    <p>一些其他的路径，包括从 Flume 中用 HDFS Sink 写入，或者用 <code class="highlighter-rouge">hadoop fs -put</code> 来把本地的文件导入到 HDFS 中。</p>
-  </li>
-</ul>
-
-<p>第一种工具包括 Apache 出品的 Sqoop 和阿里出品的 DataX(京东是根据 DataX 的原理自己搞了一套)。二者的对比可以查看这个 <a href="https://chu888chu888.gitbooks.io/hadoopstudy/content/Content/11/chapter11.html">链接</a>。</p>
-
-<p>第二种工具则在大多数情况下都是在用 Hive 来解决需求。Hive 是 FaceBook 出品的可以把 HQL(类 SQL 语法)转化为 MapReduce 执行的工具，方便数据分析师进行操作。</p>
-
-<p>同时还调研了调度系统。从原理上来说只要写好执行脚本，直接用 crontab 设置好定时任务就好。但一方面随着业务量上升我们要管理多个脚本，另一方面还想要添加进度提醒、查看日志、失败重试、邮件预警、管理多个相互依赖任务等功能。在这种情况下调研了 <strong>Ozzie/Azkaban/Airflow/Zeus/Kettle</strong> 等项目。</p>
-
-<h4 id="关于-sqoop">关于 sqoop</h4>
-
-<h4 id="关于-hive">关于 Hive</h4>
-
-<h4 id="调度系统">调度系统</h4>
-
-<h5 id="关于-airflow">关于 Airflow</h5>
-
-<p>要求团队里至少有一个人会 Python。严格来说这不算是什么多的要求，特别是在 ML/DL/AI 如火如荼的当下，上手 Python 可能也就是一两天的事情。但总归是多了一些成本。</p>
-
-<p>附录 A 里补充了 Airflow 的安装和使用</p>
-
-<h5 id="关于-zeus">关于 Zeus</h5>
-
-<p>其实我司之前用的就是 Zeus：-D 但如果要重新开始选型的话，可以有更多的选择。</p>
-
-<ul>
-  <li>
-    <p>更新缓慢。最近一次和代码有关的提交是在 2013 年，源代码长时间没有进行更新，一个非常明显的 <a href="https://github.com/alibaba/zeus/pull/66">Bug Fix PR</a> 有一个月没有合并到主分支里</p>
-  </li>
-  <li>
-    <p>部署和运维相对于其他调度工具偏难，参考它的 <a href="https://github.com/alibaba/zeus/wiki/%E5%AE%89%E8%A3%85%E6%8C%87%E5%AF%BC%E6%96%87%E6%A1%A3">安装文档</a></p>
-  </li>
-</ul>
-
-<p><a href="https://github.com/michael8335/zeus2">zeus2</a> 但上一次更新是在 2014 年…</p>
-
-<hr />
-
-<p>附录A</p>
-
-
-        </div>
-        
-          <p class="post-continue">
-            <a href="/2016/07/03/hive-and-sqoop/">Read on &rarr;</a>
-          </p>
-        
-      </li>
-    
-      
-      
-
-      <li>
-        <header class="post-header">
-          <h1 class="post-title">
-            <a class="post-link" href="/2016/05/23/Read-Python-Open-Source-Project/">阅读过的一些 Python 开源项目...</a>
+            <a class="post-link" href="/2016/05/23/Read-Python-Open-Source-Project/">Different Open Source Projects I Read</a>
           </h1>
 
           <p class="post-meta">May 23, 2016 • 
@@ -1268,18 +866,20 @@ tempArray.push(parseInt(jsonData[i].startTime) + 28800000,parseInt(jsonData[i].s
         </header>
 
         <div class="post-content">
-          <p>写出 <code class="highlighter-rouge">fluent/pythonic/elegant/idiomatic</code> 的代码～～～～～～
+          <p>To write <code class="highlighter-rouge">fluent/elegant/idiomatic</code> code
 <!-- more --></p>
 
-<h4 id="前言">前言</h4>
+<p><a href="/../translation/2016-05-23-Read-Python-Open-Source-Project.html">这篇文章对应的中文版</a></p>
 
-<p>阅读开源项目的好处不止一个人说过，无论是为了增加对自己使用工具的理解，还是为了能学会更好地划分项目结构和提高代码质量，阅读开源项目都必不可少。</p>
+<h4 id="prologue">Prologue</h4>
 
-<p>做毕设的时候就被老师说过之前师兄看过 <code class="highlighter-rouge">Apache</code> 服务器源码，这个目标虽然很难……但一些更易读的项目还是可以做到的：-D。阅读有的时候会有一些奇怪的东西，比如 <a href="https://github.com/requests/requests">requests</a> 在 github 上列出的第一个版本 v0.2.3 里有一个文件(core.py)是用 tab 作为 whitespace 的……，想到这么牛逼的项目在一开始也是这样……自己现在的代码写的没那么好好像也没有什么……</p>
+<p>The benefits of reading open source projects have been demonstrated by many people. Whether it is to increase the understanding of tools used in daily development, or to learn to divide the project structure and improve the quality of the code better, reading open source projects is essential.</p>
+
+<p>There are some interesting findings during the progress.Take the famous <a href="https://github.com/requests/requests">requests</a> which gained over 3.5K stars as an example. There is a file (core.py) in the first version v0.2.3 listed on github that used tab as a whitespace,it certainly doesn’t satisfy the requirements of PEP8 (:D</p>
 
 <hr />
 
-<h4 id="什么是-pythonic-的代码">什么是 Pythonic 的代码</h4>
+<h4 id="what-is-pythonic-code">What is Pythonic Code</h4>
 
 <p>Pythonic 代码，就是能够把代码逻辑 Pythonic 地实现，试着进行一些小的总结：</p>
 
@@ -1724,10 +1324,82 @@ def generator_of(url_pattern, class_name=None):
   <li>关于 StreamingJSON 数据这里就不详细写了</li>
 </ul>
 
+<p>Java Version</p>
+
+<p>Update：最近又遇到了这个问题。具体的原因就是最近在处理的程序用了一个自建的 redis pool。
+它在 getInstance() 方法这里用了 synchronized 关键字来加锁。</p>
+
+<p>但我们看一下 redis 是怎么实现这一点的。它继承了 Apache.commons.pool ，里面调用了
+<code class="highlighter-rouge">super.getResource()</code> 方法，而它又调用了 pool 里面的 <code class="highlighter-rouge">borrowObject</code> 方法。
+在 <code class="highlighter-rouge">borrowObject</code> 方法里，它已经实现了对多线程的考虑：</p>
+
+<p>long starttime = System.currentTimeMillis();
+Latch<T> latch = new Latch<T>();
+byte whenExhaustedAction;
+long maxWait;
+synchronized (this) {
+            // Get local copy of current config. Can't sync when used // later as it can result in a deadlock. Has the added // advantage that config is consistent for entire execution
+whenExhaustedAction = _whenExhaustedAction;
+maxWait = _maxWait;</T></T></p>
+
+<p>// activate &amp; validate the object
+try {
+    _factory.activateObject(latch.getPair().value);
+    if(_testOnBorrow &amp;&amp;
+            !_factory.validateObject(latch.getPair().value)) {
+        throw new Exception(“ValidateObject failed”);
+    }
+    synchronized(this) {
+        _numInternalProcessing–;
+        _numActive++;
+    }
+    return latch.getPair().value;
+}
+catch (Throwable e) {
+}</p>
+
         </div>
         
           <p class="post-continue">
             <a href="/2016/05/23/Read-Python-Open-Source-Project/">Read on &rarr;</a>
+          </p>
+        
+      </li>
+    
+      
+      
+
+      <li>
+        <header class="post-header">
+          <h1 class="post-title">
+            <a class="post-link" href="/2016/02/22/Hadoop-Mapreduce-Tutorial/">Translation - Use MapReduce to explore friendships</a>
+          </h1>
+
+          <p class="post-meta">Feb 22, 2016 • 
+  
+  
+
+</p>
+        </header>
+
+        <div class="post-content">
+          <p>A translation of MapReduce in practice</p>
+
+<!-- more -->
+
+<hr />
+
+<p>During the progress of learning MapReduce,it is beneficial to find an article talking about the usage of MapReduce in practical. So I decided to translate it into Chinese and share it with others.</p>
+
+<p>You can find the original novel in <a href="http://stevekrenzel.com/finding-friends-with-mapreduce">finding-friends-with-mapreduce</a>.</p>
+
+<p><a href="/../translation/2016-02-22-Hadoop-Mapreduce-Tutorial.html">点击查看对应译文</a></p>
+
+
+        </div>
+        
+          <p class="post-continue">
+            <a href="/2016/02/22/Hadoop-Mapreduce-Tutorial/">Read on &rarr;</a>
           </p>
         
       </li>
@@ -2866,8 +2538,57 @@ C++ 版：</p>
 <p>其实是以牺牲可读性来换取了性能的增加</p>
 
 <ul>
+  <li>Curator 是 Linkedin 开源的一款对 zookeeper 封装的工具，里面提供了各种方便实现的功能，包括更新配置文件，选取 leader 节点等。今天在 Spark 上看见了这个实现，具体对应代码在：<code class="highlighter-rouge">spark/core/src/main/scala/org/apache/spark/deploy/master/ZooKeeperPersistenceEngine.scala</code></li>
+</ul>
+
+<h4 id="what-happened">What Happened</h4>
+
+<p>最近所做的一些事。还是挺有趣的。</p>
+
+<p>ETL 过程，代指 <strong>Extract-&gt;Transform-&gt;Load</strong>，进行数据抽取处理的过程</p>
+
+<p>HDFS 文件路径下面的数据来源一般有以下几种：</p>
+
+<ul>
   <li>
-    <p>Curator 是 Linkedin 开源的一款对 zookeeper 封装的工具，里面提供了各种方便实现的功能，包括更新配置文件，选取 leader 节点等。今天在 Spark 上看见了这个实现，具体对应代码在：<code class="highlighter-rouge">spark/core/src/main/scala/org/apache/spark/deploy/master/ZooKeeperPersistenceEngine.scala</code></p>
+    <p>从已有的 RDBMS 数据库中导入，方便和业务进行分析</p>
+  </li>
+  <li>
+    <p>从已有的 HDFS 数据中进行连接和抽样，生成新的复合需求的数据</p>
+  </li>
+  <li>
+    <p>一些其他的路径，包括从 Flume 中用 HDFS Sink 写入，或者用 <code class="highlighter-rouge">hadoop fs -put</code> 来把本地的文件导入到 HDFS 中。</p>
+  </li>
+</ul>
+
+<p>第一种工具包括 Apache 出品的 Sqoop 和阿里出品的 DataX(京东是根据 DataX 的原理自己搞了一套)。二者的对比可以查看这个 <a href="https://chu888chu888.gitbooks.io/hadoopstudy/content/Content/11/chapter11.html">链接</a>。</p>
+
+<p>第二种工具则在大多数情况下都是在用 Hive 来解决需求。Hive 是 FaceBook 出品的可以把 HQL(类 SQL 语法)转化为 MapReduce 执行的工具，方便数据分析师进行操作。</p>
+
+<p>同时还调研了调度系统。从原理上来说只要写好执行脚本，直接用 crontab 设置好定时任务就好。但一方面随着业务量上升我们要管理多个脚本，另一方面还想要添加进度提醒、查看日志、失败重试、邮件预警、管理多个相互依赖任务等功能。在这种情况下调研了 <strong>Ozzie/Azkaban/Airflow/Zeus/Kettle</strong> 等项目。</p>
+
+<h4 id="关于-sqoop">关于 sqoop</h4>
+
+<h4 id="关于-hive">关于 Hive</h4>
+
+<h4 id="调度系统">调度系统</h4>
+
+<h5 id="关于-airflow">关于 Airflow</h5>
+
+<p>要求团队里至少有一个人会 Python。严格来说这不算是什么多的要求，特别是在 ML/DL/AI 如火如荼的当下，上手 Python 可能也就是一两天的事情。但总归是多了一些成本。</p>
+
+<p>附录 A 里补充了 Airflow 的安装和使用</p>
+
+<h5 id="关于-zeus">关于 Zeus</h5>
+
+<p>其实我司之前用的就是 Zeus：-D 但如果要重新开始选型的话，可以有更多的选择。</p>
+
+<ul>
+  <li>
+    <p>更新缓慢。最近一次和代码有关的提交是在 2013 年，源代码长时间没有进行更新，一个非常明显的 <a href="https://github.com/alibaba/zeus/pull/66">Bug Fix PR</a> 有一个月没有合并到主分支里</p>
+  </li>
+  <li>
+    <p>部署和运维相对于其他调度工具偏难，参考它的 <a href="https://github.com/alibaba/zeus/wiki/%E5%AE%89%E8%A3%85%E6%8C%87%E5%AF%BC%E6%96%87%E6%A1%A3">安装文档</a></p>
   </li>
   <li>
     <p>最近又有需求，在 Ubuntu 环境下用 VirtualBox 重新安装了 Win8.1。具体</p>

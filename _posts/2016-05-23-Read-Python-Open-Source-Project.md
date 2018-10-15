@@ -1,21 +1,25 @@
 ---
-title: 阅读过的一些 Python 开源项目...
+title: Different Open Source Projects I Read
 date: 2016-05-23 15:01:33
 categories: Python
 tags: [Python,OpenSource]
 ---
-写出 `fluent/pythonic/elegant/idiomatic` 的代码～～～～～～
+
+To write `fluent/elegant/idiomatic` code
 <!-- more -->
 
-#### 前言
+[这篇文章对应的中文版](/../translation/2016-05-23-Read-Python-Open-Source-Project.html)
 
-阅读开源项目的好处不止一个人说过，无论是为了增加对自己使用工具的理解，还是为了能学会更好地划分项目结构和提高代码质量，阅读开源项目都必不可少。
+#### Prologue
 
-做毕设的时候就被老师说过之前师兄看过 `Apache` 服务器源码，这个目标虽然很难......但一些更易读的项目还是可以做到的：-D。阅读有的时候会有一些奇怪的东西，比如 [requests](https://github.com/requests/requests) 在 github 上列出的第一个版本 v0.2.3 里有一个文件(core.py)是用 tab 作为 whitespace 的......，想到这么牛逼的项目在一开始也是这样......自己现在的代码写的没那么好好像也没有什么......
+The benefits of reading open source projects have been demonstrated by many people. Whether it is to increase the understanding of tools used in daily development, or to learn to divide the project structure and improve the quality of the code better, reading open source projects is essential.
+
+There are some interesting findings during the progress.Take the famous [requests](https://github.com/requests/requests) which gained over 3.5K stars as an example. There is a file (core.py) in the first version v0.2.3 listed on github that used tab as a whitespace,it certainly doesn't satisfy the requirements of PEP8 (:D
 
 ---
 
-#### 什么是 Pythonic 的代码
+#### What is Pythonic Code
+
 
 Pythonic 代码，就是能够把代码逻辑 Pythonic 地实现，试着进行一些小的总结：
 
@@ -429,3 +433,38 @@ def normal_attr(name_in_json=None):
 ```
 
 * 关于 StreamingJSON 数据这里就不详细写了
+
+
+Java Version
+
+Update：最近又遇到了这个问题。具体的原因就是最近在处理的程序用了一个自建的 redis pool。
+它在 getInstance() 方法这里用了 synchronized 关键字来加锁。
+
+但我们看一下 redis 是怎么实现这一点的。它继承了 Apache.commons.pool ，里面调用了
+`super.getResource()` 方法，而它又调用了 pool 里面的 `borrowObject` 方法。
+在 `borrowObject` 方法里，它已经实现了对多线程的考虑：
+
+long starttime = System.currentTimeMillis();
+Latch<T> latch = new Latch<T>();
+byte whenExhaustedAction;
+long maxWait;
+synchronized (this) {
+            // Get local copy of current config. Can't sync when used // later as it can result in a deadlock. Has the added // advantage that config is consistent for entire execution
+whenExhaustedAction = _whenExhaustedAction;
+maxWait = _maxWait;
+
+// activate & validate the object
+try {
+    _factory.activateObject(latch.getPair().value);
+    if(_testOnBorrow &&
+            !_factory.validateObject(latch.getPair().value)) {
+        throw new Exception("ValidateObject failed");
+    }
+    synchronized(this) {
+        _numInternalProcessing--;
+        _numActive++;
+    }
+    return latch.getPair().value;
+}
+catch (Throwable e) {
+}

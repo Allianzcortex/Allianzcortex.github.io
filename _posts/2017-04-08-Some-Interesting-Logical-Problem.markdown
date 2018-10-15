@@ -1,21 +1,27 @@
 ---
 layout: post
-title: 一些有趣的逻辑问题
+title: Some Interesting Logical Questions
 date: 2017-04-08 13:12:57
 categories: logic
 comments: true
 ---
 
-逻辑问题......
+This novel talks about logical questions
+
 <!-- more -->
+[这篇文章对应的中文版](/../translation/2017-04-08-Some-Interesting-Logical-Problem.html)
 
-1. 第一个问题是在已有的一个随机数基础上再生成一个随机数，确保生成 0 和 1 的概率是相等的
+1. 
 
-思路也很直接啦。
+The first problem is to generate a random number based on an existing random number, to ensure that the probability of generating 0 and 1 is equal.
 
-来写一个程序验证一下：
+The idea is also very straightforward.
+
+writing a program to verify it:
+
 
 {% highlight Python %}
+
 from __future__ import division, print_function # compatible with Py2
 from random import randint
 
@@ -53,66 +59,4 @@ if __name__ == '__main__':
 
 {% endhighlight %}
 
-2. 第二个问题其实就是数据可用性的问题
-
-最后抽象出黑盒问题：
-
-```
-# -*- coding:utf-8 -*-
-from __future__ import division
-
-from random import randint
-
-
-def gen_unique_list():
-    i = 0
-    res = set()
-    while i < 100000:
-        temp = [1] * 5
-        while True:
-            r1, r2, r3 = randint(0, 4), randint(0, 4), randint(0, 4)
-            if(r1 != r2 and r1 != r3 and r2 != r3):
-                temp[r1] = 0
-                temp[r2] = 0
-                temp[r3] = 0
-                break
-        if tuple(temp) not in res:
-            res.add(tuple(temp))
-        i += 1
-    return res
-
-
-def gen_probability():
-    res = gen_unique_list()
-    prob = 0
-    for elem in res:
-        # find last occurence
-        print elem
-        ind = 4 - list(reversed(elem)).index(0)
-        red_cnt, green_cnt = 3, 2
-        x = 1
-        # for in in range(0,ind)  这句话就是另一种思路了，显然不应该，最后得出的和都大于 1 了
-        for i in range(0, 5):
-            if(elem[i] == 0):
-                # means red
-                x *= (red_cnt / (red_cnt + green_cnt))
-                red_cnt -= 1
-            else:
-                # means green
-                x *= (green_cnt / (red_cnt + green_cnt))
-                green_cnt -= 1
-        prob += x
-        print x
-    print prob
-
-
-if __name__ == '__main__':
-    gen_probability()
-
-
-```
-
-但实际上直接 C(5,3) 就足够了......自己想的太复杂
-
-这还只是一份数据，那么如果有两份数据呢。是在第一份数据可用的前提下 * 第二份数据可用，那么这两个问题就应该是独立的。
-因为前提是机器损坏已经发生了
+Exactly!
