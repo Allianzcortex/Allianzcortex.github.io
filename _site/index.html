@@ -305,7 +305,7 @@ ImportError: cannot import name 'NotSupprotedYetException'
       <li>
         <header class="post-header">
           <h1 class="post-title">
-            <a class="post-link" href="/2017/05/21/Scala-Test-Junit-Sbt-Problem/">ScalaTest 和 JUnit 集成，使用 Sbt 不执行测试的解决办法</a>
+            <a class="post-link" href="/2017/05/21/Scala-Test-Junit-Sbt-Problem/">Run ScalaTest And JUnit On TravisCI And Some Scala99 Solutions</a>
           </h1>
 
           <p class="post-meta">May 21, 2017 • 
@@ -316,15 +316,19 @@ ImportError: cannot import name 'NotSupprotedYetException'
         </header>
 
         <div class="post-content">
-          <p>ScalaTest 与 JUnit 集成后，执行 <code class="highlighter-rouge">sbt test</code> 提示 <code class="highlighter-rouge">no tests are executed</code> 的解决办法</p>
+          <p>After integrating <code class="highlighter-rouge">ScalaTest</code> with <code class="highlighter-rouge">JUnit</code>, execute <code class="highlighter-rouge">sbt test</code> prompt <code class="highlighter-rouge">no tests are executed</code>.How to solve it ?</p>
 
 <!-- more -->
+<p><a href="/../translation/2017-05-21-Scala-Test-Junit-Sbt-Problem.html">这篇文章对应的中文版</a></p>
 
-<p>最近在试着写一个用 Scala 解决 LeetCode 的 <a href="https://github.com/Allianzcortex/Scala-LeetCode">集合</a>，Scala 里的单元测试一般推荐使用 ScalaTest，而大部分 Scala 使用者都有 Java 背景，所以 ScalaTest 也可以与 Junit 集成使用，参见 <a href="http://www.scalatest.org/getting_started_with_junit_4_in_scala">链接</a></p>
+<h3 id="background">BackGround</h3>
 
-<h4 id="遇到了什么问题">遇到了什么问题</h4>
+<p>I’ve recently tried to write a                            <a href="https://github.com/Allianzcortex/Scala-LeetCode">collection</a> that solves LeetCode with Scala. ScalaTest is generally recommended for unit testing in Scala, and most Scala users have a Java background , so ScalaTest can also be integrated with JUnit, see 
+<a href="http://www.scalatest.org/getting_started_with_junit_4_in_scala">link</a> for a further understanding</p>
 
-<p>首先定义如下的测试代码：</p>
+<h3 id="what-is-the-problem">What Is The Problem?</h3>
+
+<p>At first writing test code like this ：</p>
 
 <figure class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">import</span> <span class="nn">org.scalatest.</span><span class="o">{</span><span class="nc">BeforeAndAfterEach</span><span class="o">,</span> <span class="nc">FunSpec</span><span class="o">,</span> <span class="nc">FunSuite</span><span class="o">}</span>
 
@@ -334,16 +338,16 @@ ImportError: cannot import name 'NotSupprotedYetException'
     <span class="o">}</span>
 <span class="o">}</span></code></pre></figure>
 
-<p>然后定义如下的 <strong>build.sbt</strong> 文件：</p>
+<p><strong>build.sbt</strong> is as follows：</p>
 
 <figure class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="n">libraryDependencies</span> <span class="o">+=</span> <span class="s">"org.scalatest"</span> <span class="o">%</span> <span class="s">"scalatest_2.12"</span> <span class="o">%</span> <span class="s">"3.0.1"</span> <span class="o">%</span> <span class="s">"test"</span>
 <span class="n">libraryDependencies</span> <span class="o">+=</span> <span class="s">"junit"</span> <span class="o">%</span> <span class="s">"junit"</span> <span class="o">%</span> <span class="s">"4.8.1"</span> <span class="o">%</span> <span class="s">"test"</span></code></pre></figure>
 
-<p>上面是 Scala-Test 最标准的代码</p>
+<p>Above is the most standard code for <code class="highlighter-rouge">Scala-Test</code></p>
 
-<p>同时用 IDEA 和 <code class="highlighter-rouge">sbt test</code> 来跑测试用例都没有问题</p>
+<p>There is no problem in running test cases with <a href="https://www.jetbrains.com/idea/">Intellij IDEA</a> and <code class="highlighter-rouge">sbt test</code> at the same time.</p>
 
-<p>那么如果想要引入 JUnit 的话则如下：</p>
+<p>If you want to import Junit,then it will be：</p>
 
 <figure class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">import</span> <span class="nn">org.junit.Assert._</span>
 <span class="k">import</span> <span class="nn">org.scalatest.junit.</span><span class="o">{</span><span class="nc">AssertionsForJUnit</span><span class="o">}</span>
@@ -357,61 +361,57 @@ ImportError: cannot import name 'NotSupprotedYetException'
 
 <span class="o">}</span></code></pre></figure>
 
-<p>在这种情况下用 IDEA 可以跑测试用例，但用 <code class="highlighter-rouge">sbt test</code> 的话会提示 <code class="highlighter-rouge">no tests are executed</code></p>
+<p>Currently we can use Intellij IDEA to run unit tests, but if you use <code class="highlighter-rouge">sbt test</code> to run it in console, it will hint <code class="highlighter-rouge">no tests are executed</code>. If you want to have a continuous development,then manybe you know some famous tools such as <a href="https://travis-ci.org/">TravisCI</a> which cooperates well with github.I write a <code class="highlighter-rouge">.travis.yml</code> <a href="https://github.com/Infra-Intern/Scala-LeetCode/blob/master/.travis.yml">file</a>.Now ScalaTest and JUnit can’t work on Linux Platform.</p>
 
-<p>参考：http://stackoverflow.com/questions/28174243/run-junit-tests-with-sbt 需要在原有 sbt 的基础上加上：</p>
+<h3 id="solutions">Solutions</h3>
+
+<p>Based on this question <a href="http://stackoverflow.com/questions/28174243/run-junit-tests-with-sbt">run-junit-tests-with-sbt</a> you need to add the following code on original <code class="highlighter-rouge">build.sbt</code>：</p>
 
 <figure class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="n">crossPaths</span> <span class="o">:=</span> <span class="kc">false</span>
 <span class="n">libraryDependencies</span> <span class="o">+=</span> <span class="s">"com.novocode"</span> <span class="o">%</span> <span class="s">"junit-interface"</span> <span class="o">%</span> <span class="s">"0.11"</span> <span class="o">%</span> <span class="nc">Test</span>
 <span class="n">testOptions</span> <span class="o">+=</span> <span class="nc">Tests</span><span class="o">.</span><span class="nc">Argument</span><span class="o">(</span><span class="nc">TestFrameworks</span><span class="o">.</span><span class="nc">JUnit</span><span class="o">,</span> <span class="s">"-q"</span><span class="o">,</span> <span class="s">"-v"</span><span class="o">)</span></code></pre></figure>
 
-<p>出现这个问题的原因还是在于 Scala 和 Java 最后编译出来的是两套不同的字节码</p>
+<p>The reason for this problem is that Scala and Java finally compiled two different sets of bytecodes. Although in most cases it is compatible,but you also need to mind the corner case.</p>
+
+<p>BTW,Looked at it, the test cases in Spark are all using the pure ScalaTest framework, without using JUnit.</p>
 
 <hr />
 
-<p>看了一下，Spark 里面的测试用例都是用的纯 ScalaTest 框架，而没有用 JUnit ：-D</p>
+<p>Exercises for 《Scala For Impatient》 and some notes for Scala 99</p>
 
-<p>《Scala For Impatient》的习题和 Scala 99 的一些题解记录</p>
+<p>Scala’s syntax is as complex as C++…</p>
 
-<!-- more -->
+<p>The author of <a href="http://scalacookbook.com/">《Scala CookBook》</a> evaluates the nature of Java’s syntax as <code class="highlighter-rouge">Verbose yet obvious</code>. It is because of the obvious characteristics that it can lead in the industrial development,play a dominant role in <code class="highlighter-rouge">Web development/Android/big data field</code>. It is also because of the verbose characteristics and boilerplate code that people can feel really tired when writing in Java,especailly compared with Python.</p>
 
-<p>Scala 的语法的复杂度堪比 C++ ……</p>
+<p>Scala based on the JVM platform is a nice improvement of Java. Scala’s official website promotes <strong>OO meets FP</strong>, which combines the benefits of object-oriented and functional programming. As many people have said, there is no need to fully understand Scala’s grammar and use it later.</p>
 
-<p>《Scala CookBook》的作者评价 Java 这门语法的特性是 <code class="highlighter-rouge">Verbose yet obvious</code>，这是见过的最好对 Java 这门语言的描述了。正是因为 obvious 的特性，才能在工业级开发领域中遥遥领先，Web 开发/Android/数据领域都占据主要地位。也正是因为 verbose 的特性，让写 Java 写多的人很容易产生啰嗦的感觉，相比于 Python 的话对比感就更强烈了。</p>
-
-<blockquote>
-  <p>现在来看 Kotlin 的定位更像是 Better Java，字节码被翻译成 Java 类型，无缝调用 Java 的所有库，语法更简洁。</p>
-</blockquote>
-
-<p>Scala 则是对 Java 很好的一个改进，同样基于 JVM 平台。Scala 的官网上宣传 OO meets FP，它同时融合了面向对象和函数式编程的优点。就像很多人说的，没有必要把 Scala 的语法完全了解以后再去用它。要用 Spark，要看 Kafka，直接看就好了：-D</p>
-
-<p>Scala 学习的时候主要分为两方面吧：</p>
+<p>Scala is mainly divided into two aspects when learning:</p>
 
 <ul>
   <li>
-    <p>Array/List/Seq 等一系列 Immutable 与 Mutable 对象，对应的 take/filter/map/flatMap/reduce/head/tail/init 等可以提高开发效率的方法</p>
+    <p>A series of Immutable and Mutable objects such as <strong>Array/List/Seq</strong> , corresponding to <strong>take/filter/map/flatMap/reduce/head/tail/init</strong> method, etc.</p>
   </li>
   <li>
-    <p>class/case class/object/trait 等新的 OO 相关内容</p>
+    <p>new OO related content such as <strong>class/case</strong> <strong>class/object/trait</strong></p>
   </li>
 </ul>
 
-<p>关于水平掌握，达到 A3/L2 。</p>
+<p>Reaching <code class="highlighter-rouge">A3/L2</code> level will meet the daily needs.</p>
 
-<p>最近做了 Scala99 里面的一些题目，试着做一些摘抄，里面有些题目提出了和原来的一些不一样的方法</p>
+<p>Recently I have done some of the problems in <a href="http://aperiodic.net/phil/scala/s-99/">Scala99</a>, trying to do some excerpts, some of which have different methods from the original ones.</p>
 
 <ul>
-  <li>第 17 题：</li>
+  <li>Question 17:</li>
 </ul>
 
-<p>** 要求 ** 把一个 List 分为两个部分</p>
+<p>** Requirements**: Divide a List into two parts</p>
 
 <ul>
   <li>
-    <p>网站上提供了 ls.splitAt(n) 和直接返回 (ls.take(n),ls.drop(n)) 两种方法</p>
+    <p><code class="highlighter-rouge">ls.splitAt(n)</code> and <code class="highlighter-rouge">directly return (ls.take(n), ls.drop(n))</code> methods are available on the website</p>
   </li>
   <li>
-    <p>自己的实现：</p>
+    <p>My own implementation:</p>
   </li>
 </ul>
 
@@ -420,7 +420,7 @@ ImportError: cannot import name 'NotSupprotedYetException'
     <span class="o">(</span><span class="n">s</span><span class="o">.</span><span class="n">_1</span><span class="o">.</span><span class="n">map</span><span class="o">(</span><span class="n">x</span> <span class="k">=&gt;</span> <span class="n">x</span><span class="o">.</span><span class="n">_1</span><span class="o">),</span> <span class="n">s</span><span class="o">.</span><span class="n">_2</span><span class="o">.</span><span class="n">map</span><span class="o">(</span><span class="n">x</span> <span class="k">=&gt;</span> <span class="n">x</span><span class="o">.</span><span class="n">_1</span><span class="o">))</span>
 <span class="o">}</span></code></pre></figure>
 
-<p>关于类的部分：算是实现了一个小的 demo 吧</p>
+<p>And I implement a small demo about <strong>class</strong> and <strong>traits</strong>:</p>
 
 <figure class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">import</span> <span class="nn">collection.mutable.ArrayBuffer</span>
 
@@ -436,8 +436,8 @@ ImportError: cannot import name 'NotSupprotedYetException'
 
   <span class="k">def</span> <span class="n">addRecord</span><span class="o">(</span><span class="n">newEvent</span><span class="k">:</span> <span class="kt">String</span><span class="o">,</span> <span class="n">newMoney</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span>
 
-  <span class="k">def</span> <span class="n">removeRecord</span><span class="o">(</span><span class="n">deleteName</span><span class="k">:</span> <span class="kt">String</span><span class="o">,</span> <span class="n">deleteMoney</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span> <span class="c1">// 这也行，也就是说
-</span>
+  <span class="k">def</span> <span class="n">removeRecord</span><span class="o">(</span><span class="n">deleteName</span><span class="k">:</span> <span class="kt">String</span><span class="o">,</span> <span class="n">deleteMoney</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span>
+
   <span class="k">def</span> <span class="n">getAllCost</span>
 <span class="o">}</span>
 
@@ -450,10 +450,6 @@ ImportError: cannot import name 'NotSupprotedYetException'
     <span class="k">this</span><span class="o">.</span><span class="n">activity</span> <span class="o">+=</span> <span class="nc">Record</span><span class="o">(</span><span class="n">newEvent</span><span class="o">,</span> <span class="n">newMoney</span><span class="o">)</span>
   <span class="o">}</span>
 
-  <span class="cm">/*def addRecord={
-
-  }*/</span>
-
   <span class="k">def</span> <span class="n">removeRecord</span><span class="o">(</span><span class="n">deleteName</span><span class="k">:</span> <span class="kt">String</span><span class="o">,</span> <span class="n">deleteMoney</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span> <span class="k">=</span> <span class="o">{</span>
     <span class="k">val</span> <span class="n">targetRecord</span> <span class="k">=</span> <span class="nc">Record</span><span class="o">(</span><span class="n">deleteName</span><span class="o">,</span> <span class="n">deleteMoney</span><span class="o">)</span>
     <span class="cm">/*if this.activity.exists(_ == targetRecord) this.activity -= targetRecord*/</span>
@@ -463,14 +459,11 @@ ImportError: cannot import name 'NotSupprotedYetException'
     <span class="k">this</span><span class="o">.</span><span class="n">activity</span><span class="o">.</span><span class="n">foreach</span><span class="o">(</span><span class="n">x</span><span class="k">=&gt;</span><span class="n">println</span><span class="o">(</span><span class="n">x</span><span class="o">.</span><span class="n">money</span><span class="o">))</span>
     <span class="n">println</span><span class="o">(</span><span class="s">"money "</span> <span class="o">+</span> <span class="k">this</span><span class="o">.</span><span class="n">activity</span><span class="o">.</span><span class="n">map</span><span class="o">(</span><span class="k">_</span><span class="o">.</span><span class="n">money</span><span class="o">).</span><span class="n">reduceLeft</span><span class="o">(</span><span class="k">_</span><span class="o">+</span><span class="k">_</span><span class="o">))</span>
     <span class="k">this</span><span class="o">.</span><span class="n">activity</span><span class="o">.</span><span class="n">map</span><span class="o">(</span><span class="k">_</span><span class="o">.</span><span class="n">money</span><span class="o">).</span><span class="n">reduceLeft</span><span class="o">(</span><span class="k">_</span><span class="o">+</span><span class="k">_</span><span class="o">)</span>
-    <span class="c1">//所以自己一开始的 reduce((x,y)=&gt;x.money+y.money)) 思路是错的，你看，前两个得到的结果是 Record,但之后得到的是 Int
-</span>    <span class="c1">// 再之后就会在 Record 和 Int 之间产生冲突
+    <span class="c1">// reduce((x,y)=&gt;x.money+y.money)) is wrong,there will be confilicts between Record and Int
 </span>  <span class="o">}</span>
 
   <span class="k">def</span> <span class="n">getActivity</span><span class="o">()</span><span class="k">:</span> <span class="kt">List</span><span class="o">[</span><span class="kt">Record</span><span class="o">]</span> <span class="k">=</span> <span class="o">{</span>
-    <span class="c1">// 返回的 Array 必须是有类型的，而不能是 Array
-</span>    <span class="c1">// List 也是一样的道理。并且 List 的可读性更好
-</span>    <span class="k">this</span><span class="o">.</span><span class="n">activity</span><span class="o">.</span><span class="n">toList</span>
+    <span class="k">this</span><span class="o">.</span><span class="n">activity</span><span class="o">.</span><span class="n">toList</span>
   <span class="o">}</span>
 
   <span class="k">override</span> <span class="k">def</span> <span class="n">toString</span> <span class="k">=</span> <span class="n">s</span><span class="s">"$name $age"</span>
@@ -481,15 +474,11 @@ ImportError: cannot import name 'NotSupprotedYetException'
   <span class="k">val</span> <span class="n">u</span> <span class="k">=</span> <span class="k">new</span> <span class="nc">User</span><span class="o">(</span><span class="s">"Tom"</span><span class="o">,</span> <span class="mi">18</span><span class="o">)</span>
   <span class="n">u</span><span class="o">.</span><span class="n">addRecord</span><span class="o">(</span><span class="s">"Buy Clothes"</span><span class="o">,</span> <span class="mi">10</span><span class="o">)</span>
   <span class="n">println</span><span class="o">(</span><span class="n">u</span><span class="o">)</span>
-  <span class="n">println</span><span class="o">(</span><span class="s">"用户的活动为 "</span> <span class="o">+</span> <span class="n">u</span><span class="o">.</span><span class="n">getActivity</span><span class="o">())</span>
+  <span class="n">println</span><span class="o">(</span><span class="s">"User activity is  "</span> <span class="o">+</span> <span class="n">u</span><span class="o">.</span><span class="n">getActivity</span><span class="o">())</span>
   <span class="n">println</span><span class="o">(</span><span class="n">u</span><span class="o">.</span><span class="n">activity</span><span class="o">.</span><span class="n">toList</span><span class="o">)</span>
   <span class="n">println</span><span class="o">(</span><span class="n">u</span><span class="o">.</span><span class="n">getActivity</span><span class="o">())</span>
   <span class="n">println</span><span class="o">(</span><span class="n">u</span><span class="o">.</span><span class="n">getAllCost</span><span class="o">())</span>
 <span class="o">}</span></code></pre></figure>
-
-<hr />
-
-<p>在附录部分再总结一下 Scala 方法的集合：</p>
 
 
         </div>
@@ -1352,7 +1341,7 @@ catch (Throwable e) {
       <li>
         <header class="post-header">
           <h1 class="post-title">
-            <a class="post-link" href="/2015/10/21/Django-And-CortexForum/">Django 学习及 cortexForum</a>
+            <a class="post-link" href="/2015/10/21/Django-And-CortexForum/">Learning Django And cortexForum</a>
           </h1>
 
           <p class="post-meta">Oct 21, 2015 • 
@@ -1363,53 +1352,54 @@ catch (Throwable e) {
         </header>
 
         <div class="post-content">
-          <p>关于 Django 的学习资料以及 cortexForum</p>
+          <p>Studying Django resources and <code class="highlighter-rouge">cortexForum</code>
+<!-- more --></p>
 
-<!-- more -->
+<p><a href="/../translation/2015-10-21-Django-And-CortexForum.html">这篇文章对应的中文版</a></p>
 
-<h5 id="学习资料">学习资料</h5>
+<h5 id="studying-resources">Studying Resources</h5>
 
-<p>主要看的是 Django 的官方 tutorial 和 <a href="http://www.tangowithdjango.com/book17/">tango with Django</a></p>
+<p>At first you can review <a href="https://docs.djangoproject.com/en/2.1/intro/tutorial01/">official tutorial</a> and <a href="http://www.tangowithdjango.com/book17/">tango with Django</a></p>
 
-<p>进阶的书包括：</p>
+<p>Advanced books include ：</p>
 
 <ul>
   <li>
-    <p>《Two Scopes of Django》:Django 作者是 Django 的社区开发者，汇聚了一大批的最佳实践</p>
+    <p><a href="https://www.twoscoopspress.com/products/two-scoops-of-django-1-11">《Two Scopes of Django》</a> : author is the community developer，there are many industrial best practices.</p>
   </li>
   <li>
-    <p>《Test Driven Web Development》:以 TDD(测试驱动开发) 方式所写的关于 Django 开发的一本书，非常漂亮啊</p>
+    <p><a href="https://www.amazon.ca/Test-Driven-Development-Python-Selenium-JavaScript/dp/1491958707">《Test Driven Web Development》</a>: Development Django based on <strong>TDD(Test-Driven Development)</strong> ，I’m impressed by the use of selenium to detect the 404 page.</p>
   </li>
 </ul>
 
 <hr />
 
-<h5 id="cortexforum">cortexForum</h5>
+<h3 id="cortexforum">cortexForum</h3>
 
-<p>在文档的学习过程中所有遇到的问题和有必要的记录都在 Wiznote 里保存，方便进行复习balabala</p>
+<blockquote>
+  <p>Tell me and I forget, teach me and I may remember, involve me and I learn.</p>
+</blockquote>
 
-<p>最近在做毕设的过程中实在是看不下去论文了，便有了写一个有 Django 最佳实践的论坛的想法。在写 <a href="https://github.com/Allianzcortex/cortexForum">cortexForum</a> 的过程中，自己尽量实现了以下几点：</p>
+<p>I try to write a forum program <a href="https://github.com/Allianzcortex/cortexForum">cortexForum</a> to deepen my understanding,and during the progress,I try to do those aspects:</p>
 
 <ul>
   <li>
-    <p>在代码中将所用到的文档模块和对应的具体用法进行标志，方便查找</p>
+    <p>In the code, the document module used and the corresponding specific usage are marked for easy searching.</p>
   </li>
   <li>
-    <p>标注中有 SO 的部分说明它很常用，并且 stackoverflow 上有相关的问题(比如query_set() 里的 lookup field)</p>
+    <p>The section with SO in the annotation indicates that it is very common, and there are related issues on stackoverflow (such as the lookup field in query_set()).</p>
   </li>
   <li>
-    <p>对于有多种解决方法的部分都在注释里写了出来(比如 <code class="highlighter-rouge">objects.filer().update 和 instance.save()</code>)</p>
+    <p>Parts that have multiple workarounds are written in comments (such as <code class="highlighter-rouge">objects.filer().update and instance.save()</code>)</p>
   </li>
   <li>
-    <p>用 gitbook 的格式作为 wiki，对于 forum 的设计有这样一个总体的概述</p>
+    <p>Use gitbook format as a wiki for a general overview of forum design</p>
   </li>
 </ul>
 
 <hr />
 
-<ul>
-  <li>Django 的 models 模型里有一个 Manager 对象，非常方便实现 OOP(实现 HighLevel 而不仅仅是具体实例的行为)，以发帖的单位 Topic 为例，定义发帖的 title 和 content 之后，再定义两个外键，一个是 node,定义帖子发表的节点；一个是 author，定义帖子发表的作者。对于一个帖子来说，我希望能通过一个 node 的名称(这里可以理解为 slug )，或者一个作者的名称(username)，就能得到所有主题的信息，所以你就需要定义：</li>
-</ul>
+<p>Django’s models model has a Manager object, which is very convenient to implement OOP (implementing highlevel and not just the behavior of specific instances). Take the unit of Topic as an example, define the <code class="highlighter-rouge">title</code> and <code class="highlighter-rouge">content</code> of the post, and then define <code class="highlighter-rouge">two foreign keys</code>. One is node, which defines the node where the post is published; the other is author, which defines the author of the post. For a post, I want to be able to get information on all topics by the name of a node (which can be understood as <code class="highlighter-rouge">slug</code> here) or an author’s name (username), so you need to define:</p>
 
 <figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">get_all_topic_by_node_slug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node_slug</span><span class="p">):</span>
         <span class="n">query</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_queryset</span><span class="p">()</span><span class="o">.</span><span class="nb">filter</span><span class="p">(</span><span class="n">node__slug</span><span class="o">=</span><span class="n">node_slug</span><span class="p">)</span><span class="o">.</span> \
@@ -1417,35 +1407,28 @@ catch (Throwable e) {
             <span class="n">order_by</span><span class="p">(</span><span class="s">'-last_replied_time'</span><span class="p">,</span> <span class="s">'-reply_count'</span><span class="p">,</span> <span class="s">'-created_at'</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">query</span></code></pre></figure>
 
-<p>通过 queryset() 的重定义，你可以用 <code class="highlighter-rouge">Node.objects.get_all_topic_by_node_slug('slug-example')</code> 来获取主题信息。而如果你不这样做的话，就需要在每个 views 的函数里来多次重新定义，并且一旦模型发生更改就很难再修正过来了，比 hard-coded 还复杂的重写。</p>
+<p>With the redefinition of queryset() , you can get the subject information with <code class="highlighter-rouge">Node.objects.get_all_topic_by_node_slug('slug-example')</code>. And if you don’t do this, you need to redefine it multiple times in each view’s function, and once the model changes, it’s hard to fix it.</p>
 
-<p>而 form 里没有为我们定义更高层次的抽象，但并不妨碍我们进行 OOP，以 authen 的 registrationForm 为例，我们在 forms 里进行了 <code class="highlighter-rouge">clean_username</code>,<code class="highlighter-rouge">clean_mail</code>,重写了默认的 clean 方法，在进行 <code class="highlighter-rouge">is_valid()</code> 验证的时候就会直接提出错误信息。</p>
+<p>The form does not define a higher level of abstraction for us, but does not prevent us from doing OOP. Take authen’s registrationForm as an example. We made <code class="highlighter-rouge">clean_username</code>, <code class="highlighter-rouge">clean_mail</code> in the forms, and overridden the default clean method. When the <code class="highlighter-rouge">is_valid()</code> verification is performed, an error message is directly raised.</p>
 
 <hr />
 
-<p>在前端方面，自己完全采用 bootstrap 的架构。</p>
+<p>As for the <strong>Front End</strong>, I fully adopt the architecture of bootstrap.</p>
 
-<p>关于手写 HTML 还是用 <code class="highlighter-rouge">Crispyforms/Django-bootstrap3 </code>，这种东西见仁见智，我觉得还是用纯粹的手写 HTML 比较好，因为这样的解决方式是前后端分离的，在下次学习其他框架的时候也能用到，你只需要传给前端需要用到的 API 就行。</p>
-
-<p>比如</p>
+<p>Regarding <strong>handwritten HTML</strong> or <code class="highlighter-rouge">Crispyforms/Django-bootstrap3 </code>, this kind of thing is a matter of opinion. I think it is better to use pure handwritten HTML, because this solution is separated from the front and back, and can be used the next time you learn other frameworks. By the way, you only need to pass the API to the front end.take an example:</p>
 
 <figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;label</span> <span class="na">for=</span><span class="s">"id_"</span> <span class="na">class=</span><span class="s">"col-md-3 control-label"</span><span class="nt">&gt;&lt;/label&gt;</span>
                         <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"col-md-9"</span><span class="nt">&gt;</span>
                             <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"text"</span> <span class="na">class=</span><span class="s">"form-control"</span> <span class="na">id=</span><span class="s">"id_"</span> <span class="na">required</span> <span class="na">name=</span><span class="s">""</span> <span class="na">autofocus</span><span class="nt">&gt;</span>
-                            <span class="nt">&lt;p</span> <span class="na">class=</span><span class="s">"help-block"</span><span class="nt">&gt;</span>请输入你的用户名<span class="nt">&lt;/p&gt;</span>
+                            <span class="nt">&lt;p</span> <span class="na">class=</span><span class="s">"help-block"</span><span class="nt">&gt;</span>Please input your username<span class="nt">&lt;/p&gt;</span></code></pre></figure>
 
-```<span class="nt">&lt;label</span> <span class="na">for=</span><span class="s">"id_"</span> <span class="na">class=</span><span class="s">"col-md-3 control-label"</span><span class="nt">&gt;&lt;/label&gt;</span>
-                        <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"col-md-9"</span><span class="nt">&gt;</span>
-                            <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"text"</span> <span class="na">class=</span><span class="s">"form-control"</span> <span class="na">id=</span><span class="s">"id_"</span> <span class="na">required</span> <span class="na">name=</span><span class="s">""</span> <span class="na">autofocus</span><span class="nt">&gt;</span>
-                            <span class="nt">&lt;p</span> <span class="na">class=</span><span class="s">"help-block"</span><span class="nt">&gt;</span>请输入你的用户名<span class="nt">&lt;/p&gt;</span></code></pre></figure>
-
-<p>就要比 <code class="highlighter-rouge"><span class="p">{</span><span class="w"> </span><span class="err">form.as_p</span><span class="w"> </span><span class="p">}</span></code> 或者 <code class="highlighter-rouge"><span class="p">{</span><span class="w"> </span><span class="err">crispy</span><span class="w"> </span><span class="err">form</span><span class="w"> </span><span class="p">}</span><span class="w"> </span></code>更能实现定制化，crispy-forms 的思想是在 forms 里设置 layout 和对应的 label，想要更新前端显示需要在后端修改代码而不是 CSS 文件……</p>
+<p>It is more customizable than <code class="highlighter-rouge"><span class="p">{</span><span class="w"> </span><span class="err">form.as_p</span><span class="w"> </span><span class="p">}</span></code> or <code class="highlighter-rouge"><span class="p">{</span><span class="w"> </span><span class="err">crispy</span><span class="w"> </span><span class="err">form</span><span class="w"> </span><span class="p">}</span><span class="w"> </span></code>. The idea of crispy-forms is to set the layout and the corresponding label in the forms. To update the front-end display, you need to modify the code in the backend rather than CSS files,it is against the trendency.</p>
 
 <hr />
 
-<p>Mysql 问题还是挺多的。一开始的情况下，英文发帖是正常的。之后按照 <a href="hthttps://blog.ionelmc.ro/2014/12/28/terrible-choices-mysql/tps://blog.ionelmc.ro/2014/12/28/terrible-choices-mysql/">mysql-utf-8</a> 里的方法采用 utf-8 编码之后就会发生只有管理员可以正常发帖，而其他用户在发帖时会提醒 second column not exists ,SO 上的解决方法都没有效果，最后分析下觉得有可能是因为 user 和 forumUser 对应的 id 不对其造成的，所以手动添加一个 request.User 后解决问题。</p>
+<p>The MySQL problem is still quite a lot. In the beginning, English posting is normal. Then following <a href="hthttps://blog.ionelmc.ro/2014/12/28/terrible-choices-mysql/tps://blog.ionelmc.ro/2014/12/28/terrible- The choices-mysql/">mysql-utf-8</a> method to uses <code class="highlighter-rouge">utf-8</code> encoding, only the administrator can post normally, while other users will remind the second column not exists when posting.  Finally analyzes that it is possibly because the id corresponding to user and forumUser is not even, so manually add a <code class="highlighter-rouge">request.User </code> and all will be fine.</p>
 
-<p>下次还是用 PG 吧……为什么第一次用 onetooneField 的时候就没有这种错误？要用 abstractUser 去扩展 User 模型去……</p>
+<p>Next time I will prefer to use <code class="highlighter-rouge">PostgreSql</code> and <code class="highlighter-rouge">nosql</code> to solve the problem ,and using abstractUser to expand User model.</p>
 
 <hr />
 
@@ -1636,7 +1619,7 @@ At the time of the study, I wrote a calculator demo that adds genuine. When the 
       <li>
         <header class="post-header">
           <h1 class="post-title">
-            <a class="post-link" href="/2015/03/11/Dynamic-Programming-Explanation/">DP 解题思路</a>
+            <a class="post-link" href="/2015/03/11/Dynamic-Programming-Explanation/">Thoughts Of Solving Dynamic Programming Problems</a>
           </h1>
 
           <p class="post-meta">Mar 11, 2015 • 
@@ -1647,41 +1630,39 @@ At the time of the study, I wrote a calculator demo that adds genuine. When the 
         </header>
 
         <div class="post-content">
-          <p>动态规划例题及 Leetcode 题解
+          <p>Solving the dynamic programming problems
 <!-- more --></p>
 
-<h4 id="关于-dp">关于 DP</h4>
+<p><a href="/../translation/2015-03-11-Dynamic-Programming-Explanation.html">这篇文章对应的中文版</a></p>
+
+<h4 id="about-dp">About DP</h4>
 
 <ul>
   <li>
-    <p>动态规划是一门非常重要的算法，对它的掌握应该是计算机科学专业学生的基本功</p>
+    <p>Dynamic programming is a very important algorithm, and mastery of it should be the basic skills for computer science students.</p>
   </li>
   <li>
-    <p>下面来把对这类算法的理解进行尽可能多的解释</p>
+    <p>Let’s explain as much as possible about the understanding of this type of algorithm.</p>
   </li>
   <li>
-    <p>关键是 <strong>状态定义</strong> 和 <strong>状态转移方程</strong></p>
+    <p>The key is <code class="highlighter-rouge">state definition</code> and <code class="highlighter-rouge">state transition equation</code></p>
   </li>
 </ul>
 
 <hr />
 
-<h4 id="最长递增子序列">最长递增子序列</h4>
+<h4 id="longest-increasing-subsequence">Longest Increasing Subsequence</h4>
 
 <blockquote>
-  <p>给定K个整数的序列{ N1, N2, …, NK }，其任意连续子序列可表示为{ Ni, Ni+1, …, Nj }，其中 1 &lt;= i &lt;= j &lt;= K。最大连续子序列是所有连续子序中元素和最大的一个， 例如给定序列{ -2, 11, -4, 13, -5, -2 }，其最大连续子序列为{ 11, -4, 13 }，最大和为20。</p>
+  <p>Given a sequence of K integers { N1, N2, …, NK }, any contiguous subsequence can be expressed as { Ni, Ni+1, …, Nj }, where 1 &lt;= i &lt;= j &lt; = K. The largest contiguous subsequence is the element and the largest one of all consecutive subsequences, such as the given sequence { -2, 11, -4, 13, -5, -2 }, whose largest contiguous subsequence is { 11, -4, 13 } and the maximum sum is 20.</p>
 </blockquote>
 
 <ul>
   <li>
-    <p>定义<code class="highlighter-rouge">sum[i]</code>为’以A[i]作为最后一个结尾的连续子序列的最大值’</p>
+    <p>Define <code class="highlighter-rouge">sum[i]</code> as the <code class="highlighter-rouge">maximum value of contiguous subsequence with A[i] as the last end</code></p>
   </li>
-  <li>
-    <p>状态转移方程为：sum[i]=max(sum[i-1]+a[i],a[i])</p>
-  </li>
-  <li>
-    <p>实际求解的时候则是，只要sum&gt;0，那么加上之后的a[i]都还是有可能使max增大的；但如果sum&lt;0，则应该立即抛弃，从0开始计算下一个</p>
-  </li>
+  <li>The state transition equation is: <code class="highlighter-rouge">sum[i]=max(sum[i-1]+a[i], a[i])</code></li>
+  <li>T he actual solution is, as long as sum&gt;0, then adding a[i] is still possible to increase max; but if sum&lt;0, it should be discarded immediately, starting from 0 to calculate the next</li>
 </ul>
 
 <figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">a</span> <span class="o">=</span> <span class="p">{</span><span class="mi">4</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="o">-</span><span class="mi">12</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">9</span><span class="p">}</span>
@@ -1699,10 +1680,10 @@ At the time of the study, I wrote a calculator demo that adds genuine. When the 
 <figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kt">int</span> <span class="nf">LIS</span><span class="o">(</span><span class="kt">int</span><span class="o">[]</span> <span class="n">arr</span><span class="o">)</span> <span class="o">{</span>
         <span class="kt">int</span> <span class="n">i</span><span class="o">,</span> <span class="n">j</span><span class="o">,</span> <span class="n">max</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
         <span class="kt">int</span> <span class="n">n</span> <span class="o">=</span> <span class="n">arr</span><span class="o">.</span><span class="na">length</span><span class="o">;</span>
-        <span class="kt">int</span><span class="o">[]</span> <span class="n">list</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">int</span><span class="o">[</span><span class="n">n</span><span class="o">];</span> <span class="c1">// 存储长度
+        <span class="kt">int</span><span class="o">[]</span> <span class="n">list</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">int</span><span class="o">[</span><span class="n">n</span><span class="o">];</span> <span class="c1">// length
 </span>
         <span class="n">Arrays</span><span class="o">.</span><span class="na">fill</span><span class="o">(</span><span class="n">list</span><span class="o">,</span> <span class="mi">1</span><span class="o">);</span>
-        <span class="kt">int</span><span class="o">[]</span> <span class="n">index</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">int</span><span class="o">[</span><span class="n">n</span><span class="o">];</span> <span class="c1">// 存储距离
+        <span class="kt">int</span><span class="o">[]</span> <span class="n">index</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">int</span><span class="o">[</span><span class="n">n</span><span class="o">];</span> <span class="c1">// distance
 </span>
         <span class="n">Arrays</span><span class="o">.</span><span class="na">fill</span><span class="o">(</span><span class="n">index</span><span class="o">,</span> <span class="o">-</span><span class="mi">1</span><span class="o">);</span>
 
@@ -1715,7 +1696,7 @@ At the time of the study, I wrote a calculator demo that adds genuine. When the 
                 <span class="o">}</span>
             <span class="o">}</span>
 
-        <span class="c1">// 选择出最大的
+        <span class="c1">// choose the max
 </span>
         <span class="kt">int</span> <span class="n">max_index</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
 
@@ -1733,28 +1714,28 @@ At the time of the study, I wrote a calculator demo that adds genuine. When the 
             <span class="n">builder</span><span class="o">.</span><span class="na">insert</span><span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="n">arr</span><span class="o">[</span><span class="n">next_index</span><span class="o">]</span> <span class="o">+</span> <span class="s">" "</span><span class="o">);</span>
             <span class="n">next_index</span> <span class="o">=</span> <span class="n">index</span><span class="o">[</span><span class="n">next_index</span><span class="o">];</span>
         <span class="o">}</span>
-        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">builder</span><span class="o">.</span><span class="na">toString</span><span class="o">());</span> <span class="c1">// 输出子序列
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">builder</span><span class="o">.</span><span class="na">toString</span><span class="o">());</span> <span class="c1">// print the result
 </span>
         <span class="k">return</span> <span class="n">max</span><span class="o">;</span></code></pre></figure>
 
 <hr />
 
-<h4 id="数塔问题">数塔问题</h4>
+<h4 id="number-tower-problem">Number tower problem</h4>
 <p><img src="/images/hdu-2084.jpg" alt="img" /></p>
 
 <blockquote>
-  <p>要求从顶层到底层，每一层只能走到相邻节点，求经过的数字之和是多少</p>
+  <p>From the top layer to the bottom layer, each layer can only go to the adjacent node, and calculate the sum of the numbers</p>
 </blockquote>
 
 <ul>
   <li>
-    <p>定义状态方程：max[i,j] 表示以 [i,j] 作为起始点，所经过的最大的数字之和。则 max[1,1] 是我们要求的目标</p>
+    <p>Define the state equation: <code class="highlighter-rouge">max[i,j]</code> represents the sum of the largest numbers passed by [i,j] as the starting point. Then <code class="highlighter-rouge">max[1,1]</code> is our target</p>
   </li>
   <li>
-    <p>定义状态转移方程：max[i,j]=num[i,j]+max(max(i+1,j),max(i+1,j+1))</p>
+    <p>Define the state transition equation: <code class="highlighter-rouge">max[i,j]=num[i,j]+max(max(i+1,j),max(i+1,j+1))</code></p>
   </li>
   <li>
-    <p>接下来可以自底向上，也可以自顶向下，具体参见之前所写的关于<a href="http://acm.hdu.edu.cn/showproblem.php?pid=2084">hdu2084</a>的<a href="http://blog.csdn.net/allianzcortex/article/details/41620503">博文</a></p>
+    <p>Then you can choose to solve it from top to bottom or from bottom to top</p>
   </li>
 </ul>
 
@@ -1786,18 +1767,18 @@ At the time of the study, I wrote a calculator demo that adds genuine. When the 
 
 <hr />
 
-<h4 id="背包问题">背包问题</h4>
+<h4 id="backpack-problem">Backpack Problem</h4>
 
 <ul>
-  <li>
-    <p>有著名的背包问题九讲，这里自己先写最基本的</p>
-  </li>
-  <li>
-    <p><code class="highlighter-rouge">有N件物品和一个容量为V的背包。第i件物品的费用是c[i]，价值是w[i]。求解将哪些物品装入背包可使价值总和最大</code></p>
-  </li>
-  <li>
-    <p>如果单纯使用递归来求解 DP 的话有两种思路</p>
-  </li>
+  <li>There are different versions of backpack problem.Let me illustrate the basic one.</li>
+</ul>
+
+<blockquote>
+  <p>There are N items and a backpack with a capacity of V. The cost of the i-th item is c[i] and the value is w[i]. Decide which items are loaded into the backpack so the sum of the values can be max.</p>
+</blockquote>
+
+<ul>
+  <li>Solve it with Java.There are two types of answer,see the comment.</li>
 </ul>
 
 <figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kt">int</span> <span class="nf">Knapsack1</span><span class="o">(</span><span class="kt">int</span><span class="o">[]</span> <span class="n">value</span><span class="o">,</span> <span class="kt">int</span><span class="o">[]</span> <span class="n">weight</span><span class="o">,</span> <span class="kt">int</span> <span class="n">capacity</span><span class="o">,</span> <span class="kt">int</span> <span class="n">number</span><span class="o">)</span> <span class="o">{</span>
@@ -1821,40 +1802,38 @@ At the time of the study, I wrote a calculator demo that adds genuine. When the 
                     <span class="n">Knapsack2</span><span class="o">(</span><span class="n">value</span><span class="o">,</span> <span class="n">weight</span><span class="o">,</span> <span class="n">capacity</span><span class="o">,</span> <span class="n">index</span> <span class="o">+</span> <span class="mi">1</span><span class="o">));</span>
     <span class="o">}</span>
 
-        <span class="c1">// KnapSack 问题，两种调用
+        <span class="c1">// two ways to solve it
 </span>
         <span class="kt">int</span><span class="o">[]</span> <span class="n">value</span> <span class="o">=</span> <span class="o">{</span><span class="mi">60</span><span class="o">,</span> <span class="mi">100</span><span class="o">,</span> <span class="mi">120</span><span class="o">};</span>
         <span class="kt">int</span><span class="o">[]</span> <span class="n">weight</span> <span class="o">=</span> <span class="o">{</span><span class="mi">10</span><span class="o">,</span> <span class="mi">20</span><span class="o">,</span> <span class="mi">30</span><span class="o">};</span>
         <span class="kt">int</span> <span class="n">capacity</span> <span class="o">=</span> <span class="mi">50</span><span class="o">;</span>
         <span class="kt">int</span> <span class="n">number</span> <span class="o">=</span> <span class="n">value</span><span class="o">.</span><span class="na">length</span><span class="o">;</span>
-        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">dp</span><span class="o">.</span><span class="na">Knapsack1</span><span class="o">(</span><span class="n">value</span><span class="o">,</span> <span class="n">weight</span><span class="o">,</span> <span class="n">capacity</span><span class="o">,</span> <span class="n">number</span><span class="o">));</span> <span class="c1">// 220
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">dp</span><span class="o">.</span><span class="na">Knapsack1</span><span class="o">(</span><span class="n">value</span><span class="o">,</span> <span class="n">weight</span><span class="o">,</span> <span class="n">capacity</span><span class="o">,</span> <span class="n">number</span><span class="o">));</span> <span class="c1">// final result is 220
 </span>
         <span class="kt">int</span> <span class="n">index</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
-        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">dp</span><span class="o">.</span><span class="na">Knapsack2</span><span class="o">(</span><span class="n">value</span><span class="o">,</span> <span class="n">weight</span><span class="o">,</span> <span class="n">capacity</span><span class="o">,</span> <span class="n">index</span><span class="o">));</span>  <span class="c1">// 220</span></code></pre></figure>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">dp</span><span class="o">.</span><span class="na">Knapsack2</span><span class="o">(</span><span class="n">value</span><span class="o">,</span> <span class="n">weight</span><span class="o">,</span> <span class="n">capacity</span><span class="o">,</span> <span class="n">index</span><span class="o">));</span>  <span class="c1">// final result is also 220</span></code></pre></figure>
 
 <hr />
 
-<h4 id="leetcode-上相关题目">Leetcode 上相关题目</h4>
-
-<h5 id="303-range-sum-quwey---immutable">303 Range Sum Quwey - Immutable</h5>
+<h3 id="303-range-sum-quwey---immutable">303 Range Sum Quwey - Immutable</h3>
 
 <ul>
   <li>
-    <p><a href="https://leetcode.com/problems/range-sum-query-immutable/">链接</a></p>
+    <p><a href="https://leetcode.com/problems/range-sum-query-immutable/">Link</a></p>
   </li>
   <li>
-    <p>大意：给出一个数组，要求返回任意两个区间范围的的值</p>
+    <p>About the meaning：Give an array that returns the value of any two range of ranges</p>
   </li>
   <li>
-    <p>思路：题目中说到<code class="highlighter-rouge">many calls to function</code>，所以多次遍历求解肯定会TLE；而sum[i,j]=sum[j]-sum[i-1]，所以一次遍历求出所有的sum值之后做减法就可以。注意要用全局变量</p>
+    <p>Idea: The rpblem content says <code class="highlighter-rouge">many calls to function</code>, so the traversal solution will definitely be <strong>TLE</strong>（Time Limit Exceeded); and <code class="highlighter-rouge">sum[i,j]=sum[j]-sum[i-1]</code> is obvious, so all the sums are found in one pass. After the value is done, subtraction is fine. Note you may need to use global variables</p>
   </li>
   <li>
-    <p>代码：</p>
+    <p>code:</p>
   </li>
 </ul>
 
-<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="c1">// c++版
-//用vector&lt;int&gt; 来存储状态会更好
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="c1">// written in c++
+// Using vector&lt;int&gt; to add status will be better
 </span><span class="n">class</span> <span class="n">NumArray</span> <span class="p">{</span>
     <span class="kt">int</span> <span class="n">dp</span><span class="p">[</span><span class="mi">100000</span><span class="p">];</span>
 <span class="n">public</span><span class="o">:</span>
@@ -1876,7 +1855,7 @@ At the time of the study, I wrote a calculator demo that adds genuine. When the 
     <span class="p">}</span>
 <span class="p">};</span></code></pre></figure>
 
-<p>python版：</p>
+<p>Writen in Python：</p>
 
 <figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">class</span> <span class="nc">NumArray</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nums</span><span class="p">):</span>
@@ -1894,22 +1873,22 @@ At the time of the study, I wrote a calculator demo that adds genuine. When the 
 
 <ul>
   <li>
-    <p><a href="https://leetcode.com/problems/climbing-stairs/">链接</a></p>
+    <p><a href="https://leetcode.com/problems/climbing-stairs/">link</a></p>
   </li>
   <li>
-    <p>大意：登上一个楼梯，可以走1步，可以走两步，问走到n步有几种解法</p>
+    <p>About the meaning：Ascend a staircase, you can take 1 step or  take two steps.if you go to n steps, how many solutions will you have?</p>
   </li>
   <li>
-    <p>思路：用dp[n]来表示走到n步的方法数。对dp[n-1],只能选择走1步；对dp[n-2]，
-如果选择1+1，就会和dp[n-1]有重叠，只能选择2步</p>
+    <p>Idea: Use dp[n] to indicate the number of methods to go to n steps. For dp[n-1], you can only choose to take 1 step; for dp[n-2],
+If you choose 1+1, it will overlap with dp[n-1], you can only choose 2 steps.</p>
   </li>
   <li>
-    <p>代码：
-C++版：</p>
+    <p>Code：</p>
   </li>
 </ul>
 
-<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="n">class</span> <span class="n">Solution</span> <span class="p">{</span>
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="n">Written</span> <span class="n">in</span> <span class="n">C</span><span class="o">++</span>
+<span class="n">class</span> <span class="n">Solution</span> <span class="p">{</span>
 <span class="n">public</span><span class="o">:</span>
     <span class="kt">int</span> <span class="n">climbStairs</span><span class="p">(</span><span class="kt">int</span> <span class="n">n</span><span class="p">)</span> <span class="p">{</span>
         <span class="kt">int</span> <span class="n">dp</span><span class="p">[</span><span class="n">n</span><span class="p">]</span><span class="o">=</span><span class="p">{</span><span class="mi">0</span><span class="p">};</span>
@@ -1922,9 +1901,9 @@ C++版：</p>
     <span class="p">}</span>
 <span class="p">};</span></code></pre></figure>
 
-<p>python版：</p>
-
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">class</span> <span class="nc">Solution</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="c"># written in Python
+</span>
+<span class="k">class</span> <span class="nc">Solution</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">dp</span><span class="o">=</span><span class="p">{}</span>
         
@@ -1941,22 +1920,22 @@ C++版：</p>
 
 <ul>
   <li>
-    <p><a href="https://leetcode.com/problems/minimum-path-sum/">链接</a></p>
+    <p><a href="https://leetcode.com/problems/minimum-path-sum/">link</a></p>
   </li>
   <li>
-    <p>大意：m*n的全为正数的矩阵，可以向右向下移动，求从左上到右下经过的距离之和最小值</p>
+    <p>About the meaning: <code class="highlighter-rouge">m*n</code> is a matrix of all positive numbers, which can be moved downwards to the right,find the sum of the distances from the upper left to the lower right.</p>
   </li>
   <li>
-    <p>思路：动态规划，用dp[i][j]表示以i,j作为最后一个方块所经过的最短步数
-则 dp[i][j]=max(dp[i-1][j]+grid[i][j],dp[i][j-1]+gird[i][j]</p>
+    <p>Idea: Dynamic programming.using dp[i][j] to represent the shortest number of steps taken with i, j as the last square.
+Then <code class="highlighter-rouge">dp[i][j]=max(dp[i-1][j]+grid[i][j],dp[i][j-1]+gird[i][j]</code>,we just need to implement the equation.</p>
   </li>
   <li>
-    <p>代码：
-C++ 版：</p>
+    <p>Code:</p>
   </li>
 </ul>
 
-<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="n">class</span> <span class="n">Solution</span> <span class="p">{</span>
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="c1">// written in C++
+</span><span class="n">class</span> <span class="n">Solution</span> <span class="p">{</span>
 <span class="n">public</span><span class="o">:</span>
     <span class="kt">int</span> <span class="n">minPathSum</span><span class="p">(</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&gt;&amp;</span> <span class="n">grid</span><span class="p">)</span> <span class="p">{</span>
         <span class="k">if</span> <span class="p">(</span><span class="n">grid</span><span class="p">.</span><span class="n">empty</span><span class="p">())</span> <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
@@ -2588,7 +2567,7 @@ I will decide during the next 48 hours
       <li>
         <header class="post-header">
           <h1 class="post-title">
-            <a class="post-link" href="/2014/06/22/Python-Multiprocessing-Multithreading/">Python one-line 实现多进程和多线程(修正版)</a>
+            <a class="post-link" href="/2014/06/22/Python-Multiprocessing-Multithreading/">One Line To Achieve MultiProcess and MultiThreads In Python</a>
           </h1>
 
           <p class="post-meta">Jun 22, 2014 • 
@@ -2599,23 +2578,25 @@ I will decide during the next 48 hours
         </header>
 
         <div class="post-content">
-          <p>用 <code class="highlighter-rouge">multiprocessing</code> 和 <code class="highlighter-rouge">multiprocessing.dummy</code> 来实现多进程/实现多进程和多线程，增加了 ThreadPoolExecutor 以及其他内容</p>
+          <p>Using <code class="highlighter-rouge">multiprocessing</code> and <code class="highlighter-rouge">multiprocessing.dummy</code> to implement multi-process and multi-threading, adding ThreadPoolExecutor and other content.</p>
 
 <!-- more -->
 
-<h4 id="直接使用-one-line">直接使用 one-line</h4>
+<p><a href="/../translation/2014-06-22-Python-Multiprocessing-Multithreading.html">这篇文章对应的中文版</a></p>
 
-<p>关于 multiprocessing 和 Thread 之间的 pros 和 cons 就不多做描述了，因为关键是我们要让我们的代码来并行对吧:-D</p>
+<h4 id="just-add-one-line">Just Add One-line</h4>
 
-<p>关于使用就直接看这篇文章 <a href="http://chriskiehl.com/article/parallelism-in-one-line/">parallelism-in-one-line</a> 好啦</p>
+<p>There is not much description about pros and cons between multiprocessing and Thread, because the key is that we want our code to be parallel:-D</p>
 
-<p>来提供一个所写的例子：</p>
+<p>Read this article [parallelism-in-one-line] (http://chriskiehl.com/article/parallelism-in-one-line/) to get a rough impression.</p>
+
+<p>Providing an example written:</p>
 
 <figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="c"># -*- coding:utf-8 -*-
 </span>
 
 <span class="s">"""
-对某个目录下的文件求 md5 值
+calculate the md5 value for files under one directory
 """</span>
 
 <span class="kn">import</span> <span class="nn">os</span>
@@ -2642,57 +2623,59 @@ I will decide during the next 48 hours
 </span>
     <span class="c"># random.shuffle(file_list)
 </span>
-    <span class="k">print</span> <span class="s">'共有 {} 个文件'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">file_list</span><span class="p">))</span>
+    <span class="k">print</span> <span class="s">'There are {} files'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">file_list</span><span class="p">))</span>
     <span class="n">time1</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
     <span class="k">for</span> <span class="n">filename</span> <span class="ow">in</span> <span class="n">file_list</span><span class="p">:</span>
         <span class="n">create_hash</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
-    <span class="k">print</span> <span class="s">'普通执行状况: {}'</span><span class="o">.</span><span class="n">format</span><span class="p">((</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span> <span class="o">-</span> <span class="n">time1</span><span class="p">)</span><span class="o">.</span><span class="n">total_seconds</span><span class="p">())</span>
+    <span class="k">print</span> <span class="s">'normal case: {}'</span><span class="o">.</span><span class="n">format</span><span class="p">((</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span> <span class="o">-</span> <span class="n">time1</span><span class="p">)</span><span class="o">.</span><span class="n">total_seconds</span><span class="p">())</span>
 
     <span class="n">pool</span> <span class="o">=</span> <span class="n">ProcessPool</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
     <span class="n">time2</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
     <span class="n">pool</span><span class="o">.</span><span class="nb">map</span><span class="p">(</span><span class="n">create_hash</span><span class="p">,</span> <span class="n">file_list</span><span class="p">)</span>
-    <span class="k">print</span> <span class="s">'多进程运行状况: {}'</span><span class="o">.</span><span class="n">format</span><span class="p">((</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span> <span class="o">-</span> <span class="n">time2</span><span class="p">)</span><span class="o">.</span><span class="n">total_seconds</span><span class="p">())</span>
+    <span class="k">print</span> <span class="s">'multi-process case: {}'</span><span class="o">.</span><span class="n">format</span><span class="p">((</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span> <span class="o">-</span> <span class="n">time2</span><span class="p">)</span><span class="o">.</span><span class="n">total_seconds</span><span class="p">())</span>
 
     <span class="n">pool</span> <span class="o">=</span> <span class="n">ThreadPool</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
     <span class="n">time3</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
     <span class="n">pool</span><span class="o">.</span><span class="nb">map</span><span class="p">(</span><span class="n">create_hash</span><span class="p">,</span> <span class="n">file_list</span><span class="p">)</span>
-    <span class="k">print</span> <span class="s">'多线程运行状况: {}'</span><span class="o">.</span><span class="n">format</span><span class="p">((</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span> <span class="o">-</span> <span class="n">time3</span><span class="p">)</span><span class="o">.</span><span class="n">total_seconds</span><span class="p">())</span></code></pre></figure>
+    <span class="k">print</span> <span class="s">'multi-thread: {}'</span><span class="o">.</span><span class="n">format</span><span class="p">((</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span> <span class="o">-</span> <span class="n">time3</span><span class="p">)</span><span class="o">.</span><span class="n">total_seconds</span><span class="p">())</span></code></pre></figure>
 
-<p>有这样几个注意事项：</p>
+<p>There are something to mention：</p>
 
 <ul>
   <li>
-    <p>如果对所产生的文件列表进行 <code class="highlighter-rouge">shuflle</code> 操作让文件变得无序的话，所有消耗时间都会变长。说明线程在操作文件时是 <code class="highlighter-rouge">I/O Bound</code> 的行为。</p>
+    <p>If the <code class="highlighter-rouge">shuflle</code> operation is performed on the generated file list to make the file unordered,then all the time will be longer. Explain that the thread is <code class="highlighter-rouge">I/O Bound</code> when it manipulates the file.</p>
   </li>
   <li>
-    <p>第 22 行计算从 1-300 的阶乘，非常典型的消耗 CPU 行为。在这种情况下时间运行状况为：</p>
+    <p>Line 22 calculates the factorial from 1-300, which is very typical of CPU consumption. In this case the time health is:</p>
 
-    <div class="highlighter-rouge"><pre class="highlight"><code>  共有 403345 个文件
-  普通执行状况: 16.230872
-  多进程运行状况: 4.874608
-  多线程运行状况: 21.812273
+    <div class="highlighter-rouge"><pre class="highlight"><code>  There are 403345 files
+  normal case: 16.230872
+  multi-process: 4.874608
+  multi-thread: 21.812273
 
 </code></pre>
     </div>
-    <p>可以看出多进程操作有明显的优势</p>
-  </li>
-  <li>如果注释掉第 22 行，运行状况为
-    <div class="highlighter-rouge"><pre class="highlight"><code>  共有 403365 个文件
-  普通执行状况: 0.182251
-  多进程运行状况: 0.39652
-  多线程运行状况: 0.234787
+    <p>There are obvious multi-process advantages on multi=progress. <code class="highlighter-rouge">4&lt;16&lt;21</code> it is not difficult to choose.</p>
+
+    <p>If we comment the line 22,then situation will be:</p>
+    <div class="highlighter-rouge"><pre class="highlight"><code>  There are 403365 files
+  normal case: 0.182251
+  multi-process: 0.39652
+  multi-thread: 0.234787
+
 </code></pre>
     </div>
-    <p>可以看出多线程要比多进程的运行效果好，但仍然不如普通的执行情况。一个解释是切换目录造成的 I/O 阻塞是小于线程之间切换的 context switch 。在用 requests 写爬虫的时候检测到的 <code class="highlighter-rouge">multiprocessing.dummy</code> 运行效果要比单线程快的多。</p>
   </li>
-  <li>为了安全，在 map() 后还可以再加上 <code class="highlighter-rouge">pool.close()  pool.join()</code>。<code class="highlighter-rouge">close()</code> 的作用是 <code class="highlighter-rouge">Prevents any more tasks from being submitted to the pool. Once all the tasks have been completed the worker processes will exit.</code>,<code class="highlighter-rouge">join</code> 的作用是 <code class="highlighter-rouge">Wait for the worker processes to exit</code></li>
+  <li>
+    <p>For security, you can add <code class="highlighter-rouge">pool.close() pool.join()</code> after map() . The role of <code class="highlighter-rouge">close()</code> is <code class="highlighter-rouge">Prevents any more tasks from being submitted to the pool. Once all the tasks have been completed , the worker processes will exit.</code>, <code class="highlighter-rouge">join</code> is <code class="highlighter-rouge">Wait for the worker processes to exit</code></p>
+  </li>
 </ul>
 
 <h5 id="lock">Lock</h5>
 
-<p>Lock 的作用是对一些敏感的函数或者变量，确保只有一个进程/线程来运行。同时因为 Lock 是不可 pickable 的，所以不能作为 map() 的参数传进去。直接使用全局变量来解。</p>
+<p>The role of <code class="highlighter-rouge">Lock</code> is for some sensitive functions or variables, ensuring that only one process/thread is running. Also because Lock is not pickable, it cannot be passed as a parameter to map() . Use global variables directly to solve.</p>
 
-<p>一个例子如下：</p>
+<p>An example is as follows:</p>
 
 <figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">multiprocessing.Lock</span>
 
@@ -2712,27 +2695,28 @@ I will decide during the next 48 hours
     <span class="k">with</span> <span class="n">l</span><span class="p">:</span>
         <span class="c"># do-something,it will release automatic</span></code></pre></figure>
 
-<p>with lock 实现了 context manager，可以类比于 Java 的 <code class="highlighter-rouge">Synchronized</code> 关键字。在测试时候发现如果所有要执行的函数都被置于 lock 下，那么多进程的执行时间甚至比
-顺序执行还要差。</p>
+<p><code class="highlighter-rouge">With lock</code> implements the context manager, which can be compared to Java’s <code class="highlighter-rouge">Synchronized</code> keyword. During the test, it was found that if all the functions to be executed were placed under lock, the execution time of multiple processes was even worse than the sequential execution.</p>
 
-<h5 id="关于-apply_async">关于 apply_async</h5>
+<h5 id="about-apply_async">About apply_async</h5>
 
-<p>在 multiprocessing 的 pool 里除了 map/map_async 外还提供了 apply/apply_async。主要区别包括：</p>
+<p>In the multiprocessing pool, <code class="highlighter-rouge">apply/apply_async</code> is provided in addition to map/map_async. The main differences include:</p>
 
 <ul>
   <li>
-    <p>map/map_async 可以接受一个包含大量参数的 list，并把这个 list 的每个元素发给要执行的函数。apply/apply_async 则只能接受类似于 tuple 的一个参数，如 <code class="highlighter-rouge">(1,)</code></p>
+    <p>map/map_async can accept a list containing a large number of arguments and send each element of the list to the function to be executed. Apply/apply_async only accepts one parameter like tuple, such as <code class="highlighter-rouge">(1,)</code></p>
   </li>
   <li>
-    <p>map/apply 都是阻塞型的，也就是返回时间取决于执行最长的那个时间，在所有任务执行完后一起返回。而 map_async/apply_async 则是在开始执行任务时就返回一个 AsyncResult 对象，之后用 <code class="highlighter-rouge">.get()</code> 方法来得到结果。来做一个说明：</p>
+    <p>map/apply is block-type, that is, the return time depends on the longest execution time and returns after all tasks have been executed. Map_async/apply_async returns an AsyncResult object when it starts executing the task, and then uses the <code class="highlighter-rouge">.get()</code> method to get the result.</p>
   </li>
   <li>
-    <p>map_async/apply_async 相比 map/apply 多了一个参数:callback。callback 是一个只接受一个参数的函数，用来对执行的结果进行 ` 写入文件/读入数据库` 等操作。</p>
+    <p>map_async/apply_async has one more parameter than map/apply: callback. Callback is a function that accepts only one parameter and is used to perform operations such as <code class="highlighter-rouge">write file/read into database</code> on the result of the execution.</p>
   </li>
   <li>
-    <p>最喜欢使用的两个就是 map 和 apply_async，其中 map 的输出和输入的顺序一致，apply_async 输出和输入顺序无关。进行一个简单的比较如下：</p>
+    <p>The two favorite ones are map and apply_async, where the output of map is the same as the order of the input, and the apply_async output is independent of the input order.</p>
   </li>
 </ul>
+
+<p>Make a simple comparison as follows:</p>
 
 <figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">multiprocessing</span>
 <span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
@@ -2741,6 +2725,8 @@ I will decide during the next 48 hours
 <span class="n">l</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">Lock</span><span class="p">()</span>
 
 <span class="k">def</span> <span class="nf">cal</span><span class="p">(</span><span class="n">f</span><span class="p">):</span>
+    <span class="c"># test lock 
+</span>
     <span class="c"># with l:
 </span>
     <span class="c">#     #print f
@@ -2753,12 +2739,12 @@ I will decide during the next 48 hours
 </span>
     <span class="c">#     return 2**f
 </span>
-    <span class="k">print</span> <span class="p">(</span><span class="s">'{} 出现'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">f</span><span class="p">))</span>
+    <span class="k">print</span> <span class="p">(</span><span class="s">'{} occurs'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">f</span><span class="p">))</span>
     <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">f</span><span class="p">):</span>
             <span class="n">temp</span> <span class="o">=</span> <span class="nb">reduce</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">x</span> <span class="o">*</span> <span class="n">y</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">40000</span><span class="p">))</span>
         <span class="c"># temp = reduce(lambda x, y: x * y, range(1, f))
 </span>
-    <span class="k">return</span> <span class="s">'计算出 {} 的乘积为 {}'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">f</span><span class="p">,</span><span class="mi">2</span><span class="o">**</span><span class="n">f</span><span class="p">)</span>
+    <span class="k">return</span> <span class="s">'calculate {} result is {}'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">f</span><span class="p">,</span><span class="mi">2</span><span class="o">**</span><span class="n">f</span><span class="p">)</span>
 
 <span class="k">if</span> <span class="n">__name__</span><span class="o">==</span><span class="s">'__main__'</span><span class="p">:</span>
 
@@ -2766,67 +2752,65 @@ I will decide during the next 48 hours
     <span class="n">date3</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
     <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="p">[</span><span class="n">pool</span><span class="o">.</span><span class="n">apply_async</span><span class="p">(</span><span class="n">cal</span><span class="p">,(</span><span class="n">x</span><span class="p">,))</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">10</span><span class="p">)]:</span>
         <span class="k">print</span> <span class="p">(</span><span class="n">c</span><span class="o">.</span><span class="n">get</span><span class="p">())</span>
-    <span class="k">print</span> <span class="p">(</span><span class="s">'总共花费时间为: {}'</span><span class="o">.</span><span class="n">format</span><span class="p">((</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">-</span><span class="n">date3</span><span class="p">)</span><span class="o">.</span><span class="n">total_seconds</span><span class="p">()))</span>
+    <span class="k">print</span> <span class="p">(</span><span class="s">'Total cost time is: {}'</span><span class="o">.</span><span class="n">format</span><span class="p">((</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">-</span><span class="n">date3</span><span class="p">)</span><span class="o">.</span><span class="n">total_seconds</span><span class="p">()))</span>
     <span class="n">pool</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
     <span class="n">pool</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
 
     <span class="n">pool</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">Pool</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
     <span class="n">date1</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
-    <span class="c">#for x in [pool.map_async(cal, range(1, 30))]:
-</span>
     <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">pool</span><span class="o">.</span><span class="nb">map</span><span class="p">(</span><span class="n">cal</span><span class="p">,</span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">10</span><span class="p">)):</span>
         <span class="k">print</span> <span class="p">(</span><span class="n">x</span><span class="p">)</span>
-    <span class="k">print</span> <span class="p">(</span><span class="s">'总共花费时间为: {}'</span><span class="o">.</span><span class="n">format</span><span class="p">((</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span> <span class="o">-</span> <span class="n">date1</span><span class="p">)</span><span class="o">.</span><span class="n">total_seconds</span><span class="p">()))</span>
+    <span class="k">print</span> <span class="p">(</span><span class="s">'Total cost time is: {}'</span><span class="o">.</span><span class="n">format</span><span class="p">((</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span> <span class="o">-</span> <span class="n">date1</span><span class="p">)</span><span class="o">.</span><span class="n">total_seconds</span><span class="p">()))</span>
     <span class="n">pool</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
     <span class="n">pool</span><span class="o">.</span><span class="n">join</span><span class="p">()</span></code></pre></figure>
 
 <p>对 pool.apply_async ，显示结果如下。可以很明显看出一旦结果执行完就返回。</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>1 出现
-2 出现
-3 出现
-4 出现
-计算出 1 的乘积为 2
-5 出现
-计算出 2 的乘积为 4
-6 出现
-计算出 3 的乘积为 8
-7 出现
-计算出 4 的乘积为 16
-8 出现
-计算出 5 的乘积为 32
-9 出现
-计算出 6 的乘积为 64
-计算出 7 的乘积为 128
-计算出 8 的乘积为 256
-计算出 9 的乘积为 512
-总共花费时间为：5.700147
+<div class="highlighter-rouge"><pre class="highlight"><code>1 occurs
+2 occurs
+3 occurs
+4 occurs
+calculate 1 result is 2
+5 occurs
+calculate 2 result is 4
+6 occurs
+calculate 3 result is 8
+7 occurs
+calculate 4 result is 16
+8 occurs
+calculate 5 result is 32
+9 occurs
+calculate 6 result is 64
+calculate 7 result is 128
+calculate 8 result is 256
+calculate 9 result is 512
+Total cost time is：5.700147
 
 </code></pre>
 </div>
 
 <p>对 pool.map，显示结果如下。可以看出它在等待所有的结果都运行完，存在明显的 block 。</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>1 出现
-2 出现
-3 出现
-4 出现
-5 出现
-6 出现
-7 出现
-8 出现
-9 出现
-// 此处会出现明显的停顿
-计算出 1 的乘积为 2
-计算出 2 的乘积为 4
-计算出 3 的乘积为 8
-计算出 4 的乘积为 16
-计算出 5 的乘积为 32
-计算出 6 的乘积为 64
-计算出 7 的乘积为 128
-计算出 8 的乘积为 256
-计算出 9 的乘积为 512
-总共花费时间为: 5.706731
+<div class="highlighter-rouge"><pre class="highlight"><code>1 occurs
+2 occurs
+3 occurs
+4 occurs
+5 occurs
+6 occurs
+7 occurs
+8 occurs
+9 occurs
+// it will pause for a few seconds
+calculate 1 result is 2
+calculate 2 result is 4
+calculate 3 result is 8
+calculate 4 result is 16
+calculate 5 result is 32
+calculate 6 result is 64
+calculate 7 result is 128
+calculate 8 result is 256
+calculate 9 result is 512
+Total cost time is: 5.706731
 
 </code></pre>
 </div>

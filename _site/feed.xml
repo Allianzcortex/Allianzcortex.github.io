@@ -5,7 +5,7 @@
   
   <link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" />
   <link href="http://localhost:4000/" rel="alternate" type="text/html" />
-  <updated>2018-10-14T23:45:09-03:00</updated>
+  <updated>2018-10-15T14:47:18-03:00</updated>
   <id>http://localhost:4000//</id>
 
   
@@ -241,21 +241,25 @@ ImportError: cannot import name 'NotSupprotedYetException'
   
     <entry>
       
-      <title type="html">ScalaTest 和 JUnit 集成，使用 Sbt 不执行测试的解决办法</title>
+      <title type="html">Run ScalaTest And JUnit On TravisCI And Some Scala99 Solutions</title>
       
-      <link href="http://localhost:4000/2017/05/21/Scala-Test-Junit-Sbt-Problem/" rel="alternate" type="text/html" title="ScalaTest 和 JUnit 集成，使用 Sbt 不执行测试的解决办法" />
+      <link href="http://localhost:4000/2017/05/21/Scala-Test-Junit-Sbt-Problem/" rel="alternate" type="text/html" title="Run ScalaTest And JUnit On TravisCI And Some Scala99 Solutions" />
       <published>2017-05-21T13:29:10-03:00</published>
       <updated>2017-05-21T13:29:10-03:00</updated>
       <id>http://localhost:4000/2017/05/21/Scala-Test-Junit-Sbt-Problem</id>
-      <content type="html" xml:base="http://localhost:4000/2017/05/21/Scala-Test-Junit-Sbt-Problem/">&lt;p&gt;ScalaTest 与 JUnit 集成后，执行 &lt;code class=&quot;highlighter-rouge&quot;&gt;sbt test&lt;/code&gt; 提示 &lt;code class=&quot;highlighter-rouge&quot;&gt;no tests are executed&lt;/code&gt; 的解决办法&lt;/p&gt;
+      <content type="html" xml:base="http://localhost:4000/2017/05/21/Scala-Test-Junit-Sbt-Problem/">&lt;p&gt;After integrating &lt;code class=&quot;highlighter-rouge&quot;&gt;ScalaTest&lt;/code&gt; with &lt;code class=&quot;highlighter-rouge&quot;&gt;JUnit&lt;/code&gt;, execute &lt;code class=&quot;highlighter-rouge&quot;&gt;sbt test&lt;/code&gt; prompt &lt;code class=&quot;highlighter-rouge&quot;&gt;no tests are executed&lt;/code&gt;.How to solve it ?&lt;/p&gt;
 
 &lt;!-- more --&gt;
+&lt;p&gt;&lt;a href=&quot;/../translation/2017-05-21-Scala-Test-Junit-Sbt-Problem.html&quot;&gt;这篇文章对应的中文版&lt;/a&gt;&lt;/p&gt;
 
-&lt;p&gt;最近在试着写一个用 Scala 解决 LeetCode 的 &lt;a href=&quot;https://github.com/Allianzcortex/Scala-LeetCode&quot;&gt;集合&lt;/a&gt;，Scala 里的单元测试一般推荐使用 ScalaTest，而大部分 Scala 使用者都有 Java 背景，所以 ScalaTest 也可以与 Junit 集成使用，参见 &lt;a href=&quot;http://www.scalatest.org/getting_started_with_junit_4_in_scala&quot;&gt;链接&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&quot;background&quot;&gt;BackGround&lt;/h3&gt;
 
-&lt;h4 id=&quot;遇到了什么问题&quot;&gt;遇到了什么问题&lt;/h4&gt;
+&lt;p&gt;I’ve recently tried to write a                            &lt;a href=&quot;https://github.com/Allianzcortex/Scala-LeetCode&quot;&gt;collection&lt;/a&gt; that solves LeetCode with Scala. ScalaTest is generally recommended for unit testing in Scala, and most Scala users have a Java background , so ScalaTest can also be integrated with JUnit, see 
+&lt;a href=&quot;http://www.scalatest.org/getting_started_with_junit_4_in_scala&quot;&gt;link&lt;/a&gt; for a further understanding&lt;/p&gt;
 
-&lt;p&gt;首先定义如下的测试代码：&lt;/p&gt;
+&lt;h3 id=&quot;what-is-the-problem&quot;&gt;What Is The Problem?&lt;/h3&gt;
+
+&lt;p&gt;At first writing test code like this ：&lt;/p&gt;
 
 &lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-scala&quot; data-lang=&quot;scala&quot;&gt;&lt;span class=&quot;k&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;org.scalatest.&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;BeforeAndAfterEach&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;FunSpec&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;FunSuite&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
 
@@ -265,16 +269,16 @@ ImportError: cannot import name 'NotSupprotedYetException'
     &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
 &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
-&lt;p&gt;然后定义如下的 &lt;strong&gt;build.sbt&lt;/strong&gt; 文件：&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;build.sbt&lt;/strong&gt; is as follows：&lt;/p&gt;
 
 &lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-scala&quot; data-lang=&quot;scala&quot;&gt;&lt;span class=&quot;n&quot;&gt;libraryDependencies&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;org.scalatest&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;scalatest_2.12&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;3.0.1&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;test&quot;&lt;/span&gt;
 &lt;span class=&quot;n&quot;&gt;libraryDependencies&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;junit&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;junit&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;4.8.1&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;test&quot;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
-&lt;p&gt;上面是 Scala-Test 最标准的代码&lt;/p&gt;
+&lt;p&gt;Above is the most standard code for &lt;code class=&quot;highlighter-rouge&quot;&gt;Scala-Test&lt;/code&gt;&lt;/p&gt;
 
-&lt;p&gt;同时用 IDEA 和 &lt;code class=&quot;highlighter-rouge&quot;&gt;sbt test&lt;/code&gt; 来跑测试用例都没有问题&lt;/p&gt;
+&lt;p&gt;There is no problem in running test cases with &lt;a href=&quot;https://www.jetbrains.com/idea/&quot;&gt;Intellij IDEA&lt;/a&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;sbt test&lt;/code&gt; at the same time.&lt;/p&gt;
 
-&lt;p&gt;那么如果想要引入 JUnit 的话则如下：&lt;/p&gt;
+&lt;p&gt;If you want to import Junit,then it will be：&lt;/p&gt;
 
 &lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-scala&quot; data-lang=&quot;scala&quot;&gt;&lt;span class=&quot;k&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;org.junit.Assert._&lt;/span&gt;
 &lt;span class=&quot;k&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;org.scalatest.junit.&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;AssertionsForJUnit&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
@@ -288,61 +292,57 @@ ImportError: cannot import name 'NotSupprotedYetException'
 
 &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
-&lt;p&gt;在这种情况下用 IDEA 可以跑测试用例，但用 &lt;code class=&quot;highlighter-rouge&quot;&gt;sbt test&lt;/code&gt; 的话会提示 &lt;code class=&quot;highlighter-rouge&quot;&gt;no tests are executed&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;Currently we can use Intellij IDEA to run unit tests, but if you use &lt;code class=&quot;highlighter-rouge&quot;&gt;sbt test&lt;/code&gt; to run it in console, it will hint &lt;code class=&quot;highlighter-rouge&quot;&gt;no tests are executed&lt;/code&gt;. If you want to have a continuous development,then manybe you know some famous tools such as &lt;a href=&quot;https://travis-ci.org/&quot;&gt;TravisCI&lt;/a&gt; which cooperates well with github.I write a &lt;code class=&quot;highlighter-rouge&quot;&gt;.travis.yml&lt;/code&gt; &lt;a href=&quot;https://github.com/Infra-Intern/Scala-LeetCode/blob/master/.travis.yml&quot;&gt;file&lt;/a&gt;.Now ScalaTest and JUnit can’t work on Linux Platform.&lt;/p&gt;
 
-&lt;p&gt;参考：http://stackoverflow.com/questions/28174243/run-junit-tests-with-sbt 需要在原有 sbt 的基础上加上：&lt;/p&gt;
+&lt;h3 id=&quot;solutions&quot;&gt;Solutions&lt;/h3&gt;
+
+&lt;p&gt;Based on this question &lt;a href=&quot;http://stackoverflow.com/questions/28174243/run-junit-tests-with-sbt&quot;&gt;run-junit-tests-with-sbt&lt;/a&gt; you need to add the following code on original &lt;code class=&quot;highlighter-rouge&quot;&gt;build.sbt&lt;/code&gt;：&lt;/p&gt;
 
 &lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-scala&quot; data-lang=&quot;scala&quot;&gt;&lt;span class=&quot;n&quot;&gt;crossPaths&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;false&lt;/span&gt;
 &lt;span class=&quot;n&quot;&gt;libraryDependencies&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;com.novocode&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;junit-interface&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;0.11&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Test&lt;/span&gt;
 &lt;span class=&quot;n&quot;&gt;testOptions&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+=&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Tests&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;Argument&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;TestFrameworks&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;JUnit&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;-q&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;-v&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
-&lt;p&gt;出现这个问题的原因还是在于 Scala 和 Java 最后编译出来的是两套不同的字节码&lt;/p&gt;
+&lt;p&gt;The reason for this problem is that Scala and Java finally compiled two different sets of bytecodes. Although in most cases it is compatible,but you also need to mind the corner case.&lt;/p&gt;
+
+&lt;p&gt;BTW,Looked at it, the test cases in Spark are all using the pure ScalaTest framework, without using JUnit.&lt;/p&gt;
 
 &lt;hr /&gt;
 
-&lt;p&gt;看了一下，Spark 里面的测试用例都是用的纯 ScalaTest 框架，而没有用 JUnit ：-D&lt;/p&gt;
+&lt;p&gt;Exercises for 《Scala For Impatient》 and some notes for Scala 99&lt;/p&gt;
 
-&lt;p&gt;《Scala For Impatient》的习题和 Scala 99 的一些题解记录&lt;/p&gt;
+&lt;p&gt;Scala’s syntax is as complex as C++…&lt;/p&gt;
 
-&lt;!-- more --&gt;
+&lt;p&gt;The author of &lt;a href=&quot;http://scalacookbook.com/&quot;&gt;《Scala CookBook》&lt;/a&gt; evaluates the nature of Java’s syntax as &lt;code class=&quot;highlighter-rouge&quot;&gt;Verbose yet obvious&lt;/code&gt;. It is because of the obvious characteristics that it can lead in the industrial development,play a dominant role in &lt;code class=&quot;highlighter-rouge&quot;&gt;Web development/Android/big data field&lt;/code&gt;. It is also because of the verbose characteristics and boilerplate code that people can feel really tired when writing in Java,especailly compared with Python.&lt;/p&gt;
 
-&lt;p&gt;Scala 的语法的复杂度堪比 C++ ……&lt;/p&gt;
+&lt;p&gt;Scala based on the JVM platform is a nice improvement of Java. Scala’s official website promotes &lt;strong&gt;OO meets FP&lt;/strong&gt;, which combines the benefits of object-oriented and functional programming. As many people have said, there is no need to fully understand Scala’s grammar and use it later.&lt;/p&gt;
 
-&lt;p&gt;《Scala CookBook》的作者评价 Java 这门语法的特性是 &lt;code class=&quot;highlighter-rouge&quot;&gt;Verbose yet obvious&lt;/code&gt;，这是见过的最好对 Java 这门语言的描述了。正是因为 obvious 的特性，才能在工业级开发领域中遥遥领先，Web 开发/Android/数据领域都占据主要地位。也正是因为 verbose 的特性，让写 Java 写多的人很容易产生啰嗦的感觉，相比于 Python 的话对比感就更强烈了。&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;现在来看 Kotlin 的定位更像是 Better Java，字节码被翻译成 Java 类型，无缝调用 Java 的所有库，语法更简洁。&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;Scala 则是对 Java 很好的一个改进，同样基于 JVM 平台。Scala 的官网上宣传 OO meets FP，它同时融合了面向对象和函数式编程的优点。就像很多人说的，没有必要把 Scala 的语法完全了解以后再去用它。要用 Spark，要看 Kafka，直接看就好了：-D&lt;/p&gt;
-
-&lt;p&gt;Scala 学习的时候主要分为两方面吧：&lt;/p&gt;
+&lt;p&gt;Scala is mainly divided into two aspects when learning:&lt;/p&gt;
 
 &lt;ul&gt;
   &lt;li&gt;
-    &lt;p&gt;Array/List/Seq 等一系列 Immutable 与 Mutable 对象，对应的 take/filter/map/flatMap/reduce/head/tail/init 等可以提高开发效率的方法&lt;/p&gt;
+    &lt;p&gt;A series of Immutable and Mutable objects such as &lt;strong&gt;Array/List/Seq&lt;/strong&gt; , corresponding to &lt;strong&gt;take/filter/map/flatMap/reduce/head/tail/init&lt;/strong&gt; method, etc.&lt;/p&gt;
   &lt;/li&gt;
   &lt;li&gt;
-    &lt;p&gt;class/case class/object/trait 等新的 OO 相关内容&lt;/p&gt;
+    &lt;p&gt;new OO related content such as &lt;strong&gt;class/case&lt;/strong&gt; &lt;strong&gt;class/object/trait&lt;/strong&gt;&lt;/p&gt;
   &lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;关于水平掌握，达到 A3/L2 。&lt;/p&gt;
+&lt;p&gt;Reaching &lt;code class=&quot;highlighter-rouge&quot;&gt;A3/L2&lt;/code&gt; level will meet the daily needs.&lt;/p&gt;
 
-&lt;p&gt;最近做了 Scala99 里面的一些题目，试着做一些摘抄，里面有些题目提出了和原来的一些不一样的方法&lt;/p&gt;
+&lt;p&gt;Recently I have done some of the problems in &lt;a href=&quot;http://aperiodic.net/phil/scala/s-99/&quot;&gt;Scala99&lt;/a&gt;, trying to do some excerpts, some of which have different methods from the original ones.&lt;/p&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;第 17 题：&lt;/li&gt;
+  &lt;li&gt;Question 17:&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;** 要求 ** 把一个 List 分为两个部分&lt;/p&gt;
+&lt;p&gt;** Requirements**: Divide a List into two parts&lt;/p&gt;
 
 &lt;ul&gt;
   &lt;li&gt;
-    &lt;p&gt;网站上提供了 ls.splitAt(n) 和直接返回 (ls.take(n),ls.drop(n)) 两种方法&lt;/p&gt;
+    &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;ls.splitAt(n)&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;directly return (ls.take(n), ls.drop(n))&lt;/code&gt; methods are available on the website&lt;/p&gt;
   &lt;/li&gt;
   &lt;li&gt;
-    &lt;p&gt;自己的实现：&lt;/p&gt;
+    &lt;p&gt;My own implementation:&lt;/p&gt;
   &lt;/li&gt;
 &lt;/ul&gt;
 
@@ -351,7 +351,7 @@ ImportError: cannot import name 'NotSupprotedYetException'
     &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;s&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;map&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;s&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;map&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;))&lt;/span&gt;
 &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
-&lt;p&gt;关于类的部分：算是实现了一个小的 demo 吧&lt;/p&gt;
+&lt;p&gt;And I implement a small demo about &lt;strong&gt;class&lt;/strong&gt; and &lt;strong&gt;traits&lt;/strong&gt;:&lt;/p&gt;
 
 &lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-scala&quot; data-lang=&quot;scala&quot;&gt;&lt;span class=&quot;k&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;collection.mutable.ArrayBuffer&lt;/span&gt;
 
@@ -367,8 +367,8 @@ ImportError: cannot import name 'NotSupprotedYetException'
 
   &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;addRecord&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;newEvent&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;newMoney&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;Int&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
 
-  &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;removeRecord&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;deleteName&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;deleteMoney&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;Int&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// 这也行，也就是说
-&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;removeRecord&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;deleteName&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;deleteMoney&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;Int&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+
   &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;getAllCost&lt;/span&gt;
 &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
 
@@ -381,10 +381,6 @@ ImportError: cannot import name 'NotSupprotedYetException'
     &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;activity&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+=&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Record&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;newEvent&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;newMoney&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
   &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
 
-  &lt;span class=&quot;cm&quot;&gt;/*def addRecord={
-
-  }*/&lt;/span&gt;
-
   &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;removeRecord&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;deleteName&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;deleteMoney&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;Int&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
     &lt;span class=&quot;k&quot;&gt;val&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;targetRecord&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Record&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;deleteName&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;deleteMoney&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
     &lt;span class=&quot;cm&quot;&gt;/*if this.activity.exists(_ == targetRecord) this.activity -= targetRecord*/&lt;/span&gt;
@@ -394,14 +390,11 @@ ImportError: cannot import name 'NotSupprotedYetException'
     &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;activity&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;foreach&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;=&amp;gt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;println&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;money&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;))&lt;/span&gt;
     &lt;span class=&quot;n&quot;&gt;println&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;money &quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;activity&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;map&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;_&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;money&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;reduceLeft&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;_&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;_&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;))&lt;/span&gt;
     &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;activity&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;map&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;_&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;money&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;reduceLeft&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;_&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;_&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
-    &lt;span class=&quot;c1&quot;&gt;//所以自己一开始的 reduce((x,y)=&amp;gt;x.money+y.money)) 思路是错的，你看，前两个得到的结果是 Record,但之后得到的是 Int
-&lt;/span&gt;    &lt;span class=&quot;c1&quot;&gt;// 再之后就会在 Record 和 Int 之间产生冲突
+    &lt;span class=&quot;c1&quot;&gt;// reduce((x,y)=&amp;gt;x.money+y.money)) is wrong,there will be confilicts between Record and Int
 &lt;/span&gt;  &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
 
   &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;getActivity&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;List&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;Record&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;c1&quot;&gt;// 返回的 Array 必须是有类型的，而不能是 Array
-&lt;/span&gt;    &lt;span class=&quot;c1&quot;&gt;// List 也是一样的道理。并且 List 的可读性更好
-&lt;/span&gt;    &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;activity&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;toList&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;activity&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;toList&lt;/span&gt;
   &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
 
   &lt;span class=&quot;k&quot;&gt;override&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;toString&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;s&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;$name $age&quot;&lt;/span&gt;
@@ -412,15 +405,11 @@ ImportError: cannot import name 'NotSupprotedYetException'
   &lt;span class=&quot;k&quot;&gt;val&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;u&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;User&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Tom&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;18&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
   &lt;span class=&quot;n&quot;&gt;u&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;addRecord&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Buy Clothes&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
   &lt;span class=&quot;n&quot;&gt;println&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;u&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;println&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;用户的活动为 &quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;u&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;getActivity&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;())&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;println&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;User activity is  &quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;u&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;getActivity&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;())&lt;/span&gt;
   &lt;span class=&quot;n&quot;&gt;println&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;u&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;activity&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;toList&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
   &lt;span class=&quot;n&quot;&gt;println&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;u&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;getActivity&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;())&lt;/span&gt;
   &lt;span class=&quot;n&quot;&gt;println&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;u&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;getAllCost&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;())&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;hr /&gt;
-
-&lt;p&gt;在附录部分再总结一下 Scala 方法的集合：&lt;/p&gt;</content>
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;</content>
 
       
       
@@ -437,7 +426,7 @@ ImportError: cannot import name 'NotSupprotedYetException'
       
 
       
-        <summary type="html">ScalaTest 与 JUnit 集成后，执行 sbt test 提示 no tests are executed 的解决办法 最近在试着写一个用 Scala 解决 LeetCode 的 集合，Scala 里的单元测试一般推荐使用 ScalaTest，而大部分 Scala 使用者都有 Java 背景，所以 ScalaTest 也可以与 Junit 集成使用，参见 链接 遇到了什么问题 首先定义如下的测试代码： import org.scalatest.{BeforeAndAfterEach, FunSpec, FunSuite} class FileUtilTest extends FunSpec with BeforeAndAfterEach { it(&quot;should be equal&quot;) { assert(xx.max(1,2) == 2) } } 然后定义如下的 build.sbt 文件： libraryDependencies += &quot;org.scalatest&quot; % &quot;scalatest_2.12&quot; % &quot;3.0.1&quot; % &quot;test&quot; libraryDependencies += &quot;junit&quot; % &quot;junit&quot; % &quot;4.8.1&quot; % &quot;test&quot; 上面是 Scala-Test 最标准的代码 同时用 IDEA 和 sbt test 来跑测试用例都没有问题 那么如果想要引入 JUnit 的话则如下： import org.junit.Assert._ import org.scalatest.junit.{AssertionsForJUnit} import com.leetcode.util.{FileUtil =&amp;gt; xx} import org.junit.Test class FileUtilTest extends AssertionsForJUnit { @Test def test_max()={ assertTrue(xx.max(1,2)==2) } } 在这种情况下用 IDEA 可以跑测试用例，但用 sbt test 的话会提示 no tests are executed 参考：http://stackoverflow.com/questions/28174243/run-junit-tests-with-sbt 需要在原有 sbt 的基础上加上： crossPaths := false libraryDependencies += &quot;com.novocode&quot; % &quot;junit-interface&quot; % &quot;0.11&quot; % Test testOptions += Tests.Argument(TestFrameworks.JUnit, &quot;-q&quot;, &quot;-v&quot;) 出现这个问题的原因还是在于 Scala 和 Java 最后编译出来的是两套不同的字节码 看了一下，Spark 里面的测试用例都是用的纯 ScalaTest 框架，而没有用 JUnit ：-D 《Scala For Impatient》的习题和 Scala 99 的一些题解记录 Scala 的语法的复杂度堪比 C++ …… 《Scala CookBook》的作者评价 Java 这门语法的特性是 Verbose yet obvious，这是见过的最好对 Java 这门语言的描述了。正是因为 obvious 的特性，才能在工业级开发领域中遥遥领先，Web 开发/Android/数据领域都占据主要地位。也正是因为 verbose 的特性，让写 Java 写多的人很容易产生啰嗦的感觉，相比于 Python 的话对比感就更强烈了。 现在来看 Kotlin 的定位更像是 Better Java，字节码被翻译成 Java 类型，无缝调用 Java 的所有库，语法更简洁。 Scala 则是对 Java 很好的一个改进，同样基于 JVM 平台。Scala 的官网上宣传 OO meets FP，它同时融合了面向对象和函数式编程的优点。就像很多人说的，没有必要把 Scala 的语法完全了解以后再去用它。要用 Spark，要看 Kafka，直接看就好了：-D Scala 学习的时候主要分为两方面吧： Array/List/Seq 等一系列 Immutable 与 Mutable 对象，对应的 take/filter/map/flatMap/reduce/head/tail/init 等可以提高开发效率的方法 class/case class/object/trait 等新的 OO 相关内容 关于水平掌握，达到 A3/L2 。 最近做了 Scala99 里面的一些题目，试着做一些摘抄，里面有些题目提出了和原来的一些不一样的方法 第 17 题： ** 要求 ** 把一个 List 分为两个部分 网站上提供了 ls.splitAt(n) 和直接返回 (ls.take(n),ls.drop(n)) 两种方法 自己的实现： def splitToTwoPart[A](n: Int, ls: List[A]) = { val s = ls.zipWithIndex.partition(elem =&amp;gt; elem._2 + 1 &amp;lt;= n) (s._1.map(x =&amp;gt; x._1), s._2.map(x =&amp;gt; x._1)) } 关于类的部分：算是实现了一个小的 demo 吧 import collection.mutable.ArrayBuffer case class Record(var event: String, var money: Int) { def this() = this(&quot;sample&quot;, 1) } trait People { var name: String var age: Int var activity: ArrayBuffer[Record] def addRecord(newEvent: String, newMoney: Int) def removeRecord(deleteName: String, deleteMoney: Int) // 这也行，也就是说 def getAllCost } class User(userName: String, userAge: Int) extends People { var name = userName var age = userAge var activity = new ArrayBuffer[Record] def addRecord(newEvent: String, newMoney: Int) = { this.activity += Record(newEvent, newMoney) } /*def addRecord={ }*/ def removeRecord(deleteName: String, deleteMoney: Int) = { val targetRecord = Record(deleteName, deleteMoney) /*if this.activity.exists(_ == targetRecord) this.activity -= targetRecord*/ } def getAllCost() = { this.activity.foreach(x=&amp;gt;println(x.money)) println(&quot;money &quot; + this.activity.map(_.money).reduceLeft(_+_)) this.activity.map(_.money).reduceLeft(_+_) //所以自己一开始的 reduce((x,y)=&amp;gt;x.money+y.money)) 思路是错的，你看，前两个得到的结果是 Record,但之后得到的是 Int // 再之后就会在 Record 和 Int 之间产生冲突 } def getActivity(): List[Record] = { // 返回的 Array 必须是有类型的，而不能是 Array // List 也是一样的道理。并且 List 的可读性更好 this.activity.toList } override def toString = s&quot;$name $age&quot; } object testApplication extends App { val u = new User(&quot;Tom&quot;, 18) u.addRecord(&quot;Buy Clothes&quot;, 10) println(u) println(&quot;用户的活动为 &quot; + u.getActivity()) println(u.activity.toList) println(u.getActivity()) println(u.getAllCost()) } 在附录部分再总结一下 Scala 方法的集合：</summary>
+        <summary type="html">After integrating ScalaTest with JUnit, execute sbt test prompt no tests are executed.How to solve it ? 这篇文章对应的中文版 BackGround I’ve recently tried to write a collection that solves LeetCode with Scala. ScalaTest is generally recommended for unit testing in Scala, and most Scala users have a Java background , so ScalaTest can also be integrated with JUnit, see link for a further understanding What Is The Problem? At first writing test code like this ： import org.scalatest.{BeforeAndAfterEach, FunSpec, FunSuite} class FileUtilTest extends FunSpec with BeforeAndAfterEach { it(&quot;should be equal&quot;) { assert(xx.max(1,2) == 2) } } build.sbt is as follows： libraryDependencies += &quot;org.scalatest&quot; % &quot;scalatest_2.12&quot; % &quot;3.0.1&quot; % &quot;test&quot; libraryDependencies += &quot;junit&quot; % &quot;junit&quot; % &quot;4.8.1&quot; % &quot;test&quot; Above is the most standard code for Scala-Test There is no problem in running test cases with Intellij IDEA and sbt test at the same time. If you want to import Junit,then it will be： import org.junit.Assert._ import org.scalatest.junit.{AssertionsForJUnit} import com.leetcode.util.{FileUtil =&amp;gt; xx} import org.junit.Test class FileUtilTest extends AssertionsForJUnit { @Test def test_max()={ assertTrue(xx.max(1,2)==2) } } Currently we can use Intellij IDEA to run unit tests, but if you use sbt test to run it in console, it will hint no tests are executed. If you want to have a continuous development,then manybe you know some famous tools such as TravisCI which cooperates well with github.I write a .travis.yml file.Now ScalaTest and JUnit can’t work on Linux Platform. Solutions Based on this question run-junit-tests-with-sbt you need to add the following code on original build.sbt： crossPaths := false libraryDependencies += &quot;com.novocode&quot; % &quot;junit-interface&quot; % &quot;0.11&quot; % Test testOptions += Tests.Argument(TestFrameworks.JUnit, &quot;-q&quot;, &quot;-v&quot;) The reason for this problem is that Scala and Java finally compiled two different sets of bytecodes. Although in most cases it is compatible,but you also need to mind the corner case. BTW,Looked at it, the test cases in Spark are all using the pure ScalaTest framework, without using JUnit. Exercises for 《Scala For Impatient》 and some notes for Scala 99 Scala’s syntax is as complex as C++… The author of 《Scala CookBook》 evaluates the nature of Java’s syntax as Verbose yet obvious. It is because of the obvious characteristics that it can lead in the industrial development,play a dominant role in Web development/Android/big data field. It is also because of the verbose characteristics and boilerplate code that people can feel really tired when writing in Java,especailly compared with Python. Scala based on the JVM platform is a nice improvement of Java. Scala’s official website promotes OO meets FP, which combines the benefits of object-oriented and functional programming. As many people have said, there is no need to fully understand Scala’s grammar and use it later. Scala is mainly divided into two aspects when learning: A series of Immutable and Mutable objects such as Array/List/Seq , corresponding to take/filter/map/flatMap/reduce/head/tail/init method, etc. new OO related content such as class/case class/object/trait Reaching A3/L2 level will meet the daily needs. Recently I have done some of the problems in Scala99, trying to do some excerpts, some of which have different methods from the original ones. Question 17: ** Requirements**: Divide a List into two parts ls.splitAt(n) and directly return (ls.take(n), ls.drop(n)) methods are available on the website My own implementation: def splitToTwoPart[A](n: Int, ls: List[A]) = { val s = ls.zipWithIndex.partition(elem =&amp;gt; elem._2 + 1 &amp;lt;= n) (s._1.map(x =&amp;gt; x._1), s._2.map(x =&amp;gt; x._1)) } And I implement a small demo about class and traits: import collection.mutable.ArrayBuffer case class Record(var event: String, var money: Int) { def this() = this(&quot;sample&quot;, 1) } trait People { var name: String var age: Int var activity: ArrayBuffer[Record] def addRecord(newEvent: String, newMoney: Int) def removeRecord(deleteName: String, deleteMoney: Int) def getAllCost } class User(userName: String, userAge: Int) extends People { var name = userName var age = userAge var activity = new ArrayBuffer[Record] def addRecord(newEvent: String, newMoney: Int) = { this.activity += Record(newEvent, newMoney) } def removeRecord(deleteName: String, deleteMoney: Int) = { val targetRecord = Record(deleteName, deleteMoney) /*if this.activity.exists(_ == targetRecord) this.activity -= targetRecord*/ } def getAllCost() = { this.activity.foreach(x=&amp;gt;println(x.money)) println(&quot;money &quot; + this.activity.map(_.money).reduceLeft(_+_)) this.activity.map(_.money).reduceLeft(_+_) // reduce((x,y)=&amp;gt;x.money+y.money)) is wrong,there will be confilicts between Record and Int } def getActivity(): List[Record] = { this.activity.toList } override def toString = s&quot;$name $age&quot; } object testApplication extends App { val u = new User(&quot;Tom&quot;, 18) u.addRecord(&quot;Buy Clothes&quot;, 10) println(u) println(&quot;User activity is &quot; + u.getActivity()) println(u.activity.toList) println(u.getActivity()) println(u.getAllCost()) }</summary>
       
 
       
@@ -1335,59 +1324,60 @@ catch (Throwable e) {
   
     <entry>
       
-      <title type="html">Django 学习及 cortexForum</title>
+      <title type="html">Learning Django And cortexForum</title>
       
-      <link href="http://localhost:4000/2015/10/21/Django-And-CortexForum/" rel="alternate" type="text/html" title="Django 学习及 cortexForum" />
+      <link href="http://localhost:4000/2015/10/21/Django-And-CortexForum/" rel="alternate" type="text/html" title="Learning Django And cortexForum" />
       <published>2015-10-21T17:39:49-03:00</published>
       <updated>2015-10-21T17:39:49-03:00</updated>
       <id>http://localhost:4000/2015/10/21/Django-And-CortexForum</id>
-      <content type="html" xml:base="http://localhost:4000/2015/10/21/Django-And-CortexForum/">&lt;p&gt;关于 Django 的学习资料以及 cortexForum&lt;/p&gt;
+      <content type="html" xml:base="http://localhost:4000/2015/10/21/Django-And-CortexForum/">&lt;p&gt;Studying Django resources and &lt;code class=&quot;highlighter-rouge&quot;&gt;cortexForum&lt;/code&gt;
+&lt;!-- more --&gt;&lt;/p&gt;
 
-&lt;!-- more --&gt;
+&lt;p&gt;&lt;a href=&quot;/../translation/2015-10-21-Django-And-CortexForum.html&quot;&gt;这篇文章对应的中文版&lt;/a&gt;&lt;/p&gt;
 
-&lt;h5 id=&quot;学习资料&quot;&gt;学习资料&lt;/h5&gt;
+&lt;h5 id=&quot;studying-resources&quot;&gt;Studying Resources&lt;/h5&gt;
 
-&lt;p&gt;主要看的是 Django 的官方 tutorial 和 &lt;a href=&quot;http://www.tangowithdjango.com/book17/&quot;&gt;tango with Django&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;At first you can review &lt;a href=&quot;https://docs.djangoproject.com/en/2.1/intro/tutorial01/&quot;&gt;official tutorial&lt;/a&gt; and &lt;a href=&quot;http://www.tangowithdjango.com/book17/&quot;&gt;tango with Django&lt;/a&gt;&lt;/p&gt;
 
-&lt;p&gt;进阶的书包括：&lt;/p&gt;
+&lt;p&gt;Advanced books include ：&lt;/p&gt;
 
 &lt;ul&gt;
   &lt;li&gt;
-    &lt;p&gt;《Two Scopes of Django》:Django 作者是 Django 的社区开发者，汇聚了一大批的最佳实践&lt;/p&gt;
+    &lt;p&gt;&lt;a href=&quot;https://www.twoscoopspress.com/products/two-scoops-of-django-1-11&quot;&gt;《Two Scopes of Django》&lt;/a&gt; : author is the community developer，there are many industrial best practices.&lt;/p&gt;
   &lt;/li&gt;
   &lt;li&gt;
-    &lt;p&gt;《Test Driven Web Development》:以 TDD(测试驱动开发) 方式所写的关于 Django 开发的一本书，非常漂亮啊&lt;/p&gt;
+    &lt;p&gt;&lt;a href=&quot;https://www.amazon.ca/Test-Driven-Development-Python-Selenium-JavaScript/dp/1491958707&quot;&gt;《Test Driven Web Development》&lt;/a&gt;: Development Django based on &lt;strong&gt;TDD(Test-Driven Development)&lt;/strong&gt; ，I’m impressed by the use of selenium to detect the 404 page.&lt;/p&gt;
   &lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;hr /&gt;
 
-&lt;h5 id=&quot;cortexforum&quot;&gt;cortexForum&lt;/h5&gt;
+&lt;h3 id=&quot;cortexforum&quot;&gt;cortexForum&lt;/h3&gt;
 
-&lt;p&gt;在文档的学习过程中所有遇到的问题和有必要的记录都在 Wiznote 里保存，方便进行复习balabala&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;Tell me and I forget, teach me and I may remember, involve me and I learn.&lt;/p&gt;
+&lt;/blockquote&gt;
 
-&lt;p&gt;最近在做毕设的过程中实在是看不下去论文了，便有了写一个有 Django 最佳实践的论坛的想法。在写 &lt;a href=&quot;https://github.com/Allianzcortex/cortexForum&quot;&gt;cortexForum&lt;/a&gt; 的过程中，自己尽量实现了以下几点：&lt;/p&gt;
+&lt;p&gt;I try to write a forum program &lt;a href=&quot;https://github.com/Allianzcortex/cortexForum&quot;&gt;cortexForum&lt;/a&gt; to deepen my understanding,and during the progress,I try to do those aspects:&lt;/p&gt;
 
 &lt;ul&gt;
   &lt;li&gt;
-    &lt;p&gt;在代码中将所用到的文档模块和对应的具体用法进行标志，方便查找&lt;/p&gt;
+    &lt;p&gt;In the code, the document module used and the corresponding specific usage are marked for easy searching.&lt;/p&gt;
   &lt;/li&gt;
   &lt;li&gt;
-    &lt;p&gt;标注中有 SO 的部分说明它很常用，并且 stackoverflow 上有相关的问题(比如query_set() 里的 lookup field)&lt;/p&gt;
+    &lt;p&gt;The section with SO in the annotation indicates that it is very common, and there are related issues on stackoverflow (such as the lookup field in query_set()).&lt;/p&gt;
   &lt;/li&gt;
   &lt;li&gt;
-    &lt;p&gt;对于有多种解决方法的部分都在注释里写了出来(比如 &lt;code class=&quot;highlighter-rouge&quot;&gt;objects.filer().update 和 instance.save()&lt;/code&gt;)&lt;/p&gt;
+    &lt;p&gt;Parts that have multiple workarounds are written in comments (such as &lt;code class=&quot;highlighter-rouge&quot;&gt;objects.filer().update and instance.save()&lt;/code&gt;)&lt;/p&gt;
   &lt;/li&gt;
   &lt;li&gt;
-    &lt;p&gt;用 gitbook 的格式作为 wiki，对于 forum 的设计有这样一个总体的概述&lt;/p&gt;
+    &lt;p&gt;Use gitbook format as a wiki for a general overview of forum design&lt;/p&gt;
   &lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;hr /&gt;
 
-&lt;ul&gt;
-  &lt;li&gt;Django 的 models 模型里有一个 Manager 对象，非常方便实现 OOP(实现 HighLevel 而不仅仅是具体实例的行为)，以发帖的单位 Topic 为例，定义发帖的 title 和 content 之后，再定义两个外键，一个是 node,定义帖子发表的节点；一个是 author，定义帖子发表的作者。对于一个帖子来说，我希望能通过一个 node 的名称(这里可以理解为 slug )，或者一个作者的名称(username)，就能得到所有主题的信息，所以你就需要定义：&lt;/li&gt;
-&lt;/ul&gt;
+&lt;p&gt;Django’s models model has a Manager object, which is very convenient to implement OOP (implementing highlevel and not just the behavior of specific instances). Take the unit of Topic as an example, define the &lt;code class=&quot;highlighter-rouge&quot;&gt;title&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;content&lt;/code&gt; of the post, and then define &lt;code class=&quot;highlighter-rouge&quot;&gt;two foreign keys&lt;/code&gt;. One is node, which defines the node where the post is published; the other is author, which defines the author of the post. For a post, I want to be able to get information on all topics by the name of a node (which can be understood as &lt;code class=&quot;highlighter-rouge&quot;&gt;slug&lt;/code&gt; here) or an author’s name (username), so you need to define:&lt;/p&gt;
 
 &lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;get_all_topic_by_node_slug&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;node_slug&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
         &lt;span class=&quot;n&quot;&gt;query&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;get_queryset&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;filter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;node__slug&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;node_slug&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt; \
@@ -1395,35 +1385,28 @@ catch (Throwable e) {
             &lt;span class=&quot;n&quot;&gt;order_by&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'-last_replied_time'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'-reply_count'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'-created_at'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
         &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;query&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
-&lt;p&gt;通过 queryset() 的重定义，你可以用 &lt;code class=&quot;highlighter-rouge&quot;&gt;Node.objects.get_all_topic_by_node_slug('slug-example')&lt;/code&gt; 来获取主题信息。而如果你不这样做的话，就需要在每个 views 的函数里来多次重新定义，并且一旦模型发生更改就很难再修正过来了，比 hard-coded 还复杂的重写。&lt;/p&gt;
+&lt;p&gt;With the redefinition of queryset() , you can get the subject information with &lt;code class=&quot;highlighter-rouge&quot;&gt;Node.objects.get_all_topic_by_node_slug('slug-example')&lt;/code&gt;. And if you don’t do this, you need to redefine it multiple times in each view’s function, and once the model changes, it’s hard to fix it.&lt;/p&gt;
 
-&lt;p&gt;而 form 里没有为我们定义更高层次的抽象，但并不妨碍我们进行 OOP，以 authen 的 registrationForm 为例，我们在 forms 里进行了 &lt;code class=&quot;highlighter-rouge&quot;&gt;clean_username&lt;/code&gt;,&lt;code class=&quot;highlighter-rouge&quot;&gt;clean_mail&lt;/code&gt;,重写了默认的 clean 方法，在进行 &lt;code class=&quot;highlighter-rouge&quot;&gt;is_valid()&lt;/code&gt; 验证的时候就会直接提出错误信息。&lt;/p&gt;
+&lt;p&gt;The form does not define a higher level of abstraction for us, but does not prevent us from doing OOP. Take authen’s registrationForm as an example. We made &lt;code class=&quot;highlighter-rouge&quot;&gt;clean_username&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;clean_mail&lt;/code&gt; in the forms, and overridden the default clean method. When the &lt;code class=&quot;highlighter-rouge&quot;&gt;is_valid()&lt;/code&gt; verification is performed, an error message is directly raised.&lt;/p&gt;
 
 &lt;hr /&gt;
 
-&lt;p&gt;在前端方面，自己完全采用 bootstrap 的架构。&lt;/p&gt;
+&lt;p&gt;As for the &lt;strong&gt;Front End&lt;/strong&gt;, I fully adopt the architecture of bootstrap.&lt;/p&gt;
 
-&lt;p&gt;关于手写 HTML 还是用 &lt;code class=&quot;highlighter-rouge&quot;&gt;Crispyforms/Django-bootstrap3 &lt;/code&gt;，这种东西见仁见智，我觉得还是用纯粹的手写 HTML 比较好，因为这样的解决方式是前后端分离的，在下次学习其他框架的时候也能用到，你只需要传给前端需要用到的 API 就行。&lt;/p&gt;
-
-&lt;p&gt;比如&lt;/p&gt;
+&lt;p&gt;Regarding &lt;strong&gt;handwritten HTML&lt;/strong&gt; or &lt;code class=&quot;highlighter-rouge&quot;&gt;Crispyforms/Django-bootstrap3 &lt;/code&gt;, this kind of thing is a matter of opinion. I think it is better to use pure handwritten HTML, because this solution is separated from the front and back, and can be used the next time you learn other frameworks. By the way, you only need to pass the API to the front end.take an example:&lt;/p&gt;
 
 &lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;label&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;for=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;id_&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;class=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;col-md-3 control-label&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&amp;lt;/label&amp;gt;&lt;/span&gt;
                         &lt;span class=&quot;nt&quot;&gt;&amp;lt;div&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;class=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;col-md-9&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
                             &lt;span class=&quot;nt&quot;&gt;&amp;lt;input&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;type=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;text&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;class=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;form-control&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;id=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;id_&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;required&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;autofocus&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
-                            &lt;span class=&quot;nt&quot;&gt;&amp;lt;p&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;class=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;help-block&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;请输入你的用户名&lt;span class=&quot;nt&quot;&gt;&amp;lt;/p&amp;gt;&lt;/span&gt;
+                            &lt;span class=&quot;nt&quot;&gt;&amp;lt;p&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;class=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;help-block&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;Please input your username&lt;span class=&quot;nt&quot;&gt;&amp;lt;/p&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
-```&lt;span class=&quot;nt&quot;&gt;&amp;lt;label&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;for=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;id_&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;class=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;col-md-3 control-label&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&amp;lt;/label&amp;gt;&lt;/span&gt;
-                        &lt;span class=&quot;nt&quot;&gt;&amp;lt;div&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;class=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;col-md-9&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
-                            &lt;span class=&quot;nt&quot;&gt;&amp;lt;input&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;type=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;text&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;class=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;form-control&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;id=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;id_&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;required&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;autofocus&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
-                            &lt;span class=&quot;nt&quot;&gt;&amp;lt;p&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;class=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;help-block&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;请输入你的用户名&lt;span class=&quot;nt&quot;&gt;&amp;lt;/p&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;就要比 &lt;code class=&quot;highlighter-rouge&quot;&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;form.as_p&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt; 或者 &lt;code class=&quot;highlighter-rouge&quot;&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;crispy&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;form&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;/code&gt;更能实现定制化，crispy-forms 的思想是在 forms 里设置 layout 和对应的 label，想要更新前端显示需要在后端修改代码而不是 CSS 文件……&lt;/p&gt;
+&lt;p&gt;It is more customizable than &lt;code class=&quot;highlighter-rouge&quot;&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;form.as_p&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt; or &lt;code class=&quot;highlighter-rouge&quot;&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;crispy&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;form&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;/code&gt;. The idea of crispy-forms is to set the layout and the corresponding label in the forms. To update the front-end display, you need to modify the code in the backend rather than CSS files,it is against the trendency.&lt;/p&gt;
 
 &lt;hr /&gt;
 
-&lt;p&gt;Mysql 问题还是挺多的。一开始的情况下，英文发帖是正常的。之后按照 &lt;a href=&quot;hthttps://blog.ionelmc.ro/2014/12/28/terrible-choices-mysql/tps://blog.ionelmc.ro/2014/12/28/terrible-choices-mysql/&quot;&gt;mysql-utf-8&lt;/a&gt; 里的方法采用 utf-8 编码之后就会发生只有管理员可以正常发帖，而其他用户在发帖时会提醒 second column not exists ,SO 上的解决方法都没有效果，最后分析下觉得有可能是因为 user 和 forumUser 对应的 id 不对其造成的，所以手动添加一个 request.User 后解决问题。&lt;/p&gt;
+&lt;p&gt;The MySQL problem is still quite a lot. In the beginning, English posting is normal. Then following &lt;a href=&quot;hthttps://blog.ionelmc.ro/2014/12/28/terrible-choices-mysql/tps://blog.ionelmc.ro/2014/12/28/terrible- The choices-mysql/&quot;&gt;mysql-utf-8&lt;/a&gt; method to uses &lt;code class=&quot;highlighter-rouge&quot;&gt;utf-8&lt;/code&gt; encoding, only the administrator can post normally, while other users will remind the second column not exists when posting.  Finally analyzes that it is possibly because the id corresponding to user and forumUser is not even, so manually add a &lt;code class=&quot;highlighter-rouge&quot;&gt;request.User &lt;/code&gt; and all will be fine.&lt;/p&gt;
 
-&lt;p&gt;下次还是用 PG 吧……为什么第一次用 onetooneField 的时候就没有这种错误？要用 abstractUser 去扩展 User 模型去……&lt;/p&gt;
+&lt;p&gt;Next time I will prefer to use &lt;code class=&quot;highlighter-rouge&quot;&gt;PostgreSql&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;nosql&lt;/code&gt; to solve the problem ,and using abstractUser to expand User model.&lt;/p&gt;
 
 &lt;hr /&gt;</content>
 
@@ -1446,7 +1429,7 @@ catch (Throwable e) {
       
 
       
-        <summary type="html">关于 Django 的学习资料以及 cortexForum 学习资料 主要看的是 Django 的官方 tutorial 和 tango with Django 进阶的书包括： 《Two Scopes of Django》:Django 作者是 Django 的社区开发者，汇聚了一大批的最佳实践 《Test Driven Web Development》:以 TDD(测试驱动开发) 方式所写的关于 Django 开发的一本书，非常漂亮啊 cortexForum 在文档的学习过程中所有遇到的问题和有必要的记录都在 Wiznote 里保存，方便进行复习balabala 最近在做毕设的过程中实在是看不下去论文了，便有了写一个有 Django 最佳实践的论坛的想法。在写 cortexForum 的过程中，自己尽量实现了以下几点： 在代码中将所用到的文档模块和对应的具体用法进行标志，方便查找 标注中有 SO 的部分说明它很常用，并且 stackoverflow 上有相关的问题(比如query_set() 里的 lookup field) 对于有多种解决方法的部分都在注释里写了出来(比如 objects.filer().update 和 instance.save()) 用 gitbook 的格式作为 wiki，对于 forum 的设计有这样一个总体的概述 Django 的 models 模型里有一个 Manager 对象，非常方便实现 OOP(实现 HighLevel 而不仅仅是具体实例的行为)，以发帖的单位 Topic 为例，定义发帖的 title 和 content 之后，再定义两个外键，一个是 node,定义帖子发表的节点；一个是 author，定义帖子发表的作者。对于一个帖子来说，我希望能通过一个 node 的名称(这里可以理解为 slug )，或者一个作者的名称(username)，就能得到所有主题的信息，所以你就需要定义： def get_all_topic_by_node_slug(self, node_slug): query = self.get_queryset().filter(node__slug=node_slug). \ select_related('node', 'author', 'last_replied_by'). \ order_by('-last_replied_time', '-reply_count', '-created_at') return query 通过 queryset() 的重定义，你可以用 Node.objects.get_all_topic_by_node_slug('slug-example') 来获取主题信息。而如果你不这样做的话，就需要在每个 views 的函数里来多次重新定义，并且一旦模型发生更改就很难再修正过来了，比 hard-coded 还复杂的重写。 而 form 里没有为我们定义更高层次的抽象，但并不妨碍我们进行 OOP，以 authen 的 registrationForm 为例，我们在 forms 里进行了 clean_username,clean_mail,重写了默认的 clean 方法，在进行 is_valid() 验证的时候就会直接提出错误信息。 在前端方面，自己完全采用 bootstrap 的架构。 关于手写 HTML 还是用 Crispyforms/Django-bootstrap3 ，这种东西见仁见智，我觉得还是用纯粹的手写 HTML 比较好，因为这样的解决方式是前后端分离的，在下次学习其他框架的时候也能用到，你只需要传给前端需要用到的 API 就行。 比如 &amp;lt;label for=&quot;id_&quot; class=&quot;col-md-3 control-label&quot;&amp;gt;&amp;lt;/label&amp;gt; &amp;lt;div class=&quot;col-md-9&quot;&amp;gt; &amp;lt;input type=&quot;text&quot; class=&quot;form-control&quot; id=&quot;id_&quot; required name=&quot;&quot; autofocus&amp;gt; &amp;lt;p class=&quot;help-block&quot;&amp;gt;请输入你的用户名&amp;lt;/p&amp;gt; ```&amp;lt;label for=&quot;id_&quot; class=&quot;col-md-3 control-label&quot;&amp;gt;&amp;lt;/label&amp;gt; &amp;lt;div class=&quot;col-md-9&quot;&amp;gt; &amp;lt;input type=&quot;text&quot; class=&quot;form-control&quot; id=&quot;id_&quot; required name=&quot;&quot; autofocus&amp;gt; &amp;lt;p class=&quot;help-block&quot;&amp;gt;请输入你的用户名&amp;lt;/p&amp;gt; 就要比 { form.as_p } 或者 { crispy form } 更能实现定制化，crispy-forms 的思想是在 forms 里设置 layout 和对应的 label，想要更新前端显示需要在后端修改代码而不是 CSS 文件…… Mysql 问题还是挺多的。一开始的情况下，英文发帖是正常的。之后按照 mysql-utf-8 里的方法采用 utf-8 编码之后就会发生只有管理员可以正常发帖，而其他用户在发帖时会提醒 second column not exists ,SO 上的解决方法都没有效果，最后分析下觉得有可能是因为 user 和 forumUser 对应的 id 不对其造成的，所以手动添加一个 request.User 后解决问题。 下次还是用 PG 吧……为什么第一次用 onetooneField 的时候就没有这种错误？要用 abstractUser 去扩展 User 模型去……</summary>
+        <summary type="html">Studying Django resources and cortexForum 这篇文章对应的中文版 Studying Resources At first you can review official tutorial and tango with Django Advanced books include ： 《Two Scopes of Django》 : author is the community developer，there are many industrial best practices. 《Test Driven Web Development》: Development Django based on TDD(Test-Driven Development) ，I’m impressed by the use of selenium to detect the 404 page. cortexForum Tell me and I forget, teach me and I may remember, involve me and I learn. I try to write a forum program cortexForum to deepen my understanding,and during the progress,I try to do those aspects: In the code, the document module used and the corresponding specific usage are marked for easy searching. The section with SO in the annotation indicates that it is very common, and there are related issues on stackoverflow (such as the lookup field in query_set()). Parts that have multiple workarounds are written in comments (such as objects.filer().update and instance.save()) Use gitbook format as a wiki for a general overview of forum design Django’s models model has a Manager object, which is very convenient to implement OOP (implementing highlevel and not just the behavior of specific instances). Take the unit of Topic as an example, define the title and content of the post, and then define two foreign keys. One is node, which defines the node where the post is published; the other is author, which defines the author of the post. For a post, I want to be able to get information on all topics by the name of a node (which can be understood as slug here) or an author’s name (username), so you need to define: def get_all_topic_by_node_slug(self, node_slug): query = self.get_queryset().filter(node__slug=node_slug). \ select_related('node', 'author', 'last_replied_by'). \ order_by('-last_replied_time', '-reply_count', '-created_at') return query With the redefinition of queryset() , you can get the subject information with Node.objects.get_all_topic_by_node_slug('slug-example'). And if you don’t do this, you need to redefine it multiple times in each view’s function, and once the model changes, it’s hard to fix it. The form does not define a higher level of abstraction for us, but does not prevent us from doing OOP. Take authen’s registrationForm as an example. We made clean_username, clean_mail in the forms, and overridden the default clean method. When the is_valid() verification is performed, an error message is directly raised. As for the Front End, I fully adopt the architecture of bootstrap. Regarding handwritten HTML or Crispyforms/Django-bootstrap3 , this kind of thing is a matter of opinion. I think it is better to use pure handwritten HTML, because this solution is separated from the front and back, and can be used the next time you learn other frameworks. By the way, you only need to pass the API to the front end.take an example: &amp;lt;label for=&quot;id_&quot; class=&quot;col-md-3 control-label&quot;&amp;gt;&amp;lt;/label&amp;gt; &amp;lt;div class=&quot;col-md-9&quot;&amp;gt; &amp;lt;input type=&quot;text&quot; class=&quot;form-control&quot; id=&quot;id_&quot; required name=&quot;&quot; autofocus&amp;gt; &amp;lt;p class=&quot;help-block&quot;&amp;gt;Please input your username&amp;lt;/p&amp;gt; It is more customizable than { form.as_p } or { crispy form } . The idea of crispy-forms is to set the layout and the corresponding label in the forms. To update the front-end display, you need to modify the code in the backend rather than CSS files,it is against the trendency. The MySQL problem is still quite a lot. In the beginning, English posting is normal. Then following mysql-utf-8 method to uses utf-8 encoding, only the administrator can post normally, while other users will remind the second column not exists when posting. Finally analyzes that it is possibly because the id corresponding to user and forumUser is not even, so manually add a request.User and all will be fine. Next time I will prefer to use PostgreSql and nosql to solve the problem ,and using abstractUser to expand User model.</summary>
       
 
       
@@ -1637,47 +1620,45 @@ At the time of the study, I wrote a calculator demo that adds genuine. When the 
   
     <entry>
       
-      <title type="html">DP 解题思路</title>
+      <title type="html">Thoughts Of Solving Dynamic Programming Problems</title>
       
-      <link href="http://localhost:4000/2015/03/11/Dynamic-Programming-Explanation/" rel="alternate" type="text/html" title="DP 解题思路" />
+      <link href="http://localhost:4000/2015/03/11/Dynamic-Programming-Explanation/" rel="alternate" type="text/html" title="Thoughts Of Solving Dynamic Programming Problems" />
       <published>2015-03-11T10:22:10-03:00</published>
       <updated>2015-03-11T10:22:10-03:00</updated>
       <id>http://localhost:4000/2015/03/11/Dynamic-Programming-Explanation</id>
-      <content type="html" xml:base="http://localhost:4000/2015/03/11/Dynamic-Programming-Explanation/">&lt;p&gt;动态规划例题及 Leetcode 题解
+      <content type="html" xml:base="http://localhost:4000/2015/03/11/Dynamic-Programming-Explanation/">&lt;p&gt;Solving the dynamic programming problems
 &lt;!-- more --&gt;&lt;/p&gt;
 
-&lt;h4 id=&quot;关于-dp&quot;&gt;关于 DP&lt;/h4&gt;
+&lt;p&gt;&lt;a href=&quot;/../translation/2015-03-11-Dynamic-Programming-Explanation.html&quot;&gt;这篇文章对应的中文版&lt;/a&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;about-dp&quot;&gt;About DP&lt;/h4&gt;
 
 &lt;ul&gt;
   &lt;li&gt;
-    &lt;p&gt;动态规划是一门非常重要的算法，对它的掌握应该是计算机科学专业学生的基本功&lt;/p&gt;
+    &lt;p&gt;Dynamic programming is a very important algorithm, and mastery of it should be the basic skills for computer science students.&lt;/p&gt;
   &lt;/li&gt;
   &lt;li&gt;
-    &lt;p&gt;下面来把对这类算法的理解进行尽可能多的解释&lt;/p&gt;
+    &lt;p&gt;Let’s explain as much as possible about the understanding of this type of algorithm.&lt;/p&gt;
   &lt;/li&gt;
   &lt;li&gt;
-    &lt;p&gt;关键是 &lt;strong&gt;状态定义&lt;/strong&gt; 和 &lt;strong&gt;状态转移方程&lt;/strong&gt;&lt;/p&gt;
+    &lt;p&gt;The key is &lt;code class=&quot;highlighter-rouge&quot;&gt;state definition&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;state transition equation&lt;/code&gt;&lt;/p&gt;
   &lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;hr /&gt;
 
-&lt;h4 id=&quot;最长递增子序列&quot;&gt;最长递增子序列&lt;/h4&gt;
+&lt;h4 id=&quot;longest-increasing-subsequence&quot;&gt;Longest Increasing Subsequence&lt;/h4&gt;
 
 &lt;blockquote&gt;
-  &lt;p&gt;给定K个整数的序列{ N1, N2, …, NK }，其任意连续子序列可表示为{ Ni, Ni+1, …, Nj }，其中 1 &amp;lt;= i &amp;lt;= j &amp;lt;= K。最大连续子序列是所有连续子序中元素和最大的一个， 例如给定序列{ -2, 11, -4, 13, -5, -2 }，其最大连续子序列为{ 11, -4, 13 }，最大和为20。&lt;/p&gt;
+  &lt;p&gt;Given a sequence of K integers { N1, N2, …, NK }, any contiguous subsequence can be expressed as { Ni, Ni+1, …, Nj }, where 1 &amp;lt;= i &amp;lt;= j &amp;lt; = K. The largest contiguous subsequence is the element and the largest one of all consecutive subsequences, such as the given sequence { -2, 11, -4, 13, -5, -2 }, whose largest contiguous subsequence is { 11, -4, 13 } and the maximum sum is 20.&lt;/p&gt;
 &lt;/blockquote&gt;
 
 &lt;ul&gt;
   &lt;li&gt;
-    &lt;p&gt;定义&lt;code class=&quot;highlighter-rouge&quot;&gt;sum[i]&lt;/code&gt;为’以A[i]作为最后一个结尾的连续子序列的最大值’&lt;/p&gt;
+    &lt;p&gt;Define &lt;code class=&quot;highlighter-rouge&quot;&gt;sum[i]&lt;/code&gt; as the &lt;code class=&quot;highlighter-rouge&quot;&gt;maximum value of contiguous subsequence with A[i] as the last end&lt;/code&gt;&lt;/p&gt;
   &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;状态转移方程为：sum[i]=max(sum[i-1]+a[i],a[i])&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;实际求解的时候则是，只要sum&amp;gt;0，那么加上之后的a[i]都还是有可能使max增大的；但如果sum&amp;lt;0，则应该立即抛弃，从0开始计算下一个&lt;/p&gt;
-  &lt;/li&gt;
+  &lt;li&gt;The state transition equation is: &lt;code class=&quot;highlighter-rouge&quot;&gt;sum[i]=max(sum[i-1]+a[i], a[i])&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;T he actual solution is, as long as sum&amp;gt;0, then adding a[i] is still possible to increase max; but if sum&amp;lt;0, it should be discarded immediately, starting from 0 to calculate the next&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;n&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;8&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;12&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;7&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;9&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
@@ -1695,10 +1676,10 @@ At the time of the study, I wrote a calculator demo that adds genuine. When the 
 &lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;LIS&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[]&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;arr&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
         &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;j&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;max&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
         &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;arr&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;length&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-        &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[]&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;list&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;];&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// 存储长度
+        &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[]&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;list&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;];&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// length
 &lt;/span&gt;
         &lt;span class=&quot;n&quot;&gt;Arrays&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;fill&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;list&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
-        &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[]&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;index&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;];&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// 存储距离
+        &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[]&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;index&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;];&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// distance
 &lt;/span&gt;
         &lt;span class=&quot;n&quot;&gt;Arrays&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;fill&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;index&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
 
@@ -1711,7 +1692,7 @@ At the time of the study, I wrote a calculator demo that adds genuine. When the 
                 &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
             &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
 
-        &lt;span class=&quot;c1&quot;&gt;// 选择出最大的
+        &lt;span class=&quot;c1&quot;&gt;// choose the max
 &lt;/span&gt;
         &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;max_index&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
 
@@ -1729,28 +1710,28 @@ At the time of the study, I wrote a calculator demo that adds genuine. When the 
             &lt;span class=&quot;n&quot;&gt;builder&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;insert&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;arr&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;next_index&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot; &quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
             &lt;span class=&quot;n&quot;&gt;next_index&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;index&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;next_index&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;];&lt;/span&gt;
         &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;System&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;out&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;println&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;builder&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;toString&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;());&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// 输出子序列
+        &lt;span class=&quot;n&quot;&gt;System&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;out&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;println&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;builder&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;toString&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;());&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// print the result
 &lt;/span&gt;
         &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;max&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;hr /&gt;
 
-&lt;h4 id=&quot;数塔问题&quot;&gt;数塔问题&lt;/h4&gt;
+&lt;h4 id=&quot;number-tower-problem&quot;&gt;Number tower problem&lt;/h4&gt;
 &lt;p&gt;&lt;img src=&quot;/images/hdu-2084.jpg&quot; alt=&quot;img&quot; /&gt;&lt;/p&gt;
 
 &lt;blockquote&gt;
-  &lt;p&gt;要求从顶层到底层，每一层只能走到相邻节点，求经过的数字之和是多少&lt;/p&gt;
+  &lt;p&gt;From the top layer to the bottom layer, each layer can only go to the adjacent node, and calculate the sum of the numbers&lt;/p&gt;
 &lt;/blockquote&gt;
 
 &lt;ul&gt;
   &lt;li&gt;
-    &lt;p&gt;定义状态方程：max[i,j] 表示以 [i,j] 作为起始点，所经过的最大的数字之和。则 max[1,1] 是我们要求的目标&lt;/p&gt;
+    &lt;p&gt;Define the state equation: &lt;code class=&quot;highlighter-rouge&quot;&gt;max[i,j]&lt;/code&gt; represents the sum of the largest numbers passed by [i,j] as the starting point. Then &lt;code class=&quot;highlighter-rouge&quot;&gt;max[1,1]&lt;/code&gt; is our target&lt;/p&gt;
   &lt;/li&gt;
   &lt;li&gt;
-    &lt;p&gt;定义状态转移方程：max[i,j]=num[i,j]+max(max(i+1,j),max(i+1,j+1))&lt;/p&gt;
+    &lt;p&gt;Define the state transition equation: &lt;code class=&quot;highlighter-rouge&quot;&gt;max[i,j]=num[i,j]+max(max(i+1,j),max(i+1,j+1))&lt;/code&gt;&lt;/p&gt;
   &lt;/li&gt;
   &lt;li&gt;
-    &lt;p&gt;接下来可以自底向上，也可以自顶向下，具体参见之前所写的关于&lt;a href=&quot;http://acm.hdu.edu.cn/showproblem.php?pid=2084&quot;&gt;hdu2084&lt;/a&gt;的&lt;a href=&quot;http://blog.csdn.net/allianzcortex/article/details/41620503&quot;&gt;博文&lt;/a&gt;&lt;/p&gt;
+    &lt;p&gt;Then you can choose to solve it from top to bottom or from bottom to top&lt;/p&gt;
   &lt;/li&gt;
 &lt;/ul&gt;
 
@@ -1782,18 +1763,18 @@ At the time of the study, I wrote a calculator demo that adds genuine. When the 
 
 &lt;hr /&gt;
 
-&lt;h4 id=&quot;背包问题&quot;&gt;背包问题&lt;/h4&gt;
+&lt;h4 id=&quot;backpack-problem&quot;&gt;Backpack Problem&lt;/h4&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;有著名的背包问题九讲，这里自己先写最基本的&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;有N件物品和一个容量为V的背包。第i件物品的费用是c[i]，价值是w[i]。求解将哪些物品装入背包可使价值总和最大&lt;/code&gt;&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;如果单纯使用递归来求解 DP 的话有两种思路&lt;/p&gt;
-  &lt;/li&gt;
+  &lt;li&gt;There are different versions of backpack problem.Let me illustrate the basic one.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;There are N items and a backpack with a capacity of V. The cost of the i-th item is c[i] and the value is w[i]. Decide which items are loaded into the backpack so the sum of the values can be max.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Solve it with Java.There are two types of answer,see the comment.&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;Knapsack1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[]&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;value&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[]&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;weight&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;capacity&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;number&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
@@ -1817,40 +1798,38 @@ At the time of the study, I wrote a calculator demo that adds genuine. When the 
                     &lt;span class=&quot;n&quot;&gt;Knapsack2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;value&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;weight&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;capacity&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;index&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;));&lt;/span&gt;
     &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
 
-        &lt;span class=&quot;c1&quot;&gt;// KnapSack 问题，两种调用
+        &lt;span class=&quot;c1&quot;&gt;// two ways to solve it
 &lt;/span&gt;
         &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[]&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;value&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;60&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;100&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;120&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;};&lt;/span&gt;
         &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[]&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;weight&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;20&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;30&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;};&lt;/span&gt;
         &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;capacity&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;50&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
         &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;number&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;value&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;length&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;System&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;out&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;println&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dp&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;Knapsack1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;value&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;weight&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;capacity&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;number&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;));&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// 220
+        &lt;span class=&quot;n&quot;&gt;System&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;out&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;println&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dp&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;Knapsack1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;value&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;weight&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;capacity&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;number&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;));&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// final result is 220
 &lt;/span&gt;
         &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;index&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;System&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;out&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;println&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dp&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;Knapsack2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;value&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;weight&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;capacity&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;index&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;));&lt;/span&gt;  &lt;span class=&quot;c1&quot;&gt;// 220&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+        &lt;span class=&quot;n&quot;&gt;System&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;out&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;println&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dp&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;Knapsack2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;value&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;weight&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;capacity&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;index&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;));&lt;/span&gt;  &lt;span class=&quot;c1&quot;&gt;// final result is also 220&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;hr /&gt;
 
-&lt;h4 id=&quot;leetcode-上相关题目&quot;&gt;Leetcode 上相关题目&lt;/h4&gt;
-
-&lt;h5 id=&quot;303-range-sum-quwey---immutable&quot;&gt;303 Range Sum Quwey - Immutable&lt;/h5&gt;
+&lt;h3 id=&quot;303-range-sum-quwey---immutable&quot;&gt;303 Range Sum Quwey - Immutable&lt;/h3&gt;
 
 &lt;ul&gt;
   &lt;li&gt;
-    &lt;p&gt;&lt;a href=&quot;https://leetcode.com/problems/range-sum-query-immutable/&quot;&gt;链接&lt;/a&gt;&lt;/p&gt;
+    &lt;p&gt;&lt;a href=&quot;https://leetcode.com/problems/range-sum-query-immutable/&quot;&gt;Link&lt;/a&gt;&lt;/p&gt;
   &lt;/li&gt;
   &lt;li&gt;
-    &lt;p&gt;大意：给出一个数组，要求返回任意两个区间范围的的值&lt;/p&gt;
+    &lt;p&gt;About the meaning：Give an array that returns the value of any two range of ranges&lt;/p&gt;
   &lt;/li&gt;
   &lt;li&gt;
-    &lt;p&gt;思路：题目中说到&lt;code class=&quot;highlighter-rouge&quot;&gt;many calls to function&lt;/code&gt;，所以多次遍历求解肯定会TLE；而sum[i,j]=sum[j]-sum[i-1]，所以一次遍历求出所有的sum值之后做减法就可以。注意要用全局变量&lt;/p&gt;
+    &lt;p&gt;Idea: The rpblem content says &lt;code class=&quot;highlighter-rouge&quot;&gt;many calls to function&lt;/code&gt;, so the traversal solution will definitely be &lt;strong&gt;TLE&lt;/strong&gt;（Time Limit Exceeded); and &lt;code class=&quot;highlighter-rouge&quot;&gt;sum[i,j]=sum[j]-sum[i-1]&lt;/code&gt; is obvious, so all the sums are found in one pass. After the value is done, subtraction is fine. Note you may need to use global variables&lt;/p&gt;
   &lt;/li&gt;
   &lt;li&gt;
-    &lt;p&gt;代码：&lt;/p&gt;
+    &lt;p&gt;code:&lt;/p&gt;
   &lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c&quot; data-lang=&quot;c&quot;&gt;&lt;span class=&quot;c1&quot;&gt;// c++版
-//用vector&amp;lt;int&amp;gt; 来存储状态会更好
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c&quot; data-lang=&quot;c&quot;&gt;&lt;span class=&quot;c1&quot;&gt;// written in c++
+// Using vector&amp;lt;int&amp;gt; to add status will be better
 &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;NumArray&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
     &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dp&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;100000&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
 &lt;span class=&quot;n&quot;&gt;public&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;
@@ -1872,7 +1851,7 @@ At the time of the study, I wrote a calculator demo that adds genuine. When the 
     &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
 &lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
-&lt;p&gt;python版：&lt;/p&gt;
+&lt;p&gt;Writen in Python：&lt;/p&gt;
 
 &lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;NumArray&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;object&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
     &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;__init__&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;nums&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
@@ -1890,22 +1869,22 @@ At the time of the study, I wrote a calculator demo that adds genuine. When the 
 
 &lt;ul&gt;
   &lt;li&gt;
-    &lt;p&gt;&lt;a href=&quot;https://leetcode.com/problems/climbing-stairs/&quot;&gt;链接&lt;/a&gt;&lt;/p&gt;
+    &lt;p&gt;&lt;a href=&quot;https://leetcode.com/problems/climbing-stairs/&quot;&gt;link&lt;/a&gt;&lt;/p&gt;
   &lt;/li&gt;
   &lt;li&gt;
-    &lt;p&gt;大意：登上一个楼梯，可以走1步，可以走两步，问走到n步有几种解法&lt;/p&gt;
+    &lt;p&gt;About the meaning：Ascend a staircase, you can take 1 step or  take two steps.if you go to n steps, how many solutions will you have?&lt;/p&gt;
   &lt;/li&gt;
   &lt;li&gt;
-    &lt;p&gt;思路：用dp[n]来表示走到n步的方法数。对dp[n-1],只能选择走1步；对dp[n-2]，
-如果选择1+1，就会和dp[n-1]有重叠，只能选择2步&lt;/p&gt;
+    &lt;p&gt;Idea: Use dp[n] to indicate the number of methods to go to n steps. For dp[n-1], you can only choose to take 1 step; for dp[n-2],
+If you choose 1+1, it will overlap with dp[n-1], you can only choose 2 steps.&lt;/p&gt;
   &lt;/li&gt;
   &lt;li&gt;
-    &lt;p&gt;代码：
-C++版：&lt;/p&gt;
+    &lt;p&gt;Code：&lt;/p&gt;
   &lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c&quot; data-lang=&quot;c&quot;&gt;&lt;span class=&quot;n&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Solution&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c&quot; data-lang=&quot;c&quot;&gt;&lt;span class=&quot;n&quot;&gt;Written&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;C&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;++&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Solution&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
 &lt;span class=&quot;n&quot;&gt;public&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;
     &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;climbStairs&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
         &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dp&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
@@ -1918,9 +1897,9 @@ C++版：&lt;/p&gt;
     &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
 &lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
-&lt;p&gt;python版：&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Solution&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;object&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;c&quot;&gt;# written in Python
+&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Solution&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;object&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
     &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;__init__&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
         &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dp&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{}&lt;/span&gt;
         
@@ -1937,22 +1916,22 @@ C++版：&lt;/p&gt;
 
 &lt;ul&gt;
   &lt;li&gt;
-    &lt;p&gt;&lt;a href=&quot;https://leetcode.com/problems/minimum-path-sum/&quot;&gt;链接&lt;/a&gt;&lt;/p&gt;
+    &lt;p&gt;&lt;a href=&quot;https://leetcode.com/problems/minimum-path-sum/&quot;&gt;link&lt;/a&gt;&lt;/p&gt;
   &lt;/li&gt;
   &lt;li&gt;
-    &lt;p&gt;大意：m*n的全为正数的矩阵，可以向右向下移动，求从左上到右下经过的距离之和最小值&lt;/p&gt;
+    &lt;p&gt;About the meaning: &lt;code class=&quot;highlighter-rouge&quot;&gt;m*n&lt;/code&gt; is a matrix of all positive numbers, which can be moved downwards to the right,find the sum of the distances from the upper left to the lower right.&lt;/p&gt;
   &lt;/li&gt;
   &lt;li&gt;
-    &lt;p&gt;思路：动态规划，用dp[i][j]表示以i,j作为最后一个方块所经过的最短步数
-则 dp[i][j]=max(dp[i-1][j]+grid[i][j],dp[i][j-1]+gird[i][j]&lt;/p&gt;
+    &lt;p&gt;Idea: Dynamic programming.using dp[i][j] to represent the shortest number of steps taken with i, j as the last square.
+Then &lt;code class=&quot;highlighter-rouge&quot;&gt;dp[i][j]=max(dp[i-1][j]+grid[i][j],dp[i][j-1]+gird[i][j]&lt;/code&gt;,we just need to implement the equation.&lt;/p&gt;
   &lt;/li&gt;
   &lt;li&gt;
-    &lt;p&gt;代码：
-C++ 版：&lt;/p&gt;
+    &lt;p&gt;Code:&lt;/p&gt;
   &lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c&quot; data-lang=&quot;c&quot;&gt;&lt;span class=&quot;n&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Solution&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c&quot; data-lang=&quot;c&quot;&gt;&lt;span class=&quot;c1&quot;&gt;// written in C++
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Solution&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
 &lt;span class=&quot;n&quot;&gt;public&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;
     &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;minPathSum&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;vector&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;vector&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;amp;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;grid&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
         &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;grid&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;empty&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;())&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
@@ -1993,7 +1972,7 @@ C++ 版：&lt;/p&gt;
       
 
       
-        <summary type="html">动态规划例题及 Leetcode 题解 关于 DP 动态规划是一门非常重要的算法，对它的掌握应该是计算机科学专业学生的基本功 下面来把对这类算法的理解进行尽可能多的解释 关键是 状态定义 和 状态转移方程 最长递增子序列 给定K个整数的序列{ N1, N2, …, NK }，其任意连续子序列可表示为{ Ni, Ni+1, …, Nj }，其中 1 &amp;lt;= i &amp;lt;= j &amp;lt;= K。最大连续子序列是所有连续子序中元素和最大的一个， 例如给定序列{ -2, 11, -4, 13, -5, -2 }，其最大连续子序列为{ 11, -4, 13 }，最大和为20。 定义sum[i]为’以A[i]作为最后一个结尾的连续子序列的最大值’ 状态转移方程为：sum[i]=max(sum[i-1]+a[i],a[i]) 实际求解的时候则是，只要sum&amp;gt;0，那么加上之后的a[i]都还是有可能使max增大的；但如果sum&amp;lt;0，则应该立即抛弃，从0开始计算下一个 a = {4, 8, -12, 3, 7, 9} n = len(a) sum = 0 max = 0 for i in range(n): sum += a[i] if sum &amp;gt; max: max = sum if sum &amp;lt; 0: sum = a[i] return sum public int LIS(int[] arr) { int i, j, max = 0; int n = arr.length; int[] list = new int[n]; // 存储长度 Arrays.fill(list, 1); int[] index = new int[n]; // 存储距离 Arrays.fill(index, -1); for (i = 1; i &amp;lt; n; i++) for (j = 0; j &amp;lt; i; j++) { if (arr[i] &amp;gt; arr[j] &amp;amp;&amp;amp; list[i] &amp;lt; list[j] + 1) { list[i] = list[j] + 1; index[i] = j; } } // 选择出最大的 int max_index = 0; for (i = 0; i &amp;lt; n; i++) if (list[i] &amp;gt; max) { max = list[i]; max_index = i; } StringBuilder builder = new StringBuilder(); builder.insert(0, arr[max_index]); int next_index = index[max_index]; while (next_index != -1) { builder.insert(0, arr[next_index] + &quot; &quot;); next_index = index[next_index]; } System.out.println(builder.toString()); // 输出子序列 return max; 数塔问题 要求从顶层到底层，每一层只能走到相邻节点，求经过的数字之和是多少 定义状态方程：max[i,j] 表示以 [i,j] 作为起始点，所经过的最大的数字之和。则 max[1,1] 是我们要求的目标 定义状态转移方程：max[i,j]=num[i,j]+max(max(i+1,j),max(i+1,j+1)) 接下来可以自底向上，也可以自顶向下，具体参见之前所写的关于hdu2084的博文 #include&amp;lt;iostream&amp;gt; #include&amp;lt;cstring&amp;gt; using namespace std; #define maxnum 1000 int num[maxnum][maxnum]; int d[maxnum][maxnum]; int main(void) { int i,j,k; int n,m; cin&amp;gt;&amp;gt;n; while(n--){ cin&amp;gt;&amp;gt;m; for(i=1;i&amp;lt;=m;i++) for(j=1;j&amp;lt;=i;j++) cin&amp;gt;&amp;gt;num[i][j]; for(j=1;j&amp;lt;=m;j++) d[m][j]=num[m][j]; for(i=m-1;i&amp;gt;=1;i--) for(j=1;j&amp;lt;=i;j++) d[i][j]=num[i][j]+max(d[i+1][j+1],d[i+1][j]); cout&amp;lt;&amp;lt;d[1][1]&amp;lt;&amp;lt;endl; memset(d,0,sizeof(d)); } } 背包问题 有著名的背包问题九讲，这里自己先写最基本的 有N件物品和一个容量为V的背包。第i件物品的费用是c[i]，价值是w[i]。求解将哪些物品装入背包可使价值总和最大 如果单纯使用递归来求解 DP 的话有两种思路 public int Knapsack1(int[] value, int[] weight, int capacity, int number) { if (capacity &amp;lt;= 0 || number == 0) return 0; if (weight[number - 1] &amp;gt; capacity) return Knapsack1(value, weight, capacity, number - 1); else return max(value[number - 1] + Knapsack1(value, weight, capacity - weight[number - 1], number - 1), Knapsack1(value, weight, capacity, number - 1)); } public int Knapsack2(int[] value, int[] weight, int capacity, int index) { if (capacity &amp;lt;= 0 || index &amp;gt;= value.length) return 0; if (weight[index] &amp;gt; capacity) return Knapsack2(value, weight, capacity, index + 1); else return max(value[index] + Knapsack2(value, weight, capacity - weight[index], index + 1), Knapsack2(value, weight, capacity, index + 1)); } // KnapSack 问题，两种调用 int[] value = {60, 100, 120}; int[] weight = {10, 20, 30}; int capacity = 50; int number = value.length; System.out.println(dp.Knapsack1(value, weight, capacity, number)); // 220 int index = 0; System.out.println(dp.Knapsack2(value, weight, capacity, index)); // 220 Leetcode 上相关题目 303 Range Sum Quwey - Immutable 链接 大意：给出一个数组，要求返回任意两个区间范围的的值 思路：题目中说到many calls to function，所以多次遍历求解肯定会TLE；而sum[i,j]=sum[j]-sum[i-1]，所以一次遍历求出所有的sum值之后做减法就可以。注意要用全局变量 代码： // c++版 //用vector&amp;lt;int&amp;gt; 来存储状态会更好 class NumArray { int dp[100000]; public: NumArray(vector&amp;lt;int&amp;gt; &amp;amp;nums) { if (nums.empty()) return ; int length=nums.size(); memset(dp,0,sizeof(dp)); dp[0]=nums[0]; for(int i=1;i&amp;lt;length;i++) dp[i]=dp[i-1]+nums[i]; } int sumRange(int i, int j) { if (i==0) return dp[j]; else return dp[j]-dp[i-1]; } }; python版： class NumArray(object): def __init__(self, nums): self.dp = nums for i in range(1,len(nums)): self.dp[i] += self.dp[i-1] def sumRange(self, i, j): return self.dp[j] - (self.dp[i-1] if i &amp;gt; 0 else 0) 70 climbStatirs 链接 大意：登上一个楼梯，可以走1步，可以走两步，问走到n步有几种解法 思路：用dp[n]来表示走到n步的方法数。对dp[n-1],只能选择走1步；对dp[n-2]， 如果选择1+1，就会和dp[n-1]有重叠，只能选择2步 代码： C++版： class Solution { public: int climbStairs(int n) { int dp[n]={0}; dp[0]=0; dp[1]=1; dp[2]=2; for(int i=3;i&amp;lt;=n;i++) dp[i]=(dp[i-1]+dp[i-2]); return dp[n]; } }; python版： class Solution(object): def __init__(self): self.dp={} def climbStairs(self, n): self.dp[1]=1 self.dp[2]=2 for i in range(3,n+1): self.dp[i]=self.dp[i-1]+self.dp[i-2] return self.dp[n] 64 Minimum Path Sum 链接 大意：m*n的全为正数的矩阵，可以向右向下移动，求从左上到右下经过的距离之和最小值 思路：动态规划，用dp[i][j]表示以i,j作为最后一个方块所经过的最短步数 则 dp[i][j]=max(dp[i-1][j]+grid[i][j],dp[i][j-1]+gird[i][j] 代码： C++ 版： class Solution { public: int minPathSum(vector&amp;lt;vector&amp;lt;int&amp;gt;&amp;gt;&amp;amp; grid) { if (grid.empty()) return 0; int m=grid.size(); int n=grid[0].size(); int dp[m][n]={0}; int i,j,k; dp[0][0]=grid[0][0]; for(i=1;i&amp;lt;m;i++) dp[i][0]=(dp[i-1][0]+grid[i][0]); for(i=1;i&amp;lt;n;i++) dp[0][i]=(dp[0][i-1]+grid[0][i]); for(i=1;i&amp;lt;m;i++) for(j=1;j&amp;lt;n;j++) dp[i][j]=min(dp[i-1][j]+grid[i][j],dp[i][j-1]+grid[i][j]); return dp[m-1][n-1]; } };</summary>
+        <summary type="html">Solving the dynamic programming problems 这篇文章对应的中文版 About DP Dynamic programming is a very important algorithm, and mastery of it should be the basic skills for computer science students. Let’s explain as much as possible about the understanding of this type of algorithm. The key is state definition and state transition equation Longest Increasing Subsequence Given a sequence of K integers { N1, N2, …, NK }, any contiguous subsequence can be expressed as { Ni, Ni+1, …, Nj }, where 1 &amp;lt;= i &amp;lt;= j &amp;lt; = K. The largest contiguous subsequence is the element and the largest one of all consecutive subsequences, such as the given sequence { -2, 11, -4, 13, -5, -2 }, whose largest contiguous subsequence is { 11, -4, 13 } and the maximum sum is 20. Define sum[i] as the maximum value of contiguous subsequence with A[i] as the last end The state transition equation is: sum[i]=max(sum[i-1]+a[i], a[i]) T he actual solution is, as long as sum&amp;gt;0, then adding a[i] is still possible to increase max; but if sum&amp;lt;0, it should be discarded immediately, starting from 0 to calculate the next a = {4, 8, -12, 3, 7, 9} n = len(a) sum = 0 max = 0 for i in range(n): sum += a[i] if sum &amp;gt; max: max = sum if sum &amp;lt; 0: sum = a[i] return sum public int LIS(int[] arr) { int i, j, max = 0; int n = arr.length; int[] list = new int[n]; // length Arrays.fill(list, 1); int[] index = new int[n]; // distance Arrays.fill(index, -1); for (i = 1; i &amp;lt; n; i++) for (j = 0; j &amp;lt; i; j++) { if (arr[i] &amp;gt; arr[j] &amp;amp;&amp;amp; list[i] &amp;lt; list[j] + 1) { list[i] = list[j] + 1; index[i] = j; } } // choose the max int max_index = 0; for (i = 0; i &amp;lt; n; i++) if (list[i] &amp;gt; max) { max = list[i]; max_index = i; } StringBuilder builder = new StringBuilder(); builder.insert(0, arr[max_index]); int next_index = index[max_index]; while (next_index != -1) { builder.insert(0, arr[next_index] + &quot; &quot;); next_index = index[next_index]; } System.out.println(builder.toString()); // print the result return max; Number tower problem From the top layer to the bottom layer, each layer can only go to the adjacent node, and calculate the sum of the numbers Define the state equation: max[i,j] represents the sum of the largest numbers passed by [i,j] as the starting point. Then max[1,1] is our target Define the state transition equation: max[i,j]=num[i,j]+max(max(i+1,j),max(i+1,j+1)) Then you can choose to solve it from top to bottom or from bottom to top #include&amp;lt;iostream&amp;gt; #include&amp;lt;cstring&amp;gt; using namespace std; #define maxnum 1000 int num[maxnum][maxnum]; int d[maxnum][maxnum]; int main(void) { int i,j,k; int n,m; cin&amp;gt;&amp;gt;n; while(n--){ cin&amp;gt;&amp;gt;m; for(i=1;i&amp;lt;=m;i++) for(j=1;j&amp;lt;=i;j++) cin&amp;gt;&amp;gt;num[i][j]; for(j=1;j&amp;lt;=m;j++) d[m][j]=num[m][j]; for(i=m-1;i&amp;gt;=1;i--) for(j=1;j&amp;lt;=i;j++) d[i][j]=num[i][j]+max(d[i+1][j+1],d[i+1][j]); cout&amp;lt;&amp;lt;d[1][1]&amp;lt;&amp;lt;endl; memset(d,0,sizeof(d)); } } Backpack Problem There are different versions of backpack problem.Let me illustrate the basic one. There are N items and a backpack with a capacity of V. The cost of the i-th item is c[i] and the value is w[i]. Decide which items are loaded into the backpack so the sum of the values can be max. Solve it with Java.There are two types of answer,see the comment. public int Knapsack1(int[] value, int[] weight, int capacity, int number) { if (capacity &amp;lt;= 0 || number == 0) return 0; if (weight[number - 1] &amp;gt; capacity) return Knapsack1(value, weight, capacity, number - 1); else return max(value[number - 1] + Knapsack1(value, weight, capacity - weight[number - 1], number - 1), Knapsack1(value, weight, capacity, number - 1)); } public int Knapsack2(int[] value, int[] weight, int capacity, int index) { if (capacity &amp;lt;= 0 || index &amp;gt;= value.length) return 0; if (weight[index] &amp;gt; capacity) return Knapsack2(value, weight, capacity, index + 1); else return max(value[index] + Knapsack2(value, weight, capacity - weight[index], index + 1), Knapsack2(value, weight, capacity, index + 1)); } // two ways to solve it int[] value = {60, 100, 120}; int[] weight = {10, 20, 30}; int capacity = 50; int number = value.length; System.out.println(dp.Knapsack1(value, weight, capacity, number)); // final result is 220 int index = 0; System.out.println(dp.Knapsack2(value, weight, capacity, index)); // final result is also 220 303 Range Sum Quwey - Immutable Link About the meaning：Give an array that returns the value of any two range of ranges Idea: The rpblem content says many calls to function, so the traversal solution will definitely be TLE（Time Limit Exceeded); and sum[i,j]=sum[j]-sum[i-1] is obvious, so all the sums are found in one pass. After the value is done, subtraction is fine. Note you may need to use global variables code: // written in c++ // Using vector&amp;lt;int&amp;gt; to add status will be better class NumArray { int dp[100000]; public: NumArray(vector&amp;lt;int&amp;gt; &amp;amp;nums) { if (nums.empty()) return ; int length=nums.size(); memset(dp,0,sizeof(dp)); dp[0]=nums[0]; for(int i=1;i&amp;lt;length;i++) dp[i]=dp[i-1]+nums[i]; } int sumRange(int i, int j) { if (i==0) return dp[j]; else return dp[j]-dp[i-1]; } }; Writen in Python： class NumArray(object): def __init__(self, nums): self.dp = nums for i in range(1,len(nums)): self.dp[i] += self.dp[i-1] def sumRange(self, i, j): return self.dp[j] - (self.dp[i-1] if i &amp;gt; 0 else 0) 70 climbStatirs link About the meaning：Ascend a staircase, you can take 1 step or take two steps.if you go to n steps, how many solutions will you have? Idea: Use dp[n] to indicate the number of methods to go to n steps. For dp[n-1], you can only choose to take 1 step; for dp[n-2], If you choose 1+1, it will overlap with dp[n-1], you can only choose 2 steps. Code： Written in C++ class Solution { public: int climbStairs(int n) { int dp[n]={0}; dp[0]=0; dp[1]=1; dp[2]=2; for(int i=3;i&amp;lt;=n;i++) dp[i]=(dp[i-1]+dp[i-2]); return dp[n]; } }; # written in Python class Solution(object): def __init__(self): self.dp={} def climbStairs(self, n): self.dp[1]=1 self.dp[2]=2 for i in range(3,n+1): self.dp[i]=self.dp[i-1]+self.dp[i-2] return self.dp[n] 64 Minimum Path Sum link About the meaning: m*n is a matrix of all positive numbers, which can be moved downwards to the right,find the sum of the distances from the upper left to the lower right. Idea: Dynamic programming.using dp[i][j] to represent the shortest number of steps taken with i, j as the last square. Then dp[i][j]=max(dp[i-1][j]+grid[i][j],dp[i][j-1]+gird[i][j],we just need to implement the equation. Code: // written in C++ class Solution { public: int minPathSum(vector&amp;lt;vector&amp;lt;int&amp;gt;&amp;gt;&amp;amp; grid) { if (grid.empty()) return 0; int m=grid.size(); int n=grid[0].size(); int dp[m][n]={0}; int i,j,k; dp[0][0]=grid[0][0]; for(i=1;i&amp;lt;m;i++) dp[i][0]=(dp[i-1][0]+grid[i][0]); for(i=1;i&amp;lt;n;i++) dp[0][i]=(dp[0][i-1]+grid[0][i]); for(i=1;i&amp;lt;m;i++) for(j=1;j&amp;lt;n;j++) dp[i][j]=min(dp[i-1][j]+grid[i][j],dp[i][j-1]+grid[i][j]); return dp[m-1][n-1]; } };</summary>
       
 
       
@@ -2607,29 +2586,31 @@ I will decide during the next 48 hours
   
     <entry>
       
-      <title type="html">Python one-line 实现多进程和多线程(修正版)</title>
+      <title type="html">One Line To Achieve MultiProcess and MultiThreads In Python</title>
       
-      <link href="http://localhost:4000/2014/06/22/Python-Multiprocessing-Multithreading/" rel="alternate" type="text/html" title="Python one-line 实现多进程和多线程(修正版)" />
+      <link href="http://localhost:4000/2014/06/22/Python-Multiprocessing-Multithreading/" rel="alternate" type="text/html" title="One Line To Achieve MultiProcess and MultiThreads In Python" />
       <published>2014-06-22T07:49:24-03:00</published>
       <updated>2014-06-22T07:49:24-03:00</updated>
       <id>http://localhost:4000/2014/06/22/Python-Multiprocessing-Multithreading</id>
-      <content type="html" xml:base="http://localhost:4000/2014/06/22/Python-Multiprocessing-Multithreading/">&lt;p&gt;用 &lt;code class=&quot;highlighter-rouge&quot;&gt;multiprocessing&lt;/code&gt; 和 &lt;code class=&quot;highlighter-rouge&quot;&gt;multiprocessing.dummy&lt;/code&gt; 来实现多进程/实现多进程和多线程，增加了 ThreadPoolExecutor 以及其他内容&lt;/p&gt;
+      <content type="html" xml:base="http://localhost:4000/2014/06/22/Python-Multiprocessing-Multithreading/">&lt;p&gt;Using &lt;code class=&quot;highlighter-rouge&quot;&gt;multiprocessing&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;multiprocessing.dummy&lt;/code&gt; to implement multi-process and multi-threading, adding ThreadPoolExecutor and other content.&lt;/p&gt;
 
 &lt;!-- more --&gt;
 
-&lt;h4 id=&quot;直接使用-one-line&quot;&gt;直接使用 one-line&lt;/h4&gt;
+&lt;p&gt;&lt;a href=&quot;/../translation/2014-06-22-Python-Multiprocessing-Multithreading.html&quot;&gt;这篇文章对应的中文版&lt;/a&gt;&lt;/p&gt;
 
-&lt;p&gt;关于 multiprocessing 和 Thread 之间的 pros 和 cons 就不多做描述了，因为关键是我们要让我们的代码来并行对吧:-D&lt;/p&gt;
+&lt;h4 id=&quot;just-add-one-line&quot;&gt;Just Add One-line&lt;/h4&gt;
 
-&lt;p&gt;关于使用就直接看这篇文章 &lt;a href=&quot;http://chriskiehl.com/article/parallelism-in-one-line/&quot;&gt;parallelism-in-one-line&lt;/a&gt; 好啦&lt;/p&gt;
+&lt;p&gt;There is not much description about pros and cons between multiprocessing and Thread, because the key is that we want our code to be parallel:-D&lt;/p&gt;
 
-&lt;p&gt;来提供一个所写的例子：&lt;/p&gt;
+&lt;p&gt;Read this article [parallelism-in-one-line] (http://chriskiehl.com/article/parallelism-in-one-line/) to get a rough impression.&lt;/p&gt;
+
+&lt;p&gt;Providing an example written:&lt;/p&gt;
 
 &lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;c&quot;&gt;# -*- coding:utf-8 -*-
 &lt;/span&gt;
 
 &lt;span class=&quot;s&quot;&gt;&quot;&quot;&quot;
-对某个目录下的文件求 md5 值
+calculate the md5 value for files under one directory
 &quot;&quot;&quot;&lt;/span&gt;
 
 &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;os&lt;/span&gt;
@@ -2656,57 +2637,59 @@ I will decide during the next 48 hours
 &lt;/span&gt;
     &lt;span class=&quot;c&quot;&gt;# random.shuffle(file_list)
 &lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'共有 {} 个文件'&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;format&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;len&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;file_list&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'There are {} files'&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;format&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;len&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;file_list&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
     &lt;span class=&quot;n&quot;&gt;time1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;datetime&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;now&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
     &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;filename&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;file_list&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
         &lt;span class=&quot;n&quot;&gt;create_hash&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;filename&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'普通执行状况: {}'&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;format&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;datetime&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;now&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;time1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;total_seconds&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;())&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'normal case: {}'&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;format&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;datetime&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;now&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;time1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;total_seconds&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;())&lt;/span&gt;
 
     &lt;span class=&quot;n&quot;&gt;pool&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ProcessPool&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
     &lt;span class=&quot;n&quot;&gt;time2&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;datetime&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;now&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
     &lt;span class=&quot;n&quot;&gt;pool&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;map&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;create_hash&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;file_list&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'多进程运行状况: {}'&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;format&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;datetime&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;now&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;time2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;total_seconds&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;())&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'multi-process case: {}'&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;format&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;datetime&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;now&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;time2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;total_seconds&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;())&lt;/span&gt;
 
     &lt;span class=&quot;n&quot;&gt;pool&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ThreadPool&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
     &lt;span class=&quot;n&quot;&gt;time3&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;datetime&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;now&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
     &lt;span class=&quot;n&quot;&gt;pool&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;map&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;create_hash&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;file_list&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'多线程运行状况: {}'&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;format&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;datetime&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;now&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;time3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;total_seconds&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;())&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+    &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'multi-thread: {}'&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;format&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;datetime&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;now&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;time3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;total_seconds&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;())&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
-&lt;p&gt;有这样几个注意事项：&lt;/p&gt;
+&lt;p&gt;There are something to mention：&lt;/p&gt;
 
 &lt;ul&gt;
   &lt;li&gt;
-    &lt;p&gt;如果对所产生的文件列表进行 &lt;code class=&quot;highlighter-rouge&quot;&gt;shuflle&lt;/code&gt; 操作让文件变得无序的话，所有消耗时间都会变长。说明线程在操作文件时是 &lt;code class=&quot;highlighter-rouge&quot;&gt;I/O Bound&lt;/code&gt; 的行为。&lt;/p&gt;
+    &lt;p&gt;If the &lt;code class=&quot;highlighter-rouge&quot;&gt;shuflle&lt;/code&gt; operation is performed on the generated file list to make the file unordered,then all the time will be longer. Explain that the thread is &lt;code class=&quot;highlighter-rouge&quot;&gt;I/O Bound&lt;/code&gt; when it manipulates the file.&lt;/p&gt;
   &lt;/li&gt;
   &lt;li&gt;
-    &lt;p&gt;第 22 行计算从 1-300 的阶乘，非常典型的消耗 CPU 行为。在这种情况下时间运行状况为：&lt;/p&gt;
+    &lt;p&gt;Line 22 calculates the factorial from 1-300, which is very typical of CPU consumption. In this case the time health is:&lt;/p&gt;
 
-    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  共有 403345 个文件
-  普通执行状况: 16.230872
-  多进程运行状况: 4.874608
-  多线程运行状况: 21.812273
+    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  There are 403345 files
+  normal case: 16.230872
+  multi-process: 4.874608
+  multi-thread: 21.812273
 
 &lt;/code&gt;&lt;/pre&gt;
     &lt;/div&gt;
-    &lt;p&gt;可以看出多进程操作有明显的优势&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;如果注释掉第 22 行，运行状况为
-    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  共有 403365 个文件
-  普通执行状况: 0.182251
-  多进程运行状况: 0.39652
-  多线程运行状况: 0.234787
+    &lt;p&gt;There are obvious multi-process advantages on multi=progress. &lt;code class=&quot;highlighter-rouge&quot;&gt;4&amp;lt;16&amp;lt;21&lt;/code&gt; it is not difficult to choose.&lt;/p&gt;
+
+    &lt;p&gt;If we comment the line 22,then situation will be:&lt;/p&gt;
+    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  There are 403365 files
+  normal case: 0.182251
+  multi-process: 0.39652
+  multi-thread: 0.234787
+
 &lt;/code&gt;&lt;/pre&gt;
     &lt;/div&gt;
-    &lt;p&gt;可以看出多线程要比多进程的运行效果好，但仍然不如普通的执行情况。一个解释是切换目录造成的 I/O 阻塞是小于线程之间切换的 context switch 。在用 requests 写爬虫的时候检测到的 &lt;code class=&quot;highlighter-rouge&quot;&gt;multiprocessing.dummy&lt;/code&gt; 运行效果要比单线程快的多。&lt;/p&gt;
   &lt;/li&gt;
-  &lt;li&gt;为了安全，在 map() 后还可以再加上 &lt;code class=&quot;highlighter-rouge&quot;&gt;pool.close()  pool.join()&lt;/code&gt;。&lt;code class=&quot;highlighter-rouge&quot;&gt;close()&lt;/code&gt; 的作用是 &lt;code class=&quot;highlighter-rouge&quot;&gt;Prevents any more tasks from being submitted to the pool. Once all the tasks have been completed the worker processes will exit.&lt;/code&gt;,&lt;code class=&quot;highlighter-rouge&quot;&gt;join&lt;/code&gt; 的作用是 &lt;code class=&quot;highlighter-rouge&quot;&gt;Wait for the worker processes to exit&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;For security, you can add &lt;code class=&quot;highlighter-rouge&quot;&gt;pool.close() pool.join()&lt;/code&gt; after map() . The role of &lt;code class=&quot;highlighter-rouge&quot;&gt;close()&lt;/code&gt; is &lt;code class=&quot;highlighter-rouge&quot;&gt;Prevents any more tasks from being submitted to the pool. Once all the tasks have been completed , the worker processes will exit.&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;join&lt;/code&gt; is &lt;code class=&quot;highlighter-rouge&quot;&gt;Wait for the worker processes to exit&lt;/code&gt;&lt;/p&gt;
+  &lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;h5 id=&quot;lock&quot;&gt;Lock&lt;/h5&gt;
 
-&lt;p&gt;Lock 的作用是对一些敏感的函数或者变量，确保只有一个进程/线程来运行。同时因为 Lock 是不可 pickable 的，所以不能作为 map() 的参数传进去。直接使用全局变量来解。&lt;/p&gt;
+&lt;p&gt;The role of &lt;code class=&quot;highlighter-rouge&quot;&gt;Lock&lt;/code&gt; is for some sensitive functions or variables, ensuring that only one process/thread is running. Also because Lock is not pickable, it cannot be passed as a parameter to map() . Use global variables directly to solve.&lt;/p&gt;
 
-&lt;p&gt;一个例子如下：&lt;/p&gt;
+&lt;p&gt;An example is as follows:&lt;/p&gt;
 
 &lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;multiprocessing.Lock&lt;/span&gt;
 
@@ -2726,27 +2709,28 @@ I will decide during the next 48 hours
     &lt;span class=&quot;k&quot;&gt;with&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;l&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
         &lt;span class=&quot;c&quot;&gt;# do-something,it will release automatic&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
-&lt;p&gt;with lock 实现了 context manager，可以类比于 Java 的 &lt;code class=&quot;highlighter-rouge&quot;&gt;Synchronized&lt;/code&gt; 关键字。在测试时候发现如果所有要执行的函数都被置于 lock 下，那么多进程的执行时间甚至比
-顺序执行还要差。&lt;/p&gt;
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;With lock&lt;/code&gt; implements the context manager, which can be compared to Java’s &lt;code class=&quot;highlighter-rouge&quot;&gt;Synchronized&lt;/code&gt; keyword. During the test, it was found that if all the functions to be executed were placed under lock, the execution time of multiple processes was even worse than the sequential execution.&lt;/p&gt;
 
-&lt;h5 id=&quot;关于-apply_async&quot;&gt;关于 apply_async&lt;/h5&gt;
+&lt;h5 id=&quot;about-apply_async&quot;&gt;About apply_async&lt;/h5&gt;
 
-&lt;p&gt;在 multiprocessing 的 pool 里除了 map/map_async 外还提供了 apply/apply_async。主要区别包括：&lt;/p&gt;
+&lt;p&gt;In the multiprocessing pool, &lt;code class=&quot;highlighter-rouge&quot;&gt;apply/apply_async&lt;/code&gt; is provided in addition to map/map_async. The main differences include:&lt;/p&gt;
 
 &lt;ul&gt;
   &lt;li&gt;
-    &lt;p&gt;map/map_async 可以接受一个包含大量参数的 list，并把这个 list 的每个元素发给要执行的函数。apply/apply_async 则只能接受类似于 tuple 的一个参数，如 &lt;code class=&quot;highlighter-rouge&quot;&gt;(1,)&lt;/code&gt;&lt;/p&gt;
+    &lt;p&gt;map/map_async can accept a list containing a large number of arguments and send each element of the list to the function to be executed. Apply/apply_async only accepts one parameter like tuple, such as &lt;code class=&quot;highlighter-rouge&quot;&gt;(1,)&lt;/code&gt;&lt;/p&gt;
   &lt;/li&gt;
   &lt;li&gt;
-    &lt;p&gt;map/apply 都是阻塞型的，也就是返回时间取决于执行最长的那个时间，在所有任务执行完后一起返回。而 map_async/apply_async 则是在开始执行任务时就返回一个 AsyncResult 对象，之后用 &lt;code class=&quot;highlighter-rouge&quot;&gt;.get()&lt;/code&gt; 方法来得到结果。来做一个说明：&lt;/p&gt;
+    &lt;p&gt;map/apply is block-type, that is, the return time depends on the longest execution time and returns after all tasks have been executed. Map_async/apply_async returns an AsyncResult object when it starts executing the task, and then uses the &lt;code class=&quot;highlighter-rouge&quot;&gt;.get()&lt;/code&gt; method to get the result.&lt;/p&gt;
   &lt;/li&gt;
   &lt;li&gt;
-    &lt;p&gt;map_async/apply_async 相比 map/apply 多了一个参数:callback。callback 是一个只接受一个参数的函数，用来对执行的结果进行 ` 写入文件/读入数据库` 等操作。&lt;/p&gt;
+    &lt;p&gt;map_async/apply_async has one more parameter than map/apply: callback. Callback is a function that accepts only one parameter and is used to perform operations such as &lt;code class=&quot;highlighter-rouge&quot;&gt;write file/read into database&lt;/code&gt; on the result of the execution.&lt;/p&gt;
   &lt;/li&gt;
   &lt;li&gt;
-    &lt;p&gt;最喜欢使用的两个就是 map 和 apply_async，其中 map 的输出和输入的顺序一致，apply_async 输出和输入顺序无关。进行一个简单的比较如下：&lt;/p&gt;
+    &lt;p&gt;The two favorite ones are map and apply_async, where the output of map is the same as the order of the input, and the apply_async output is independent of the input order.&lt;/p&gt;
   &lt;/li&gt;
 &lt;/ul&gt;
+
+&lt;p&gt;Make a simple comparison as follows:&lt;/p&gt;
 
 &lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;multiprocessing&lt;/span&gt;
 &lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;datetime&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;datetime&lt;/span&gt;
@@ -2755,6 +2739,8 @@ I will decide during the next 48 hours
 &lt;span class=&quot;n&quot;&gt;l&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;multiprocessing&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Lock&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
 
 &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;cal&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+    &lt;span class=&quot;c&quot;&gt;# test lock 
+&lt;/span&gt;
     &lt;span class=&quot;c&quot;&gt;# with l:
 &lt;/span&gt;
     &lt;span class=&quot;c&quot;&gt;#     #print f
@@ -2767,12 +2753,12 @@ I will decide during the next 48 hours
 &lt;/span&gt;
     &lt;span class=&quot;c&quot;&gt;#     return 2**f
 &lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'{} 出现'&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;format&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'{} occurs'&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;format&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
     &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;_&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;range&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
             &lt;span class=&quot;n&quot;&gt;temp&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;reduce&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;lambda&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;range&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;40000&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
         &lt;span class=&quot;c&quot;&gt;# temp = reduce(lambda x, y: x * y, range(1, f))
 &lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'计算出 {} 的乘积为 {}'&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;format&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;**&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'calculate {} result is {}'&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;format&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;**&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
 
 &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;__name__&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;==&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'__main__'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
 
@@ -2780,67 +2766,65 @@ I will decide during the next 48 hours
     &lt;span class=&quot;n&quot;&gt;date3&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;datetime&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;now&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
     &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;c&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pool&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;apply_async&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cal&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,))&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;range&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)]:&lt;/span&gt;
         &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;c&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;())&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'总共花费时间为: {}'&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;format&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;datetime&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;now&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;date3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;total_seconds&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()))&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'Total cost time is: {}'&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;format&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;datetime&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;now&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;date3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;total_seconds&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()))&lt;/span&gt;
     &lt;span class=&quot;n&quot;&gt;pool&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;close&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
     &lt;span class=&quot;n&quot;&gt;pool&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;join&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
 
     &lt;span class=&quot;n&quot;&gt;pool&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;multiprocessing&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Pool&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
     &lt;span class=&quot;n&quot;&gt;date1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;datetime&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;now&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
-    &lt;span class=&quot;c&quot;&gt;#for x in [pool.map_async(cal, range(1, 30))]:
-&lt;/span&gt;
     &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pool&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;map&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cal&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;range&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)):&lt;/span&gt;
         &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'总共花费时间为: {}'&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;format&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;datetime&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;now&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;date1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;total_seconds&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()))&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'Total cost time is: {}'&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;format&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;datetime&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;now&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;date1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;total_seconds&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()))&lt;/span&gt;
     &lt;span class=&quot;n&quot;&gt;pool&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;close&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
     &lt;span class=&quot;n&quot;&gt;pool&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;join&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;p&gt;对 pool.apply_async ，显示结果如下。可以很明显看出一旦结果执行完就返回。&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;1 出现
-2 出现
-3 出现
-4 出现
-计算出 1 的乘积为 2
-5 出现
-计算出 2 的乘积为 4
-6 出现
-计算出 3 的乘积为 8
-7 出现
-计算出 4 的乘积为 16
-8 出现
-计算出 5 的乘积为 32
-9 出现
-计算出 6 的乘积为 64
-计算出 7 的乘积为 128
-计算出 8 的乘积为 256
-计算出 9 的乘积为 512
-总共花费时间为：5.700147
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;1 occurs
+2 occurs
+3 occurs
+4 occurs
+calculate 1 result is 2
+5 occurs
+calculate 2 result is 4
+6 occurs
+calculate 3 result is 8
+7 occurs
+calculate 4 result is 16
+8 occurs
+calculate 5 result is 32
+9 occurs
+calculate 6 result is 64
+calculate 7 result is 128
+calculate 8 result is 256
+calculate 9 result is 512
+Total cost time is：5.700147
 
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 
 &lt;p&gt;对 pool.map，显示结果如下。可以看出它在等待所有的结果都运行完，存在明显的 block 。&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;1 出现
-2 出现
-3 出现
-4 出现
-5 出现
-6 出现
-7 出现
-8 出现
-9 出现
-// 此处会出现明显的停顿
-计算出 1 的乘积为 2
-计算出 2 的乘积为 4
-计算出 3 的乘积为 8
-计算出 4 的乘积为 16
-计算出 5 的乘积为 32
-计算出 6 的乘积为 64
-计算出 7 的乘积为 128
-计算出 8 的乘积为 256
-计算出 9 的乘积为 512
-总共花费时间为: 5.706731
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;1 occurs
+2 occurs
+3 occurs
+4 occurs
+5 occurs
+6 occurs
+7 occurs
+8 occurs
+9 occurs
+// it will pause for a few seconds
+calculate 1 result is 2
+calculate 2 result is 4
+calculate 3 result is 8
+calculate 4 result is 16
+calculate 5 result is 32
+calculate 6 result is 64
+calculate 7 result is 128
+calculate 8 result is 256
+calculate 9 result is 512
+Total cost time is: 5.706731
 
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
@@ -3021,7 +3005,7 @@ submit 这里很明显可以看到 Java 的影子。future 特性最好的是一
       
 
       
-        <summary type="html">用 multiprocessing 和 multiprocessing.dummy 来实现多进程/实现多进程和多线程，增加了 ThreadPoolExecutor 以及其他内容 直接使用 one-line 关于 multiprocessing 和 Thread 之间的 pros 和 cons 就不多做描述了，因为关键是我们要让我们的代码来并行对吧:-D 关于使用就直接看这篇文章 parallelism-in-one-line 好啦 来提供一个所写的例子： # -*- coding:utf-8 -*- &quot;&quot;&quot; 对某个目录下的文件求 md5 值 &quot;&quot;&quot; import os import hashlib from multiprocessing import Pool as ProcessPool from multiprocessing.dummy import Pool as ThreadPool from datetime import datetime def traverse_dir(dir_='/home/'): for origin_dir, current_dir, filename in os.walk(dir_): for file_ in filename: yield origin_dir + file_ def create_hash(filename): hashlib.md5(filename) temp = reduce(lambda x, y: x * y, range(1, 300)) if __name__ == '__main__': file_list = list(traverse_dir()) # import random # random.shuffle(file_list) print '共有 {} 个文件'.format(len(file_list)) time1 = datetime.now() for filename in file_list: create_hash(filename) print '普通执行状况: {}'.format((datetime.now() - time1).total_seconds()) pool = ProcessPool(4) time2 = datetime.now() pool.map(create_hash, file_list) print '多进程运行状况: {}'.format((datetime.now() - time2).total_seconds()) pool = ThreadPool(4) time3 = datetime.now() pool.map(create_hash, file_list) print '多线程运行状况: {}'.format((datetime.now() - time3).total_seconds()) 有这样几个注意事项： 如果对所产生的文件列表进行 shuflle 操作让文件变得无序的话，所有消耗时间都会变长。说明线程在操作文件时是 I/O Bound 的行为。 第 22 行计算从 1-300 的阶乘，非常典型的消耗 CPU 行为。在这种情况下时间运行状况为： 共有 403345 个文件 普通执行状况: 16.230872 多进程运行状况: 4.874608 多线程运行状况: 21.812273 可以看出多进程操作有明显的优势 如果注释掉第 22 行，运行状况为 共有 403365 个文件 普通执行状况: 0.182251 多进程运行状况: 0.39652 多线程运行状况: 0.234787 可以看出多线程要比多进程的运行效果好，但仍然不如普通的执行情况。一个解释是切换目录造成的 I/O 阻塞是小于线程之间切换的 context switch 。在用 requests 写爬虫的时候检测到的 multiprocessing.dummy 运行效果要比单线程快的多。 为了安全，在 map() 后还可以再加上 pool.close() pool.join()。close() 的作用是 Prevents any more tasks from being submitted to the pool. Once all the tasks have been completed the worker processes will exit.,join 的作用是 Wait for the worker processes to exit Lock Lock 的作用是对一些敏感的函数或者变量，确保只有一个进程/线程来运行。同时因为 Lock 是不可 pickable 的，所以不能作为 map() 的参数传进去。直接使用全局变量来解。 一个例子如下： import multiprocessing.Lock l = Lock() def func1(): # some key function l.acquire() # do-something l.release() def func2(): # or use next method with l: # do-something,it will release automatic with lock 实现了 context manager，可以类比于 Java 的 Synchronized 关键字。在测试时候发现如果所有要执行的函数都被置于 lock 下，那么多进程的执行时间甚至比 顺序执行还要差。 关于 apply_async 在 multiprocessing 的 pool 里除了 map/map_async 外还提供了 apply/apply_async。主要区别包括： map/map_async 可以接受一个包含大量参数的 list，并把这个 list 的每个元素发给要执行的函数。apply/apply_async 则只能接受类似于 tuple 的一个参数，如 (1,) map/apply 都是阻塞型的，也就是返回时间取决于执行最长的那个时间，在所有任务执行完后一起返回。而 map_async/apply_async 则是在开始执行任务时就返回一个 AsyncResult 对象，之后用 .get() 方法来得到结果。来做一个说明： map_async/apply_async 相比 map/apply 多了一个参数:callback。callback 是一个只接受一个参数的函数，用来对执行的结果进行 ` 写入文件/读入数据库` 等操作。 最喜欢使用的两个就是 map 和 apply_async，其中 map 的输出和输入的顺序一致，apply_async 输出和输入顺序无关。进行一个简单的比较如下： import multiprocessing from datetime import datetime from functools import reduce l = multiprocessing.Lock() def cal(f): # with l: # #print f # for _ in range(f): # temp = reduce(lambda x, y: x * y, range(1, 400)) # #temp = reduce(lambda x, y: x * y, range(1, f)) # return 2**f print ('{} 出现'.format(f)) for _ in range(f): temp = reduce(lambda x, y: x * y, range(1, 40000)) # temp = reduce(lambda x, y: x * y, range(1, f)) return '计算出 {} 的乘积为 {}'.format(f,2**f) if __name__=='__main__': pool = multiprocessing.Pool(4) date3 = datetime.now() for c in [pool.apply_async(cal,(x,)) for x in range(1,10)]: print (c.get()) print ('总共花费时间为: {}'.format((datetime.now()-date3).total_seconds())) pool.close() pool.join() pool = multiprocessing.Pool(4) date1 = datetime.now() #for x in [pool.map_async(cal, range(1, 30))]: for x in pool.map(cal,range(1,10)): print (x) print ('总共花费时间为: {}'.format((datetime.now() - date1).total_seconds())) pool.close() pool.join() 对 pool.apply_async ，显示结果如下。可以很明显看出一旦结果执行完就返回。 1 出现 2 出现 3 出现 4 出现 计算出 1 的乘积为 2 5 出现 计算出 2 的乘积为 4 6 出现 计算出 3 的乘积为 8 7 出现 计算出 4 的乘积为 16 8 出现 计算出 5 的乘积为 32 9 出现 计算出 6 的乘积为 64 计算出 7 的乘积为 128 计算出 8 的乘积为 256 计算出 9 的乘积为 512 总共花费时间为：5.700147 对 pool.map，显示结果如下。可以看出它在等待所有的结果都运行完，存在明显的 block 。 1 出现 2 出现 3 出现 4 出现 5 出现 6 出现 7 出现 8 出现 9 出现 // 此处会出现明显的停顿 计算出 1 的乘积为 2 计算出 2 的乘积为 4 计算出 3 的乘积为 8 计算出 4 的乘积为 16 计算出 5 的乘积为 32 计算出 6 的乘积为 64 计算出 7 的乘积为 128 计算出 8 的乘积为 256 计算出 9 的乘积为 512 总共花费时间为: 5.706731 关于性能，在做的大量测试下所花费的时间都是类似的，在这种情况下性能不应该成为考量的瓶颈。apply_async 更适合于希望能立刻得到执行结果的场合：-D 一个更加复杂的例子 上面的方法在大多数情况下已经足够开发用了。但如果我们想要对多进程/线程操作有更好的掌控，如共享状态(share state)，就需要了解的更深。 曾经在学习的时候写过一个用 mp.Process 来运行，并用 mp.Queue 来作为队列的例子，参见如下。有时间的话再加上注释吧： #!/usr/bin/env python # -*- coding:utf-8 -*- import multiprocessing as mp import Queue import time import re import requests def run(task_queue, result_queue, visited_set): name = mp.current_process().name while True: try: # return an item if one is immediately available new_task = task_queue.get(False) url=new_task ''' if not next_task: print '{} exiting'.format(next_task) task_queue.task_done() break ''' except Queue.Empty: #print 'error happened' # task_queue.task_done() break if visited_set.has_key(url): print '{}has been added'.format(url) task_queue.task_done() continue title = crawl(url) print '{}:{}'.format(name,title) visited_set[url] = 1 task_queue.task_done() result_queue.put(title) return def crawl(url): #time.sleep(5.0/1000) r=requests.get(url) title=re.findall(r'&amp;lt;title&amp;gt;(.*?).&amp;lt;/title&amp;gt;',r.content) return title if __name__ == '__main__': t1=time.time() tasks = mp.JoinableQueue() results = mp.Queue() manager = mp.Manager() # completeFlag vset = manager.dict() num_consumers = mp.cpu_count() * 2 print 'Creating {} consumers'.format(num_consumers) num_jobs = 10 url_list=['http://www.qunar.com','http://www.douban.com', 'http://www.github.com','http://www.ctrip.com','http://www.v2ex.com'] for u in url_list: tasks.put(u, False) tasks.put(url_list[2], False) tasks.put(url_list[3], False) processes = [mp.Process(target=run, args=(tasks, results, vset)) for i in xrange(num_consumers)] for p in processes: p.start() # wait until all the items in taskqueue are processed tasks.join() for p in processes: p.join() while True: try: print results.get(False), except Queue.Empty: print '停止' break print 'cost {}'.format(time.time()-t1) Python3 里的 Thread/Process PoolExecutor Python3 里为进程和线程提供了进一步的抽象。使用方法有两种： 使用 map 一个典型的函数如下： with ProcessPoolExecutor(max_workers=4) as executor: executor.map(create_hash, file_list) 在对上面的代码稍作改动之后在 Python3 里运行，在最好的情况里结果如下： 普通执行状况: 12.71012 多进程运行状况: 5.799454 多线程运行状况: 18.085609 ThreadPoolExecutor 运行状况: 18.403806 ProcessPoolExecutor 运行状况: 5.764657 其他大部分的情况 ThreadPoolExecutor 和 ProcessPoolExecutor 都比 multiprocessing 的效果差。原因可以参考 processpoolexecutor-from-concurrent-futures-way-slower-than-multiprocessing-pool也就是说 PoolExecutor 里最好的适用情况是用 submit() 来监测即时更新的结果，而非套用 mp 。这就引到了第二种使用，使用 submit(): 使用 submit 正如上面所说，对 PoolExecutor 用 map 的意义不大。下面就主要对 submit　进行讨论。 submit 这里很明显可以看到 Java 的影子。future 特性最好的是一旦完成就返回，而不必等到所有阻塞返回。和 apply_async 相比更抽象。 对官网的例子略作改进，一个使用如下： from concurrent.futures import ThreadPoolExecutor,as_completed import requests URLS = ['http://www.foxnews.com/', 'http://www.cnn.com/', 'http://europe.wsj.com/', 'http://www.bbc.co.uk/', 'http://some-made-up-domain.com/'] def load_url(url): return requests.get(url).content().decode('utf-8') if __name__ == '__main__': with ThreadPoolExecutor(max_workers=4) as executor: future_to_url = {executor.submit(load_url,url):url for url in URLS} for future in as_completed(future_to_url): url = future_to_url.get(future) try: data = future.result() except Exception as ex: print ('raise exception') else: print ('{url} content is {content}'.format(url=url,content=data))</summary>
+        <summary type="html">Using multiprocessing and multiprocessing.dummy to implement multi-process and multi-threading, adding ThreadPoolExecutor and other content. 这篇文章对应的中文版 Just Add One-line There is not much description about pros and cons between multiprocessing and Thread, because the key is that we want our code to be parallel:-D Read this article [parallelism-in-one-line] (http://chriskiehl.com/article/parallelism-in-one-line/) to get a rough impression. Providing an example written: # -*- coding:utf-8 -*- &quot;&quot;&quot; calculate the md5 value for files under one directory &quot;&quot;&quot; import os import hashlib from multiprocessing import Pool as ProcessPool from multiprocessing.dummy import Pool as ThreadPool from datetime import datetime def traverse_dir(dir_='/home/'): for origin_dir, current_dir, filename in os.walk(dir_): for file_ in filename: yield origin_dir + file_ def create_hash(filename): hashlib.md5(filename) temp = reduce(lambda x, y: x * y, range(1, 300)) if __name__ == '__main__': file_list = list(traverse_dir()) # import random # random.shuffle(file_list) print 'There are {} files'.format(len(file_list)) time1 = datetime.now() for filename in file_list: create_hash(filename) print 'normal case: {}'.format((datetime.now() - time1).total_seconds()) pool = ProcessPool(4) time2 = datetime.now() pool.map(create_hash, file_list) print 'multi-process case: {}'.format((datetime.now() - time2).total_seconds()) pool = ThreadPool(4) time3 = datetime.now() pool.map(create_hash, file_list) print 'multi-thread: {}'.format((datetime.now() - time3).total_seconds()) There are something to mention： If the shuflle operation is performed on the generated file list to make the file unordered,then all the time will be longer. Explain that the thread is I/O Bound when it manipulates the file. Line 22 calculates the factorial from 1-300, which is very typical of CPU consumption. In this case the time health is: There are 403345 files normal case: 16.230872 multi-process: 4.874608 multi-thread: 21.812273 There are obvious multi-process advantages on multi=progress. 4&amp;lt;16&amp;lt;21 it is not difficult to choose. If we comment the line 22,then situation will be: There are 403365 files normal case: 0.182251 multi-process: 0.39652 multi-thread: 0.234787 For security, you can add pool.close() pool.join() after map() . The role of close() is Prevents any more tasks from being submitted to the pool. Once all the tasks have been completed , the worker processes will exit., join is Wait for the worker processes to exit Lock The role of Lock is for some sensitive functions or variables, ensuring that only one process/thread is running. Also because Lock is not pickable, it cannot be passed as a parameter to map() . Use global variables directly to solve. An example is as follows: import multiprocessing.Lock l = Lock() def func1(): # some key function l.acquire() # do-something l.release() def func2(): # or use next method with l: # do-something,it will release automatic With lock implements the context manager, which can be compared to Java’s Synchronized keyword. During the test, it was found that if all the functions to be executed were placed under lock, the execution time of multiple processes was even worse than the sequential execution. About apply_async In the multiprocessing pool, apply/apply_async is provided in addition to map/map_async. The main differences include: map/map_async can accept a list containing a large number of arguments and send each element of the list to the function to be executed. Apply/apply_async only accepts one parameter like tuple, such as (1,) map/apply is block-type, that is, the return time depends on the longest execution time and returns after all tasks have been executed. Map_async/apply_async returns an AsyncResult object when it starts executing the task, and then uses the .get() method to get the result. map_async/apply_async has one more parameter than map/apply: callback. Callback is a function that accepts only one parameter and is used to perform operations such as write file/read into database on the result of the execution. The two favorite ones are map and apply_async, where the output of map is the same as the order of the input, and the apply_async output is independent of the input order. Make a simple comparison as follows: import multiprocessing from datetime import datetime from functools import reduce l = multiprocessing.Lock() def cal(f): # test lock # with l: # #print f # for _ in range(f): # temp = reduce(lambda x, y: x * y, range(1, 400)) # #temp = reduce(lambda x, y: x * y, range(1, f)) # return 2**f print ('{} occurs'.format(f)) for _ in range(f): temp = reduce(lambda x, y: x * y, range(1, 40000)) # temp = reduce(lambda x, y: x * y, range(1, f)) return 'calculate {} result is {}'.format(f,2**f) if __name__=='__main__': pool = multiprocessing.Pool(4) date3 = datetime.now() for c in [pool.apply_async(cal,(x,)) for x in range(1,10)]: print (c.get()) print ('Total cost time is: {}'.format((datetime.now()-date3).total_seconds())) pool.close() pool.join() pool = multiprocessing.Pool(4) date1 = datetime.now() for x in pool.map(cal,range(1,10)): print (x) print ('Total cost time is: {}'.format((datetime.now() - date1).total_seconds())) pool.close() pool.join() 对 pool.apply_async ，显示结果如下。可以很明显看出一旦结果执行完就返回。 1 occurs 2 occurs 3 occurs 4 occurs calculate 1 result is 2 5 occurs calculate 2 result is 4 6 occurs calculate 3 result is 8 7 occurs calculate 4 result is 16 8 occurs calculate 5 result is 32 9 occurs calculate 6 result is 64 calculate 7 result is 128 calculate 8 result is 256 calculate 9 result is 512 Total cost time is：5.700147 对 pool.map，显示结果如下。可以看出它在等待所有的结果都运行完，存在明显的 block 。 1 occurs 2 occurs 3 occurs 4 occurs 5 occurs 6 occurs 7 occurs 8 occurs 9 occurs // it will pause for a few seconds calculate 1 result is 2 calculate 2 result is 4 calculate 3 result is 8 calculate 4 result is 16 calculate 5 result is 32 calculate 6 result is 64 calculate 7 result is 128 calculate 8 result is 256 calculate 9 result is 512 Total cost time is: 5.706731 关于性能，在做的大量测试下所花费的时间都是类似的，在这种情况下性能不应该成为考量的瓶颈。apply_async 更适合于希望能立刻得到执行结果的场合：-D 一个更加复杂的例子 上面的方法在大多数情况下已经足够开发用了。但如果我们想要对多进程/线程操作有更好的掌控，如共享状态(share state)，就需要了解的更深。 曾经在学习的时候写过一个用 mp.Process 来运行，并用 mp.Queue 来作为队列的例子，参见如下。有时间的话再加上注释吧： #!/usr/bin/env python # -*- coding:utf-8 -*- import multiprocessing as mp import Queue import time import re import requests def run(task_queue, result_queue, visited_set): name = mp.current_process().name while True: try: # return an item if one is immediately available new_task = task_queue.get(False) url=new_task ''' if not next_task: print '{} exiting'.format(next_task) task_queue.task_done() break ''' except Queue.Empty: #print 'error happened' # task_queue.task_done() break if visited_set.has_key(url): print '{}has been added'.format(url) task_queue.task_done() continue title = crawl(url) print '{}:{}'.format(name,title) visited_set[url] = 1 task_queue.task_done() result_queue.put(title) return def crawl(url): #time.sleep(5.0/1000) r=requests.get(url) title=re.findall(r'&amp;lt;title&amp;gt;(.*?).&amp;lt;/title&amp;gt;',r.content) return title if __name__ == '__main__': t1=time.time() tasks = mp.JoinableQueue() results = mp.Queue() manager = mp.Manager() # completeFlag vset = manager.dict() num_consumers = mp.cpu_count() * 2 print 'Creating {} consumers'.format(num_consumers) num_jobs = 10 url_list=['http://www.qunar.com','http://www.douban.com', 'http://www.github.com','http://www.ctrip.com','http://www.v2ex.com'] for u in url_list: tasks.put(u, False) tasks.put(url_list[2], False) tasks.put(url_list[3], False) processes = [mp.Process(target=run, args=(tasks, results, vset)) for i in xrange(num_consumers)] for p in processes: p.start() # wait until all the items in taskqueue are processed tasks.join() for p in processes: p.join() while True: try: print results.get(False), except Queue.Empty: print '停止' break print 'cost {}'.format(time.time()-t1) Python3 里的 Thread/Process PoolExecutor Python3 里为进程和线程提供了进一步的抽象。使用方法有两种： 使用 map 一个典型的函数如下： with ProcessPoolExecutor(max_workers=4) as executor: executor.map(create_hash, file_list) 在对上面的代码稍作改动之后在 Python3 里运行，在最好的情况里结果如下： 普通执行状况: 12.71012 多进程运行状况: 5.799454 多线程运行状况: 18.085609 ThreadPoolExecutor 运行状况: 18.403806 ProcessPoolExecutor 运行状况: 5.764657 其他大部分的情况 ThreadPoolExecutor 和 ProcessPoolExecutor 都比 multiprocessing 的效果差。原因可以参考 processpoolexecutor-from-concurrent-futures-way-slower-than-multiprocessing-pool也就是说 PoolExecutor 里最好的适用情况是用 submit() 来监测即时更新的结果，而非套用 mp 。这就引到了第二种使用，使用 submit(): 使用 submit 正如上面所说，对 PoolExecutor 用 map 的意义不大。下面就主要对 submit　进行讨论。 submit 这里很明显可以看到 Java 的影子。future 特性最好的是一旦完成就返回，而不必等到所有阻塞返回。和 apply_async 相比更抽象。 对官网的例子略作改进，一个使用如下： from concurrent.futures import ThreadPoolExecutor,as_completed import requests URLS = ['http://www.foxnews.com/', 'http://www.cnn.com/', 'http://europe.wsj.com/', 'http://www.bbc.co.uk/', 'http://some-made-up-domain.com/'] def load_url(url): return requests.get(url).content().decode('utf-8') if __name__ == '__main__': with ThreadPoolExecutor(max_workers=4) as executor: future_to_url = {executor.submit(load_url,url):url for url in URLS} for future in as_completed(future_to_url): url = future_to_url.get(future) try: data = future.result() except Exception as ex: print ('raise exception') else: print ('{url} content is {content}'.format(url=url,content=data))</summary>
       
 
       

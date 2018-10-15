@@ -1,34 +1,37 @@
 ---
 layout: post
-title: DP 解题思路
+title: Thoughts Of Solving Dynamic Programming Problems
 date: 2015-03-11 13:22:10
 categories: DP
 tags: [DP,Algorithm,Leetcode]
 comments: true
 ---
-动态规划例题及 Leetcode 题解
+
+Solving the dynamic programming problems
 <!-- more -->
 
-#### 关于 DP
+[这篇文章对应的中文版](/../translation/2015-03-11-Dynamic-Programming-Explanation.html)
 
-* 动态规划是一门非常重要的算法，对它的掌握应该是计算机科学专业学生的基本功
 
-* 下面来把对这类算法的理解进行尽可能多的解释
+#### About DP
 
-* 关键是 **状态定义** 和 **状态转移方程**
+* Dynamic programming is a very important algorithm, and mastery of it should be the basic skills for computer science students.
+
+* Let's explain as much as possible about the understanding of this type of algorithm.
+
+* The key is `state definition` and `state transition equation`
 
 ---
 
-#### 最长递增子序列
+#### Longest Increasing Subsequence
 
-> 给定K个整数的序列{ N1, N2, ..., NK }，其任意连续子序列可表示为{ Ni, Ni+1, ..., Nj }，其中 1 <= i <= j <= K。最大连续子序列是所有连续子序中元素和最大的一个， 例如给定序列{ -2, 11, -4, 13, -5, -2 }，其最大连续子序列为{ 11, -4, 13 }，最大和为20。
+> Given a sequence of K integers { N1, N2, ..., NK }, any contiguous subsequence can be expressed as { Ni, Ni+1, ..., Nj }, where 1 <= i <= j < = K. The largest contiguous subsequence is the element and the largest one of all consecutive subsequences, such as the given sequence { -2, 11, -4, 13, -5, -2 }, whose largest contiguous subsequence is { 11, -4, 13 } and the maximum sum is 20.
 
+* Define `sum[i]` as the `maximum value of contiguous subsequence with A[i] as the last end`
 
-* 定义`sum[i]`为'以A[i]作为最后一个结尾的连续子序列的最大值'
+* The state transition equation is: `sum[i]=max(sum[i-1]+a[i], a[i])`
+* T he actual solution is, as long as sum>0, then adding a[i] is still possible to increase max; but if sum<0, it should be discarded immediately, starting from 0 to calculate the next
 
-* 状态转移方程为：sum[i]=max(sum[i-1]+a[i],a[i])
-
-* 实际求解的时候则是，只要sum>0，那么加上之后的a[i]都还是有可能使max增大的；但如果sum<0，则应该立即抛弃，从0开始计算下一个
 
 {% highlight Python %}
 a = {4, 8, -12, 3, 7, 9}
@@ -49,9 +52,9 @@ return sum
 public int LIS(int[] arr) {
         int i, j, max = 0;
         int n = arr.length;
-        int[] list = new int[n]; // 存储长度
+        int[] list = new int[n]; // length
         Arrays.fill(list, 1);
-        int[] index = new int[n]; // 存储距离
+        int[] index = new int[n]; // distance
         Arrays.fill(index, -1);
 
 
@@ -63,7 +66,7 @@ public int LIS(int[] arr) {
                 }
             }
 
-        // 选择出最大的
+        // choose the max
         int max_index = 0;
 
         for (i = 0; i < n; i++)
@@ -80,22 +83,22 @@ public int LIS(int[] arr) {
             builder.insert(0, arr[next_index] + " ");
             next_index = index[next_index];
         }
-        System.out.println(builder.toString()); // 输出子序列
+        System.out.println(builder.toString()); // print the result
         return max;
 {% endhighlight %}
 
 ---
 
-#### 数塔问题
+#### Number tower problem
 ![img](/images/hdu-2084.jpg)
 
-> 要求从顶层到底层，每一层只能走到相邻节点，求经过的数字之和是多少
+>From the top layer to the bottom layer, each layer can only go to the adjacent node, and calculate the sum of the numbers
 
-* 定义状态方程：max[i,j] 表示以 [i,j] 作为起始点，所经过的最大的数字之和。则 max[1,1] 是我们要求的目标
+* Define the state equation: `max[i,j]` represents the sum of the largest numbers passed by [i,j] as the starting point. Then `max[1,1]` is our target
 
-* 定义状态转移方程：max[i,j]=num[i,j]+max(max(i+1,j),max(i+1,j+1))
+* Define the state transition equation: `max[i,j]=num[i,j]+max(max(i+1,j),max(i+1,j+1))`
 
-* 接下来可以自底向上，也可以自顶向下，具体参见之前所写的关于[hdu2084](http://acm.hdu.edu.cn/showproblem.php?pid=2084)的[博文](http://blog.csdn.net/allianzcortex/article/details/41620503)
+* Then you can choose to solve it from top to bottom or from bottom to top
 
 {% highlight C %}
 #include<iostream>  
@@ -127,13 +130,13 @@ int main(void)
 
 ---
 
-#### 背包问题
+#### Backpack Problem
 
-* 有著名的背包问题九讲，这里自己先写最基本的
+* There are different versions of backpack problem.Let me illustrate the basic one.
 
-* `有N件物品和一个容量为V的背包。第i件物品的费用是c[i]，价值是w[i]。求解将哪些物品装入背包可使价值总和最大`
+> There are N items and a backpack with a capacity of V. The cost of the i-th item is c[i] and the value is w[i]. Decide which items are loaded into the backpack so the sum of the values can be max.
 
-* 如果单纯使用递归来求解 DP 的话有两种思路
+* Solve it with Java.There are two types of answer,see the comment.
 
 {% highlight Java %}
 public int Knapsack1(int[] value, int[] weight, int capacity, int number) {
@@ -157,34 +160,32 @@ public int Knapsack1(int[] value, int[] weight, int capacity, int number) {
                     Knapsack2(value, weight, capacity, index + 1));
     }
 
-        // KnapSack 问题，两种调用
+        // two ways to solve it
         int[] value = {60, 100, 120};
         int[] weight = {10, 20, 30};
         int capacity = 50;
         int number = value.length;
-        System.out.println(dp.Knapsack1(value, weight, capacity, number)); // 220
+        System.out.println(dp.Knapsack1(value, weight, capacity, number)); // final result is 220
         int index = 0;
-        System.out.println(dp.Knapsack2(value, weight, capacity, index));  // 220
+        System.out.println(dp.Knapsack2(value, weight, capacity, index));  // final result is also 220
 
 {% endhighlight %}
 
 ---
 
-#### Leetcode 上相关题目
+### 303 Range Sum Quwey - Immutable
 
-##### 303 Range Sum Quwey - Immutable
+* [Link](https://leetcode.com/problems/range-sum-query-immutable/)
 
-* [链接](https://leetcode.com/problems/range-sum-query-immutable/)
+* About the meaning：Give an array that returns the value of any two range of ranges
 
-* 大意：给出一个数组，要求返回任意两个区间范围的的值
+* Idea: The rpblem content says `many calls to function`, so the traversal solution will definitely be **TLE**（Time Limit Exceeded); and `sum[i,j]=sum[j]-sum[i-1]` is obvious, so all the sums are found in one pass. After the value is done, subtraction is fine. Note you may need to use global variables
 
-* 思路：题目中说到`many calls to function`，所以多次遍历求解肯定会TLE；而sum[i,j]=sum[j]-sum[i-1]，所以一次遍历求出所有的sum值之后做减法就可以。注意要用全局变量
-
-* 代码：
+* code:
 
 {% highlight C %}
-// c++版
-//用vector<int> 来存储状态会更好
+// written in c++
+// Using vector<int> to add status will be better
 class NumArray {
     int dp[100000];
 public:
@@ -207,7 +208,7 @@ public:
 };
 {% endhighlight %}
 
-python版：
+Writen in Python：
 
 {% highlight Python %}
 class NumArray(object):
@@ -225,17 +226,17 @@ class NumArray(object):
 
 ##### 70 climbStatirs
 
-* [链接](https://leetcode.com/problems/climbing-stairs/)
+* [link](https://leetcode.com/problems/climbing-stairs/)
 
-* 大意：登上一个楼梯，可以走1步，可以走两步，问走到n步有几种解法
+* About the meaning：Ascend a staircase, you can take 1 step or  take two steps.if you go to n steps, how many solutions will you have?
 
-* 思路：用dp[n]来表示走到n步的方法数。对dp[n-1],只能选择走1步；对dp[n-2]，
-如果选择1+1，就会和dp[n-1]有重叠，只能选择2步
+* Idea: Use dp[n] to indicate the number of methods to go to n steps. For dp[n-1], you can only choose to take 1 step; for dp[n-2],
+If you choose 1+1, it will overlap with dp[n-1], you can only choose 2 steps.
 
-* 代码：
-C++版：
+* Code：
 
 {% highlight C %}
+Written in C++
 class Solution {
 public:
     int climbStairs(int n) {
@@ -250,8 +251,8 @@ public:
 };
 {% endhighlight %}
 
-python版：
 {% highlight Python %}
+# written in Python
 class Solution(object):
     def __init__(self):
         self.dp={}
@@ -268,17 +269,17 @@ class Solution(object):
 
 ##### 64 Minimum Path Sum
 
-* [链接](https://leetcode.com/problems/minimum-path-sum/)
+* [link](https://leetcode.com/problems/minimum-path-sum/)
 
-* 大意：m*n的全为正数的矩阵，可以向右向下移动，求从左上到右下经过的距离之和最小值
+* About the meaning: `m*n` is a matrix of all positive numbers, which can be moved downwards to the right,find the sum of the distances from the upper left to the lower right.
 
-* 思路：动态规划，用dp[i][j]表示以i,j作为最后一个方块所经过的最短步数
-则 dp[i][j]=max(dp[i-1][j]+grid[i][j],dp[i][j-1]+gird[i][j]
+* Idea: Dynamic programming.using dp[i][j] to represent the shortest number of steps taken with i, j as the last square.
+Then `dp[i][j]=max(dp[i-1][j]+grid[i][j],dp[i][j-1]+gird[i][j]`,we just need to implement the equation.
 
-* 代码：
-C++ 版：
+* Code:
 
 {% highlight C %}
+// written in C++
 class Solution {
 public:
     int minPathSum(vector<vector<int>>& grid) {

@@ -1,26 +1,29 @@
 ---
-title: Python one-line 实现多进程和多线程(修正版)
+title: One Line To Achieve MultiProcess and MultiThreads In Python
 date: 2014-06-22 10:49:24
 categories: Python
 tags: [Python]
 ---
-用 `multiprocessing` 和 `multiprocessing.dummy` 来实现多进程/实现多进程和多线程，增加了 ThreadPoolExecutor 以及其他内容
+Using `multiprocessing` and `multiprocessing.dummy` to implement multi-process and multi-threading, adding ThreadPoolExecutor and other content.
 
 <!-- more -->
 
-#### 直接使用 one-line 
+[这篇文章对应的中文版](/../translation/2014-06-22-Python-Multiprocessing-Multithreading.html)
 
-关于 multiprocessing 和 Thread 之间的 pros 和 cons 就不多做描述了，因为关键是我们要让我们的代码来并行对吧:-D
 
-关于使用就直接看这篇文章 [parallelism-in-one-line](http://chriskiehl.com/article/parallelism-in-one-line/) 好啦
+#### Just Add One-line
 
-来提供一个所写的例子：
+There is not much description about pros and cons between multiprocessing and Thread, because the key is that we want our code to be parallel:-D
+
+Read this article [parallelism-in-one-line] (http://chriskiehl.com/article/parallelism-in-one-line/) to get a rough impression.
+
+Providing an example written:
 
 {% highlight Python %}
 # -*- coding:utf-8 -*-
 
 """
-对某个目录下的文件求 md5 值
+calculate the md5 value for files under one directory
 """
 
 import os
@@ -45,56 +48,57 @@ if __name__ == '__main__':
     file_list = list(traverse_dir())
     # import random
     # random.shuffle(file_list)
-    print '共有 {} 个文件'.format(len(file_list))
+    print 'There are {} files'.format(len(file_list))
     time1 = datetime.now()
     for filename in file_list:
         create_hash(filename)
-    print '普通执行状况: {}'.format((datetime.now() - time1).total_seconds())
+    print 'normal case: {}'.format((datetime.now() - time1).total_seconds())
 
     pool = ProcessPool(4)
     time2 = datetime.now()
     pool.map(create_hash, file_list)
-    print '多进程运行状况: {}'.format((datetime.now() - time2).total_seconds())
+    print 'multi-process case: {}'.format((datetime.now() - time2).total_seconds())
 
     pool = ThreadPool(4)
     time3 = datetime.now()
     pool.map(create_hash, file_list)
-    print '多线程运行状况: {}'.format((datetime.now() - time3).total_seconds())
+    print 'multi-thread: {}'.format((datetime.now() - time3).total_seconds())
 
 {% endhighlight %}
 
 
-有这样几个注意事项：
+There are something to mention：
 
-- 如果对所产生的文件列表进行 `shuflle` 操作让文件变得无序的话，所有消耗时间都会变长。说明线程在操作文件时是 `I/O Bound` 的行为。
+- If the `shuflle` operation is performed on the generated file list to make the file unordered,then all the time will be longer. Explain that the thread is `I/O Bound` when it manipulates the file.
 
-- 第 22 行计算从 1-300 的阶乘，非常典型的消耗 CPU 行为。在这种情况下时间运行状况为：
-
-    ```
-    共有 403345 个文件
-    普通执行状况: 16.230872
-    多进程运行状况: 4.874608
-    多线程运行状况: 21.812273
+- Line 22 calculates the factorial from 1-300, which is very typical of CPU consumption. In this case the time health is:
 
     ```
-   可以看出多进程操作有明显的优势
+    There are 403345 files
+    normal case: 16.230872
+    multi-process: 4.874608
+    multi-thread: 21.812273
 
-- 如果注释掉第 22 行，运行状况为
     ```
-    共有 403365 个文件
-    普通执行状况: 0.182251
-    多进程运行状况: 0.39652
-    多线程运行状况: 0.234787
-    ```
-  可以看出多线程要比多进程的运行效果好，但仍然不如普通的执行情况。一个解释是切换目录造成的 I/O 阻塞是小于线程之间切换的 context switch 。在用 requests 写爬虫的时候检测到的 `multiprocessing.dummy` 运行效果要比单线程快的多。
+   There are obvious multi-process advantages on multi=progress. `4<16<21` it is not difficult to choose.
 
-- 为了安全，在 map() 后还可以再加上 `pool.close()  pool.join()`。`close()` 的作用是 `Prevents any more tasks from being submitted to the pool. Once all the tasks have been completed the worker processes will exit.`,`join` 的作用是 `Wait for the worker processes to exit`
+   If we comment the line 22,then situation will be:
+    ```
+    There are 403365 files
+    normal case: 0.182251
+    multi-process: 0.39652
+    multi-thread: 0.234787
+
+    ```
+  
+
+- For security, you can add `pool.close() pool.join()` after map() . The role of `close()` is `Prevents any more tasks from being submitted to the pool. Once all the tasks have been completed , the worker processes will exit.`, `join` is `Wait for the worker processes to exit`
 
 ##### Lock
 
-Lock 的作用是对一些敏感的函数或者变量，确保只有一个进程/线程来运行。同时因为 Lock 是不可 pickable 的，所以不能作为 map() 的参数传进去。直接使用全局变量来解。
+The role of `Lock` is for some sensitive functions or variables, ensuring that only one process/thread is running. Also because Lock is not pickable, it cannot be passed as a parameter to map() . Use global variables directly to solve.
 
-一个例子如下：
+An example is as follows:
 
 {% highlight Python %}
 import multiprocessing.Lock
@@ -114,20 +118,21 @@ def func2():
 
 {% endhighlight %}
 
-with lock 实现了 context manager，可以类比于 Java 的 `Synchronized` 关键字。在测试时候发现如果所有要执行的函数都被置于 lock 下，那么多进程的执行时间甚至比
-顺序执行还要差。
+`With lock` implements the context manager, which can be compared to Java's `Synchronized` keyword. During the test, it was found that if all the functions to be executed were placed under lock, the execution time of multiple processes was even worse than the sequential execution.
 
-##### 关于 apply_async
+##### About apply_async
 
-在 multiprocessing 的 pool 里除了 map/map_async 外还提供了 apply/apply_async。主要区别包括：
+In the multiprocessing pool, `apply/apply_async` is provided in addition to map/map_async. The main differences include:
 
-- map/map_async 可以接受一个包含大量参数的 list，并把这个 list 的每个元素发给要执行的函数。apply/apply_async 则只能接受类似于 tuple 的一个参数，如 `(1,)`
+- map/map_async can accept a list containing a large number of arguments and send each element of the list to the function to be executed. Apply/apply_async only accepts one parameter like tuple, such as `(1,)`
 
-- map/apply 都是阻塞型的，也就是返回时间取决于执行最长的那个时间，在所有任务执行完后一起返回。而 map_async/apply_async 则是在开始执行任务时就返回一个 AsyncResult 对象，之后用 `.get()` 方法来得到结果。来做一个说明：
+- map/apply is block-type, that is, the return time depends on the longest execution time and returns after all tasks have been executed. Map_async/apply_async returns an AsyncResult object when it starts executing the task, and then uses the `.get()` method to get the result.
 
-- map_async/apply_async 相比 map/apply 多了一个参数:callback。callback 是一个只接受一个参数的函数，用来对执行的结果进行 ` 写入文件/读入数据库` 等操作。
+- map_async/apply_async has one more parameter than map/apply: callback. Callback is a function that accepts only one parameter and is used to perform operations such as `write file/read into database` on the result of the execution.
 
-- 最喜欢使用的两个就是 map 和 apply_async，其中 map 的输出和输入的顺序一致，apply_async 输出和输入顺序无关。进行一个简单的比较如下：
+- The two favorite ones are map and apply_async, where the output of map is the same as the order of the input, and the apply_async output is independent of the input order. 
+
+Make a simple comparison as follows:
 
 {% highlight Python %}
 import multiprocessing
@@ -137,17 +142,18 @@ from functools import reduce
 l = multiprocessing.Lock()
 
 def cal(f):
+    # test lock 
     # with l:
     #     #print f
     #     for _ in range(f):
     #         temp = reduce(lambda x, y: x * y, range(1, 400))
     #     #temp = reduce(lambda x, y: x * y, range(1, f))
     #     return 2**f
-    print ('{} 出现'.format(f))
+    print ('{} occurs'.format(f))
     for _ in range(f):
             temp = reduce(lambda x, y: x * y, range(1, 40000))
         # temp = reduce(lambda x, y: x * y, range(1, f))
-    return '计算出 {} 的乘积为 {}'.format(f,2**f)
+    return 'calculate {} result is {}'.format(f,2**f)
 
 if __name__=='__main__':
 
@@ -155,16 +161,15 @@ if __name__=='__main__':
     date3 = datetime.now()
     for c in [pool.apply_async(cal,(x,)) for x in range(1,10)]:
         print (c.get())
-    print ('总共花费时间为: {}'.format((datetime.now()-date3).total_seconds()))
+    print ('Total cost time is: {}'.format((datetime.now()-date3).total_seconds()))
     pool.close()
     pool.join()
 
     pool = multiprocessing.Pool(4)
     date1 = datetime.now()
-    #for x in [pool.map_async(cal, range(1, 30))]:
     for x in pool.map(cal,range(1,10)):
         print (x)
-    print ('总共花费时间为: {}'.format((datetime.now() - date1).total_seconds()))
+    print ('Total cost time is: {}'.format((datetime.now() - date1).total_seconds()))
     pool.close()
     pool.join()
 
@@ -173,51 +178,51 @@ if __name__=='__main__':
 对 pool.apply_async ，显示结果如下。可以很明显看出一旦结果执行完就返回。
 
 ```
-1 出现
-2 出现
-3 出现
-4 出现
-计算出 1 的乘积为 2
-5 出现
-计算出 2 的乘积为 4
-6 出现
-计算出 3 的乘积为 8
-7 出现
-计算出 4 的乘积为 16
-8 出现
-计算出 5 的乘积为 32
-9 出现
-计算出 6 的乘积为 64
-计算出 7 的乘积为 128
-计算出 8 的乘积为 256
-计算出 9 的乘积为 512
-总共花费时间为：5.700147
+1 occurs
+2 occurs
+3 occurs
+4 occurs
+calculate 1 result is 2
+5 occurs
+calculate 2 result is 4
+6 occurs
+calculate 3 result is 8
+7 occurs
+calculate 4 result is 16
+8 occurs
+calculate 5 result is 32
+9 occurs
+calculate 6 result is 64
+calculate 7 result is 128
+calculate 8 result is 256
+calculate 9 result is 512
+Total cost time is：5.700147
 
 ```
 
 对 pool.map，显示结果如下。可以看出它在等待所有的结果都运行完，存在明显的 block 。
 
 ```
-1 出现
-2 出现
-3 出现
-4 出现
-5 出现
-6 出现
-7 出现
-8 出现
-9 出现
-// 此处会出现明显的停顿
-计算出 1 的乘积为 2
-计算出 2 的乘积为 4
-计算出 3 的乘积为 8
-计算出 4 的乘积为 16
-计算出 5 的乘积为 32
-计算出 6 的乘积为 64
-计算出 7 的乘积为 128
-计算出 8 的乘积为 256
-计算出 9 的乘积为 512
-总共花费时间为: 5.706731
+1 occurs
+2 occurs
+3 occurs
+4 occurs
+5 occurs
+6 occurs
+7 occurs
+8 occurs
+9 occurs
+// it will pause for a few seconds
+calculate 1 result is 2
+calculate 2 result is 4
+calculate 3 result is 8
+calculate 4 result is 16
+calculate 5 result is 32
+calculate 6 result is 64
+calculate 7 result is 128
+calculate 8 result is 256
+calculate 9 result is 512
+Total cost time is: 5.706731
 
 ```
 

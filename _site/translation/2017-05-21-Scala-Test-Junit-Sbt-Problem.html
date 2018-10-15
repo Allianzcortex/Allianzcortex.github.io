@@ -10,8 +10,8 @@
   
   
   
-  <title>Run ScalaTest And JUnit On TravisCI And Some Scala99 Solutions</title>
-  <meta name="description" content="After integrating ScalaTest with JUnit, execute sbt test prompt no tests are executed.How to solve it ? 这篇文章对应的中文版 BackGround I’ve recently tried to write a collection that solves LeetCode with Scala. ScalaTest is generally recommended for unit testing in Scala, and most Scala users have a Java background , so ScalaTest can also be integrated with JUnit, see link for a further understanding What Is The Problem? At first writing test code like this ： import org.scalatest.{BeforeAndAfterEach, FunSpec, FunSuite} class FileUtilTest extends FunSpec with BeforeAndAfterEach { it(&quot;should be equal&quot;) { assert(xx.max(1,2) == 2) } } build.sbt is as follows： libraryDependencies += &quot;org.scalatest&quot; % &quot;scalatest_2.12&quot; % &quot;3.0.1&quot; % &quot;test&quot; libraryDependencies += &quot;junit&quot; % &quot;junit&quot; % &quot;4.8.1&quot; % &quot;test&quot; Above is the most standard code for Scala-Test There is no problem in running test cases with Intellij IDEA and sbt test at the same time. If you want to import Junit,then it will be： import org.junit.Assert._ import org.scalatest.junit.{AssertionsForJUnit} import com.leetcode.util.{FileUtil =&amp;gt; xx} import org.junit.Test class FileUtilTest extends AssertionsForJUnit { @Test def test_max()={ assertTrue(xx.max(1,2)==2) } } Currently we can use Intellij IDEA to run unit tests, but if you use sbt test to run it in console, it will hint no tests are executed. If you want to have a continuous development,then manybe you know some famous tools such as TravisCI which cooperates well with github.I write a .travis.yml file.Now ScalaTest and JUnit can’t work on Linux Platform. Solutions Based on this question run-junit-tests-with-sbt you need to add the following code on original build.sbt： crossPaths := false libraryDependencies += &quot;com.novocode&quot; % &quot;junit-interface&quot; % &quot;0.11&quot; % Test testOptions += Tests.Argument(TestFrameworks.JUnit, &quot;-q&quot;, &quot;-v&quot;) The reason for this problem is that Scala and Java finally compiled two different sets of bytecodes. Although in most cases it is compatible,but you also need to mind the corner case. BTW,Looked at it, the test cases in Spark are all using the pure ScalaTest framework, without using JUnit. Exercises for 《Scala For Impatient》 and some notes for Scala 99 Scala’s syntax is as complex as C++… The author of 《Scala CookBook》 evaluates the nature of Java’s syntax as Verbose yet obvious. It is because of the obvious characteristics that it can lead in the industrial development,play a dominant role in Web development/Android/big data field. It is also because of the verbose characteristics and boilerplate code that people can feel really tired when writing in Java,especailly compared with Python. Scala based on the JVM platform is a nice improvement of Java. Scala’s official website promotes OO meets FP, which combines the benefits of object-oriented and functional programming. As many people have said, there is no need to fully understand Scala’s grammar and use it later. Scala is mainly divided into two aspects when learning: A series of Immutable and Mutable objects such as Array/List/Seq , corresponding to take/filter/map/flatMap/reduce/head/tail/init method, etc. new OO related content such as class/case class/object/trait Reaching A3/L2 level will meet the daily needs. Recently I have done some of the problems in Scala99, trying to do some excerpts, some of which have different methods from the original ones. Question 17: ** Requirements**: Divide a List into two parts ls.splitAt(n) and directly return (ls.take(n), ls.drop(n)) methods are available on the website My own implementation: def splitToTwoPart[A](n: Int, ls: List[A]) = { val s = ls.zipWithIndex.partition(elem =&amp;gt; elem._2 + 1 &amp;lt;= n) (s._1.map(x =&amp;gt; x._1), s._2.map(x =&amp;gt; x._1)) } And I implement a small demo about class and traits: import collection.mutable.ArrayBuffer case class Record(var event: String, var money: Int) { def this() = this(&quot;sample&quot;, 1) } trait People { var name: String var age: Int var activity: ArrayBuffer[Record] def addRecord(newEvent: String, newMoney: Int) def removeRecord(deleteName: String, deleteMoney: Int) def getAllCost } class User(userName: String, userAge: Int) extends People { var name = userName var age = userAge var activity = new ArrayBuffer[Record] def addRecord(newEvent: String, newMoney: Int) = { this.activity += Record(newEvent, newMoney) } def removeRecord(deleteName: String, deleteMoney: Int) = { val targetRecord = Record(deleteName, deleteMoney) /*if this.activity.exists(_ == targetRecord) this.activity -= targetRecord*/ } def getAllCost() = { this.activity.foreach(x=&amp;gt;println(x.money)) println(&quot;money &quot; + this.activity.map(_.money).reduceLeft(_+_)) this.activity.map(_.money).reduceLeft(_+_) // reduce((x,y)=&amp;gt;x.money+y.money)) is wrong,there will be confilicts between Record and Int } def getActivity(): List[Record] = { this.activity.toList } override def toString = s&quot;$name $age&quot; } object testApplication extends App { val u = new User(&quot;Tom&quot;, 18) u.addRecord(&quot;Buy Clothes&quot;, 10) println(u) println(&quot;User activity is &quot; + u.getActivity()) println(u.activity.toList) println(u.getActivity()) println(u.getAllCost()) }">
+  <title>ScalaTest 和 JUnit 集成，使用 Sbt 不执行测试的解决办法</title>
+  <meta name="description" content="ScalaTest 与 JUnit 集成后，执行 sbt test 提示 no tests are executed 的解决办法 最近在试着写一个用 Scala 解决 LeetCode 的 集合，Scala 里的单元测试一般推荐使用 ScalaTest，而大部分 Scala 使用者都有 Java 背景，所以 ScalaTest 也可以与 Junit 集成使用，参见 链接 遇到了什么问题 首先定义如下的测试代码： import org.scalatest.{BeforeAndAfterEach, FunSpec, FunSuite} class FileUtilTest extends FunSpec with BeforeAndAfterEach { it(&quot;should be equal&quot;) { assert(xx.max(1,2) == 2) } } 然后定义如下的 build.sbt 文件： libraryDependencies += &quot;org.scalatest&quot; % &quot;scalatest_2.12&quot; % &quot;3.0.1&quot; % &quot;test&quot; libraryDependencies += &quot;junit&quot; % &quot;junit&quot; % &quot;4.8.1&quot; % &quot;test&quot; 上面是 Scala-Test 最标准的代码 同时用 IDEA 和 sbt test 来跑测试用例都没有问题 那么如果想要引入 JUnit 的话则如下： import org.junit.Assert._ import org.scalatest.junit.{AssertionsForJUnit} import com.leetcode.util.{FileUtil =&amp;gt; xx} import org.junit.Test class FileUtilTest extends AssertionsForJUnit { @Test def test_max()={ assertTrue(xx.max(1,2)==2) } } 在这种情况下用 IDEA 可以跑测试用例，但用 sbt test 的话会提示 no tests are executed 参考：http://stackoverflow.com/questions/28174243/run-junit-tests-with-sbt 需要在原有 sbt 的基础上加上： crossPaths := false libraryDependencies += &quot;com.novocode&quot; % &quot;junit-interface&quot; % &quot;0.11&quot; % Test testOptions += Tests.Argument(TestFrameworks.JUnit, &quot;-q&quot;, &quot;-v&quot;) 出现这个问题的原因还是在于 Scala 和 Java 最后编译出来的是两套不同的字节码 看了一下，Spark 里面的测试用例都是用的纯 ScalaTest 框架，而没有用 JUnit ：-D 《Scala For Impatient》的习题和 Scala 99 的一些题解记录 Scala 的语法的复杂度堪比 C++ …… 《Scala CookBook》的作者评价 Java 这门语法的特性是 Verbose yet obvious，这是见过的最好对 Java 这门语言的描述了。正是因为 obvious 的特性，才能在工业级开发领域中遥遥领先，Web 开发/Android/数据领域都占据主要地位。也正是因为 verbose 的特性，让写 Java 写多的人很容易产生啰嗦的感觉，相比于 Python 的话对比感就更强烈了。 现在来看 Kotlin 的定位更像是 Better Java，字节码被翻译成 Java 类型，无缝调用 Java 的所有库，语法更简洁。 Scala 则是对 Java 很好的一个改进，同样基于 JVM 平台。Scala 的官网上宣传 OO meets FP，它同时融合了面向对象和函数式编程的优点。就像很多人说的，没有必要把 Scala 的语法完全了解以后再去用它。要用 Spark，要看 Kafka，直接看就好了：-D Scala 学习的时候主要分为两方面吧： Array/List/Seq 等一系列 Immutable 与 Mutable 对象，对应的 take/filter/map/flatMap/reduce/head/tail/init 等可以提高开发效率的方法 class/case class/object/trait 等新的 OO 相关内容 关于水平掌握，达到 A3/L2 。 最近做了 Scala99 里面的一些题目，试着做一些摘抄，里面有些题目提出了和原来的一些不一样的方法 第 17 题： ** 要求 ** 把一个 List 分为两个部分 网站上提供了 ls.splitAt(n) 和直接返回 (ls.take(n),ls.drop(n)) 两种方法 自己的实现： def splitToTwoPart[A](n: Int, ls: List[A]) = { val s = ls.zipWithIndex.partition(elem =&amp;gt; elem._2 + 1 &amp;lt;= n) (s._1.map(x =&amp;gt; x._1), s._2.map(x =&amp;gt; x._1)) } 关于类的部分：算是实现了一个小的 demo 吧 import collection.mutable.ArrayBuffer case class Record(var event: String, var money: Int) { def this() = this(&quot;sample&quot;, 1) } trait People { var name: String var age: Int var activity: ArrayBuffer[Record] def addRecord(newEvent: String, newMoney: Int) def removeRecord(deleteName: String, deleteMoney: Int) // 这也行，也就是说 def getAllCost } class User(userName: String, userAge: Int) extends People { var name = userName var age = userAge var activity = new ArrayBuffer[Record] def addRecord(newEvent: String, newMoney: Int) = { this.activity += Record(newEvent, newMoney) } /*def addRecord={ }*/ def removeRecord(deleteName: String, deleteMoney: Int) = { val targetRecord = Record(deleteName, deleteMoney) /*if this.activity.exists(_ == targetRecord) this.activity -= targetRecord*/ } def getAllCost() = { this.activity.foreach(x=&amp;gt;println(x.money)) println(&quot;money &quot; + this.activity.map(_.money).reduceLeft(_+_)) this.activity.map(_.money).reduceLeft(_+_) //所以自己一开始的 reduce((x,y)=&amp;gt;x.money+y.money)) 思路是错的，你看，前两个得到的结果是 Record,但之后得到的是 Int // 再之后就会在 Record 和 Int 之间产生冲突 } def getActivity(): List[Record] = { // 返回的 Array 必须是有类型的，而不能是 Array // List 也是一样的道理。并且 List 的可读性更好 this.activity.toList } override def toString = s&quot;$name $age&quot; } object testApplication extends App { val u = new User(&quot;Tom&quot;, 18) u.addRecord(&quot;Buy Clothes&quot;, 10) println(u) println(&quot;用户的活动为 &quot; + u.getActivity()) println(u.activity.toList) println(u.getActivity()) println(u.getAllCost()) } 在附录部分再总结一下 Scala 方法的集合：">
   
 
   <link rel="stylesheet" href="/assets/main.css">
@@ -25,8 +25,8 @@
   
   <meta name="twitter:card" content="summary">
   <meta name="twitter:site" content="hzcortex">
-  <meta name="twitter:title" content="Run ScalaTest And JUnit On TravisCI And Some Scala99 Solutions">
-  <meta name="twitter:description" content="After integrating ScalaTest with JUnit, execute sbt test prompt no tests are executed.How to solve it ? 这篇文章对应的中文版 BackGround I’ve recently tried to write a collection that solves LeetCode with Sca...">
+  <meta name="twitter:title" content="ScalaTest 和 JUnit 集成，使用 Sbt 不执行测试的解决办法">
+  <meta name="twitter:description" content="ScalaTest 与 JUnit 集成后，执行 sbt test 提示 no tests are executed 的解决办法 最近在试着写一个用 Scala 解决 LeetCode 的 集合，Scala 里的单元测试一般推荐使用 ScalaTest，而大部分 Scala 使用者都有 Java 背景，所以 ScalaTest 也可以与 Junit 集成使用，参见 链接 遇到了什么问题 首先...">
   
     <meta name="twitter:creator" content="hzcortex">
   
@@ -90,7 +90,7 @@
 
   <header class="post-header">
     
-      <h1 class="post-title" itemprop="name headline">Run ScalaTest And JUnit On TravisCI And Some Scala99 Solutions</h1>
+      <h1 class="post-title" itemprop="name headline">ScalaTest 和 JUnit 集成，使用 Sbt 不执行测试的解决办法</h1>
     
     <p class="post-meta"><time datetime="2017-05-21T13:29:10-03:00" itemprop="datePublished">May 21, 2017</time> • 
   
@@ -100,19 +100,15 @@
   </header>
 
   <div class="post-content" itemprop="articleBody">
-    <p>After integrating <code class="highlighter-rouge">ScalaTest</code> with <code class="highlighter-rouge">JUnit</code>, execute <code class="highlighter-rouge">sbt test</code> prompt <code class="highlighter-rouge">no tests are executed</code>.How to solve it ?</p>
+    <p>ScalaTest 与 JUnit 集成后，执行 <code class="highlighter-rouge">sbt test</code> 提示 <code class="highlighter-rouge">no tests are executed</code> 的解决办法</p>
 
 <!-- more -->
-<p><a href="/../translation/2017-05-21-Scala-Test-Junit-Sbt-Problem.html">这篇文章对应的中文版</a></p>
 
-<h3 id="background">BackGround</h3>
+<p>最近在试着写一个用 Scala 解决 LeetCode 的 <a href="https://github.com/Allianzcortex/Scala-LeetCode">集合</a>，Scala 里的单元测试一般推荐使用 ScalaTest，而大部分 Scala 使用者都有 Java 背景，所以 ScalaTest 也可以与 Junit 集成使用，参见 <a href="http://www.scalatest.org/getting_started_with_junit_4_in_scala">链接</a></p>
 
-<p>I’ve recently tried to write a                            <a href="https://github.com/Allianzcortex/Scala-LeetCode">collection</a> that solves LeetCode with Scala. ScalaTest is generally recommended for unit testing in Scala, and most Scala users have a Java background , so ScalaTest can also be integrated with JUnit, see 
-<a href="http://www.scalatest.org/getting_started_with_junit_4_in_scala">link</a> for a further understanding</p>
+<h4 id="遇到了什么问题">遇到了什么问题</h4>
 
-<h3 id="what-is-the-problem">What Is The Problem?</h3>
-
-<p>At first writing test code like this ：</p>
+<p>首先定义如下的测试代码：</p>
 
 <figure class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">import</span> <span class="nn">org.scalatest.</span><span class="o">{</span><span class="nc">BeforeAndAfterEach</span><span class="o">,</span> <span class="nc">FunSpec</span><span class="o">,</span> <span class="nc">FunSuite</span><span class="o">}</span>
 
@@ -122,16 +118,16 @@
     <span class="o">}</span>
 <span class="o">}</span></code></pre></figure>
 
-<p><strong>build.sbt</strong> is as follows：</p>
+<p>然后定义如下的 <strong>build.sbt</strong> 文件：</p>
 
 <figure class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="n">libraryDependencies</span> <span class="o">+=</span> <span class="s">"org.scalatest"</span> <span class="o">%</span> <span class="s">"scalatest_2.12"</span> <span class="o">%</span> <span class="s">"3.0.1"</span> <span class="o">%</span> <span class="s">"test"</span>
 <span class="n">libraryDependencies</span> <span class="o">+=</span> <span class="s">"junit"</span> <span class="o">%</span> <span class="s">"junit"</span> <span class="o">%</span> <span class="s">"4.8.1"</span> <span class="o">%</span> <span class="s">"test"</span></code></pre></figure>
 
-<p>Above is the most standard code for <code class="highlighter-rouge">Scala-Test</code></p>
+<p>上面是 Scala-Test 最标准的代码</p>
 
-<p>There is no problem in running test cases with <a href="https://www.jetbrains.com/idea/">Intellij IDEA</a> and <code class="highlighter-rouge">sbt test</code> at the same time.</p>
+<p>同时用 IDEA 和 <code class="highlighter-rouge">sbt test</code> 来跑测试用例都没有问题</p>
 
-<p>If you want to import Junit,then it will be：</p>
+<p>那么如果想要引入 JUnit 的话则如下：</p>
 
 <figure class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">import</span> <span class="nn">org.junit.Assert._</span>
 <span class="k">import</span> <span class="nn">org.scalatest.junit.</span><span class="o">{</span><span class="nc">AssertionsForJUnit</span><span class="o">}</span>
@@ -145,57 +141,61 @@
 
 <span class="o">}</span></code></pre></figure>
 
-<p>Currently we can use Intellij IDEA to run unit tests, but if you use <code class="highlighter-rouge">sbt test</code> to run it in console, it will hint <code class="highlighter-rouge">no tests are executed</code>. If you want to have a continuous development,then manybe you know some famous tools such as <a href="https://travis-ci.org/">TravisCI</a> which cooperates well with github.I write a <code class="highlighter-rouge">.travis.yml</code> <a href="https://github.com/Infra-Intern/Scala-LeetCode/blob/master/.travis.yml">file</a>.Now ScalaTest and JUnit can’t work on Linux Platform.</p>
+<p>在这种情况下用 IDEA 可以跑测试用例，但用 <code class="highlighter-rouge">sbt test</code> 的话会提示 <code class="highlighter-rouge">no tests are executed</code></p>
 
-<h3 id="solutions">Solutions</h3>
-
-<p>Based on this question <a href="http://stackoverflow.com/questions/28174243/run-junit-tests-with-sbt">run-junit-tests-with-sbt</a> you need to add the following code on original <code class="highlighter-rouge">build.sbt</code>：</p>
+<p>参考：http://stackoverflow.com/questions/28174243/run-junit-tests-with-sbt 需要在原有 sbt 的基础上加上：</p>
 
 <figure class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="n">crossPaths</span> <span class="o">:=</span> <span class="kc">false</span>
 <span class="n">libraryDependencies</span> <span class="o">+=</span> <span class="s">"com.novocode"</span> <span class="o">%</span> <span class="s">"junit-interface"</span> <span class="o">%</span> <span class="s">"0.11"</span> <span class="o">%</span> <span class="nc">Test</span>
 <span class="n">testOptions</span> <span class="o">+=</span> <span class="nc">Tests</span><span class="o">.</span><span class="nc">Argument</span><span class="o">(</span><span class="nc">TestFrameworks</span><span class="o">.</span><span class="nc">JUnit</span><span class="o">,</span> <span class="s">"-q"</span><span class="o">,</span> <span class="s">"-v"</span><span class="o">)</span></code></pre></figure>
 
-<p>The reason for this problem is that Scala and Java finally compiled two different sets of bytecodes. Although in most cases it is compatible,but you also need to mind the corner case.</p>
-
-<p>BTW,Looked at it, the test cases in Spark are all using the pure ScalaTest framework, without using JUnit.</p>
+<p>出现这个问题的原因还是在于 Scala 和 Java 最后编译出来的是两套不同的字节码</p>
 
 <hr />
 
-<p>Exercises for 《Scala For Impatient》 and some notes for Scala 99</p>
+<p>看了一下，Spark 里面的测试用例都是用的纯 ScalaTest 框架，而没有用 JUnit ：-D</p>
 
-<p>Scala’s syntax is as complex as C++…</p>
+<p>《Scala For Impatient》的习题和 Scala 99 的一些题解记录</p>
 
-<p>The author of <a href="http://scalacookbook.com/">《Scala CookBook》</a> evaluates the nature of Java’s syntax as <code class="highlighter-rouge">Verbose yet obvious</code>. It is because of the obvious characteristics that it can lead in the industrial development,play a dominant role in <code class="highlighter-rouge">Web development/Android/big data field</code>. It is also because of the verbose characteristics and boilerplate code that people can feel really tired when writing in Java,especailly compared with Python.</p>
+<!-- more -->
 
-<p>Scala based on the JVM platform is a nice improvement of Java. Scala’s official website promotes <strong>OO meets FP</strong>, which combines the benefits of object-oriented and functional programming. As many people have said, there is no need to fully understand Scala’s grammar and use it later.</p>
+<p>Scala 的语法的复杂度堪比 C++ ……</p>
 
-<p>Scala is mainly divided into two aspects when learning:</p>
+<p>《Scala CookBook》的作者评价 Java 这门语法的特性是 <code class="highlighter-rouge">Verbose yet obvious</code>，这是见过的最好对 Java 这门语言的描述了。正是因为 obvious 的特性，才能在工业级开发领域中遥遥领先，Web 开发/Android/数据领域都占据主要地位。也正是因为 verbose 的特性，让写 Java 写多的人很容易产生啰嗦的感觉，相比于 Python 的话对比感就更强烈了。</p>
+
+<blockquote>
+  <p>现在来看 Kotlin 的定位更像是 Better Java，字节码被翻译成 Java 类型，无缝调用 Java 的所有库，语法更简洁。</p>
+</blockquote>
+
+<p>Scala 则是对 Java 很好的一个改进，同样基于 JVM 平台。Scala 的官网上宣传 OO meets FP，它同时融合了面向对象和函数式编程的优点。就像很多人说的，没有必要把 Scala 的语法完全了解以后再去用它。要用 Spark，要看 Kafka，直接看就好了：-D</p>
+
+<p>Scala 学习的时候主要分为两方面吧：</p>
 
 <ul>
   <li>
-    <p>A series of Immutable and Mutable objects such as <strong>Array/List/Seq</strong> , corresponding to <strong>take/filter/map/flatMap/reduce/head/tail/init</strong> method, etc.</p>
+    <p>Array/List/Seq 等一系列 Immutable 与 Mutable 对象，对应的 take/filter/map/flatMap/reduce/head/tail/init 等可以提高开发效率的方法</p>
   </li>
   <li>
-    <p>new OO related content such as <strong>class/case</strong> <strong>class/object/trait</strong></p>
+    <p>class/case class/object/trait 等新的 OO 相关内容</p>
   </li>
 </ul>
 
-<p>Reaching <code class="highlighter-rouge">A3/L2</code> level will meet the daily needs.</p>
+<p>关于水平掌握，达到 A3/L2 。</p>
 
-<p>Recently I have done some of the problems in <a href="http://aperiodic.net/phil/scala/s-99/">Scala99</a>, trying to do some excerpts, some of which have different methods from the original ones.</p>
+<p>最近做了 Scala99 里面的一些题目，试着做一些摘抄，里面有些题目提出了和原来的一些不一样的方法</p>
 
 <ul>
-  <li>Question 17:</li>
+  <li>第 17 题：</li>
 </ul>
 
-<p>** Requirements**: Divide a List into two parts</p>
+<p>** 要求 ** 把一个 List 分为两个部分</p>
 
 <ul>
   <li>
-    <p><code class="highlighter-rouge">ls.splitAt(n)</code> and <code class="highlighter-rouge">directly return (ls.take(n), ls.drop(n))</code> methods are available on the website</p>
+    <p>网站上提供了 ls.splitAt(n) 和直接返回 (ls.take(n),ls.drop(n)) 两种方法</p>
   </li>
   <li>
-    <p>My own implementation:</p>
+    <p>自己的实现：</p>
   </li>
 </ul>
 
@@ -204,7 +204,7 @@
     <span class="o">(</span><span class="n">s</span><span class="o">.</span><span class="n">_1</span><span class="o">.</span><span class="n">map</span><span class="o">(</span><span class="n">x</span> <span class="k">=&gt;</span> <span class="n">x</span><span class="o">.</span><span class="n">_1</span><span class="o">),</span> <span class="n">s</span><span class="o">.</span><span class="n">_2</span><span class="o">.</span><span class="n">map</span><span class="o">(</span><span class="n">x</span> <span class="k">=&gt;</span> <span class="n">x</span><span class="o">.</span><span class="n">_1</span><span class="o">))</span>
 <span class="o">}</span></code></pre></figure>
 
-<p>And I implement a small demo about <strong>class</strong> and <strong>traits</strong>:</p>
+<p>关于类的部分：算是实现了一个小的 demo 吧</p>
 
 <figure class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">import</span> <span class="nn">collection.mutable.ArrayBuffer</span>
 
@@ -220,8 +220,8 @@
 
   <span class="k">def</span> <span class="n">addRecord</span><span class="o">(</span><span class="n">newEvent</span><span class="k">:</span> <span class="kt">String</span><span class="o">,</span> <span class="n">newMoney</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span>
 
-  <span class="k">def</span> <span class="n">removeRecord</span><span class="o">(</span><span class="n">deleteName</span><span class="k">:</span> <span class="kt">String</span><span class="o">,</span> <span class="n">deleteMoney</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span>
-
+  <span class="k">def</span> <span class="n">removeRecord</span><span class="o">(</span><span class="n">deleteName</span><span class="k">:</span> <span class="kt">String</span><span class="o">,</span> <span class="n">deleteMoney</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span> <span class="c1">// 这也行，也就是说
+</span>
   <span class="k">def</span> <span class="n">getAllCost</span>
 <span class="o">}</span>
 
@@ -234,6 +234,10 @@
     <span class="k">this</span><span class="o">.</span><span class="n">activity</span> <span class="o">+=</span> <span class="nc">Record</span><span class="o">(</span><span class="n">newEvent</span><span class="o">,</span> <span class="n">newMoney</span><span class="o">)</span>
   <span class="o">}</span>
 
+  <span class="cm">/*def addRecord={
+
+  }*/</span>
+
   <span class="k">def</span> <span class="n">removeRecord</span><span class="o">(</span><span class="n">deleteName</span><span class="k">:</span> <span class="kt">String</span><span class="o">,</span> <span class="n">deleteMoney</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span> <span class="k">=</span> <span class="o">{</span>
     <span class="k">val</span> <span class="n">targetRecord</span> <span class="k">=</span> <span class="nc">Record</span><span class="o">(</span><span class="n">deleteName</span><span class="o">,</span> <span class="n">deleteMoney</span><span class="o">)</span>
     <span class="cm">/*if this.activity.exists(_ == targetRecord) this.activity -= targetRecord*/</span>
@@ -243,11 +247,14 @@
     <span class="k">this</span><span class="o">.</span><span class="n">activity</span><span class="o">.</span><span class="n">foreach</span><span class="o">(</span><span class="n">x</span><span class="k">=&gt;</span><span class="n">println</span><span class="o">(</span><span class="n">x</span><span class="o">.</span><span class="n">money</span><span class="o">))</span>
     <span class="n">println</span><span class="o">(</span><span class="s">"money "</span> <span class="o">+</span> <span class="k">this</span><span class="o">.</span><span class="n">activity</span><span class="o">.</span><span class="n">map</span><span class="o">(</span><span class="k">_</span><span class="o">.</span><span class="n">money</span><span class="o">).</span><span class="n">reduceLeft</span><span class="o">(</span><span class="k">_</span><span class="o">+</span><span class="k">_</span><span class="o">))</span>
     <span class="k">this</span><span class="o">.</span><span class="n">activity</span><span class="o">.</span><span class="n">map</span><span class="o">(</span><span class="k">_</span><span class="o">.</span><span class="n">money</span><span class="o">).</span><span class="n">reduceLeft</span><span class="o">(</span><span class="k">_</span><span class="o">+</span><span class="k">_</span><span class="o">)</span>
-    <span class="c1">// reduce((x,y)=&gt;x.money+y.money)) is wrong,there will be confilicts between Record and Int
+    <span class="c1">//所以自己一开始的 reduce((x,y)=&gt;x.money+y.money)) 思路是错的，你看，前两个得到的结果是 Record,但之后得到的是 Int
+</span>    <span class="c1">// 再之后就会在 Record 和 Int 之间产生冲突
 </span>  <span class="o">}</span>
 
   <span class="k">def</span> <span class="n">getActivity</span><span class="o">()</span><span class="k">:</span> <span class="kt">List</span><span class="o">[</span><span class="kt">Record</span><span class="o">]</span> <span class="k">=</span> <span class="o">{</span>
-    <span class="k">this</span><span class="o">.</span><span class="n">activity</span><span class="o">.</span><span class="n">toList</span>
+    <span class="c1">// 返回的 Array 必须是有类型的，而不能是 Array
+</span>    <span class="c1">// List 也是一样的道理。并且 List 的可读性更好
+</span>    <span class="k">this</span><span class="o">.</span><span class="n">activity</span><span class="o">.</span><span class="n">toList</span>
   <span class="o">}</span>
 
   <span class="k">override</span> <span class="k">def</span> <span class="n">toString</span> <span class="k">=</span> <span class="n">s</span><span class="s">"$name $age"</span>
@@ -258,11 +265,15 @@
   <span class="k">val</span> <span class="n">u</span> <span class="k">=</span> <span class="k">new</span> <span class="nc">User</span><span class="o">(</span><span class="s">"Tom"</span><span class="o">,</span> <span class="mi">18</span><span class="o">)</span>
   <span class="n">u</span><span class="o">.</span><span class="n">addRecord</span><span class="o">(</span><span class="s">"Buy Clothes"</span><span class="o">,</span> <span class="mi">10</span><span class="o">)</span>
   <span class="n">println</span><span class="o">(</span><span class="n">u</span><span class="o">)</span>
-  <span class="n">println</span><span class="o">(</span><span class="s">"User activity is  "</span> <span class="o">+</span> <span class="n">u</span><span class="o">.</span><span class="n">getActivity</span><span class="o">())</span>
+  <span class="n">println</span><span class="o">(</span><span class="s">"用户的活动为 "</span> <span class="o">+</span> <span class="n">u</span><span class="o">.</span><span class="n">getActivity</span><span class="o">())</span>
   <span class="n">println</span><span class="o">(</span><span class="n">u</span><span class="o">.</span><span class="n">activity</span><span class="o">.</span><span class="n">toList</span><span class="o">)</span>
   <span class="n">println</span><span class="o">(</span><span class="n">u</span><span class="o">.</span><span class="n">getActivity</span><span class="o">())</span>
   <span class="n">println</span><span class="o">(</span><span class="n">u</span><span class="o">.</span><span class="n">getAllCost</span><span class="o">())</span>
 <span class="o">}</span></code></pre></figure>
+
+<hr />
+
+<p>在附录部分再总结一下 Scala 方法的集合：</p>
 
 
   </div>

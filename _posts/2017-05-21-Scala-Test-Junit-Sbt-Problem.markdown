@@ -1,19 +1,24 @@
 ---
 layout: post
-title: ScalaTest 和 JUnit 集成，使用 Sbt 不执行测试的解决办法
+title: Run ScalaTest And JUnit On TravisCI And Some Scala99 Solutions
 date: 2017-05-21 16:29:10
 categories: Scala
 comments: true
 ---
-ScalaTest 与 JUnit 集成后，执行 `sbt test` 提示 `no tests are executed` 的解决办法
+
+After integrating `ScalaTest` with `JUnit`, execute `sbt test` prompt `no tests are executed`.How to solve it ?
 
 <!-- more -->
+[这篇文章对应的中文版](/../translation/2017-05-21-Scala-Test-Junit-Sbt-Problem.html)
 
-最近在试着写一个用 Scala 解决 LeetCode 的 [集合](https://github.com/Allianzcortex/Scala-LeetCode)，Scala 里的单元测试一般推荐使用 ScalaTest，而大部分 Scala 使用者都有 Java 背景，所以 ScalaTest 也可以与 Junit 集成使用，参见 [链接](http://www.scalatest.org/getting_started_with_junit_4_in_scala)
+### BackGround
 
-#### 遇到了什么问题
+I’ve recently tried to write a                            [collection](https://github.com/Allianzcortex/Scala-LeetCode) that solves LeetCode with Scala. ScalaTest is generally recommended for unit testing in Scala, and most Scala users have a Java background , so ScalaTest can also be integrated with JUnit, see 
+[link](http://www.scalatest.org/getting_started_with_junit_4_in_scala) for a further understanding
 
-首先定义如下的测试代码：
+### What Is The Problem?
+
+At first writing test code like this ：
 
 {% highlight Scala %}
 import org.scalatest.{BeforeAndAfterEach, FunSpec, FunSuite}
@@ -26,7 +31,7 @@ class FileUtilTest extends FunSpec with BeforeAndAfterEach {
 
 {% endhighlight %}
 
-然后定义如下的 **build.sbt** 文件：
+ **build.sbt** is as follows：
 
 {% highlight Scala %}
 libraryDependencies += "org.scalatest" % "scalatest_2.12" % "3.0.1" % "test"
@@ -34,11 +39,12 @@ libraryDependencies += "junit" % "junit" % "4.8.1" % "test"
 
 {% endhighlight %}
 
-上面是 Scala-Test 最标准的代码
+Above is the most standard code for `Scala-Test`
 
-同时用 IDEA 和 `sbt test` 来跑测试用例都没有问题
+There is no problem in running test cases with [Intellij IDEA](https://www.jetbrains.com/idea/) and `sbt test` at the same time.
 
-那么如果想要引入 JUnit 的话则如下：
+If you want to import Junit,then it will be：
+
 {% highlight Scala %}
 import org.junit.Assert._
 import org.scalatest.junit.{AssertionsForJUnit}
@@ -53,9 +59,11 @@ class FileUtilTest extends  AssertionsForJUnit {
 }
 {% endhighlight %}
 
-在这种情况下用 IDEA 可以跑测试用例，但用 `sbt test` 的话会提示 `no tests are executed`
+Currently we can use Intellij IDEA to run unit tests, but if you use `sbt test` to run it in console, it will hint `no tests are executed`. If you want to have a continuous development,then manybe you know some famous tools such as [TravisCI](https://travis-ci.org/) which cooperates well with github.I write a `.travis.yml` [file](https://github.com/Infra-Intern/Scala-LeetCode/blob/master/.travis.yml).Now ScalaTest and JUnit can't work on Linux Platform.
 
-参考：http://stackoverflow.com/questions/28174243/run-junit-tests-with-sbt 需要在原有 sbt 的基础上加上：
+### Solutions
+
+Based on this question [run-junit-tests-with-sbt](http://stackoverflow.com/questions/28174243/run-junit-tests-with-sbt) you need to add the following code on original `build.sbt`：
 
 {% highlight Scala %}
 crossPaths := false
@@ -63,46 +71,37 @@ libraryDependencies += "com.novocode" % "junit-interface" % "0.11" % Test
 testOptions += Tests.Argument(TestFrameworks.JUnit, "-q", "-v")
 {% endhighlight %}
 
-出现这个问题的原因还是在于 Scala 和 Java 最后编译出来的是两套不同的字节码
+The reason for this problem is that Scala and Java finally compiled two different sets of bytecodes. Although in most cases it is compatible,but you also need to mind the corner case.
+
+BTW,Looked at it, the test cases in Spark are all using the pure ScalaTest framework, without using JUnit.
 
 ---
 
-看了一下，Spark 里面的测试用例都是用的纯 ScalaTest 框架，而没有用 JUnit ：-D
+Exercises for 《Scala For Impatient》 and some notes for Scala 99
 
+Scala's syntax is as complex as C++...
 
+The author of [《Scala CookBook》](http://scalacookbook.com/) evaluates the nature of Java's syntax as `Verbose yet obvious`. It is because of the obvious characteristics that it can lead in the industrial development,play a dominant role in `Web development/Android/big data field`. It is also because of the verbose characteristics and boilerplate code that people can feel really tired when writing in Java,especailly compared with Python.
 
+Scala based on the JVM platform is a nice improvement of Java. Scala's official website promotes **OO meets FP**, which combines the benefits of object-oriented and functional programming. As many people have said, there is no need to fully understand Scala's grammar and use it later.
 
-《Scala For Impatient》的习题和 Scala 99 的一些题解记录
+Scala is mainly divided into two aspects when learning:
 
-<!-- more -->
+- A series of Immutable and Mutable objects such as **Array/List/Seq** , corresponding to **take/filter/map/flatMap/reduce/head/tail/init** method, etc.
 
-Scala 的语法的复杂度堪比 C++ ......
+- new OO related content such as **class/case** **class/object/trait**
+ 
+ Reaching `A3/L2` level will meet the daily needs.
 
-《Scala CookBook》的作者评价 Java 这门语法的特性是 `Verbose yet obvious`，这是见过的最好对 Java 这门语言的描述了。正是因为 obvious 的特性，才能在工业级开发领域中遥遥领先，Web 开发/Android/数据领域都占据主要地位。也正是因为 verbose 的特性，让写 Java 写多的人很容易产生啰嗦的感觉，相比于 Python 的话对比感就更强烈了。
+Recently I have done some of the problems in [Scala99](http://aperiodic.net/phil/scala/s-99/), trying to do some excerpts, some of which have different methods from the original ones.
 
-> 现在来看 Kotlin 的定位更像是 Better Java，字节码被翻译成 Java 类型，无缝调用 Java 的所有库，语法更简洁。
+- Question 17:
 
-Scala 则是对 Java 很好的一个改进，同样基于 JVM 平台。Scala 的官网上宣传 OO meets FP，它同时融合了面向对象和函数式编程的优点。就像很多人说的，没有必要把 Scala 的语法完全了解以后再去用它。要用 Spark，要看 Kafka，直接看就好了：-D
+** Requirements**: Divide a List into two parts
 
-Scala 学习的时候主要分为两方面吧：
+- `ls.splitAt(n)` and `directly return (ls.take(n), ls.drop(n))` methods are available on the website
 
-
-- Array/List/Seq 等一系列 Immutable 与 Mutable 对象，对应的 take/filter/map/flatMap/reduce/head/tail/init 等可以提高开发效率的方法
-
-- class/case class/object/trait 等新的 OO 相关内容
-
-关于水平掌握，达到 A3/L2 。
-
-最近做了 Scala99 里面的一些题目，试着做一些摘抄，里面有些题目提出了和原来的一些不一样的方法
-
-
-- 第 17 题：
-
-** 要求 ** 把一个 List 分为两个部分
-
-- 网站上提供了 ls.splitAt(n) 和直接返回 (ls.take(n),ls.drop(n)) 两种方法
-
-- 自己的实现：
+- My own implementation:
 
 {% highlight Scala %}
 
@@ -113,7 +112,8 @@ def splitToTwoPart[A](n: Int, ls: List[A]) = {
 
 {% endhighlight %}
 
-关于类的部分：算是实现了一个小的 demo 吧
+
+And I implement a small demo about **class** and **traits**:
 
 {% highlight Scala %}
 import collection.mutable.ArrayBuffer
@@ -130,7 +130,7 @@ trait People {
 
   def addRecord(newEvent: String, newMoney: Int)
 
-  def removeRecord(deleteName: String, deleteMoney: Int) // 这也行，也就是说
+  def removeRecord(deleteName: String, deleteMoney: Int)
 
   def getAllCost
 }
@@ -144,10 +144,6 @@ class User(userName: String, userAge: Int) extends People {
     this.activity += Record(newEvent, newMoney)
   }
 
-  /*def addRecord={
-
-  }*/
-
   def removeRecord(deleteName: String, deleteMoney: Int) = {
     val targetRecord = Record(deleteName, deleteMoney)
     /*if this.activity.exists(_ == targetRecord) this.activity -= targetRecord*/
@@ -157,13 +153,10 @@ class User(userName: String, userAge: Int) extends People {
     this.activity.foreach(x=>println(x.money))
     println("money " + this.activity.map(_.money).reduceLeft(_+_))
     this.activity.map(_.money).reduceLeft(_+_)
-    //所以自己一开始的 reduce((x,y)=>x.money+y.money)) 思路是错的，你看，前两个得到的结果是 Record,但之后得到的是 Int
-    // 再之后就会在 Record 和 Int 之间产生冲突
+    // reduce((x,y)=>x.money+y.money)) is wrong,there will be confilicts between Record and Int
   }
 
   def getActivity(): List[Record] = {
-    // 返回的 Array 必须是有类型的，而不能是 Array
-    // List 也是一样的道理。并且 List 的可读性更好
     this.activity.toList
   }
 
@@ -175,14 +168,9 @@ object testApplication extends App {
   val u = new User("Tom", 18)
   u.addRecord("Buy Clothes", 10)
   println(u)
-  println("用户的活动为 " + u.getActivity())
+  println("User activity is  " + u.getActivity())
   println(u.activity.toList)
   println(u.getActivity())
   println(u.getAllCost())
 }
 {% endhighlight %}
-
----
-
-在附录部分再总结一下 Scala 方法的集合：
-

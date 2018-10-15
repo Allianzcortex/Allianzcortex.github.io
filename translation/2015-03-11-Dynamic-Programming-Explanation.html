@@ -10,8 +10,8 @@
   
   
   
-  <title>Thoughts Of Solving Dynamic Programming Problems</title>
-  <meta name="description" content="Solving the dynamic programming problems 这篇文章对应的中文版 About DP Dynamic programming is a very important algorithm, and mastery of it should be the basic skills for computer science students. Let’s explain as much as possible about the understanding of this type of algorithm. The key is state definition and state transition equation Longest Increasing Subsequence Given a sequence of K integers { N1, N2, …, NK }, any contiguous subsequence can be expressed as { Ni, Ni+1, …, Nj }, where 1 &amp;lt;= i &amp;lt;= j &amp;lt; = K. The largest contiguous subsequence is the element and the largest one of all consecutive subsequences, such as the given sequence { -2, 11, -4, 13, -5, -2 }, whose largest contiguous subsequence is { 11, -4, 13 } and the maximum sum is 20. Define sum[i] as the maximum value of contiguous subsequence with A[i] as the last end The state transition equation is: sum[i]=max(sum[i-1]+a[i], a[i]) T he actual solution is, as long as sum&amp;gt;0, then adding a[i] is still possible to increase max; but if sum&amp;lt;0, it should be discarded immediately, starting from 0 to calculate the next a = {4, 8, -12, 3, 7, 9} n = len(a) sum = 0 max = 0 for i in range(n): sum += a[i] if sum &amp;gt; max: max = sum if sum &amp;lt; 0: sum = a[i] return sum public int LIS(int[] arr) { int i, j, max = 0; int n = arr.length; int[] list = new int[n]; // length Arrays.fill(list, 1); int[] index = new int[n]; // distance Arrays.fill(index, -1); for (i = 1; i &amp;lt; n; i++) for (j = 0; j &amp;lt; i; j++) { if (arr[i] &amp;gt; arr[j] &amp;amp;&amp;amp; list[i] &amp;lt; list[j] + 1) { list[i] = list[j] + 1; index[i] = j; } } // choose the max int max_index = 0; for (i = 0; i &amp;lt; n; i++) if (list[i] &amp;gt; max) { max = list[i]; max_index = i; } StringBuilder builder = new StringBuilder(); builder.insert(0, arr[max_index]); int next_index = index[max_index]; while (next_index != -1) { builder.insert(0, arr[next_index] + &quot; &quot;); next_index = index[next_index]; } System.out.println(builder.toString()); // print the result return max; Number tower problem From the top layer to the bottom layer, each layer can only go to the adjacent node, and calculate the sum of the numbers Define the state equation: max[i,j] represents the sum of the largest numbers passed by [i,j] as the starting point. Then max[1,1] is our target Define the state transition equation: max[i,j]=num[i,j]+max(max(i+1,j),max(i+1,j+1)) Then you can choose to solve it from top to bottom or from bottom to top #include&amp;lt;iostream&amp;gt; #include&amp;lt;cstring&amp;gt; using namespace std; #define maxnum 1000 int num[maxnum][maxnum]; int d[maxnum][maxnum]; int main(void) { int i,j,k; int n,m; cin&amp;gt;&amp;gt;n; while(n--){ cin&amp;gt;&amp;gt;m; for(i=1;i&amp;lt;=m;i++) for(j=1;j&amp;lt;=i;j++) cin&amp;gt;&amp;gt;num[i][j]; for(j=1;j&amp;lt;=m;j++) d[m][j]=num[m][j]; for(i=m-1;i&amp;gt;=1;i--) for(j=1;j&amp;lt;=i;j++) d[i][j]=num[i][j]+max(d[i+1][j+1],d[i+1][j]); cout&amp;lt;&amp;lt;d[1][1]&amp;lt;&amp;lt;endl; memset(d,0,sizeof(d)); } } Backpack Problem There are different versions of backpack problem.Let me illustrate the basic one. There are N items and a backpack with a capacity of V. The cost of the i-th item is c[i] and the value is w[i]. Decide which items are loaded into the backpack so the sum of the values can be max. Solve it with Java.There are two types of answer,see the comment. public int Knapsack1(int[] value, int[] weight, int capacity, int number) { if (capacity &amp;lt;= 0 || number == 0) return 0; if (weight[number - 1] &amp;gt; capacity) return Knapsack1(value, weight, capacity, number - 1); else return max(value[number - 1] + Knapsack1(value, weight, capacity - weight[number - 1], number - 1), Knapsack1(value, weight, capacity, number - 1)); } public int Knapsack2(int[] value, int[] weight, int capacity, int index) { if (capacity &amp;lt;= 0 || index &amp;gt;= value.length) return 0; if (weight[index] &amp;gt; capacity) return Knapsack2(value, weight, capacity, index + 1); else return max(value[index] + Knapsack2(value, weight, capacity - weight[index], index + 1), Knapsack2(value, weight, capacity, index + 1)); } // two ways to solve it int[] value = {60, 100, 120}; int[] weight = {10, 20, 30}; int capacity = 50; int number = value.length; System.out.println(dp.Knapsack1(value, weight, capacity, number)); // final result is 220 int index = 0; System.out.println(dp.Knapsack2(value, weight, capacity, index)); // final result is also 220 303 Range Sum Quwey - Immutable Link About the meaning：Give an array that returns the value of any two range of ranges Idea: The rpblem content says many calls to function, so the traversal solution will definitely be TLE（Time Limit Exceeded); and sum[i,j]=sum[j]-sum[i-1] is obvious, so all the sums are found in one pass. After the value is done, subtraction is fine. Note you may need to use global variables code: // written in c++ // Using vector&amp;lt;int&amp;gt; to add status will be better class NumArray { int dp[100000]; public: NumArray(vector&amp;lt;int&amp;gt; &amp;amp;nums) { if (nums.empty()) return ; int length=nums.size(); memset(dp,0,sizeof(dp)); dp[0]=nums[0]; for(int i=1;i&amp;lt;length;i++) dp[i]=dp[i-1]+nums[i]; } int sumRange(int i, int j) { if (i==0) return dp[j]; else return dp[j]-dp[i-1]; } }; Writen in Python： class NumArray(object): def __init__(self, nums): self.dp = nums for i in range(1,len(nums)): self.dp[i] += self.dp[i-1] def sumRange(self, i, j): return self.dp[j] - (self.dp[i-1] if i &amp;gt; 0 else 0) 70 climbStatirs link About the meaning：Ascend a staircase, you can take 1 step or take two steps.if you go to n steps, how many solutions will you have? Idea: Use dp[n] to indicate the number of methods to go to n steps. For dp[n-1], you can only choose to take 1 step; for dp[n-2], If you choose 1+1, it will overlap with dp[n-1], you can only choose 2 steps. Code： Written in C++ class Solution { public: int climbStairs(int n) { int dp[n]={0}; dp[0]=0; dp[1]=1; dp[2]=2; for(int i=3;i&amp;lt;=n;i++) dp[i]=(dp[i-1]+dp[i-2]); return dp[n]; } }; # written in Python class Solution(object): def __init__(self): self.dp={} def climbStairs(self, n): self.dp[1]=1 self.dp[2]=2 for i in range(3,n+1): self.dp[i]=self.dp[i-1]+self.dp[i-2] return self.dp[n] 64 Minimum Path Sum link About the meaning: m*n is a matrix of all positive numbers, which can be moved downwards to the right,find the sum of the distances from the upper left to the lower right. Idea: Dynamic programming.using dp[i][j] to represent the shortest number of steps taken with i, j as the last square. Then dp[i][j]=max(dp[i-1][j]+grid[i][j],dp[i][j-1]+gird[i][j],we just need to implement the equation. Code: // written in C++ class Solution { public: int minPathSum(vector&amp;lt;vector&amp;lt;int&amp;gt;&amp;gt;&amp;amp; grid) { if (grid.empty()) return 0; int m=grid.size(); int n=grid[0].size(); int dp[m][n]={0}; int i,j,k; dp[0][0]=grid[0][0]; for(i=1;i&amp;lt;m;i++) dp[i][0]=(dp[i-1][0]+grid[i][0]); for(i=1;i&amp;lt;n;i++) dp[0][i]=(dp[0][i-1]+grid[0][i]); for(i=1;i&amp;lt;m;i++) for(j=1;j&amp;lt;n;j++) dp[i][j]=min(dp[i-1][j]+grid[i][j],dp[i][j-1]+grid[i][j]); return dp[m-1][n-1]; } };">
+  <title>DP 解题思路</title>
+  <meta name="description" content="动态规划例题及 Leetcode 题解 关于 DP 动态规划是一门非常重要的算法，对它的掌握应该是计算机科学专业学生的基本功 下面来把对这类算法的理解进行尽可能多的解释 关键是 状态定义 和 状态转移方程 最长递增子序列 给定K个整数的序列{ N1, N2, …, NK }，其任意连续子序列可表示为{ Ni, Ni+1, …, Nj }，其中 1 &amp;lt;= i &amp;lt;= j &amp;lt;= K。最大连续子序列是所有连续子序中元素和最大的一个， 例如给定序列{ -2, 11, -4, 13, -5, -2 }，其最大连续子序列为{ 11, -4, 13 }，最大和为20。 定义sum[i]为’以A[i]作为最后一个结尾的连续子序列的最大值’ 状态转移方程为：sum[i]=max(sum[i-1]+a[i],a[i]) 实际求解的时候则是，只要sum&amp;gt;0，那么加上之后的a[i]都还是有可能使max增大的；但如果sum&amp;lt;0，则应该立即抛弃，从0开始计算下一个 a = {4, 8, -12, 3, 7, 9} n = len(a) sum = 0 max = 0 for i in range(n): sum += a[i] if sum &amp;gt; max: max = sum if sum &amp;lt; 0: sum = a[i] return sum public int LIS(int[] arr) { int i, j, max = 0; int n = arr.length; int[] list = new int[n]; // 存储长度 Arrays.fill(list, 1); int[] index = new int[n]; // 存储距离 Arrays.fill(index, -1); for (i = 1; i &amp;lt; n; i++) for (j = 0; j &amp;lt; i; j++) { if (arr[i] &amp;gt; arr[j] &amp;amp;&amp;amp; list[i] &amp;lt; list[j] + 1) { list[i] = list[j] + 1; index[i] = j; } } // 选择出最大的 int max_index = 0; for (i = 0; i &amp;lt; n; i++) if (list[i] &amp;gt; max) { max = list[i]; max_index = i; } StringBuilder builder = new StringBuilder(); builder.insert(0, arr[max_index]); int next_index = index[max_index]; while (next_index != -1) { builder.insert(0, arr[next_index] + &quot; &quot;); next_index = index[next_index]; } System.out.println(builder.toString()); // 输出子序列 return max; 数塔问题 要求从顶层到底层，每一层只能走到相邻节点，求经过的数字之和是多少 定义状态方程：max[i,j] 表示以 [i,j] 作为起始点，所经过的最大的数字之和。则 max[1,1] 是我们要求的目标 定义状态转移方程：max[i,j]=num[i,j]+max(max(i+1,j),max(i+1,j+1)) 接下来可以自底向上，也可以自顶向下，具体参见之前所写的关于hdu2084的博文 #include&amp;lt;iostream&amp;gt; #include&amp;lt;cstring&amp;gt; using namespace std; #define maxnum 1000 int num[maxnum][maxnum]; int d[maxnum][maxnum]; int main(void) { int i,j,k; int n,m; cin&amp;gt;&amp;gt;n; while(n--){ cin&amp;gt;&amp;gt;m; for(i=1;i&amp;lt;=m;i++) for(j=1;j&amp;lt;=i;j++) cin&amp;gt;&amp;gt;num[i][j]; for(j=1;j&amp;lt;=m;j++) d[m][j]=num[m][j]; for(i=m-1;i&amp;gt;=1;i--) for(j=1;j&amp;lt;=i;j++) d[i][j]=num[i][j]+max(d[i+1][j+1],d[i+1][j]); cout&amp;lt;&amp;lt;d[1][1]&amp;lt;&amp;lt;endl; memset(d,0,sizeof(d)); } } 背包问题 有著名的背包问题九讲，这里自己先写最基本的 有N件物品和一个容量为V的背包。第i件物品的费用是c[i]，价值是w[i]。求解将哪些物品装入背包可使价值总和最大 如果单纯使用递归来求解 DP 的话有两种思路 public int Knapsack1(int[] value, int[] weight, int capacity, int number) { if (capacity &amp;lt;= 0 || number == 0) return 0; if (weight[number - 1] &amp;gt; capacity) return Knapsack1(value, weight, capacity, number - 1); else return max(value[number - 1] + Knapsack1(value, weight, capacity - weight[number - 1], number - 1), Knapsack1(value, weight, capacity, number - 1)); } public int Knapsack2(int[] value, int[] weight, int capacity, int index) { if (capacity &amp;lt;= 0 || index &amp;gt;= value.length) return 0; if (weight[index] &amp;gt; capacity) return Knapsack2(value, weight, capacity, index + 1); else return max(value[index] + Knapsack2(value, weight, capacity - weight[index], index + 1), Knapsack2(value, weight, capacity, index + 1)); } // KnapSack 问题，两种调用 int[] value = {60, 100, 120}; int[] weight = {10, 20, 30}; int capacity = 50; int number = value.length; System.out.println(dp.Knapsack1(value, weight, capacity, number)); // 220 int index = 0; System.out.println(dp.Knapsack2(value, weight, capacity, index)); // 220 Leetcode 上相关题目 303 Range Sum Quwey - Immutable 链接 大意：给出一个数组，要求返回任意两个区间范围的的值 思路：题目中说到many calls to function，所以多次遍历求解肯定会TLE；而sum[i,j]=sum[j]-sum[i-1]，所以一次遍历求出所有的sum值之后做减法就可以。注意要用全局变量 代码： // c++版 //用vector&amp;lt;int&amp;gt; 来存储状态会更好 class NumArray { int dp[100000]; public: NumArray(vector&amp;lt;int&amp;gt; &amp;amp;nums) { if (nums.empty()) return ; int length=nums.size(); memset(dp,0,sizeof(dp)); dp[0]=nums[0]; for(int i=1;i&amp;lt;length;i++) dp[i]=dp[i-1]+nums[i]; } int sumRange(int i, int j) { if (i==0) return dp[j]; else return dp[j]-dp[i-1]; } }; python版： class NumArray(object): def __init__(self, nums): self.dp = nums for i in range(1,len(nums)): self.dp[i] += self.dp[i-1] def sumRange(self, i, j): return self.dp[j] - (self.dp[i-1] if i &amp;gt; 0 else 0) 70 climbStatirs 链接 大意：登上一个楼梯，可以走1步，可以走两步，问走到n步有几种解法 思路：用dp[n]来表示走到n步的方法数。对dp[n-1],只能选择走1步；对dp[n-2]， 如果选择1+1，就会和dp[n-1]有重叠，只能选择2步 代码： C++版： class Solution { public: int climbStairs(int n) { int dp[n]={0}; dp[0]=0; dp[1]=1; dp[2]=2; for(int i=3;i&amp;lt;=n;i++) dp[i]=(dp[i-1]+dp[i-2]); return dp[n]; } }; python版： class Solution(object): def __init__(self): self.dp={} def climbStairs(self, n): self.dp[1]=1 self.dp[2]=2 for i in range(3,n+1): self.dp[i]=self.dp[i-1]+self.dp[i-2] return self.dp[n] 64 Minimum Path Sum 链接 大意：m*n的全为正数的矩阵，可以向右向下移动，求从左上到右下经过的距离之和最小值 思路：动态规划，用dp[i][j]表示以i,j作为最后一个方块所经过的最短步数 则 dp[i][j]=max(dp[i-1][j]+grid[i][j],dp[i][j-1]+gird[i][j] 代码： C++ 版： class Solution { public: int minPathSum(vector&amp;lt;vector&amp;lt;int&amp;gt;&amp;gt;&amp;amp; grid) { if (grid.empty()) return 0; int m=grid.size(); int n=grid[0].size(); int dp[m][n]={0}; int i,j,k; dp[0][0]=grid[0][0]; for(i=1;i&amp;lt;m;i++) dp[i][0]=(dp[i-1][0]+grid[i][0]); for(i=1;i&amp;lt;n;i++) dp[0][i]=(dp[0][i-1]+grid[0][i]); for(i=1;i&amp;lt;m;i++) for(j=1;j&amp;lt;n;j++) dp[i][j]=min(dp[i-1][j]+grid[i][j],dp[i][j-1]+grid[i][j]); return dp[m-1][n-1]; } };">
   
 
   <link rel="stylesheet" href="/assets/main.css">
@@ -25,8 +25,8 @@
   
   <meta name="twitter:card" content="summary">
   <meta name="twitter:site" content="hzcortex">
-  <meta name="twitter:title" content="Thoughts Of Solving Dynamic Programming Problems">
-  <meta name="twitter:description" content="Solving the dynamic programming problems 这篇文章对应的中文版 About DP Dynamic programming is a very important algorithm, and mastery of it should be the basic skills for computer science students. Let’s exp...">
+  <meta name="twitter:title" content="DP 解题思路">
+  <meta name="twitter:description" content="动态规划例题及 Leetcode 题解 关于 DP 动态规划是一门非常重要的算法，对它的掌握应该是计算机科学专业学生的基本功 下面来把对这类算法的理解进行尽可能多的解释 关键是 状态定义 和 状态转移方程 最长递增子序列 给定K个整数的序列{ N1, N2, …, NK }，其任意连续子序列可表示为{ Ni, Ni+1, …, Nj }，其中 1 &amp;lt;= i &amp;lt;= ...">
   
     <meta name="twitter:creator" content="hzcortex">
   
@@ -90,7 +90,7 @@
 
   <header class="post-header">
     
-      <h1 class="post-title" itemprop="name headline">Thoughts Of Solving Dynamic Programming Problems</h1>
+      <h1 class="post-title" itemprop="name headline">DP 解题思路</h1>
     
     <p class="post-meta"><time datetime="2015-03-11T10:22:10-03:00" itemprop="datePublished">Mar 11, 2015</time> • 
   
@@ -100,39 +100,41 @@
   </header>
 
   <div class="post-content" itemprop="articleBody">
-    <p>Solving the dynamic programming problems
+    <p>动态规划例题及 Leetcode 题解
 <!-- more --></p>
 
-<p><a href="/../translation/2015-03-11-Dynamic-Programming-Explanation.html">这篇文章对应的中文版</a></p>
-
-<h4 id="about-dp">About DP</h4>
+<h4 id="关于-dp">关于 DP</h4>
 
 <ul>
   <li>
-    <p>Dynamic programming is a very important algorithm, and mastery of it should be the basic skills for computer science students.</p>
+    <p>动态规划是一门非常重要的算法，对它的掌握应该是计算机科学专业学生的基本功</p>
   </li>
   <li>
-    <p>Let’s explain as much as possible about the understanding of this type of algorithm.</p>
+    <p>下面来把对这类算法的理解进行尽可能多的解释</p>
   </li>
   <li>
-    <p>The key is <code class="highlighter-rouge">state definition</code> and <code class="highlighter-rouge">state transition equation</code></p>
+    <p>关键是 <strong>状态定义</strong> 和 <strong>状态转移方程</strong></p>
   </li>
 </ul>
 
 <hr />
 
-<h4 id="longest-increasing-subsequence">Longest Increasing Subsequence</h4>
+<h4 id="最长递增子序列">最长递增子序列</h4>
 
 <blockquote>
-  <p>Given a sequence of K integers { N1, N2, …, NK }, any contiguous subsequence can be expressed as { Ni, Ni+1, …, Nj }, where 1 &lt;= i &lt;= j &lt; = K. The largest contiguous subsequence is the element and the largest one of all consecutive subsequences, such as the given sequence { -2, 11, -4, 13, -5, -2 }, whose largest contiguous subsequence is { 11, -4, 13 } and the maximum sum is 20.</p>
+  <p>给定K个整数的序列{ N1, N2, …, NK }，其任意连续子序列可表示为{ Ni, Ni+1, …, Nj }，其中 1 &lt;= i &lt;= j &lt;= K。最大连续子序列是所有连续子序中元素和最大的一个， 例如给定序列{ -2, 11, -4, 13, -5, -2 }，其最大连续子序列为{ 11, -4, 13 }，最大和为20。</p>
 </blockquote>
 
 <ul>
   <li>
-    <p>Define <code class="highlighter-rouge">sum[i]</code> as the <code class="highlighter-rouge">maximum value of contiguous subsequence with A[i] as the last end</code></p>
+    <p>定义<code class="highlighter-rouge">sum[i]</code>为’以A[i]作为最后一个结尾的连续子序列的最大值’</p>
   </li>
-  <li>The state transition equation is: <code class="highlighter-rouge">sum[i]=max(sum[i-1]+a[i], a[i])</code></li>
-  <li>T he actual solution is, as long as sum&gt;0, then adding a[i] is still possible to increase max; but if sum&lt;0, it should be discarded immediately, starting from 0 to calculate the next</li>
+  <li>
+    <p>状态转移方程为：sum[i]=max(sum[i-1]+a[i],a[i])</p>
+  </li>
+  <li>
+    <p>实际求解的时候则是，只要sum&gt;0，那么加上之后的a[i]都还是有可能使max增大的；但如果sum&lt;0，则应该立即抛弃，从0开始计算下一个</p>
+  </li>
 </ul>
 
 <figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">a</span> <span class="o">=</span> <span class="p">{</span><span class="mi">4</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="o">-</span><span class="mi">12</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">9</span><span class="p">}</span>
@@ -150,10 +152,10 @@
 <figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kt">int</span> <span class="nf">LIS</span><span class="o">(</span><span class="kt">int</span><span class="o">[]</span> <span class="n">arr</span><span class="o">)</span> <span class="o">{</span>
         <span class="kt">int</span> <span class="n">i</span><span class="o">,</span> <span class="n">j</span><span class="o">,</span> <span class="n">max</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
         <span class="kt">int</span> <span class="n">n</span> <span class="o">=</span> <span class="n">arr</span><span class="o">.</span><span class="na">length</span><span class="o">;</span>
-        <span class="kt">int</span><span class="o">[]</span> <span class="n">list</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">int</span><span class="o">[</span><span class="n">n</span><span class="o">];</span> <span class="c1">// length
+        <span class="kt">int</span><span class="o">[]</span> <span class="n">list</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">int</span><span class="o">[</span><span class="n">n</span><span class="o">];</span> <span class="c1">// 存储长度
 </span>
         <span class="n">Arrays</span><span class="o">.</span><span class="na">fill</span><span class="o">(</span><span class="n">list</span><span class="o">,</span> <span class="mi">1</span><span class="o">);</span>
-        <span class="kt">int</span><span class="o">[]</span> <span class="n">index</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">int</span><span class="o">[</span><span class="n">n</span><span class="o">];</span> <span class="c1">// distance
+        <span class="kt">int</span><span class="o">[]</span> <span class="n">index</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">int</span><span class="o">[</span><span class="n">n</span><span class="o">];</span> <span class="c1">// 存储距离
 </span>
         <span class="n">Arrays</span><span class="o">.</span><span class="na">fill</span><span class="o">(</span><span class="n">index</span><span class="o">,</span> <span class="o">-</span><span class="mi">1</span><span class="o">);</span>
 
@@ -166,7 +168,7 @@
                 <span class="o">}</span>
             <span class="o">}</span>
 
-        <span class="c1">// choose the max
+        <span class="c1">// 选择出最大的
 </span>
         <span class="kt">int</span> <span class="n">max_index</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
 
@@ -184,28 +186,28 @@
             <span class="n">builder</span><span class="o">.</span><span class="na">insert</span><span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="n">arr</span><span class="o">[</span><span class="n">next_index</span><span class="o">]</span> <span class="o">+</span> <span class="s">" "</span><span class="o">);</span>
             <span class="n">next_index</span> <span class="o">=</span> <span class="n">index</span><span class="o">[</span><span class="n">next_index</span><span class="o">];</span>
         <span class="o">}</span>
-        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">builder</span><span class="o">.</span><span class="na">toString</span><span class="o">());</span> <span class="c1">// print the result
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">builder</span><span class="o">.</span><span class="na">toString</span><span class="o">());</span> <span class="c1">// 输出子序列
 </span>
         <span class="k">return</span> <span class="n">max</span><span class="o">;</span></code></pre></figure>
 
 <hr />
 
-<h4 id="number-tower-problem">Number tower problem</h4>
+<h4 id="数塔问题">数塔问题</h4>
 <p><img src="/images/hdu-2084.jpg" alt="img" /></p>
 
 <blockquote>
-  <p>From the top layer to the bottom layer, each layer can only go to the adjacent node, and calculate the sum of the numbers</p>
+  <p>要求从顶层到底层，每一层只能走到相邻节点，求经过的数字之和是多少</p>
 </blockquote>
 
 <ul>
   <li>
-    <p>Define the state equation: <code class="highlighter-rouge">max[i,j]</code> represents the sum of the largest numbers passed by [i,j] as the starting point. Then <code class="highlighter-rouge">max[1,1]</code> is our target</p>
+    <p>定义状态方程：max[i,j] 表示以 [i,j] 作为起始点，所经过的最大的数字之和。则 max[1,1] 是我们要求的目标</p>
   </li>
   <li>
-    <p>Define the state transition equation: <code class="highlighter-rouge">max[i,j]=num[i,j]+max(max(i+1,j),max(i+1,j+1))</code></p>
+    <p>定义状态转移方程：max[i,j]=num[i,j]+max(max(i+1,j),max(i+1,j+1))</p>
   </li>
   <li>
-    <p>Then you can choose to solve it from top to bottom or from bottom to top</p>
+    <p>接下来可以自底向上，也可以自顶向下，具体参见之前所写的关于<a href="http://acm.hdu.edu.cn/showproblem.php?pid=2084">hdu2084</a>的<a href="http://blog.csdn.net/allianzcortex/article/details/41620503">博文</a></p>
   </li>
 </ul>
 
@@ -237,18 +239,18 @@
 
 <hr />
 
-<h4 id="backpack-problem">Backpack Problem</h4>
+<h4 id="背包问题">背包问题</h4>
 
 <ul>
-  <li>There are different versions of backpack problem.Let me illustrate the basic one.</li>
-</ul>
-
-<blockquote>
-  <p>There are N items and a backpack with a capacity of V. The cost of the i-th item is c[i] and the value is w[i]. Decide which items are loaded into the backpack so the sum of the values can be max.</p>
-</blockquote>
-
-<ul>
-  <li>Solve it with Java.There are two types of answer,see the comment.</li>
+  <li>
+    <p>有著名的背包问题九讲，这里自己先写最基本的</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">有N件物品和一个容量为V的背包。第i件物品的费用是c[i]，价值是w[i]。求解将哪些物品装入背包可使价值总和最大</code></p>
+  </li>
+  <li>
+    <p>如果单纯使用递归来求解 DP 的话有两种思路</p>
+  </li>
 </ul>
 
 <figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kt">int</span> <span class="nf">Knapsack1</span><span class="o">(</span><span class="kt">int</span><span class="o">[]</span> <span class="n">value</span><span class="o">,</span> <span class="kt">int</span><span class="o">[]</span> <span class="n">weight</span><span class="o">,</span> <span class="kt">int</span> <span class="n">capacity</span><span class="o">,</span> <span class="kt">int</span> <span class="n">number</span><span class="o">)</span> <span class="o">{</span>
@@ -272,38 +274,40 @@
                     <span class="n">Knapsack2</span><span class="o">(</span><span class="n">value</span><span class="o">,</span> <span class="n">weight</span><span class="o">,</span> <span class="n">capacity</span><span class="o">,</span> <span class="n">index</span> <span class="o">+</span> <span class="mi">1</span><span class="o">));</span>
     <span class="o">}</span>
 
-        <span class="c1">// two ways to solve it
+        <span class="c1">// KnapSack 问题，两种调用
 </span>
         <span class="kt">int</span><span class="o">[]</span> <span class="n">value</span> <span class="o">=</span> <span class="o">{</span><span class="mi">60</span><span class="o">,</span> <span class="mi">100</span><span class="o">,</span> <span class="mi">120</span><span class="o">};</span>
         <span class="kt">int</span><span class="o">[]</span> <span class="n">weight</span> <span class="o">=</span> <span class="o">{</span><span class="mi">10</span><span class="o">,</span> <span class="mi">20</span><span class="o">,</span> <span class="mi">30</span><span class="o">};</span>
         <span class="kt">int</span> <span class="n">capacity</span> <span class="o">=</span> <span class="mi">50</span><span class="o">;</span>
         <span class="kt">int</span> <span class="n">number</span> <span class="o">=</span> <span class="n">value</span><span class="o">.</span><span class="na">length</span><span class="o">;</span>
-        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">dp</span><span class="o">.</span><span class="na">Knapsack1</span><span class="o">(</span><span class="n">value</span><span class="o">,</span> <span class="n">weight</span><span class="o">,</span> <span class="n">capacity</span><span class="o">,</span> <span class="n">number</span><span class="o">));</span> <span class="c1">// final result is 220
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">dp</span><span class="o">.</span><span class="na">Knapsack1</span><span class="o">(</span><span class="n">value</span><span class="o">,</span> <span class="n">weight</span><span class="o">,</span> <span class="n">capacity</span><span class="o">,</span> <span class="n">number</span><span class="o">));</span> <span class="c1">// 220
 </span>
         <span class="kt">int</span> <span class="n">index</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
-        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">dp</span><span class="o">.</span><span class="na">Knapsack2</span><span class="o">(</span><span class="n">value</span><span class="o">,</span> <span class="n">weight</span><span class="o">,</span> <span class="n">capacity</span><span class="o">,</span> <span class="n">index</span><span class="o">));</span>  <span class="c1">// final result is also 220</span></code></pre></figure>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">dp</span><span class="o">.</span><span class="na">Knapsack2</span><span class="o">(</span><span class="n">value</span><span class="o">,</span> <span class="n">weight</span><span class="o">,</span> <span class="n">capacity</span><span class="o">,</span> <span class="n">index</span><span class="o">));</span>  <span class="c1">// 220</span></code></pre></figure>
 
 <hr />
 
-<h3 id="303-range-sum-quwey---immutable">303 Range Sum Quwey - Immutable</h3>
+<h4 id="leetcode-上相关题目">Leetcode 上相关题目</h4>
+
+<h5 id="303-range-sum-quwey---immutable">303 Range Sum Quwey - Immutable</h5>
 
 <ul>
   <li>
-    <p><a href="https://leetcode.com/problems/range-sum-query-immutable/">Link</a></p>
+    <p><a href="https://leetcode.com/problems/range-sum-query-immutable/">链接</a></p>
   </li>
   <li>
-    <p>About the meaning：Give an array that returns the value of any two range of ranges</p>
+    <p>大意：给出一个数组，要求返回任意两个区间范围的的值</p>
   </li>
   <li>
-    <p>Idea: The rpblem content says <code class="highlighter-rouge">many calls to function</code>, so the traversal solution will definitely be <strong>TLE</strong>（Time Limit Exceeded); and <code class="highlighter-rouge">sum[i,j]=sum[j]-sum[i-1]</code> is obvious, so all the sums are found in one pass. After the value is done, subtraction is fine. Note you may need to use global variables</p>
+    <p>思路：题目中说到<code class="highlighter-rouge">many calls to function</code>，所以多次遍历求解肯定会TLE；而sum[i,j]=sum[j]-sum[i-1]，所以一次遍历求出所有的sum值之后做减法就可以。注意要用全局变量</p>
   </li>
   <li>
-    <p>code:</p>
+    <p>代码：</p>
   </li>
 </ul>
 
-<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="c1">// written in c++
-// Using vector&lt;int&gt; to add status will be better
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="c1">// c++版
+//用vector&lt;int&gt; 来存储状态会更好
 </span><span class="n">class</span> <span class="n">NumArray</span> <span class="p">{</span>
     <span class="kt">int</span> <span class="n">dp</span><span class="p">[</span><span class="mi">100000</span><span class="p">];</span>
 <span class="n">public</span><span class="o">:</span>
@@ -325,7 +329,7 @@
     <span class="p">}</span>
 <span class="p">};</span></code></pre></figure>
 
-<p>Writen in Python：</p>
+<p>python版：</p>
 
 <figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">class</span> <span class="nc">NumArray</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nums</span><span class="p">):</span>
@@ -343,22 +347,22 @@
 
 <ul>
   <li>
-    <p><a href="https://leetcode.com/problems/climbing-stairs/">link</a></p>
+    <p><a href="https://leetcode.com/problems/climbing-stairs/">链接</a></p>
   </li>
   <li>
-    <p>About the meaning：Ascend a staircase, you can take 1 step or  take two steps.if you go to n steps, how many solutions will you have?</p>
+    <p>大意：登上一个楼梯，可以走1步，可以走两步，问走到n步有几种解法</p>
   </li>
   <li>
-    <p>Idea: Use dp[n] to indicate the number of methods to go to n steps. For dp[n-1], you can only choose to take 1 step; for dp[n-2],
-If you choose 1+1, it will overlap with dp[n-1], you can only choose 2 steps.</p>
+    <p>思路：用dp[n]来表示走到n步的方法数。对dp[n-1],只能选择走1步；对dp[n-2]，
+如果选择1+1，就会和dp[n-1]有重叠，只能选择2步</p>
   </li>
   <li>
-    <p>Code：</p>
+    <p>代码：
+C++版：</p>
   </li>
 </ul>
 
-<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="n">Written</span> <span class="n">in</span> <span class="n">C</span><span class="o">++</span>
-<span class="n">class</span> <span class="n">Solution</span> <span class="p">{</span>
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="n">class</span> <span class="n">Solution</span> <span class="p">{</span>
 <span class="n">public</span><span class="o">:</span>
     <span class="kt">int</span> <span class="n">climbStairs</span><span class="p">(</span><span class="kt">int</span> <span class="n">n</span><span class="p">)</span> <span class="p">{</span>
         <span class="kt">int</span> <span class="n">dp</span><span class="p">[</span><span class="n">n</span><span class="p">]</span><span class="o">=</span><span class="p">{</span><span class="mi">0</span><span class="p">};</span>
@@ -371,9 +375,9 @@ If you choose 1+1, it will overlap with dp[n-1], you can only choose 2 steps.</p
     <span class="p">}</span>
 <span class="p">};</span></code></pre></figure>
 
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="c"># written in Python
-</span>
-<span class="k">class</span> <span class="nc">Solution</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<p>python版：</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">class</span> <span class="nc">Solution</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">dp</span><span class="o">=</span><span class="p">{}</span>
         
@@ -390,22 +394,22 @@ If you choose 1+1, it will overlap with dp[n-1], you can only choose 2 steps.</p
 
 <ul>
   <li>
-    <p><a href="https://leetcode.com/problems/minimum-path-sum/">link</a></p>
+    <p><a href="https://leetcode.com/problems/minimum-path-sum/">链接</a></p>
   </li>
   <li>
-    <p>About the meaning: <code class="highlighter-rouge">m*n</code> is a matrix of all positive numbers, which can be moved downwards to the right,find the sum of the distances from the upper left to the lower right.</p>
+    <p>大意：m*n的全为正数的矩阵，可以向右向下移动，求从左上到右下经过的距离之和最小值</p>
   </li>
   <li>
-    <p>Idea: Dynamic programming.using dp[i][j] to represent the shortest number of steps taken with i, j as the last square.
-Then <code class="highlighter-rouge">dp[i][j]=max(dp[i-1][j]+grid[i][j],dp[i][j-1]+gird[i][j]</code>,we just need to implement the equation.</p>
+    <p>思路：动态规划，用dp[i][j]表示以i,j作为最后一个方块所经过的最短步数
+则 dp[i][j]=max(dp[i-1][j]+grid[i][j],dp[i][j-1]+gird[i][j]</p>
   </li>
   <li>
-    <p>Code:</p>
+    <p>代码：
+C++ 版：</p>
   </li>
 </ul>
 
-<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="c1">// written in C++
-</span><span class="n">class</span> <span class="n">Solution</span> <span class="p">{</span>
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="n">class</span> <span class="n">Solution</span> <span class="p">{</span>
 <span class="n">public</span><span class="o">:</span>
     <span class="kt">int</span> <span class="n">minPathSum</span><span class="p">(</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&gt;&amp;</span> <span class="n">grid</span><span class="p">)</span> <span class="p">{</span>
         <span class="k">if</span> <span class="p">(</span><span class="n">grid</span><span class="p">.</span><span class="n">empty</span><span class="p">())</span> <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
