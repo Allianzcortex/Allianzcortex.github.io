@@ -111,6 +111,29 @@ HDFS 文件路径下面的数据来源一般有以下几种：
 
 
 
+MapReduce 实现细节
+
+实现数据库 left/inner/right join
+
+这里可以参考 Quora 的这个问题：https://www.quora.com/How-does-Hive-implement-joins-in-Map-Reduce
+
+存在 Map-side 和 Reduce-side 两种情况来区分讨论
+
+MultiInput 用 ArrayList 存储
+
+劣势：在一个表中有上千万数据时可能会 OOM
+
+
+HBase:
+
+![HBase-source-code.png](/images/HBase-source-code.png)
+
+HBase 的特点：
+
+- 实现比 redis 持久化存储效果更好的 key-value 键值对
+
+- 实现需要有历史版本的增量存储
+
 
 - 最近又有需求，在 Ubuntu 环境下用 VirtualBox 重新安装了 Win8.1。具体
 

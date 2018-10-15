@@ -5,7 +5,7 @@
   
   <link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" />
   <link href="http://localhost:4000/" rel="alternate" type="text/html" />
-  <updated>2018-10-14T21:14:23-03:00</updated>
+  <updated>2018-10-14T23:45:09-03:00</updated>
   <id>http://localhost:4000//</id>
 
   
@@ -63,6 +63,174 @@
 
       
         <summary type="html">讨论 BTC 的套利性是否真的有必要 讨论比特币的存储，外部交易所的不稳定性 讨论数字货币的不靠谱性，白皮书，代码 讨论长期持有与其他理财方式(美股)的关系 讨论如何在一个自己完全陌生的环境中不被割韭菜 讨论 EOS 的图片 讨论比特币打赏： 欢迎大家：1KAYM9K6M6Cp7RJwwr4K1m59ETPxB6o8n4</summary>
+      
+
+      
+      
+    </entry>
+  
+  
+  
+    <entry>
+      
+      <title type="html">The Import Mechanism Of Python And Two Related Problems</title>
+      
+      <link href="http://localhost:4000/2017/05/22/Python-Import-Mechanism/" rel="alternate" type="text/html" title="The Import Mechanism Of Python And Two Related Problems" />
+      <published>2017-05-22T10:29:10-03:00</published>
+      <updated>2017-05-22T10:29:10-03:00</updated>
+      <id>http://localhost:4000/2017/05/22/Python-Import-Mechanism</id>
+      <content type="html" xml:base="http://localhost:4000/2017/05/22/Python-Import-Mechanism/">&lt;p&gt;How to solve &lt;code class=&quot;highlighter-rouge&quot;&gt;No module named&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;Attempted relative import&lt;/code&gt; ?&lt;/p&gt;
+
+&lt;!-- more --&gt;
+&lt;p&gt;&lt;a href=&quot;/../translation/2017-05-22-Python-Import-Mechanism.html&quot;&gt;这篇文章对应的中文版&lt;/a&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;no-module-named&quot;&gt;No module named&lt;/h3&gt;
+
+&lt;p&gt;This problem ever happened when executed with the command line, but the application can be executed smoothly with the Pycharm run button. The error is also very simple to debug, just check the &lt;strong&gt;show command line afterwards&lt;/strong&gt; in the edit configuration item of Pycharm, and then execute the &lt;code class=&quot;highlighter-rouge&quot;&gt;import sys; sys.path&lt;/code&gt; command. Compare the options in the command line,you will find the former has Added a module for &lt;code class=&quot;highlighter-rouge&quot;&gt;/home/hzcortex/projects...&lt;/code&gt;. In other words, Python does not add the directory where the script executes the command to sys.path.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;The solution is to add the following code in the directory where error happened:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;sys&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;os&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;path&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;sys&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;path&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;append&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;path&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dirname&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;path&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dirname&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;path&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;abspath&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;__file__&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))))&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;h3 id=&quot;attempted-relative-import-in-non--package&quot;&gt;Attempted relative import in non  package&lt;/h3&gt;
+
+&lt;p&gt;There are two types of issues to discuss:&lt;/p&gt;
+
+&lt;p&gt;1 A circular reference does occur. A wants to reference B, B wants to reference C, and C also refers to a function in B. The normal solution at this point is to modify the reference order of the C files and put the &lt;code class=&quot;highlighter-rouge&quot;&gt;import&lt;/code&gt; statement before the statement that needs to use the reference object (see 《Fluent Python》). I recently encountered this problem when developing [FBRank] (https://github.com/Allianzcortex/FBRank). The project structure is like :&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;err&quot;&gt;└──&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;utils&lt;/span&gt;
+    &lt;span class=&quot;err&quot;&gt;├──&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;exceptions&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;py&lt;/span&gt;
+    &lt;span class=&quot;err&quot;&gt;├──&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;__init__&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;py&lt;/span&gt;
+
+&lt;span class=&quot;c&quot;&gt;# utils.py
+&lt;/span&gt;
+ &lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;.exceptions&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;NotSupprotedYetException&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;check_before&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;attr&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'name'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;...&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;raise&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;NotSupprotedYetException&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;...&lt;/span&gt;
+
+&lt;span class=&quot;c&quot;&gt;# exceptions.py
+&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;.utils&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;github_url&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;connect_url&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;NotSupprotedYetException&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;FBRankException&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+    &lt;span class=&quot;s&quot;&gt;&quot;&quot;&quot;still not supprt
+    &quot;&quot;&quot;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;Then there was such an error when executing the program:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;File &quot;/home/hzcortex/FBRank/FBRank/parse/League.py&quot;, line 13, in &amp;lt;module&amp;gt;
+    from FBRank.utils.exceptions import IllegalArgumentException, NotSupprotedYetException
+  File &quot;/home/hzcortex/FBRank/FBRank/utils/exceptions.py&quot;, line 2, in &amp;lt;module&amp;gt;
+    from .utils import github_url, connect_url
+  File &quot;/home/hzcortex/FBRank/FBRank/utils/utils.py&quot;, line 5, in &amp;lt;module&amp;gt;
+    from .exceptions import NotSupprotedYetException
+ImportError: cannot import name 'NotSupprotedYetException'
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Looking at the order of the calls from top to bottom, the &lt;code class=&quot;highlighter-rouge&quot;&gt;github_url, connect_url&lt;/code&gt; variables are called from .utils.py in /exceptions.py, and &lt;strong&gt;NotSupprotedYetException&lt;/strong&gt; is called from /exceptions.py when calling .utils.py. This will cycle through each other and will never solve the &lt;strong&gt;import issue&lt;/strong&gt;. The solution is to load it only when you need to use the function:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;c&quot;&gt;# utils.py
+&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;check_before&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;attr&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'name'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+    &lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;.exceptions&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;NotSupprotedYetException&lt;/span&gt;
+    &lt;span class=&quot;c&quot;&gt;# ......&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;Because Python’s reference mechanism does not reimport previously imported packages (use &lt;code class=&quot;highlighter-rouge&quot;&gt;imp.reaload()&lt;/code&gt; if needed), so don’t worry about performance problem.&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;If there is really no circular reference, problem maybe is mainly because:&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Take an example of a program push data from Kafka to ES that was previously written. The structure of the whole program is as follows&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/RLTES-2.png&quot; alt=&quot;RLTES-Project&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;In the main program &lt;code class=&quot;highlighter-rouge&quot;&gt;RealtimeLogToES.py&lt;/code&gt; there are the following references:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/RLTES-1.png&quot; alt=&quot;RLTES-import&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Go to the RLTES directory and execute &lt;code class=&quot;highlighter-rouge&quot;&gt;python RealtimeLogToES.py&lt;/code&gt; directly in this case, then the above circular reference error will be reported.&lt;/p&gt;
+
+&lt;p&gt;There are two solutions:&lt;/p&gt;
+
+&lt;p&gt;1 Change &lt;code class=&quot;highlighter-rouge&quot;&gt;from .config import&lt;/code&gt; to the same absolute reference as below, &lt;code class=&quot;highlighter-rouge&quot;&gt;from RLTES.config import&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;2 Do not modify the code, return to the previous directory, &lt;code class=&quot;highlighter-rouge&quot;&gt;cd ..&lt;/code&gt;, and then execute &lt;code class=&quot;highlighter-rouge&quot;&gt;python -m RLTES.RealtimeLogToES&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;When Python is relatively introduced, the basis for the judgment is the &lt;code class=&quot;highlighter-rouge&quot;&gt;__name__&lt;/code&gt; attribute of the current file. When you execute a file, the original &lt;code class=&quot;highlighter-rouge&quot;&gt;__name__&lt;/code&gt; attribute of the file is replaced by the fixed &lt;code class=&quot;highlighter-rouge&quot;&gt;'__main__'&lt;/code&gt;, so the relative introduction does not work, while the absolute introduction is fine. After adding -m to the command line, tell the Python interpreter to run this file as a script.&lt;/p&gt;
+
+&lt;h3 id=&quot;why-the-problem-happened&quot;&gt;Why the problem happened&lt;/h3&gt;
+
+&lt;p&gt;If there is sufficient time,I will try to explain it. Now you can read &lt;a href=&quot;https://www.python.org/dev/peps/pep-0302/&quot;&gt;PEP302&lt;/a&gt; to hava a straightforward impression.&lt;/p&gt;
+
+&lt;h3 id=&quot;how-we-do-properly&quot;&gt;How We Do Properly&lt;/h3&gt;
+
+&lt;p&gt;The recommendation in PEP8 is to always use absolute references, but just like the &lt;code class=&quot;highlighter-rouge&quot;&gt;annoying double underscore&lt;/code&gt;, there are a lot of people who prefer to use relative import.&lt;/p&gt;
+
+&lt;p&gt;The key is to Keep the team consistent. As for personal development, I prefer to use &lt;code class=&quot;highlighter-rouge&quot;&gt;.import&lt;/code&gt; for single layer and absolute reference for others.&lt;/p&gt;
+
+&lt;p&gt;In the book “Two Scopes Of Django” &lt;strong&gt;, it is stipulated that the use of the **implicit import&lt;/strong&gt; statement such as &lt;code class=&quot;highlighter-rouge&quot;&gt;from A import a&lt;/code&gt; is forbidden, but considering that many times the script will not be specific to a large project but to create a directory on the server to complete a specific function or solve a temporary problem(don’t need to maintain), if this is convenient for debugging and deployment,it can also be a good choice,done is better than perfect after all.&lt;/p&gt;
+
+&lt;h3 id=&quot;the-role-of-__init__py&quot;&gt;The role of &lt;code class=&quot;highlighter-rouge&quot;&gt;__init__.py&lt;/code&gt;&lt;/h3&gt;
+
+&lt;p&gt;The most important role of &lt;code class=&quot;highlighter-rouge&quot;&gt;__init__.py&lt;/code&gt; is to mark the folder containing the &lt;code class=&quot;highlighter-rouge&quot;&gt;__init__.py&lt;/code&gt; directory as a package to complete the corresponding import.&lt;/p&gt;
+
+&lt;p&gt;In most cases, there is no need to write anything in &lt;code class=&quot;highlighter-rouge&quot;&gt;__init__.py&lt;/code&gt;. If you must write it, it basically has the following three functions:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;Write &lt;code class=&quot;highlighter-rouge&quot;&gt;__author__&lt;/code&gt; and other related information&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Write a &lt;code class=&quot;highlighter-rouge&quot;&gt;__all__&lt;/code&gt; configuration that exactly defines what will be introduced when &lt;code class=&quot;highlighter-rouge&quot;&gt;from x import *&lt;/code&gt;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;If the first two are irrelevant, then the last one is much more important, and the importing method can be simplified to control the stability of the API.&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Let me still take the example of [FBRank] (github.com/Allianzcortex/FBRank). Although you see that the command line tool is only supported in the README, it also provides the ability to import it in the code. for example:&lt;/p&gt;
+
+&lt;p&gt;If you need to assign the corresponding file if you need to  import an exception&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt; &lt;span class=&quot;n&quot;&gt;In&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]:&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;FBRank.utils.exceptions&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;IllegalArgumentException&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;But if you want to import a class, you only need to identify the corresponding package, which is very convenient for subsequent development.&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;n&quot;&gt;In&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]:&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;FBRank.object&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Club&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;The key it  the following code in &lt;code class=&quot;highlighter-rouge&quot;&gt;__init__.py&lt;/code&gt; of FBRank/object folder.Import something from package is equal to import something from file under this package.&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;  &lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;.League&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;League&lt;/span&gt;
+  &lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;.Club&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Club&lt;/span&gt;
+  &lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;.Player&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Player&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;</content>
+
+      
+      
+      
+      
+      
+
+      
+
+      
+        <category term="Python" />
+      
+
+      
+
+      
+        <summary type="html">How to solve No module named and Attempted relative import ? 这篇文章对应的中文版 No module named This problem ever happened when executed with the command line, but the application can be executed smoothly with the Pycharm run button. The error is also very simple to debug, just check the show command line afterwards in the edit configuration item of Pycharm, and then execute the import sys; sys.path command. Compare the options in the command line,you will find the former has Added a module for /home/hzcortex/projects.... In other words, Python does not add the directory where the script executes the command to sys.path. The solution is to add the following code in the directory where error happened: import sys from os import path sys.path.append(path.dirname(path.dirname(path.abspath(__file__)))) Attempted relative import in non package There are two types of issues to discuss: 1 A circular reference does occur. A wants to reference B, B wants to reference C, and C also refers to a function in B. The normal solution at this point is to modify the reference order of the C files and put the import statement before the statement that needs to use the reference object (see 《Fluent Python》). I recently encountered this problem when developing [FBRank] (https://github.com/Allianzcortex/FBRank). The project structure is like : └── utils ├── exceptions.py ├── __init__.py # utils.py from .exceptions import NotSupprotedYetException def check_before(attr='name'): ... raise NotSupprotedYetException ... # exceptions.py from .utils import github_url, connect_url class NotSupprotedYetException(FBRankException): &quot;&quot;&quot;still not supprt &quot;&quot;&quot; Then there was such an error when executing the program: File &quot;/home/hzcortex/FBRank/FBRank/parse/League.py&quot;, line 13, in &amp;lt;module&amp;gt; from FBRank.utils.exceptions import IllegalArgumentException, NotSupprotedYetException File &quot;/home/hzcortex/FBRank/FBRank/utils/exceptions.py&quot;, line 2, in &amp;lt;module&amp;gt; from .utils import github_url, connect_url File &quot;/home/hzcortex/FBRank/FBRank/utils/utils.py&quot;, line 5, in &amp;lt;module&amp;gt; from .exceptions import NotSupprotedYetException ImportError: cannot import name 'NotSupprotedYetException' Looking at the order of the calls from top to bottom, the github_url, connect_url variables are called from .utils.py in /exceptions.py, and NotSupprotedYetException is called from /exceptions.py when calling .utils.py. This will cycle through each other and will never solve the import issue. The solution is to load it only when you need to use the function: # utils.py def check_before(attr='name'): from .exceptions import NotSupprotedYetException # ...... Because Python’s reference mechanism does not reimport previously imported packages (use imp.reaload() if needed), so don’t worry about performance problem. If there is really no circular reference, problem maybe is mainly because: Take an example of a program push data from Kafka to ES that was previously written. The structure of the whole program is as follows In the main program RealtimeLogToES.py there are the following references: Go to the RLTES directory and execute python RealtimeLogToES.py directly in this case, then the above circular reference error will be reported. There are two solutions: 1 Change from .config import to the same absolute reference as below, from RLTES.config import 2 Do not modify the code, return to the previous directory, cd .., and then execute python -m RLTES.RealtimeLogToES When Python is relatively introduced, the basis for the judgment is the __name__ attribute of the current file. When you execute a file, the original __name__ attribute of the file is replaced by the fixed '__main__', so the relative introduction does not work, while the absolute introduction is fine. After adding -m to the command line, tell the Python interpreter to run this file as a script. Why the problem happened If there is sufficient time,I will try to explain it. Now you can read PEP302 to hava a straightforward impression. How We Do Properly The recommendation in PEP8 is to always use absolute references, but just like the annoying double underscore, there are a lot of people who prefer to use relative import. The key is to Keep the team consistent. As for personal development, I prefer to use .import for single layer and absolute reference for others. In the book “Two Scopes Of Django” , it is stipulated that the use of the **implicit import statement such as from A import a is forbidden, but considering that many times the script will not be specific to a large project but to create a directory on the server to complete a specific function or solve a temporary problem(don’t need to maintain), if this is convenient for debugging and deployment,it can also be a good choice,done is better than perfect after all. The role of __init__.py The most important role of __init__.py is to mark the folder containing the __init__.py directory as a package to complete the corresponding import. In most cases, there is no need to write anything in __init__.py. If you must write it, it basically has the following three functions: Write __author__ and other related information Write a __all__ configuration that exactly defines what will be introduced when from x import * If the first two are irrelevant, then the last one is much more important, and the importing method can be simplified to control the stability of the API. Let me still take the example of [FBRank] (github.com/Allianzcortex/FBRank). Although you see that the command line tool is only supported in the README, it also provides the ability to import it in the code. for example: If you need to assign the corresponding file if you need to import an exception In [1]: from FBRank.utils.exceptions import IllegalArgumentException But if you want to import a class, you only need to identify the corresponding package, which is very convenient for subsequent development. In [2]: from FBRank.object import Club The key it the following code in __init__.py of FBRank/object folder.Import something from package is equal to import something from file under this package. from .League import League from .Club import Club from .Player import Player</summary>
       
 
       
@@ -132,41 +300,9 @@
 
 &lt;hr /&gt;
 
-&lt;p&gt;看了一下，Spark 里面的测试用例都是用的纯 ScalaTest 框架，而没有用 JUnit ：-D&lt;/p&gt;</content>
+&lt;p&gt;看了一下，Spark 里面的测试用例都是用的纯 ScalaTest 框架，而没有用 JUnit ：-D&lt;/p&gt;
 
-      
-      
-      
-      
-      
-
-      
-
-      
-        <category term="Scala" />
-      
-
-      
-
-      
-        <summary type="html">ScalaTest 与 JUnit 集成后，执行 sbt test 提示 no tests are executed 的解决办法 最近在试着写一个用 Scala 解决 LeetCode 的 集合，Scala 里的单元测试一般推荐使用 ScalaTest，而大部分 Scala 使用者都有 Java 背景，所以 ScalaTest 也可以与 Junit 集成使用，参见 链接 遇到了什么问题 首先定义如下的测试代码： import org.scalatest.{BeforeAndAfterEach, FunSpec, FunSuite} class FileUtilTest extends FunSpec with BeforeAndAfterEach { it(&quot;should be equal&quot;) { assert(xx.max(1,2) == 2) } } 然后定义如下的 build.sbt 文件： libraryDependencies += &quot;org.scalatest&quot; % &quot;scalatest_2.12&quot; % &quot;3.0.1&quot; % &quot;test&quot; libraryDependencies += &quot;junit&quot; % &quot;junit&quot; % &quot;4.8.1&quot; % &quot;test&quot; 上面是 Scala-Test 最标准的代码 同时用 IDEA 和 sbt test 来跑测试用例都没有问题 那么如果想要引入 JUnit 的话则如下： import org.junit.Assert._ import org.scalatest.junit.{AssertionsForJUnit} import com.leetcode.util.{FileUtil =&amp;gt; xx} import org.junit.Test class FileUtilTest extends AssertionsForJUnit { @Test def test_max()={ assertTrue(xx.max(1,2)==2) } } 在这种情况下用 IDEA 可以跑测试用例，但用 sbt test 的话会提示 no tests are executed 参考：http://stackoverflow.com/questions/28174243/run-junit-tests-with-sbt 需要在原有 sbt 的基础上加上： crossPaths := false libraryDependencies += &quot;com.novocode&quot; % &quot;junit-interface&quot; % &quot;0.11&quot; % Test testOptions += Tests.Argument(TestFrameworks.JUnit, &quot;-q&quot;, &quot;-v&quot;) 出现这个问题的原因还是在于 Scala 和 Java 最后编译出来的是两套不同的字节码 看了一下，Spark 里面的测试用例都是用的纯 ScalaTest 框架，而没有用 JUnit ：-D</summary>
-      
-
-      
-      
-    </entry>
-  
-  
-  
-    <entry>
-      
-      <title type="html">《Scala For Impatient》的习题和 Scala 99 的一些题解记录</title>
-      
-      <link href="http://localhost:4000/2017/05/21/Scala-99-Solution/" rel="alternate" type="text/html" title="《Scala For Impatient》的习题和 Scala 99 的一些题解记录" />
-      <published>2017-05-21T10:29:10-03:00</published>
-      <updated>2017-05-21T10:29:10-03:00</updated>
-      <id>http://localhost:4000/2017/05/21/Scala-99-Solution</id>
-      <content type="html" xml:base="http://localhost:4000/2017/05/21/Scala-99-Solution/">&lt;p&gt;《Scala For Impatient》的习题和 Scala 99 的一些题解记录&lt;/p&gt;
+&lt;p&gt;《Scala For Impatient》的习题和 Scala 99 的一些题解记录&lt;/p&gt;
 
 &lt;!-- more --&gt;
 
@@ -301,235 +437,7 @@
       
 
       
-        <summary type="html">《Scala For Impatient》的习题和 Scala 99 的一些题解记录 Scala 的语法的复杂度堪比 C++ …… 《Scala CookBook》的作者评价 Java 这门语法的特性是 Verbose yet obvious，这是见过的最好对 Java 这门语言的描述了。正是因为 obvious 的特性，才能在工业级开发领域中遥遥领先，Web 开发/Android/数据领域都占据主要地位。也正是因为 verbose 的特性，让写 Java 写多的人很容易产生啰嗦的感觉，相比于 Python 的话对比感就更强烈了。 现在来看 Kotlin 的定位更像是 Better Java，字节码被翻译成 Java 类型，无缝调用 Java 的所有库，语法更简洁。 Scala 则是对 Java 很好的一个改进，同样基于 JVM 平台。Scala 的官网上宣传 OO meets FP，它同时融合了面向对象和函数式编程的优点。就像很多人说的，没有必要把 Scala 的语法完全了解以后再去用它。要用 Spark，要看 Kafka，直接看就好了：-D Scala 学习的时候主要分为两方面吧： Array/List/Seq 等一系列 Immutable 与 Mutable 对象，对应的 take/filter/map/flatMap/reduce/head/tail/init 等可以提高开发效率的方法 class/case class/object/trait 等新的 OO 相关内容 关于水平掌握，达到 A3/L2 。 最近做了 Scala99 里面的一些题目，试着做一些摘抄，里面有些题目提出了和原来的一些不一样的方法 第 17 题： ** 要求 ** 把一个 List 分为两个部分 网站上提供了 ls.splitAt(n) 和直接返回 (ls.take(n),ls.drop(n)) 两种方法 自己的实现： def splitToTwoPart[A](n: Int, ls: List[A]) = { val s = ls.zipWithIndex.partition(elem =&amp;gt; elem._2 + 1 &amp;lt;= n) (s._1.map(x =&amp;gt; x._1), s._2.map(x =&amp;gt; x._1)) } 关于类的部分：算是实现了一个小的 demo 吧 import collection.mutable.ArrayBuffer case class Record(var event: String, var money: Int) { def this() = this(&quot;sample&quot;, 1) } trait People { var name: String var age: Int var activity: ArrayBuffer[Record] def addRecord(newEvent: String, newMoney: Int) def removeRecord(deleteName: String, deleteMoney: Int) // 这也行，也就是说 def getAllCost } class User(userName: String, userAge: Int) extends People { var name = userName var age = userAge var activity = new ArrayBuffer[Record] def addRecord(newEvent: String, newMoney: Int) = { this.activity += Record(newEvent, newMoney) } /*def addRecord={ }*/ def removeRecord(deleteName: String, deleteMoney: Int) = { val targetRecord = Record(deleteName, deleteMoney) /*if this.activity.exists(_ == targetRecord) this.activity -= targetRecord*/ } def getAllCost() = { this.activity.foreach(x=&amp;gt;println(x.money)) println(&quot;money &quot; + this.activity.map(_.money).reduceLeft(_+_)) this.activity.map(_.money).reduceLeft(_+_) //所以自己一开始的 reduce((x,y)=&amp;gt;x.money+y.money)) 思路是错的，你看，前两个得到的结果是 Record,但之后得到的是 Int // 再之后就会在 Record 和 Int 之间产生冲突 } def getActivity(): List[Record] = { // 返回的 Array 必须是有类型的，而不能是 Array // List 也是一样的道理。并且 List 的可读性更好 this.activity.toList } override def toString = s&quot;$name $age&quot; } object testApplication extends App { val u = new User(&quot;Tom&quot;, 18) u.addRecord(&quot;Buy Clothes&quot;, 10) println(u) println(&quot;用户的活动为 &quot; + u.getActivity()) println(u.activity.toList) println(u.getActivity()) println(u.getAllCost()) } 在附录部分再总结一下 Scala 方法的集合：</summary>
-      
-
-      
-      
-    </entry>
-  
-  
-  
-    <entry>
-      
-      <title type="html">用 Spring Boot 来构建一个 Rest 服务</title>
-      
-      <link href="http://localhost:4000/2017/05/07/Create-Rest-API-With-Sprint-Boot/" rel="alternate" type="text/html" title="用 Spring Boot 来构建一个 Rest 服务" />
-      <published>2017-05-07T13:59:20-03:00</published>
-      <updated>2017-05-07T13:59:20-03:00</updated>
-      <id>http://localhost:4000/2017/05/07/Create-Rest-API-With-Sprint-Boot</id>
-      <content type="html" xml:base="http://localhost:4000/2017/05/07/Create-Rest-API-With-Sprint-Boot/">&lt;p&gt;使用 spring 来从 &lt;code class=&quot;highlighter-rouge&quot;&gt;redis/MySQL/HBase/ES&lt;/code&gt; 中读取数据，并对外提供 Restful 接口&lt;/p&gt;
-
-&lt;!-- more --&gt;
-
-&lt;p&gt;ETL 工作的最终落地&lt;/p&gt;</content>
-
-      
-      
-      
-      
-      
-
-      
-
-      
-        <category term="rest" />
-      
-
-      
-
-      
-        <summary type="html">使用 spring 来从 redis/MySQL/HBase/ES 中读取数据，并对外提供 Restful 接口 ETL 工作的最终落地</summary>
-      
-
-      
-      
-    </entry>
-  
-  
-  
-    <entry>
-      
-      <title type="html">阅读 HBase 源代码</title>
-      
-      <link href="http://localhost:4000/2017/05/01/read-HBase-source-code/" rel="alternate" type="text/html" title="阅读 HBase 源代码" />
-      <published>2017-05-01T10:29:10-03:00</published>
-      <updated>2017-05-01T10:29:10-03:00</updated>
-      <id>http://localhost:4000/2017/05/01/read-HBase-source-code</id>
-      <content type="html" xml:base="http://localhost:4000/2017/05/01/read-HBase-source-code/">&lt;p&gt;开始阅读 HBase 源代码&lt;/p&gt;
-
-&lt;!-- more --&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/HBase-source-code.png&quot; alt=&quot;HBase-source-code.png&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;HBase 的特点：&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;实现比 redis 持久化存储效果更好的 key-value 键值对&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;实现需要有历史版本的增量存储&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;阅读代码主要包括以下几个方面：&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;在实际编写程序时，通过有关 API 及 IDEA 跳转到源代码的功能，查看具体功能实现&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;在 debug 应用时，了解整个 Hbase 执行应用的业务逻辑&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;通读整个源代码，了解各块的实现&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;hr /&gt;
-
-&lt;p&gt;在这里首先看第一部分，执行一个小的应用，看它是怎么执行下来的&lt;/p&gt;
-
-&lt;p&gt;读取配置文件 reloadConfig()，重新记载配置文件&lt;/p&gt;
-
-&lt;p&gt;checkDefaultVersion():检查配置文件的版本和应用所读取的版本是否相等。可以用一个配置文件来跳过这项配置&lt;/p&gt;
-
-&lt;p&gt;set(String name,String value) // 这里用 Guava 的 Preconditions.checkArgument() 来判断配置是否为 null
-同时还有 updateSource()&lt;/p&gt;
-
-&lt;p&gt;关于 HConnection connection = HConnectionManager.create&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;IDEA 为分析项目的整体结构提供了非常强大的功能
-几个常用的如下：
-
-光标选中某个类：在 Navigate-&amp;gt;call  call Hierarchy 查看该
-callers 查看该方法被哪个方法调用，callee 查看该方法调用了哪些方法
-
-选中某个方法，类，查看该类被哪些类引用，生成用例图， ctrl+alt+H
-
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;方便开发&lt;/p&gt;</content>
-
-      
-      
-      
-      
-      
-
-      
-
-      
-        <category term="Hbase" />
-      
-
-      
-
-      
-        <summary type="html">开始阅读 HBase 源代码 HBase 的特点： 实现比 redis 持久化存储效果更好的 key-value 键值对 实现需要有历史版本的增量存储 阅读代码主要包括以下几个方面： 在实际编写程序时，通过有关 API 及 IDEA 跳转到源代码的功能，查看具体功能实现 在 debug 应用时，了解整个 Hbase 执行应用的业务逻辑 通读整个源代码，了解各块的实现 在这里首先看第一部分，执行一个小的应用，看它是怎么执行下来的 读取配置文件 reloadConfig()，重新记载配置文件 checkDefaultVersion():检查配置文件的版本和应用所读取的版本是否相等。可以用一个配置文件来跳过这项配置 set(String name,String value) // 这里用 Guava 的 Preconditions.checkArgument() 来判断配置是否为 null 同时还有 updateSource() 关于 HConnection connection = HConnectionManager.create IDEA 为分析项目的整体结构提供了非常强大的功能 几个常用的如下： 光标选中某个类：在 Navigate-&amp;gt;call call Hierarchy 查看该 callers 查看该方法被哪个方法调用，callee 查看该方法调用了哪些方法 选中某个方法，类，查看该类被哪些类引用，生成用例图， ctrl+alt+H 方便开发</summary>
-      
-
-      
-      
-    </entry>
-  
-  
-  
-    <entry>
-      
-      <title type="html">Jvm Performance Snippets</title>
-      
-      <link href="http://localhost:4000/2017/04/27/JVM-performance-snippets/" rel="alternate" type="text/html" title="Jvm Performance Snippets" />
-      <published>2017-04-27T00:00:00-03:00</published>
-      <updated>2017-04-27T00:00:00-03:00</updated>
-      <id>http://localhost:4000/2017/04/27/JVM-performance-snippets</id>
-      <content type="html" xml:base="http://localhost:4000/2017/04/27/JVM-performance-snippets/"></content>
-
-      
-      
-      
-      
-      
-
-      
-
-      
-
-      
-
-      
-        <summary type="html"></summary>
-      
-
-      
-      
-    </entry>
-  
-  
-  
-    <entry>
-      
-      <title type="html">关于 MapReduce 设计模式</title>
-      
-      <link href="http://localhost:4000/2017/04/25/Mapreduce-Design-Pattern/" rel="alternate" type="text/html" title="关于 MapReduce 设计模式" />
-      <published>2017-04-25T14:03:40-03:00</published>
-      <updated>2017-04-25T14:03:40-03:00</updated>
-      <id>http://localhost:4000/2017/04/25/Mapreduce-Design-Pattern</id>
-      <content type="html" xml:base="http://localhost:4000/2017/04/25/Mapreduce-Design-Pattern/">&lt;h4 id=&quot;实现统计-uv&quot;&gt;实现统计 UV&lt;/h4&gt;
-
-&lt;p&gt;类似于 SQL 中的 count(distinct *)&lt;/p&gt;
-
-&lt;p&gt;我所实现的第一种：&lt;/p&gt;
-
-&lt;p&gt;map:emit(null,key)&lt;/p&gt;
-
-&lt;p&gt;reduce:TreeSet 存储元素，cleanup():写入，得到 length&lt;/p&gt;
-
-&lt;p&gt;优势：跑一次 MapReduce Job 即可得到最终结果
-劣势：只能有一个 reduce
-待优化：在 combiner 阶段可以写一个处理类来减少 shuffle 的数量&lt;/p&gt;
-
-&lt;p&gt;书中的第二种：
-map:emit(key,null)
-reduce:迭代任意一个 Iterrator 时只需要 O(1) 操作&lt;/p&gt;
-
-&lt;p&gt;优势：利用 MR 框架自带的去重特性，在处理大量数据时有优势
-劣势：需要跑两次 MR 来得到最终的统计结果&lt;/p&gt;
-
-&lt;hr /&gt;
-
-&lt;h4 id=&quot;实现数据库-leftinnerright-join&quot;&gt;实现数据库 left/inner/right join&lt;/h4&gt;
-
-&lt;p&gt;这里可以参考 Quora 的这个问题：https://www.quora.com/How-does-Hive-implement-joins-in-Map-Reduce&lt;/p&gt;
-
-&lt;p&gt;存在 Map-side 和 Reduce-side 两种情况来区分讨论&lt;/p&gt;
-
-&lt;p&gt;MultiInput 用 ArrayList 存储&lt;/p&gt;
-
-&lt;p&gt;劣势：在一个表中有上千万数据时可能会 OOM&lt;/p&gt;
-
-&lt;hr /&gt;
-
-&lt;p&gt;####&lt;/p&gt;</content>
-
-      
-      
-      
-      
-      
-
-      
-
-      
-        <category term="MapReduce" />
-      
-
-      
-
-      
-        <summary type="html">实现统计 UV 类似于 SQL 中的 count(distinct *) 我所实现的第一种： map:emit(null,key) reduce:TreeSet 存储元素，cleanup():写入，得到 length 优势：跑一次 MapReduce Job 即可得到最终结果 劣势：只能有一个 reduce 待优化：在 combiner 阶段可以写一个处理类来减少 shuffle 的数量 书中的第二种： map:emit(key,null) reduce:迭代任意一个 Iterrator 时只需要 O(1) 操作 优势：利用 MR 框架自带的去重特性，在处理大量数据时有优势 劣势：需要跑两次 MR 来得到最终的统计结果 实现数据库 left/inner/right join 这里可以参考 Quora 的这个问题：https://www.quora.com/How-does-Hive-implement-joins-in-Map-Reduce 存在 Map-side 和 Reduce-side 两种情况来区分讨论 MultiInput 用 ArrayList 存储 劣势：在一个表中有上千万数据时可能会 OOM ####</summary>
+        <summary type="html">ScalaTest 与 JUnit 集成后，执行 sbt test 提示 no tests are executed 的解决办法 最近在试着写一个用 Scala 解决 LeetCode 的 集合，Scala 里的单元测试一般推荐使用 ScalaTest，而大部分 Scala 使用者都有 Java 背景，所以 ScalaTest 也可以与 Junit 集成使用，参见 链接 遇到了什么问题 首先定义如下的测试代码： import org.scalatest.{BeforeAndAfterEach, FunSpec, FunSuite} class FileUtilTest extends FunSpec with BeforeAndAfterEach { it(&quot;should be equal&quot;) { assert(xx.max(1,2) == 2) } } 然后定义如下的 build.sbt 文件： libraryDependencies += &quot;org.scalatest&quot; % &quot;scalatest_2.12&quot; % &quot;3.0.1&quot; % &quot;test&quot; libraryDependencies += &quot;junit&quot; % &quot;junit&quot; % &quot;4.8.1&quot; % &quot;test&quot; 上面是 Scala-Test 最标准的代码 同时用 IDEA 和 sbt test 来跑测试用例都没有问题 那么如果想要引入 JUnit 的话则如下： import org.junit.Assert._ import org.scalatest.junit.{AssertionsForJUnit} import com.leetcode.util.{FileUtil =&amp;gt; xx} import org.junit.Test class FileUtilTest extends AssertionsForJUnit { @Test def test_max()={ assertTrue(xx.max(1,2)==2) } } 在这种情况下用 IDEA 可以跑测试用例，但用 sbt test 的话会提示 no tests are executed 参考：http://stackoverflow.com/questions/28174243/run-junit-tests-with-sbt 需要在原有 sbt 的基础上加上： crossPaths := false libraryDependencies += &quot;com.novocode&quot; % &quot;junit-interface&quot; % &quot;0.11&quot; % Test testOptions += Tests.Argument(TestFrameworks.JUnit, &quot;-q&quot;, &quot;-v&quot;) 出现这个问题的原因还是在于 Scala 和 Java 最后编译出来的是两套不同的字节码 看了一下，Spark 里面的测试用例都是用的纯 ScalaTest 框架，而没有用 JUnit ：-D 《Scala For Impatient》的习题和 Scala 99 的一些题解记录 Scala 的语法的复杂度堪比 C++ …… 《Scala CookBook》的作者评价 Java 这门语法的特性是 Verbose yet obvious，这是见过的最好对 Java 这门语言的描述了。正是因为 obvious 的特性，才能在工业级开发领域中遥遥领先，Web 开发/Android/数据领域都占据主要地位。也正是因为 verbose 的特性，让写 Java 写多的人很容易产生啰嗦的感觉，相比于 Python 的话对比感就更强烈了。 现在来看 Kotlin 的定位更像是 Better Java，字节码被翻译成 Java 类型，无缝调用 Java 的所有库，语法更简洁。 Scala 则是对 Java 很好的一个改进，同样基于 JVM 平台。Scala 的官网上宣传 OO meets FP，它同时融合了面向对象和函数式编程的优点。就像很多人说的，没有必要把 Scala 的语法完全了解以后再去用它。要用 Spark，要看 Kafka，直接看就好了：-D Scala 学习的时候主要分为两方面吧： Array/List/Seq 等一系列 Immutable 与 Mutable 对象，对应的 take/filter/map/flatMap/reduce/head/tail/init 等可以提高开发效率的方法 class/case class/object/trait 等新的 OO 相关内容 关于水平掌握，达到 A3/L2 。 最近做了 Scala99 里面的一些题目，试着做一些摘抄，里面有些题目提出了和原来的一些不一样的方法 第 17 题： ** 要求 ** 把一个 List 分为两个部分 网站上提供了 ls.splitAt(n) 和直接返回 (ls.take(n),ls.drop(n)) 两种方法 自己的实现： def splitToTwoPart[A](n: Int, ls: List[A]) = { val s = ls.zipWithIndex.partition(elem =&amp;gt; elem._2 + 1 &amp;lt;= n) (s._1.map(x =&amp;gt; x._1), s._2.map(x =&amp;gt; x._1)) } 关于类的部分：算是实现了一个小的 demo 吧 import collection.mutable.ArrayBuffer case class Record(var event: String, var money: Int) { def this() = this(&quot;sample&quot;, 1) } trait People { var name: String var age: Int var activity: ArrayBuffer[Record] def addRecord(newEvent: String, newMoney: Int) def removeRecord(deleteName: String, deleteMoney: Int) // 这也行，也就是说 def getAllCost } class User(userName: String, userAge: Int) extends People { var name = userName var age = userAge var activity = new ArrayBuffer[Record] def addRecord(newEvent: String, newMoney: Int) = { this.activity += Record(newEvent, newMoney) } /*def addRecord={ }*/ def removeRecord(deleteName: String, deleteMoney: Int) = { val targetRecord = Record(deleteName, deleteMoney) /*if this.activity.exists(_ == targetRecord) this.activity -= targetRecord*/ } def getAllCost() = { this.activity.foreach(x=&amp;gt;println(x.money)) println(&quot;money &quot; + this.activity.map(_.money).reduceLeft(_+_)) this.activity.map(_.money).reduceLeft(_+_) //所以自己一开始的 reduce((x,y)=&amp;gt;x.money+y.money)) 思路是错的，你看，前两个得到的结果是 Record,但之后得到的是 Int // 再之后就会在 Record 和 Int 之间产生冲突 } def getActivity(): List[Record] = { // 返回的 Array 必须是有类型的，而不能是 Array // List 也是一样的道理。并且 List 的可读性更好 this.activity.toList } override def toString = s&quot;$name $age&quot; } object testApplication extends App { val u = new User(&quot;Tom&quot;, 18) u.addRecord(&quot;Buy Clothes&quot;, 10) println(u) println(&quot;用户的活动为 &quot; + u.getActivity()) println(u.activity.toList) println(u.getActivity()) println(u.getAllCost()) } 在附录部分再总结一下 Scala 方法的集合：</summary>
       
 
       
@@ -1729,176 +1637,6 @@ At the time of the study, I wrote a calculator demo that adds genuine. When the 
   
     <entry>
       
-      <title type="html">Python 中的引用机制</title>
-      
-      <link href="http://localhost:4000/2015/03/11/Python-Import-Mechanism/" rel="alternate" type="text/html" title="Python 中的引用机制" />
-      <published>2015-03-11T10:29:10-03:00</published>
-      <updated>2015-03-11T10:29:10-03:00</updated>
-      <id>http://localhost:4000/2015/03/11/Python-Import-Mechanism</id>
-      <content type="html" xml:base="http://localhost:4000/2015/03/11/Python-Import-Mechanism/">&lt;p&gt;解决 &lt;code class=&quot;highlighter-rouge&quot;&gt;No module named&lt;/code&gt; 和 &lt;code class=&quot;highlighter-rouge&quot;&gt;Attempted relative import&lt;/code&gt; 这两个问题
-&lt;!-- more --&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;两个引用时最常见的问题&quot;&gt;两个引用时最常见的问题&lt;/h2&gt;
-
-&lt;h3 id=&quot;no-module-named-xxxz&quot;&gt;No module named XXXz&lt;/h3&gt;
-
-&lt;p&gt;在编译时遇到 &lt;code class=&quot;highlighter-rouge&quot;&gt;No Module Named XX&lt;/code&gt; 。这个问题曾经遇到过，并且用命令行执行时会报错，但用 Pycharm 的运行按钮就可以顺利执行。最后发现错误的过程也很简&amp;gt;单，在编辑配置一项里勾选 “show command line afterwards”，然后执行　&lt;code class=&quot;highlighter-rouge&quot;&gt;import sys;sys.path&lt;/code&gt; 命令，和在命令行里的选项进行对比，发现前者多了一个 &lt;code class=&quot;highlighter-rouge&quot;&gt;/home/hzcortex/projects...&lt;/code&gt; 的模块。也就是说 Python 并没有把执行命令的这个脚本所在的目录加入 sys.path 中。&lt;/p&gt;
-
-&lt;hr /&gt;
-
-&lt;p&gt;解决方法是在报错的文件目录下加入：&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;sys&lt;/span&gt;
-&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;os&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;path&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;sys&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;path&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;append&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;path&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dirname&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;path&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dirname&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;path&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;abspath&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;__file__&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))))&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;sys&lt;/span&gt;
-&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;os&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;path&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;sys&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;path&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;append&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;path&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dirname&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;path&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dirname&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;path&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;abspath&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;__file__&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))))&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;h3 id=&quot;attempted-relative-import-in-non--package&quot;&gt;Attempted relative import in non  package&lt;/h3&gt;
-
-&lt;p&gt;这个问题要分两类来进行讨论：&lt;/p&gt;
-
-&lt;p&gt;① 在引用的时候确实发生了循环引用，A 要引用 B，B 要引用 C，而 C 同时要引用 B 里的一个函数。这时通常的解决办法是修改 C 文件的引用顺序，把 &lt;code class=&quot;highlighter-rouge&quot;&gt;import&lt;/code&gt; 语句放到需要使用引用对象的语句前(参考 《Python 核心编程》 的说法)。最近在开发 &lt;a href=&quot;https://github.com/Allianzcortex/FBRank&quot;&gt;FBRank&lt;/a&gt; 的时候确实遇到了这个问题，项目结构是这样的：&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;err&quot;&gt;└──&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;utils&lt;/span&gt;
-    &lt;span class=&quot;err&quot;&gt;├──&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;exceptions&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;py&lt;/span&gt;
-    &lt;span class=&quot;err&quot;&gt;├──&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;__init__&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;py&lt;/span&gt;
-
-&lt;span class=&quot;c&quot;&gt;# utils.py
-&lt;/span&gt;
- &lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;.exceptions&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;NotSupprotedYetException&lt;/span&gt;
-
-&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;check_before&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;attr&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'name'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
-    &lt;span class=&quot;o&quot;&gt;...&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;raise&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;NotSupprotedYetException&lt;/span&gt;
-    &lt;span class=&quot;o&quot;&gt;...&lt;/span&gt;
-
-&lt;span class=&quot;c&quot;&gt;# exceptions.py
-&lt;/span&gt;
-&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;.utils&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;github_url&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;connect_url&lt;/span&gt;
-
-&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;NotSupprotedYetException&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;FBRankException&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
-    &lt;span class=&quot;s&quot;&gt;&quot;&quot;&quot;still not supprt
-    &quot;&quot;&quot;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;之后在执行程序的时候出现了这样的错误：&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;File &quot;/home/hzcortex/FBRank/FBRank/parse/League.py&quot;, line 13, in &amp;lt;module&amp;gt;
-    from FBRank.utils.exceptions import IllegalArgumentException, NotSupprotedYetException
-  File &quot;/home/hzcortex/FBRank/FBRank/utils/exceptions.py&quot;, line 2, in &amp;lt;module&amp;gt;
-    from .utils import github_url, connect_url
-  File &quot;/home/hzcortex/FBRank/FBRank/utils/utils.py&quot;, line 5, in &amp;lt;module&amp;gt;
-    from .exceptions import NotSupprotedYetException
-ImportError: cannot import name 'NotSupprotedYetException'
-
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;p&gt;自上而下看调用的顺序，在 /exceptions.py 里从 .utils.py 调用了 &lt;code class=&quot;highlighter-rouge&quot;&gt;github_url, connect_url&lt;/code&gt; 这两个变量，而在调用 .utils.py 时又从 /exceptions.py 调用了 NotSupprotedYetException，这样就互相循环，永远都无法解决引入。解决办法就是只在需要使用的函数时再加载：&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;c&quot;&gt;# utils.py
-&lt;/span&gt;
-
-&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;check_before&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;attr&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'name'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
-    &lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;.exceptions&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;NotSupprotedYetException&lt;/span&gt;
-    &lt;span class=&quot;c&quot;&gt;# ......&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;因为 Python 的引用机制并不会重新引入之前已经引入的包(需要的话要用 &lt;code class=&quot;highlighter-rouge&quot;&gt;imp.reaload()&lt;/code&gt;)，所以不用担心这种引入会对性能产生影响&lt;/p&gt;
-
-&lt;p&gt;② 如果确实没有循环引用，那么通常是如下的情况：&lt;/p&gt;
-
-&lt;p&gt;拿之前写的一个从 Kafka 向 ES 导数据的程序来举例子。整个程序的结构如下(好像紫色对比度比较高…)：&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/RLTES-2.png&quot; alt=&quot;RLTES-Project&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;在主程序 &lt;code class=&quot;highlighter-rouge&quot;&gt;RealtimeLogToES.py&lt;/code&gt; 里有如下的引用：&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/RLTES-1.png&quot; alt=&quot;RLTES-import&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;如果在这种情况下进入到 RLTES 目录里直接执行 &lt;code class=&quot;highlighter-rouge&quot;&gt;python RealtimeLogToES.py&lt;/code&gt;，那么就会报上面的循环引用的错。&lt;/p&gt;
-
-&lt;p&gt;解决方法再有以下两种：&lt;/p&gt;
-
-&lt;p&gt;① 将 &lt;code class=&quot;highlighter-rouge&quot;&gt;from .config import&lt;/code&gt; 改为和下面一样的绝对引用，&lt;code class=&quot;highlighter-rouge&quot;&gt;from RLTES.config import&lt;/code&gt;&lt;/p&gt;
-
-&lt;p&gt;② 不修改代码，退回到上一层目录,&lt;code class=&quot;highlighter-rouge&quot;&gt;cd ..&lt;/code&gt;，之后执行 &lt;code class=&quot;highlighter-rouge&quot;&gt;python -m RLTES.RealtimeLogToES&lt;/code&gt;&lt;/p&gt;
-
-&lt;p&gt;Python 在进行相对引入的时候，判断的根据是当前文件的 &lt;strong&gt;name&lt;/strong&gt; 属性。而当你执行一个文件的时候，该文件原有的 &lt;strong&gt;name&lt;/strong&gt; 属性被替代为了固定的 ‘&lt;strong&gt;main&lt;/strong&gt;‘,所以相对引入就无法工作，而绝对引入是没有问题的。在命令行里加入-m 后，告诉 Python 解释器应该将这个文件作为一个脚本来运行。&lt;/p&gt;
-
-&lt;h5 id=&quot;为什么会发生这种问题&quot;&gt;为什么会发生这种问题&lt;/h5&gt;
-
-&lt;p&gt;要真正理解 Python 的 import 机制是如何查找变量的。&lt;/p&gt;
-
-&lt;h5 id=&quot;到底怎么引用&quot;&gt;到底怎么引用&lt;/h5&gt;
-
-&lt;p&gt;PEP8 里建议是一直用绝对引用，但就像那个 &lt;code class=&quot;highlighter-rouge&quot;&gt;annoying double underscore&lt;/code&gt; 一样，不喜欢绝对引用的也大有人在。&lt;/p&gt;
-
-&lt;p&gt;团队里面保持一致即可。就个人开发来说，还是更喜欢单层采用用 .import，其他用绝对引用。&lt;/p&gt;
-
-&lt;p&gt;在 &lt;strong&gt;《Two Scopes Of Django》&lt;/strong&gt; 一书里明确说明了禁止使用如 &lt;code class=&quot;highlighter-rouge&quot;&gt;from A import a&lt;/code&gt; 这样的 &lt;strong&gt;implicit import&lt;/strong&gt; 语句，但考虑到很多时候写脚本并不会具体到一个大的工程，而是在服务器上建立一个目录去完成一个特定的功能，如果这么写能方便调试和部署，那么也没有大的问题。&lt;/p&gt;
-
-&lt;h5 id=&quot;__init__py-的作用&quot;&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;__init__.py&lt;/code&gt; 的作用&lt;/h5&gt;
-
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;__init__.py&lt;/code&gt; 最重要的作用就是标记含有该 &lt;code class=&quot;highlighter-rouge&quot;&gt;__init__.py&lt;/code&gt; 目录的文件夹为一个 package ，从而完成对应的引入。&lt;/p&gt;
-
-&lt;p&gt;大部分情况下 &lt;code class=&quot;highlighter-rouge&quot;&gt;__init__.py&lt;/code&gt; 里什么内容也不用写，如果一定要写的话基本有以下三个作用：&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;写 &lt;code class=&quot;highlighter-rouge&quot;&gt;__author__&lt;/code&gt; 等有关信息&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;写一个 &lt;code class=&quot;highlighter-rouge&quot;&gt;__all__&lt;/code&gt; 的配置，精确定义在 &lt;code class=&quot;highlighter-rouge&quot;&gt;from x import *&lt;/code&gt; 时候会引入的内容&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;如果说前两个都无关紧要的话，那么最后一个就比较多了，可以简化引入方式，用来控制 API 的稳定性。&lt;/p&gt;
-
-    &lt;p&gt;还是拿写的 &lt;a href=&quot;github.com/Allianzcortex/FBRank&quot;&gt;FBRank&lt;/a&gt; 来举例子。虽然你看在 README 里写的是只支持命令行工具，但其实它也提供了在代码里引入的能力。举个例子：&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;  &lt;span class=&quot;c&quot;&gt;# 想要引入某个异常，需要具体到对应的文件
-&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;In&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]:&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;FBRank.utils.exceptions&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;IllegalArgumentException&lt;/span&gt;
-
-  &lt;span class=&quot;c&quot;&gt;# 但想要引入某个类，只要具体到对应的 package 就可以了
-&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;In&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]:&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;FBRank.object&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Club&lt;/span&gt;
-
-  &lt;span class=&quot;c&quot;&gt;# 具体原因是在 FBRank/object 下的 __init__.py 里有如下代码
-&lt;/span&gt;
-  &lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;.League&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;League&lt;/span&gt;
-  &lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;.Club&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Club&lt;/span&gt;
-  &lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;.Player&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Player&lt;/span&gt;
-  &lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;</content>
-
-      
-      
-      
-      
-      
-
-      
-
-      
-        <category term="Python" />
-      
-
-      
-
-      
-        <summary type="html">解决 No module named 和 Attempted relative import 这两个问题 两个引用时最常见的问题 No module named XXXz 在编译时遇到 No Module Named XX 。这个问题曾经遇到过，并且用命令行执行时会报错，但用 Pycharm 的运行按钮就可以顺利执行。最后发现错误的过程也很简&amp;gt;单，在编辑配置一项里勾选 “show command line afterwards”，然后执行　import sys;sys.path 命令，和在命令行里的选项进行对比，发现前者多了一个 /home/hzcortex/projects... 的模块。也就是说 Python 并没有把执行命令的这个脚本所在的目录加入 sys.path 中。 解决方法是在报错的文件目录下加入： import sys from os import path sys.path.append(path.dirname(path.dirname(path.abspath(__file__)))) import sys from os import path sys.path.append(path.dirname(path.dirname(path.abspath(__file__)))) Attempted relative import in non package 这个问题要分两类来进行讨论： ① 在引用的时候确实发生了循环引用，A 要引用 B，B 要引用 C，而 C 同时要引用 B 里的一个函数。这时通常的解决办法是修改 C 文件的引用顺序，把 import 语句放到需要使用引用对象的语句前(参考 《Python 核心编程》 的说法)。最近在开发 FBRank 的时候确实遇到了这个问题，项目结构是这样的： └── utils ├── exceptions.py ├── __init__.py # utils.py from .exceptions import NotSupprotedYetException def check_before(attr='name'): ... raise NotSupprotedYetException ... # exceptions.py from .utils import github_url, connect_url class NotSupprotedYetException(FBRankException): &quot;&quot;&quot;still not supprt &quot;&quot;&quot; 之后在执行程序的时候出现了这样的错误： File &quot;/home/hzcortex/FBRank/FBRank/parse/League.py&quot;, line 13, in &amp;lt;module&amp;gt; from FBRank.utils.exceptions import IllegalArgumentException, NotSupprotedYetException File &quot;/home/hzcortex/FBRank/FBRank/utils/exceptions.py&quot;, line 2, in &amp;lt;module&amp;gt; from .utils import github_url, connect_url File &quot;/home/hzcortex/FBRank/FBRank/utils/utils.py&quot;, line 5, in &amp;lt;module&amp;gt; from .exceptions import NotSupprotedYetException ImportError: cannot import name 'NotSupprotedYetException' 自上而下看调用的顺序，在 /exceptions.py 里从 .utils.py 调用了 github_url, connect_url 这两个变量，而在调用 .utils.py 时又从 /exceptions.py 调用了 NotSupprotedYetException，这样就互相循环，永远都无法解决引入。解决办法就是只在需要使用的函数时再加载： # utils.py def check_before(attr='name'): from .exceptions import NotSupprotedYetException # ...... 因为 Python 的引用机制并不会重新引入之前已经引入的包(需要的话要用 imp.reaload())，所以不用担心这种引入会对性能产生影响 ② 如果确实没有循环引用，那么通常是如下的情况： 拿之前写的一个从 Kafka 向 ES 导数据的程序来举例子。整个程序的结构如下(好像紫色对比度比较高…)： 在主程序 RealtimeLogToES.py 里有如下的引用： 如果在这种情况下进入到 RLTES 目录里直接执行 python RealtimeLogToES.py，那么就会报上面的循环引用的错。 解决方法再有以下两种： ① 将 from .config import 改为和下面一样的绝对引用，from RLTES.config import ② 不修改代码，退回到上一层目录,cd ..，之后执行 python -m RLTES.RealtimeLogToES Python 在进行相对引入的时候，判断的根据是当前文件的 name 属性。而当你执行一个文件的时候，该文件原有的 name 属性被替代为了固定的 ‘main‘,所以相对引入就无法工作，而绝对引入是没有问题的。在命令行里加入-m 后，告诉 Python 解释器应该将这个文件作为一个脚本来运行。 为什么会发生这种问题 要真正理解 Python 的 import 机制是如何查找变量的。 到底怎么引用 PEP8 里建议是一直用绝对引用，但就像那个 annoying double underscore 一样，不喜欢绝对引用的也大有人在。 团队里面保持一致即可。就个人开发来说，还是更喜欢单层采用用 .import，其他用绝对引用。 在 《Two Scopes Of Django》 一书里明确说明了禁止使用如 from A import a 这样的 implicit import 语句，但考虑到很多时候写脚本并不会具体到一个大的工程，而是在服务器上建立一个目录去完成一个特定的功能，如果这么写能方便调试和部署，那么也没有大的问题。 __init__.py 的作用 __init__.py 最重要的作用就是标记含有该 __init__.py 目录的文件夹为一个 package ，从而完成对应的引入。 大部分情况下 __init__.py 里什么内容也不用写，如果一定要写的话基本有以下三个作用： 写 __author__ 等有关信息 写一个 __all__ 的配置，精确定义在 from x import * 时候会引入的内容 如果说前两个都无关紧要的话，那么最后一个就比较多了，可以简化引入方式，用来控制 API 的稳定性。 还是拿写的 FBRank 来举例子。虽然你看在 README 里写的是只支持命令行工具，但其实它也提供了在代码里引入的能力。举个例子： # 想要引入某个异常，需要具体到对应的文件 In [1]: from FBRank.utils.exceptions import IllegalArgumentException # 但想要引入某个类，只要具体到对应的 package 就可以了 In [2]: from FBRank.object import Club # 具体原因是在 FBRank/object 下的 __init__.py 里有如下代码 from .League import League from .Club import Club from .Player import Player</summary>
-      
-
-      
-      
-    </entry>
-  
-  
-  
-    <entry>
-      
       <title type="html">DP 解题思路</title>
       
       <link href="http://localhost:4000/2015/03/11/Dynamic-Programming-Explanation/" rel="alternate" type="text/html" title="DP 解题思路" />
@@ -2393,6 +2131,33 @@ C++ 版：&lt;/p&gt;
   &lt;li&gt;
     &lt;p&gt;部署和运维相对于其他调度工具偏难，参考它的 &lt;a href=&quot;https://github.com/alibaba/zeus/wiki/%E5%AE%89%E8%A3%85%E6%8C%87%E5%AF%BC%E6%96%87%E6%A1%A3&quot;&gt;安装文档&lt;/a&gt;&lt;/p&gt;
   &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;MapReduce 实现细节&lt;/p&gt;
+
+&lt;p&gt;实现数据库 left/inner/right join&lt;/p&gt;
+
+&lt;p&gt;这里可以参考 Quora 的这个问题：https://www.quora.com/How-does-Hive-implement-joins-in-Map-Reduce&lt;/p&gt;
+
+&lt;p&gt;存在 Map-side 和 Reduce-side 两种情况来区分讨论&lt;/p&gt;
+
+&lt;p&gt;MultiInput 用 ArrayList 存储&lt;/p&gt;
+
+&lt;p&gt;劣势：在一个表中有上千万数据时可能会 OOM&lt;/p&gt;
+
+&lt;p&gt;HBase:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/HBase-source-code.png&quot; alt=&quot;HBase-source-code.png&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;HBase 的特点：&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;实现比 redis 持久化存储效果更好的 key-value 键值对&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;实现需要有历史版本的增量存储&lt;/p&gt;
+  &lt;/li&gt;
   &lt;li&gt;
     &lt;p&gt;最近又有需求，在 Ubuntu 环境下用 VirtualBox 重新安装了 Win8.1。具体&lt;/p&gt;
   &lt;/li&gt;
@@ -2831,7 +2596,7 @@ I will decide during the next 48 hours
       
 
       
-        <summary type="html">Actually I’m trying to express some light knowledge about coding and interesting experience in my daily life.And this post will be divided into 2 parts: the 1st part will be written in english,and the corresponding Chinese translation can be found in chinese 一些碎碎念… 之前代码是这样的： private static byte[] decrypt(byte[] data, byte[] key) throws Exception { SecureRandom sr = new SecureRandom(); DESKeySpec dks = new DESKeySpec(key); SecretKeyFactory keyFactory = SecretKeyFactory.getInstance(&quot;DES&quot;); SecretKey securekey = keyFactory.generateSecret(dks); Cipher cipher = Cipher.getInstance(&quot;DES&quot;); cipher.init(2, securekey, sr); return cipher.doFinal(data); } 各种 debug，看 DES 解法对应的 mode，最后还是要感谢 https://www.tools4noobs.com/online_tools/decrypt/ ，其实两行就用 Python 写好了： def decrypt_des(input_): &quot;&quot;&quot; :param input_: 加密的密文 :return: 经过 des 解密后的密文 &quot;&quot;&quot; des = DES.new(&quot;naidnefi&quot;, DES.MODE_ECB) return &quot;&quot;.join(x for x in des.decrypt(b64decode(input_)) if 31 &amp;lt; ord(x) &amp;lt; 127) 最后解密出来一堆 ‘\x5’，可以看 http://donsnotes.com/tech/charsets/ascii.html 来得到具体的含义，解决方法参考：https://stackoverflow.com/questions/14256593/remove-special-characters-from-the-string 今天帮我司算法团队调一个 Bug，调的心好累……本来用 Python2 处理中文就很闹心，还要用正则来调。调试了一大堆 unicode 字符以后终于能跑了……结果在测试服务器能跑，在对方的线上服务器就不能跑，擦……最后搜到了这个 ！链接，一试，果然……测试的是用 ucs4 编译的，而线上的是用 ucs2 编译的。两个有什么区别……我不知道啊……现在到家都已经 12 点了，我要睡觉……明天再说 自从 Google Reader 解散之后就没有怎么再用过 RSS 了，但最近发现还是很有用啊，类似 Push 和 Pull。这个 链接 里说直接用 IFTTT 连接 Feedly 和 Gmail 就可以，但连接时候发现 IFTTT 必须要付费升级到 Pro 版才行。所以参考 简书的这篇文章，连接 RSS 和 Gmail。不过 IFTTT 改版后界面需要在右上角的个人主页那里点击 New Applet。有些 rss 的地址不一定好找，那就用 feedly 订阅后再导出 opml 文件，找到里面的 xmlUrl 属性对应内容。最后的截图如下： 帮搜了一个 foursquare 的数据集。开始的链接地址是在 http://www.public.asu.edu/~hgao16/dataset.html，但链接失效了，用 Google 搜的话在犄角旮旯里找到个 reddit 的帖子 https://www.reddit.com/r/datasets/comments/1nywu2/foursquare_data_set/，里面到在 https://archive.org/download/201309_foursquare_dataset_umn 提供了下载zip 格式的文件，150M+。 Java 上 StringUtils 里最常见的一个就是把首字母变成小写，一般来实现的话就是 public static String firstCharToLower(String input){ if(input == nulll) } 但 SO 上还有这么一个回答，提供了另一种思路： char c[] = string.toCharArray(); c[0] = Character.toLowerCase(c[0]); string = new String(c); 其实是以牺牲可读性来换取了性能的增加 Curator 是 Linkedin 开源的一款对 zookeeper 封装的工具，里面提供了各种方便实现的功能，包括更新配置文件，选取 leader 节点等。今天在 Spark 上看见了这个实现，具体对应代码在：spark/core/src/main/scala/org/apache/spark/deploy/master/ZooKeeperPersistenceEngine.scala What Happened 最近所做的一些事。还是挺有趣的。 ETL 过程，代指 Extract-&amp;gt;Transform-&amp;gt;Load，进行数据抽取处理的过程 HDFS 文件路径下面的数据来源一般有以下几种： 从已有的 RDBMS 数据库中导入，方便和业务进行分析 从已有的 HDFS 数据中进行连接和抽样，生成新的复合需求的数据 一些其他的路径，包括从 Flume 中用 HDFS Sink 写入，或者用 hadoop fs -put 来把本地的文件导入到 HDFS 中。 第一种工具包括 Apache 出品的 Sqoop 和阿里出品的 DataX(京东是根据 DataX 的原理自己搞了一套)。二者的对比可以查看这个 链接。 第二种工具则在大多数情况下都是在用 Hive 来解决需求。Hive 是 FaceBook 出品的可以把 HQL(类 SQL 语法)转化为 MapReduce 执行的工具，方便数据分析师进行操作。 同时还调研了调度系统。从原理上来说只要写好执行脚本，直接用 crontab 设置好定时任务就好。但一方面随着业务量上升我们要管理多个脚本，另一方面还想要添加进度提醒、查看日志、失败重试、邮件预警、管理多个相互依赖任务等功能。在这种情况下调研了 Ozzie/Azkaban/Airflow/Zeus/Kettle 等项目。 关于 sqoop 关于 Hive 调度系统 关于 Airflow 要求团队里至少有一个人会 Python。严格来说这不算是什么多的要求，特别是在 ML/DL/AI 如火如荼的当下，上手 Python 可能也就是一两天的事情。但总归是多了一些成本。 附录 A 里补充了 Airflow 的安装和使用 关于 Zeus 其实我司之前用的就是 Zeus：-D 但如果要重新开始选型的话，可以有更多的选择。 更新缓慢。最近一次和代码有关的提交是在 2013 年，源代码长时间没有进行更新，一个非常明显的 Bug Fix PR 有一个月没有合并到主分支里 部署和运维相对于其他调度工具偏难，参考它的 安装文档 最近又有需求，在 Ubuntu 环境下用 VirtualBox 重新安装了 Win8.1。具体 今天试着用了一下 GitLab CI，从个人体验来说和 Github 的 travis-CI 没有什么太大区别啦，按照 stages 和 build/deploy 来区分，但最后问题发生在下面： 根据它的说法，你需要在安装 GitLab 的服务器上安装 Runner,参见 这个。但之前安装 GitLab 的人都不在了，既没有运维的权限，同时也没有像创业公司那样必须用 CI 的迫切性(不存在一天上线七八次这种情况啊……)。所以真的是…… 最后把写的 .gitlab-ci.yml 脚本立此存照一下： before_script: - sudo yum install maven2 stages: - build build_job: stage: build script: - mvn install - mvn '-Dtest=com.xxx.example.*Test' test 其中 mvn '-Dtest=com.xxx.example.*Test' test 用来运行所有匹配的测试用例 今天在讨论的时候知道阿里和百度都开始用 DL 来做 CRT 预估了，记得一段时间以前都在说深度学习都还是黑匣子，可解释性遭到 challenge 的话是不能在生产环境上用的，但转眼间都开始用了 大部分讨论操作系统的问题最后都变成了要不要用 SSD 的问题……哇咔咔 因为最近要从事的是现场办公，某司要访问开发环境的话，不能用 openvpn 或类似的工具，而是用启明星辰所提供的天玥安全审计。哼哧哼哧配好了 ip 和 dns 后(其中还踩了 Ubuntu Desktop 版不能直接用编辑配置文件方式修改 ip 的坑)，登陆到 Web 端来访问。但发现登陆工具怎么都选择不了，看了 css 以后发现选择器没问题啊……花了一天的时间各种配，最后申了一份当时发给运维的文档看，FAQ 里第一个就是： 问题1：如果我的操作系统是Linux或者是Mac的怎么办？ Linux和Mac系统的用户可以使用web界面操作，web地址为 ××××××，操作方法和windows客户端版是一样的，web存在兼容性问题，建议使用客户端版。 我…… 发现 IDEA 配置好以后不能用设 Socks5 的方式来翻墙下载 SBT 的依赖，但 manual configuration 应该是没问题的啊。最后在 SBT 的参数里加上 ` -Dhttps.proxyHost=127.0.0.1 -Dhttps.proxyPort=8080`，:-(，但为什么不能用 IDEA 自带的配置呢？……. 在调试 Spark 源码里面的 Spark Streaming 程序的时候，需要把对应的 VM Options 改为 -Dspark.master=local[2]，否则 就一直报 netword connection refused 的错误…… 分布式系统里一个最重要的特性就是 CAP 不能同时满足。Google 搜出来的第一个链接就是 Quora 的回答，里面提到了一篇非常好的 InfoQ 文章，我来试着理解一下。C 指的是 Consistency(一致性)，A 指的是 Availability(可用性)，P 指的是 Partition Tolerance(分区容忍性)。通常情况下我们必须要保证多节点运行，所以 P 是肯定要满足的。而对 C 和 A，就只能取舍一个，举例： 一个集群有两台机器，A 和 B(这里为了举例进行了简化，在生产环境中要求通常为大于 1 的奇数)。 每当 A/B 有数据写入，都会同时在 B/A 上同步过去。 但突然网络连接出现了故障，A 和 B 之间无法进行通信。这时候对 A 而言，有两种选择： 1. 为了保持一致性，就不应当再接受对外的请求来确保数据不发生变化，这时候可用性就无法得到满足。 2. 为了保持可用性，继续接受请求，那么两台机器上的数据就会不一致，这时候一致性就无法得到满足。 这时候大多数的选择都是保持对外的可用性，两台机器继续对外提供服务，当可以继续进行通信时再同步数据， 从而保持最终一致性(eventual consistency)。 在衡量系统的 Availability 的时候有几个概念，一个就是 X 个9。说明如下： 3个9：(1-99.9%)*365*24=8.76小时： 表示该软件系统在连续运行1年时间里最多可能的业务中断时间是8.76小时。 4个9：(1-99.99%)*365*24=0.876小时=52.6分钟： 表示该软件系统在连续运行1年时间里最多可能的业务中断时间是52.6分钟。 5个9：(1-99.999%)*365*24*60=5.26分钟： 表示该软件系统在连续运行1年时间里最多可能的业务中断时间是5.26分钟。 最近在写一个 MR 的程序，解析出一堆变量要产生一个字符串。虽然知道 Guava 库里有 join 方法，并且用 hasNext() 来避免结尾加上分隔符的实现高到不知道哪里去了，但就为了这么一个函数引入一个 jar 包是不是不太好啊⊙﹏⊙b。试着自己写一个，实现的稍微 tricky： public static String join(Character separator, String... input) { if (input == null || input.length &amp;lt; 1) throw new IllegalArgumentException(&quot;the input is illegal,check wheteris it's null or empty&quot;); String _separator = String.valueOf(separator); StringBuilder res = new StringBuilder(); for (String elem : input) res.append(elem).append(_separator); res.deleteCharAt(res.length() - 1); return res.toString(); } 日常日常超量的话要进行处理，如果是我的话估计就写个脚本了，但今天才被教做人…Linux 下的 /etc/logrotate.conf 直接进行编辑就好了，压缩，移除，时间设置，各种功能都有…… 最近在看 JStorm 的源码,其中有一段代码是这样的……kill the process 5 times……make sure the process be killed definitely……作者是个有故事的人…… public static void ensure_process_killed(Integer pid) { // in this function, just kill the process 5 times // make sure the process be killed definitely for (int i = 0; i &amp;lt; 5; i++) { try { exec_command(&quot;kill -9 &quot; + pid); LOG.info(&quot;kill -9 process &quot; + pid); sleepMs(100); } catch (ExecuteException e) { LOG.info(&quot;Error when trying to kill &quot; + pid + &quot;. Process has been killed&quot;); } catch (Exception e) { LOG.info(&quot;Error when trying to kill &quot; + pid + &quot;.Exception &quot;, e); } } } concurrency(并发) 和 parallelism(并行) 两个概念常常混淆。今天又遇到了这个问题，结果发现为知里 2014 年就有这个记录了……好尴……那么用一句话来总结，就是说并发是针对程序的设计来讲的(concurrency as a property of a program or system)，一个设计良好的并发程序使得程序可以做到在重叠的时间段内执行不同任务。而并行指的是在实际运行中在物理上有多个任务在运行(parallelism as the run-time behaviour of executing multiple tasks at the same time)。所以如果一个并发的程序在一个单 cpu 的机器上运行，那么它仍然是并发的，但却不是并行。 这个问题解释最好的中文文章在 这里，英文资料就是 Go 语言的那篇 slide 了 除了 MongoDB 外 ES 也有被人黑啊……为了开发方便就不取消 curl delete 了，但必须只有内网能访问……到底是怎么做到每笔交易都是可回溯验证但无法关联到具体账户的……根据这个 blockchain 地址 看一下，收了 32 笔 0.2 BTC，总共 6.4 BTC，根据 2017.01.18-11:36 上午的汇率，等价 5696.64 $，也等价 39202.73 ¥…… 有一个 600M+ 的 CSV 文件，因为要实验转化读取，所以就用 split 来按大小分割一下。但之后怎么处理都是乱码，以为是源文件的问题，但 head -10 读出来也没问题啊。也怀疑是自己没有加后缀，但文本文件又不是二进制啊……最后才意识到不应该按大小来分割的……按大小来分割是为了方便后续合并啊……要用 split -l 按行来分…… 所以到底发生了什么……为什么要用图片处理……今天遇到不少事情……比如说要用 pillow 来把一个字体显示到图像上。需要用到 ImageFont 的 TrueType ，下载 simsun.ttc，包含宋体和新宋体，但使用的时候会报 OSError的错误，无法识别 fileformat ，需要换成 Linux 下对应的字体。但如果用 /usr/share/fonts/ 目录下的随便一个，又不会正常显示，只会出现 “?”。需要选择一个对中文支持友好的字体，可以在命令行里用 fc-list :lang=zh-cn 来找。用 numpy.asarray() 和 numpy.fromarray() 来做到在图像和矩阵之间相互转化，中间添加随机数干扰会让字体扭曲变形，但这个更适配于对手写体的识别。如果是对拍照的印刷体，合适的场景是用 rotate() 来旋转一定角度。但这样会出现一些黑色空间，用 crop()再截取一下就好了：-D 虽然一直在用 requests，但今天才意识到可以这样: requests-code-read-content-auto-encode。关于 chardet 识别编码的原理之前在看《Fluent Python》的时候也提到过，根据字符前缀出现的频率来判定。 In [7]: chardet.detect('再也不被编码问题困扰了2333ShakaLaka!!!'.encode('GBK')) Out[7]: {'confidence': 0.99, 'encoding': 'GB2312'} supervisor 项目配置下有一个 user 选项，可以选择以什么用户来启动命令。但是必须用 root 账号来启动 supervisor 今天遇到了一个挺崩溃的问题。简单来说就是这样：数据校验的脚本有这样一句sql 查询:count_sql = &quot;select count(*) from... 但 print count_sql 的时候总是会把第一个 ‘s’ 字符和最后的一个单引号 ' 丢掉。查来查去最后甚至怀疑到了 XShell 的显示问题，但在我电脑上显示也不对，那就还是代码的问题。最后不用 print 来 debug 了，决定把 count_sql 写入到文件里来看(一直在用 Linux，读写模式里没有加 ‘b’…)，然后发现显示的语句后面多了一个 ^M。问题就出在这里，以前创建这个文件的时候用的是 txt 文本编辑器而不是 notepad++，换行符用的是 ‘\r\n’，而 Linux 下用的是 ‘\n’。换句话来说就是 Unix uses 0xA for a newline character. Windows uses a combination of two characters: 0xD 0xA. 0xD is the carriage return character. ^M happens to be the way vim displays 0xD.(参考 这个)。在 Py2 的范畴内解决办法就是读取后再用 strip() 处理一次。当然换到 Py3 就没有这个问题了(虽然离 2020 还有 3 年，但还是赶紧换啊啊啊)。这种问题还是第一次遇见，记录一下：-D 装 Kafka 的 UI，最后选型用的是 Yahoo 的 Kafka Manager。但它要用的是 JDK8 …能检测单位时间内的信息量。最后界面还好啦，就是浓厚的 Bootstrap 风格让人不忍直视： 同时补充一下 Centos 下安装 JDK8 的使用方法: ① 在现有的环境下 java -version 显示 1.7.0,目录在 /usr/lib 下。参考 Ubuntu 上的安装经验，我们不希望它发生冲突，所以在 /opt 目录下安装。 ② cd /opt,之后使用 wget --no-cookies --no-check-certificate --header &quot;Cookie: gpw_e24=http%3A%2F%2Fwww.oracle.com%2F; oraclelicense=accept-securebackup-cookie&quot; &quot;http://download.oracle.com/otn-pub/java/jdk/8u101-b13/jdk-8u101-linux-x64.tar.gz&quot; 来安装,之后使用 tar -xzf jdk-8u101-linux-i586.tar.gz 来解压。 ③ cd /opt/jdk1.8.0_101/ 来进入安装环境。java 提供了 alternatives 选项来允许在同一系统内存在多个 java 版本。执行 alternatives --install /usr/bin/java java /opt/jdk1.8.0_101/bin/java 2 来安装。执行 alternatives --config java 来选择，只需要输入对应的编号即可（在 158 环境需要输入的是 3，对应的正是 /opt 对应的 JDK8）。执行 java -version 可以看到已经变为 1.8。 ④ 接下来需要设置环境变量，直接执行下面三个命令： export JAVA_HOME=/opt/jdk1.8.0_101 export JRE_HOME=/opt/jdk1.8.0_101/jre export PATH=$PATH:/opt/jdk1.8.0_101/bin:/opt/jdk1.8.0_101/jre/bin 准备去看 《Web Analytics 2.0》 了，虽然与技术关联不大，但没事的时候翻一番～～ 对于定时清空的日志文件，用命令 &amp;gt; ToDelete.log… NLPchina 提供了一个 elasticsearch-sql 的插件，能用类 sql 的方式来对 ES 进行查询。但用 select 查询的时候如果不指定 limit 的数量，默认始终是 200 想起以前看过的一个挺有意思的 问题，刚好最近在学 Scala，试着写一个 var boyfriendList = Array.fill(12)(0) def calculate(total:Int=0,freq:Int=0):Int = total match { case 12 =&amp;gt; { println(s&quot;总次数为 $freq &quot;) freq } case _ =&amp;gt; { boyfriendList(nextInt(12)) = 1 calculate(boyfriendList.sum,freq+1) } } object Application extends App { var boyfriendList = Array.fill(12)(0) var index = 1 var count = 0 while(index&amp;lt;=50){ boyfriendList = Array.fill(12)(0) count += calculate() index += 1 } println(sum.toFloat/50) // 34.64 啊，Pattern Matching 这里还比较好，但 var 和 val 变量这里自己做的太 tricky 了 …… 今天群里在讨论爬虫被抓的一个问题，有人提到可以模拟搜索引擎，就搜了一下…还真有这种数据，看这个 Google Crawler ，把 UA 配置成 Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html) Python 2.6 里一个输出语句 print '{}'.format(1) 会报错，提示 ValueError: zero length field name in format，必须指明顺序，print '{0}'.format(1)。啊…连 2.7 和 2.6 都不能做到完全兼容，有毒… 今天遇到一个挺有意思的问题。日志打码用的是 pageName&amp;amp;{key1:value1,key2:value2} 的形式，通常情况下用 split(“&amp;amp;”)[1] 得到 JSON 字符串后用 get_json_object 来查就可以了。但如果所提供的 value 里面有多个 “&amp;amp;”(如含参的 url)，那么分隔开后就会产生只有一个 &quot; 的字符串，读不出 JSON 格式。所以就写了一个 UDF 来解决(额，貌似 Hadoop.io.Text 效率比 Java 的 String 高……) /** * 主要处理 url 中包含 &amp;amp; 从而不能用 split(&quot;&amp;amp;&quot;) 来分割的情形 * input:String * output:JSON-like Object */ import org.apache.hadoop.hive.ql.exec.UDF; public class dealJSONWithUrl extends UDF { public String evaluate(String input) { if (!input.contains(&quot;&amp;amp;&quot;)) return input; String[] temp = input.split(&quot;&amp;amp;&quot;); StringBuilder builder = new StringBuilder(); for (int i = 1; i &amp;lt; temp.length; i++) { if (i != temp.length - 1) builder.append(temp[i]).append(&quot;&amp;amp;&quot;); else builder.append(temp[i]); } return builder.toString(); } } crontab 总会有一些非常 tricky 的问题…今天遇到的是运维老师写的一个redis-cli 清数据的时候在 shell 脚本里不能直接用 redis-cli，而是一定要用绝对路径（线上服务器的绝对路径是在 /usr/local/lib，测试服务器上是 /usr/bin，后者可以在 shell 里直接删…所以是这个原因吗？）。还想起之前一个 Python 程序总是不能正常运行，最后发现是因为自己用了 os.chdir('..')，要先 cd 到目录再跑。这个坑踩过的人还不少啊…这个…supervisor 里能指定 Directory 实在太幸福了… 有一段时间搜狗输入法会莫名其妙崩溃，突然就无法输入中文了。没有办法，写了个 alias sogou='pkill sogou-qimpanel &amp;amp;&amp;amp; fcitx &amp;amp;&amp;amp; sogou-qimpanel&amp;amp;' 的命令，一有崩溃就重启。 上面说的这个故障应该是搜狗输入法云端输入后台的故障，因为大概在某一个时间段内同时在 PC 和自己的笔记本上遇到这个 Bug，在此之前和在此之后都没有能复现这个问题… row_number() over 查询分组，用 row_id 来选择指定 之前用 ssh-copy-id 配置免密码登陆后一般都是在 bash 里面设置一个 alias，比如 ssh-75='ssh root@10.10.8.75' 这种，今天又学习了一点新的人生经验，可以在 ~/.ssh 里直接配一个 config 文件。看看 create-ssh-config-file-on-linux-unit ubuntu 上最喜欢的命令行工具是 guake，F12 一键呼出，再配合上 tmux 分屏…可惜的是我不是纯 vim 党啊…有时候 guake 会突然变空白，这个时候杀掉进程就好了，但之前运行的一些程序会还运行。当然像 shadowsocks 这些程序会提醒你端口被占用，但 openvpn 是不会告诉你已经有一个实例运行了啊…再开一个就会造成你在服务器上动不动就被踢下去… 今天用到了 pip 的一个功能… 把所有项目的依赖下下来并且不安装: pip install --download /path module_name，scp 上传后用 pip insall --no-index -f /path module_name 来安装 又是 Hive 时间的问题…..在 unix_timestamp 转化时，如果时间格式如 2016-06-27 11:00 因为没有秒数，所以实际上是无法进行转化的。它查询时也不会报错，但也永远不会有合乎要求的结果。最后用 concat() 连接上不会影响时间的 ':','00'再查。 需要用 JStorm 调用一个运维接口来发短信。但只有 Nimbus 服务器可以发短信，Supervisor 服务器没有对应的权限（host 地址设置问题）。这种分布式的问题总是由奇奇怪怪的原因产生… Java 的 jedis 只能在 getResource() 取得实例后再用 select 来选择分库，但 Python 的 redis client 是可以在构造函数里就指定的。 有时间要学学 docker 啊，真的要能统一开发环境和生产环境，那就很厉害了… 踩了 Hive SQL 的一个坑，不同表的时间格式不一样，转的时候要这么用：from_unixtime(unix_timestamp(‘20160521’,’yyyyMMdd’),’yyyy-MM-dd’) Gunicorn 部署。一个空格引发的惨案，噗 Anaconda 突然发现 .condarc 好像不起作用了，不从清华的源安装。看了看 conda install -h，用 --channel https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/ 来指定以后就可以了。还有问题是提示没有权限，，，看了一下，文件上显示锁，chown + chmod ~~ 几百行的 SQL 到底是怎么维护 等待毕设结果，有些焦虑……写了个模拟登陆教务处的脚本，下载完验证码后输入到命令行中……没有能明确显示登陆结果的标志，最后发现可以用返回 header 的 Content-Type 来判断，如果后缀是 gb2312 就登陆成功，而后缀是 GBK 就登录失败(好奇葩是不是……当时是谁写的这个网站⊙﹏⊙b)。本来想再分析一下课表的，但发现 post 请求的结果是一个 js 函数……竟然有这种 Web 开发方式……虽然也能解析但……还是算了……并且它的登陆逻辑是有问题的啊，填完一次验证码后就能多次尝试登陆，按照大多数人的习惯，如果还是六位数密码，那么最多跑 10**6 次就肯定能破出密码来~~~ 花在写论文上的时间比在代码上的时间还多：-D 中期答辩前终于把简化版的结果做出来了…但中文字符前都会有一个 u’’ Unicode 标识符，影响美观 为何要作死…用 sudo shutdown now 来关机,然后黑屏状态-&amp;gt;强制关机-&amp;gt;重启后发现怎么输入密码都不对.重装系统… 用 ubuntu 用多了会在某些时候觉得真的不方便啊,大概是 auto-remove 和 purge 之间的混乱关系,或者是自己编译 OpenSSL 和安装后的 OpenSSL 产生冲突…Arch wiki能和 ask ubuntu 提供一样的帮助,随时升级内核比不敢 upgrade 高到不知道哪里去了…但路径依赖…再在这上面折腾就太耗时间了… 被 STL 的 Vector 坑大了==&amp;gt;!!!! Sublime 的列操作，ctrl + shift + L Windows 下的命令行终端还是推荐 cmder，能使用 cd/ls 等常用命令，切换磁盘(以D盘为例)请直接用 D:，要使中文字符不产生缩进可以选择右侧的设置(ctrl+alt+p),勾选 monospace 为不使用状态，并且自带对 git 的支持。再也不用 git bash 了… 在 VMWare 上安装 Ubuntu 镜像遇到了桌面无法显示边栏和顶栏问题，最后用的是 ccsm 来解决(sudo apt-get install ccsm，执行软件，并选中 Unity，执行，关机重启) 之前在用 Intellij IDEA 和 Pycharm 时候一直用的是 Sublime Text2 的配色，来自Intellij theme虽然配色很好，但还是和 ST 有差距。今天修改了一下 Line Comment 的颜色，改成 RGB(138,130,107)，评论颜色为淡灰色，更容易和正文区分开，给原作者发了封邮件，邮件秒回，发邮件这个真的是美帝人民的天赋技能…自己当时是怎么写出 is not very good 这种小学英语的…我的天… jkeyll竟然不支持Pagination下的categories/tags 集合，试了半天啊… Pagination does not support tags or categories.Pagination pages through every post in the posts variable regardless of variables defined in the YAML Front Matter of each. It does not currently allow paging over groups of posts linked by a common tag or category. It cannot include any collection of documents because it is restricted to posts. 计算机系统结构试验要求是用WInDLX平台来模拟，现在才知道不同平台汇编语言标准不统一…其他语言都是标准一样实现不一样的 计算机网络实验，用微软的 network monitor 来监控，用 display fliter 来过滤，但是为什么不用 fiddler 呀 手写 Parser 和 Token … 写《通信原理》的结课论文，发现一本扫描版的书也给搜出来了，Google…OCR…ORZ…</summary>
+        <summary type="html">Actually I’m trying to express some light knowledge about coding and interesting experience in my daily life.And this post will be divided into 2 parts: the 1st part will be written in english,and the corresponding Chinese translation can be found in chinese 一些碎碎念… 之前代码是这样的： private static byte[] decrypt(byte[] data, byte[] key) throws Exception { SecureRandom sr = new SecureRandom(); DESKeySpec dks = new DESKeySpec(key); SecretKeyFactory keyFactory = SecretKeyFactory.getInstance(&quot;DES&quot;); SecretKey securekey = keyFactory.generateSecret(dks); Cipher cipher = Cipher.getInstance(&quot;DES&quot;); cipher.init(2, securekey, sr); return cipher.doFinal(data); } 各种 debug，看 DES 解法对应的 mode，最后还是要感谢 https://www.tools4noobs.com/online_tools/decrypt/ ，其实两行就用 Python 写好了： def decrypt_des(input_): &quot;&quot;&quot; :param input_: 加密的密文 :return: 经过 des 解密后的密文 &quot;&quot;&quot; des = DES.new(&quot;naidnefi&quot;, DES.MODE_ECB) return &quot;&quot;.join(x for x in des.decrypt(b64decode(input_)) if 31 &amp;lt; ord(x) &amp;lt; 127) 最后解密出来一堆 ‘\x5’，可以看 http://donsnotes.com/tech/charsets/ascii.html 来得到具体的含义，解决方法参考：https://stackoverflow.com/questions/14256593/remove-special-characters-from-the-string 今天帮我司算法团队调一个 Bug，调的心好累……本来用 Python2 处理中文就很闹心，还要用正则来调。调试了一大堆 unicode 字符以后终于能跑了……结果在测试服务器能跑，在对方的线上服务器就不能跑，擦……最后搜到了这个 ！链接，一试，果然……测试的是用 ucs4 编译的，而线上的是用 ucs2 编译的。两个有什么区别……我不知道啊……现在到家都已经 12 点了，我要睡觉……明天再说 自从 Google Reader 解散之后就没有怎么再用过 RSS 了，但最近发现还是很有用啊，类似 Push 和 Pull。这个 链接 里说直接用 IFTTT 连接 Feedly 和 Gmail 就可以，但连接时候发现 IFTTT 必须要付费升级到 Pro 版才行。所以参考 简书的这篇文章，连接 RSS 和 Gmail。不过 IFTTT 改版后界面需要在右上角的个人主页那里点击 New Applet。有些 rss 的地址不一定好找，那就用 feedly 订阅后再导出 opml 文件，找到里面的 xmlUrl 属性对应内容。最后的截图如下： 帮搜了一个 foursquare 的数据集。开始的链接地址是在 http://www.public.asu.edu/~hgao16/dataset.html，但链接失效了，用 Google 搜的话在犄角旮旯里找到个 reddit 的帖子 https://www.reddit.com/r/datasets/comments/1nywu2/foursquare_data_set/，里面到在 https://archive.org/download/201309_foursquare_dataset_umn 提供了下载zip 格式的文件，150M+。 Java 上 StringUtils 里最常见的一个就是把首字母变成小写，一般来实现的话就是 public static String firstCharToLower(String input){ if(input == nulll) } 但 SO 上还有这么一个回答，提供了另一种思路： char c[] = string.toCharArray(); c[0] = Character.toLowerCase(c[0]); string = new String(c); 其实是以牺牲可读性来换取了性能的增加 Curator 是 Linkedin 开源的一款对 zookeeper 封装的工具，里面提供了各种方便实现的功能，包括更新配置文件，选取 leader 节点等。今天在 Spark 上看见了这个实现，具体对应代码在：spark/core/src/main/scala/org/apache/spark/deploy/master/ZooKeeperPersistenceEngine.scala What Happened 最近所做的一些事。还是挺有趣的。 ETL 过程，代指 Extract-&amp;gt;Transform-&amp;gt;Load，进行数据抽取处理的过程 HDFS 文件路径下面的数据来源一般有以下几种： 从已有的 RDBMS 数据库中导入，方便和业务进行分析 从已有的 HDFS 数据中进行连接和抽样，生成新的复合需求的数据 一些其他的路径，包括从 Flume 中用 HDFS Sink 写入，或者用 hadoop fs -put 来把本地的文件导入到 HDFS 中。 第一种工具包括 Apache 出品的 Sqoop 和阿里出品的 DataX(京东是根据 DataX 的原理自己搞了一套)。二者的对比可以查看这个 链接。 第二种工具则在大多数情况下都是在用 Hive 来解决需求。Hive 是 FaceBook 出品的可以把 HQL(类 SQL 语法)转化为 MapReduce 执行的工具，方便数据分析师进行操作。 同时还调研了调度系统。从原理上来说只要写好执行脚本，直接用 crontab 设置好定时任务就好。但一方面随着业务量上升我们要管理多个脚本，另一方面还想要添加进度提醒、查看日志、失败重试、邮件预警、管理多个相互依赖任务等功能。在这种情况下调研了 Ozzie/Azkaban/Airflow/Zeus/Kettle 等项目。 关于 sqoop 关于 Hive 调度系统 关于 Airflow 要求团队里至少有一个人会 Python。严格来说这不算是什么多的要求，特别是在 ML/DL/AI 如火如荼的当下，上手 Python 可能也就是一两天的事情。但总归是多了一些成本。 附录 A 里补充了 Airflow 的安装和使用 关于 Zeus 其实我司之前用的就是 Zeus：-D 但如果要重新开始选型的话，可以有更多的选择。 更新缓慢。最近一次和代码有关的提交是在 2013 年，源代码长时间没有进行更新，一个非常明显的 Bug Fix PR 有一个月没有合并到主分支里 部署和运维相对于其他调度工具偏难，参考它的 安装文档 MapReduce 实现细节 实现数据库 left/inner/right join 这里可以参考 Quora 的这个问题：https://www.quora.com/How-does-Hive-implement-joins-in-Map-Reduce 存在 Map-side 和 Reduce-side 两种情况来区分讨论 MultiInput 用 ArrayList 存储 劣势：在一个表中有上千万数据时可能会 OOM HBase: HBase 的特点： 实现比 redis 持久化存储效果更好的 key-value 键值对 实现需要有历史版本的增量存储 最近又有需求，在 Ubuntu 环境下用 VirtualBox 重新安装了 Win8.1。具体 今天试着用了一下 GitLab CI，从个人体验来说和 Github 的 travis-CI 没有什么太大区别啦，按照 stages 和 build/deploy 来区分，但最后问题发生在下面： 根据它的说法，你需要在安装 GitLab 的服务器上安装 Runner,参见 这个。但之前安装 GitLab 的人都不在了，既没有运维的权限，同时也没有像创业公司那样必须用 CI 的迫切性(不存在一天上线七八次这种情况啊……)。所以真的是…… 最后把写的 .gitlab-ci.yml 脚本立此存照一下： before_script: - sudo yum install maven2 stages: - build build_job: stage: build script: - mvn install - mvn '-Dtest=com.xxx.example.*Test' test 其中 mvn '-Dtest=com.xxx.example.*Test' test 用来运行所有匹配的测试用例 今天在讨论的时候知道阿里和百度都开始用 DL 来做 CRT 预估了，记得一段时间以前都在说深度学习都还是黑匣子，可解释性遭到 challenge 的话是不能在生产环境上用的，但转眼间都开始用了 大部分讨论操作系统的问题最后都变成了要不要用 SSD 的问题……哇咔咔 因为最近要从事的是现场办公，某司要访问开发环境的话，不能用 openvpn 或类似的工具，而是用启明星辰所提供的天玥安全审计。哼哧哼哧配好了 ip 和 dns 后(其中还踩了 Ubuntu Desktop 版不能直接用编辑配置文件方式修改 ip 的坑)，登陆到 Web 端来访问。但发现登陆工具怎么都选择不了，看了 css 以后发现选择器没问题啊……花了一天的时间各种配，最后申了一份当时发给运维的文档看，FAQ 里第一个就是： 问题1：如果我的操作系统是Linux或者是Mac的怎么办？ Linux和Mac系统的用户可以使用web界面操作，web地址为 ××××××，操作方法和windows客户端版是一样的，web存在兼容性问题，建议使用客户端版。 我…… 发现 IDEA 配置好以后不能用设 Socks5 的方式来翻墙下载 SBT 的依赖，但 manual configuration 应该是没问题的啊。最后在 SBT 的参数里加上 ` -Dhttps.proxyHost=127.0.0.1 -Dhttps.proxyPort=8080`，:-(，但为什么不能用 IDEA 自带的配置呢？……. 在调试 Spark 源码里面的 Spark Streaming 程序的时候，需要把对应的 VM Options 改为 -Dspark.master=local[2]，否则 就一直报 netword connection refused 的错误…… 分布式系统里一个最重要的特性就是 CAP 不能同时满足。Google 搜出来的第一个链接就是 Quora 的回答，里面提到了一篇非常好的 InfoQ 文章，我来试着理解一下。C 指的是 Consistency(一致性)，A 指的是 Availability(可用性)，P 指的是 Partition Tolerance(分区容忍性)。通常情况下我们必须要保证多节点运行，所以 P 是肯定要满足的。而对 C 和 A，就只能取舍一个，举例： 一个集群有两台机器，A 和 B(这里为了举例进行了简化，在生产环境中要求通常为大于 1 的奇数)。 每当 A/B 有数据写入，都会同时在 B/A 上同步过去。 但突然网络连接出现了故障，A 和 B 之间无法进行通信。这时候对 A 而言，有两种选择： 1. 为了保持一致性，就不应当再接受对外的请求来确保数据不发生变化，这时候可用性就无法得到满足。 2. 为了保持可用性，继续接受请求，那么两台机器上的数据就会不一致，这时候一致性就无法得到满足。 这时候大多数的选择都是保持对外的可用性，两台机器继续对外提供服务，当可以继续进行通信时再同步数据， 从而保持最终一致性(eventual consistency)。 在衡量系统的 Availability 的时候有几个概念，一个就是 X 个9。说明如下： 3个9：(1-99.9%)*365*24=8.76小时： 表示该软件系统在连续运行1年时间里最多可能的业务中断时间是8.76小时。 4个9：(1-99.99%)*365*24=0.876小时=52.6分钟： 表示该软件系统在连续运行1年时间里最多可能的业务中断时间是52.6分钟。 5个9：(1-99.999%)*365*24*60=5.26分钟： 表示该软件系统在连续运行1年时间里最多可能的业务中断时间是5.26分钟。 最近在写一个 MR 的程序，解析出一堆变量要产生一个字符串。虽然知道 Guava 库里有 join 方法，并且用 hasNext() 来避免结尾加上分隔符的实现高到不知道哪里去了，但就为了这么一个函数引入一个 jar 包是不是不太好啊⊙﹏⊙b。试着自己写一个，实现的稍微 tricky： public static String join(Character separator, String... input) { if (input == null || input.length &amp;lt; 1) throw new IllegalArgumentException(&quot;the input is illegal,check wheteris it's null or empty&quot;); String _separator = String.valueOf(separator); StringBuilder res = new StringBuilder(); for (String elem : input) res.append(elem).append(_separator); res.deleteCharAt(res.length() - 1); return res.toString(); } 日常日常超量的话要进行处理，如果是我的话估计就写个脚本了，但今天才被教做人…Linux 下的 /etc/logrotate.conf 直接进行编辑就好了，压缩，移除，时间设置，各种功能都有…… 最近在看 JStorm 的源码,其中有一段代码是这样的……kill the process 5 times……make sure the process be killed definitely……作者是个有故事的人…… public static void ensure_process_killed(Integer pid) { // in this function, just kill the process 5 times // make sure the process be killed definitely for (int i = 0; i &amp;lt; 5; i++) { try { exec_command(&quot;kill -9 &quot; + pid); LOG.info(&quot;kill -9 process &quot; + pid); sleepMs(100); } catch (ExecuteException e) { LOG.info(&quot;Error when trying to kill &quot; + pid + &quot;. Process has been killed&quot;); } catch (Exception e) { LOG.info(&quot;Error when trying to kill &quot; + pid + &quot;.Exception &quot;, e); } } } concurrency(并发) 和 parallelism(并行) 两个概念常常混淆。今天又遇到了这个问题，结果发现为知里 2014 年就有这个记录了……好尴……那么用一句话来总结，就是说并发是针对程序的设计来讲的(concurrency as a property of a program or system)，一个设计良好的并发程序使得程序可以做到在重叠的时间段内执行不同任务。而并行指的是在实际运行中在物理上有多个任务在运行(parallelism as the run-time behaviour of executing multiple tasks at the same time)。所以如果一个并发的程序在一个单 cpu 的机器上运行，那么它仍然是并发的，但却不是并行。 这个问题解释最好的中文文章在 这里，英文资料就是 Go 语言的那篇 slide 了 除了 MongoDB 外 ES 也有被人黑啊……为了开发方便就不取消 curl delete 了，但必须只有内网能访问……到底是怎么做到每笔交易都是可回溯验证但无法关联到具体账户的……根据这个 blockchain 地址 看一下，收了 32 笔 0.2 BTC，总共 6.4 BTC，根据 2017.01.18-11:36 上午的汇率，等价 5696.64 $，也等价 39202.73 ¥…… 有一个 600M+ 的 CSV 文件，因为要实验转化读取，所以就用 split 来按大小分割一下。但之后怎么处理都是乱码，以为是源文件的问题，但 head -10 读出来也没问题啊。也怀疑是自己没有加后缀，但文本文件又不是二进制啊……最后才意识到不应该按大小来分割的……按大小来分割是为了方便后续合并啊……要用 split -l 按行来分…… 所以到底发生了什么……为什么要用图片处理……今天遇到不少事情……比如说要用 pillow 来把一个字体显示到图像上。需要用到 ImageFont 的 TrueType ，下载 simsun.ttc，包含宋体和新宋体，但使用的时候会报 OSError的错误，无法识别 fileformat ，需要换成 Linux 下对应的字体。但如果用 /usr/share/fonts/ 目录下的随便一个，又不会正常显示，只会出现 “?”。需要选择一个对中文支持友好的字体，可以在命令行里用 fc-list :lang=zh-cn 来找。用 numpy.asarray() 和 numpy.fromarray() 来做到在图像和矩阵之间相互转化，中间添加随机数干扰会让字体扭曲变形，但这个更适配于对手写体的识别。如果是对拍照的印刷体，合适的场景是用 rotate() 来旋转一定角度。但这样会出现一些黑色空间，用 crop()再截取一下就好了：-D 虽然一直在用 requests，但今天才意识到可以这样: requests-code-read-content-auto-encode。关于 chardet 识别编码的原理之前在看《Fluent Python》的时候也提到过，根据字符前缀出现的频率来判定。 In [7]: chardet.detect('再也不被编码问题困扰了2333ShakaLaka!!!'.encode('GBK')) Out[7]: {'confidence': 0.99, 'encoding': 'GB2312'} supervisor 项目配置下有一个 user 选项，可以选择以什么用户来启动命令。但是必须用 root 账号来启动 supervisor 今天遇到了一个挺崩溃的问题。简单来说就是这样：数据校验的脚本有这样一句sql 查询:count_sql = &quot;select count(*) from... 但 print count_sql 的时候总是会把第一个 ‘s’ 字符和最后的一个单引号 ' 丢掉。查来查去最后甚至怀疑到了 XShell 的显示问题，但在我电脑上显示也不对，那就还是代码的问题。最后不用 print 来 debug 了，决定把 count_sql 写入到文件里来看(一直在用 Linux，读写模式里没有加 ‘b’…)，然后发现显示的语句后面多了一个 ^M。问题就出在这里，以前创建这个文件的时候用的是 txt 文本编辑器而不是 notepad++，换行符用的是 ‘\r\n’，而 Linux 下用的是 ‘\n’。换句话来说就是 Unix uses 0xA for a newline character. Windows uses a combination of two characters: 0xD 0xA. 0xD is the carriage return character. ^M happens to be the way vim displays 0xD.(参考 这个)。在 Py2 的范畴内解决办法就是读取后再用 strip() 处理一次。当然换到 Py3 就没有这个问题了(虽然离 2020 还有 3 年，但还是赶紧换啊啊啊)。这种问题还是第一次遇见，记录一下：-D 装 Kafka 的 UI，最后选型用的是 Yahoo 的 Kafka Manager。但它要用的是 JDK8 …能检测单位时间内的信息量。最后界面还好啦，就是浓厚的 Bootstrap 风格让人不忍直视： 同时补充一下 Centos 下安装 JDK8 的使用方法: ① 在现有的环境下 java -version 显示 1.7.0,目录在 /usr/lib 下。参考 Ubuntu 上的安装经验，我们不希望它发生冲突，所以在 /opt 目录下安装。 ② cd /opt,之后使用 wget --no-cookies --no-check-certificate --header &quot;Cookie: gpw_e24=http%3A%2F%2Fwww.oracle.com%2F; oraclelicense=accept-securebackup-cookie&quot; &quot;http://download.oracle.com/otn-pub/java/jdk/8u101-b13/jdk-8u101-linux-x64.tar.gz&quot; 来安装,之后使用 tar -xzf jdk-8u101-linux-i586.tar.gz 来解压。 ③ cd /opt/jdk1.8.0_101/ 来进入安装环境。java 提供了 alternatives 选项来允许在同一系统内存在多个 java 版本。执行 alternatives --install /usr/bin/java java /opt/jdk1.8.0_101/bin/java 2 来安装。执行 alternatives --config java 来选择，只需要输入对应的编号即可（在 158 环境需要输入的是 3，对应的正是 /opt 对应的 JDK8）。执行 java -version 可以看到已经变为 1.8。 ④ 接下来需要设置环境变量，直接执行下面三个命令： export JAVA_HOME=/opt/jdk1.8.0_101 export JRE_HOME=/opt/jdk1.8.0_101/jre export PATH=$PATH:/opt/jdk1.8.0_101/bin:/opt/jdk1.8.0_101/jre/bin 准备去看 《Web Analytics 2.0》 了，虽然与技术关联不大，但没事的时候翻一番～～ 对于定时清空的日志文件，用命令 &amp;gt; ToDelete.log… NLPchina 提供了一个 elasticsearch-sql 的插件，能用类 sql 的方式来对 ES 进行查询。但用 select 查询的时候如果不指定 limit 的数量，默认始终是 200 想起以前看过的一个挺有意思的 问题，刚好最近在学 Scala，试着写一个 var boyfriendList = Array.fill(12)(0) def calculate(total:Int=0,freq:Int=0):Int = total match { case 12 =&amp;gt; { println(s&quot;总次数为 $freq &quot;) freq } case _ =&amp;gt; { boyfriendList(nextInt(12)) = 1 calculate(boyfriendList.sum,freq+1) } } object Application extends App { var boyfriendList = Array.fill(12)(0) var index = 1 var count = 0 while(index&amp;lt;=50){ boyfriendList = Array.fill(12)(0) count += calculate() index += 1 } println(sum.toFloat/50) // 34.64 啊，Pattern Matching 这里还比较好，但 var 和 val 变量这里自己做的太 tricky 了 …… 今天群里在讨论爬虫被抓的一个问题，有人提到可以模拟搜索引擎，就搜了一下…还真有这种数据，看这个 Google Crawler ，把 UA 配置成 Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html) Python 2.6 里一个输出语句 print '{}'.format(1) 会报错，提示 ValueError: zero length field name in format，必须指明顺序，print '{0}'.format(1)。啊…连 2.7 和 2.6 都不能做到完全兼容，有毒… 今天遇到一个挺有意思的问题。日志打码用的是 pageName&amp;amp;{key1:value1,key2:value2} 的形式，通常情况下用 split(“&amp;amp;”)[1] 得到 JSON 字符串后用 get_json_object 来查就可以了。但如果所提供的 value 里面有多个 “&amp;amp;”(如含参的 url)，那么分隔开后就会产生只有一个 &quot; 的字符串，读不出 JSON 格式。所以就写了一个 UDF 来解决(额，貌似 Hadoop.io.Text 效率比 Java 的 String 高……) /** * 主要处理 url 中包含 &amp;amp; 从而不能用 split(&quot;&amp;amp;&quot;) 来分割的情形 * input:String * output:JSON-like Object */ import org.apache.hadoop.hive.ql.exec.UDF; public class dealJSONWithUrl extends UDF { public String evaluate(String input) { if (!input.contains(&quot;&amp;amp;&quot;)) return input; String[] temp = input.split(&quot;&amp;amp;&quot;); StringBuilder builder = new StringBuilder(); for (int i = 1; i &amp;lt; temp.length; i++) { if (i != temp.length - 1) builder.append(temp[i]).append(&quot;&amp;amp;&quot;); else builder.append(temp[i]); } return builder.toString(); } } crontab 总会有一些非常 tricky 的问题…今天遇到的是运维老师写的一个redis-cli 清数据的时候在 shell 脚本里不能直接用 redis-cli，而是一定要用绝对路径（线上服务器的绝对路径是在 /usr/local/lib，测试服务器上是 /usr/bin，后者可以在 shell 里直接删…所以是这个原因吗？）。还想起之前一个 Python 程序总是不能正常运行，最后发现是因为自己用了 os.chdir('..')，要先 cd 到目录再跑。这个坑踩过的人还不少啊…这个…supervisor 里能指定 Directory 实在太幸福了… 有一段时间搜狗输入法会莫名其妙崩溃，突然就无法输入中文了。没有办法，写了个 alias sogou='pkill sogou-qimpanel &amp;amp;&amp;amp; fcitx &amp;amp;&amp;amp; sogou-qimpanel&amp;amp;' 的命令，一有崩溃就重启。 上面说的这个故障应该是搜狗输入法云端输入后台的故障，因为大概在某一个时间段内同时在 PC 和自己的笔记本上遇到这个 Bug，在此之前和在此之后都没有能复现这个问题… row_number() over 查询分组，用 row_id 来选择指定 之前用 ssh-copy-id 配置免密码登陆后一般都是在 bash 里面设置一个 alias，比如 ssh-75='ssh root@10.10.8.75' 这种，今天又学习了一点新的人生经验，可以在 ~/.ssh 里直接配一个 config 文件。看看 create-ssh-config-file-on-linux-unit ubuntu 上最喜欢的命令行工具是 guake，F12 一键呼出，再配合上 tmux 分屏…可惜的是我不是纯 vim 党啊…有时候 guake 会突然变空白，这个时候杀掉进程就好了，但之前运行的一些程序会还运行。当然像 shadowsocks 这些程序会提醒你端口被占用，但 openvpn 是不会告诉你已经有一个实例运行了啊…再开一个就会造成你在服务器上动不动就被踢下去… 今天用到了 pip 的一个功能… 把所有项目的依赖下下来并且不安装: pip install --download /path module_name，scp 上传后用 pip insall --no-index -f /path module_name 来安装 又是 Hive 时间的问题…..在 unix_timestamp 转化时，如果时间格式如 2016-06-27 11:00 因为没有秒数，所以实际上是无法进行转化的。它查询时也不会报错，但也永远不会有合乎要求的结果。最后用 concat() 连接上不会影响时间的 ':','00'再查。 需要用 JStorm 调用一个运维接口来发短信。但只有 Nimbus 服务器可以发短信，Supervisor 服务器没有对应的权限（host 地址设置问题）。这种分布式的问题总是由奇奇怪怪的原因产生… Java 的 jedis 只能在 getResource() 取得实例后再用 select 来选择分库，但 Python 的 redis client 是可以在构造函数里就指定的。 有时间要学学 docker 啊，真的要能统一开发环境和生产环境，那就很厉害了… 踩了 Hive SQL 的一个坑，不同表的时间格式不一样，转的时候要这么用：from_unixtime(unix_timestamp(‘20160521’,’yyyyMMdd’),’yyyy-MM-dd’) Gunicorn 部署。一个空格引发的惨案，噗 Anaconda 突然发现 .condarc 好像不起作用了，不从清华的源安装。看了看 conda install -h，用 --channel https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/ 来指定以后就可以了。还有问题是提示没有权限，，，看了一下，文件上显示锁，chown + chmod ~~ 几百行的 SQL 到底是怎么维护 等待毕设结果，有些焦虑……写了个模拟登陆教务处的脚本，下载完验证码后输入到命令行中……没有能明确显示登陆结果的标志，最后发现可以用返回 header 的 Content-Type 来判断，如果后缀是 gb2312 就登陆成功，而后缀是 GBK 就登录失败(好奇葩是不是……当时是谁写的这个网站⊙﹏⊙b)。本来想再分析一下课表的，但发现 post 请求的结果是一个 js 函数……竟然有这种 Web 开发方式……虽然也能解析但……还是算了……并且它的登陆逻辑是有问题的啊，填完一次验证码后就能多次尝试登陆，按照大多数人的习惯，如果还是六位数密码，那么最多跑 10**6 次就肯定能破出密码来~~~ 花在写论文上的时间比在代码上的时间还多：-D 中期答辩前终于把简化版的结果做出来了…但中文字符前都会有一个 u’’ Unicode 标识符，影响美观 为何要作死…用 sudo shutdown now 来关机,然后黑屏状态-&amp;gt;强制关机-&amp;gt;重启后发现怎么输入密码都不对.重装系统… 用 ubuntu 用多了会在某些时候觉得真的不方便啊,大概是 auto-remove 和 purge 之间的混乱关系,或者是自己编译 OpenSSL 和安装后的 OpenSSL 产生冲突…Arch wiki能和 ask ubuntu 提供一样的帮助,随时升级内核比不敢 upgrade 高到不知道哪里去了…但路径依赖…再在这上面折腾就太耗时间了… 被 STL 的 Vector 坑大了==&amp;gt;!!!! Sublime 的列操作，ctrl + shift + L Windows 下的命令行终端还是推荐 cmder，能使用 cd/ls 等常用命令，切换磁盘(以D盘为例)请直接用 D:，要使中文字符不产生缩进可以选择右侧的设置(ctrl+alt+p),勾选 monospace 为不使用状态，并且自带对 git 的支持。再也不用 git bash 了… 在 VMWare 上安装 Ubuntu 镜像遇到了桌面无法显示边栏和顶栏问题，最后用的是 ccsm 来解决(sudo apt-get install ccsm，执行软件，并选中 Unity，执行，关机重启) 之前在用 Intellij IDEA 和 Pycharm 时候一直用的是 Sublime Text2 的配色，来自Intellij theme虽然配色很好，但还是和 ST 有差距。今天修改了一下 Line Comment 的颜色，改成 RGB(138,130,107)，评论颜色为淡灰色，更容易和正文区分开，给原作者发了封邮件，邮件秒回，发邮件这个真的是美帝人民的天赋技能…自己当时是怎么写出 is not very good 这种小学英语的…我的天… jkeyll竟然不支持Pagination下的categories/tags 集合，试了半天啊… Pagination does not support tags or categories.Pagination pages through every post in the posts variable regardless of variables defined in the YAML Front Matter of each. It does not currently allow paging over groups of posts linked by a common tag or category. It cannot include any collection of documents because it is restricted to posts. 计算机系统结构试验要求是用WInDLX平台来模拟，现在才知道不同平台汇编语言标准不统一…其他语言都是标准一样实现不一样的 计算机网络实验，用微软的 network monitor 来监控，用 display fliter 来过滤，但是为什么不用 fiddler 呀 手写 Parser 和 Token … 写《通信原理》的结课论文，发现一本扫描版的书也给搜出来了，Google…OCR…ORZ…</summary>
       
 
       

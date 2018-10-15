@@ -143,6 +143,168 @@
       <li>
         <header class="post-header">
           <h1 class="post-title">
+            <a class="post-link" href="/2017/05/22/Python-Import-Mechanism/">The Import Mechanism Of Python And Two Related Problems</a>
+          </h1>
+
+          <p class="post-meta">May 22, 2017 • 
+  
+  
+
+</p>
+        </header>
+
+        <div class="post-content">
+          <p>How to solve <code class="highlighter-rouge">No module named</code> and <code class="highlighter-rouge">Attempted relative import</code> ?</p>
+
+<!-- more -->
+<p><a href="/../translation/2017-05-22-Python-Import-Mechanism.html">这篇文章对应的中文版</a></p>
+
+<h3 id="no-module-named">No module named</h3>
+
+<p>This problem ever happened when executed with the command line, but the application can be executed smoothly with the Pycharm run button. The error is also very simple to debug, just check the <strong>show command line afterwards</strong> in the edit configuration item of Pycharm, and then execute the <code class="highlighter-rouge">import sys; sys.path</code> command. Compare the options in the command line,you will find the former has Added a module for <code class="highlighter-rouge">/home/hzcortex/projects...</code>. In other words, Python does not add the directory where the script executes the command to sys.path.</p>
+
+<hr />
+
+<p>The solution is to add the following code in the directory where error happened:</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">from</span> <span class="nn">os</span> <span class="kn">import</span> <span class="n">path</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">__file__</span><span class="p">))))</span></code></pre></figure>
+
+<h3 id="attempted-relative-import-in-non--package">Attempted relative import in non  package</h3>
+
+<p>There are two types of issues to discuss:</p>
+
+<p>1 A circular reference does occur. A wants to reference B, B wants to reference C, and C also refers to a function in B. The normal solution at this point is to modify the reference order of the C files and put the <code class="highlighter-rouge">import</code> statement before the statement that needs to use the reference object (see 《Fluent Python》). I recently encountered this problem when developing [FBRank] (https://github.com/Allianzcortex/FBRank). The project structure is like :</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="err">└──</span> <span class="n">utils</span>
+    <span class="err">├──</span> <span class="n">exceptions</span><span class="o">.</span><span class="n">py</span>
+    <span class="err">├──</span> <span class="n">__init__</span><span class="o">.</span><span class="n">py</span>
+
+<span class="c"># utils.py
+</span>
+ <span class="kn">from</span> <span class="nn">.exceptions</span> <span class="kn">import</span> <span class="n">NotSupprotedYetException</span>
+
+<span class="k">def</span> <span class="nf">check_before</span><span class="p">(</span><span class="n">attr</span><span class="o">=</span><span class="s">'name'</span><span class="p">):</span>
+    <span class="o">...</span>
+    <span class="k">raise</span> <span class="n">NotSupprotedYetException</span>
+    <span class="o">...</span>
+
+<span class="c"># exceptions.py
+</span>
+<span class="kn">from</span> <span class="nn">.utils</span> <span class="kn">import</span> <span class="n">github_url</span><span class="p">,</span> <span class="n">connect_url</span>
+
+<span class="k">class</span> <span class="nc">NotSupprotedYetException</span><span class="p">(</span><span class="n">FBRankException</span><span class="p">):</span>
+    <span class="s">"""still not supprt
+    """</span></code></pre></figure>
+
+<p>Then there was such an error when executing the program:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>File "/home/hzcortex/FBRank/FBRank/parse/League.py", line 13, in &lt;module&gt;
+    from FBRank.utils.exceptions import IllegalArgumentException, NotSupprotedYetException
+  File "/home/hzcortex/FBRank/FBRank/utils/exceptions.py", line 2, in &lt;module&gt;
+    from .utils import github_url, connect_url
+  File "/home/hzcortex/FBRank/FBRank/utils/utils.py", line 5, in &lt;module&gt;
+    from .exceptions import NotSupprotedYetException
+ImportError: cannot import name 'NotSupprotedYetException'
+
+</code></pre>
+</div>
+
+<p>Looking at the order of the calls from top to bottom, the <code class="highlighter-rouge">github_url, connect_url</code> variables are called from .utils.py in /exceptions.py, and <strong>NotSupprotedYetException</strong> is called from /exceptions.py when calling .utils.py. This will cycle through each other and will never solve the <strong>import issue</strong>. The solution is to load it only when you need to use the function:</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="c"># utils.py
+</span>
+
+<span class="k">def</span> <span class="nf">check_before</span><span class="p">(</span><span class="n">attr</span><span class="o">=</span><span class="s">'name'</span><span class="p">):</span>
+    <span class="kn">from</span> <span class="nn">.exceptions</span> <span class="kn">import</span> <span class="n">NotSupprotedYetException</span>
+    <span class="c"># ......</span></code></pre></figure>
+
+<p>Because Python’s reference mechanism does not reimport previously imported packages (use <code class="highlighter-rouge">imp.reaload()</code> if needed), so don’t worry about performance problem.</p>
+
+<ol>
+  <li>If there is really no circular reference, problem maybe is mainly because:</li>
+</ol>
+
+<p>Take an example of a program push data from Kafka to ES that was previously written. The structure of the whole program is as follows</p>
+
+<p><img src="/images/RLTES-2.png" alt="RLTES-Project" /></p>
+
+<p>In the main program <code class="highlighter-rouge">RealtimeLogToES.py</code> there are the following references:</p>
+
+<p><img src="/images/RLTES-1.png" alt="RLTES-import" /></p>
+
+<p>Go to the RLTES directory and execute <code class="highlighter-rouge">python RealtimeLogToES.py</code> directly in this case, then the above circular reference error will be reported.</p>
+
+<p>There are two solutions:</p>
+
+<p>1 Change <code class="highlighter-rouge">from .config import</code> to the same absolute reference as below, <code class="highlighter-rouge">from RLTES.config import</code></p>
+
+<p>2 Do not modify the code, return to the previous directory, <code class="highlighter-rouge">cd ..</code>, and then execute <code class="highlighter-rouge">python -m RLTES.RealtimeLogToES</code></p>
+
+<p>When Python is relatively introduced, the basis for the judgment is the <code class="highlighter-rouge">__name__</code> attribute of the current file. When you execute a file, the original <code class="highlighter-rouge">__name__</code> attribute of the file is replaced by the fixed <code class="highlighter-rouge">'__main__'</code>, so the relative introduction does not work, while the absolute introduction is fine. After adding -m to the command line, tell the Python interpreter to run this file as a script.</p>
+
+<h3 id="why-the-problem-happened">Why the problem happened</h3>
+
+<p>If there is sufficient time,I will try to explain it. Now you can read <a href="https://www.python.org/dev/peps/pep-0302/">PEP302</a> to hava a straightforward impression.</p>
+
+<h3 id="how-we-do-properly">How We Do Properly</h3>
+
+<p>The recommendation in PEP8 is to always use absolute references, but just like the <code class="highlighter-rouge">annoying double underscore</code>, there are a lot of people who prefer to use relative import.</p>
+
+<p>The key is to Keep the team consistent. As for personal development, I prefer to use <code class="highlighter-rouge">.import</code> for single layer and absolute reference for others.</p>
+
+<p>In the book “Two Scopes Of Django” <strong>, it is stipulated that the use of the **implicit import</strong> statement such as <code class="highlighter-rouge">from A import a</code> is forbidden, but considering that many times the script will not be specific to a large project but to create a directory on the server to complete a specific function or solve a temporary problem(don’t need to maintain), if this is convenient for debugging and deployment,it can also be a good choice,done is better than perfect after all.</p>
+
+<h3 id="the-role-of-__init__py">The role of <code class="highlighter-rouge">__init__.py</code></h3>
+
+<p>The most important role of <code class="highlighter-rouge">__init__.py</code> is to mark the folder containing the <code class="highlighter-rouge">__init__.py</code> directory as a package to complete the corresponding import.</p>
+
+<p>In most cases, there is no need to write anything in <code class="highlighter-rouge">__init__.py</code>. If you must write it, it basically has the following three functions:</p>
+
+<ul>
+  <li>
+    <p>Write <code class="highlighter-rouge">__author__</code> and other related information</p>
+  </li>
+  <li>
+    <p>Write a <code class="highlighter-rouge">__all__</code> configuration that exactly defines what will be introduced when <code class="highlighter-rouge">from x import *</code></p>
+  </li>
+  <li>
+    <p>If the first two are irrelevant, then the last one is much more important, and the importing method can be simplified to control the stability of the API.</p>
+  </li>
+</ul>
+
+<p>Let me still take the example of [FBRank] (github.com/Allianzcortex/FBRank). Although you see that the command line tool is only supported in the README, it also provides the ability to import it in the code. for example:</p>
+
+<p>If you need to assign the corresponding file if you need to  import an exception</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"> <span class="n">In</span> <span class="p">[</span><span class="mi">1</span><span class="p">]:</span> <span class="kn">from</span> <span class="nn">FBRank.utils.exceptions</span> <span class="kn">import</span> <span class="n">IllegalArgumentException</span></code></pre></figure>
+
+<p>But if you want to import a class, you only need to identify the corresponding package, which is very convenient for subsequent development.</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">In</span> <span class="p">[</span><span class="mi">2</span><span class="p">]:</span> <span class="kn">from</span> <span class="nn">FBRank.object</span> <span class="kn">import</span> <span class="n">Club</span></code></pre></figure>
+
+<p>The key it  the following code in <code class="highlighter-rouge">__init__.py</code> of FBRank/object folder.Import something from package is equal to import something from file under this package.</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python">  <span class="kn">from</span> <span class="nn">.League</span> <span class="kn">import</span> <span class="n">League</span>
+  <span class="kn">from</span> <span class="nn">.Club</span> <span class="kn">import</span> <span class="n">Club</span>
+  <span class="kn">from</span> <span class="nn">.Player</span> <span class="kn">import</span> <span class="n">Player</span></code></pre></figure>
+
+
+        </div>
+        
+          <p class="post-continue">
+            <a href="/2017/05/22/Python-Import-Mechanism/">Read on &rarr;</a>
+          </p>
+        
+      </li>
+    
+      
+      
+
+      <li>
+        <header class="post-header">
+          <h1 class="post-title">
             <a class="post-link" href="/2017/05/21/Scala-Test-Junit-Sbt-Problem/">ScalaTest 和 JUnit 集成，使用 Sbt 不执行测试的解决办法</a>
           </h1>
 
@@ -209,32 +371,7 @@
 
 <p>看了一下，Spark 里面的测试用例都是用的纯 ScalaTest 框架，而没有用 JUnit ：-D</p>
 
-        </div>
-        
-          <p class="post-continue">
-            <a href="/2017/05/21/Scala-Test-Junit-Sbt-Problem/">Read on &rarr;</a>
-          </p>
-        
-      </li>
-    
-      
-      
-
-      <li>
-        <header class="post-header">
-          <h1 class="post-title">
-            <a class="post-link" href="/2017/05/21/Scala-99-Solution/">《Scala For Impatient》的习题和 Scala 99 的一些题解记录</a>
-          </h1>
-
-          <p class="post-meta">May 21, 2017 • 
-  
-  
-
-</p>
-        </header>
-
-        <div class="post-content">
-          <p>《Scala For Impatient》的习题和 Scala 99 的一些题解记录</p>
+<p>《Scala For Impatient》的习题和 Scala 99 的一些题解记录</p>
 
 <!-- more -->
 
@@ -358,202 +495,7 @@
         </div>
         
           <p class="post-continue">
-            <a href="/2017/05/21/Scala-99-Solution/">Read on &rarr;</a>
-          </p>
-        
-      </li>
-    
-      
-      
-
-      <li>
-        <header class="post-header">
-          <h1 class="post-title">
-            <a class="post-link" href="/2017/05/07/Create-Rest-API-With-Sprint-Boot/">用 Spring Boot 来构建一个 Rest 服务</a>
-          </h1>
-
-          <p class="post-meta">May 7, 2017 • 
-  
-  
-
-</p>
-        </header>
-
-        <div class="post-content">
-          <p>使用 spring 来从 <code class="highlighter-rouge">redis/MySQL/HBase/ES</code> 中读取数据，并对外提供 Restful 接口</p>
-
-<!-- more -->
-
-<p>ETL 工作的最终落地</p>
-
-
-        </div>
-        
-          <p class="post-continue">
-            <a href="/2017/05/07/Create-Rest-API-With-Sprint-Boot/">Read on &rarr;</a>
-          </p>
-        
-      </li>
-    
-      
-      
-
-      <li>
-        <header class="post-header">
-          <h1 class="post-title">
-            <a class="post-link" href="/2017/05/01/read-HBase-source-code/">阅读 HBase 源代码</a>
-          </h1>
-
-          <p class="post-meta">May 1, 2017 • 
-  
-  
-
-</p>
-        </header>
-
-        <div class="post-content">
-          <p>开始阅读 HBase 源代码</p>
-
-<!-- more -->
-
-<p><img src="/images/HBase-source-code.png" alt="HBase-source-code.png" /></p>
-
-<p>HBase 的特点：</p>
-
-<ul>
-  <li>
-    <p>实现比 redis 持久化存储效果更好的 key-value 键值对</p>
-  </li>
-  <li>
-    <p>实现需要有历史版本的增量存储</p>
-  </li>
-</ul>
-
-<p>阅读代码主要包括以下几个方面：</p>
-
-<ul>
-  <li>
-    <p>在实际编写程序时，通过有关 API 及 IDEA 跳转到源代码的功能，查看具体功能实现</p>
-  </li>
-  <li>
-    <p>在 debug 应用时，了解整个 Hbase 执行应用的业务逻辑</p>
-  </li>
-  <li>
-    <p>通读整个源代码，了解各块的实现</p>
-  </li>
-</ul>
-
-<hr />
-
-<p>在这里首先看第一部分，执行一个小的应用，看它是怎么执行下来的</p>
-
-<p>读取配置文件 reloadConfig()，重新记载配置文件</p>
-
-<p>checkDefaultVersion():检查配置文件的版本和应用所读取的版本是否相等。可以用一个配置文件来跳过这项配置</p>
-
-<p>set(String name,String value) // 这里用 Guava 的 Preconditions.checkArgument() 来判断配置是否为 null
-同时还有 updateSource()</p>
-
-<p>关于 HConnection connection = HConnectionManager.create</p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>IDEA 为分析项目的整体结构提供了非常强大的功能
-几个常用的如下：
-
-光标选中某个类：在 Navigate-&gt;call  call Hierarchy 查看该
-callers 查看该方法被哪个方法调用，callee 查看该方法调用了哪些方法
-
-选中某个方法，类，查看该类被哪些类引用，生成用例图， ctrl+alt+H
-
-</code></pre>
-</div>
-
-<p>方便开发</p>
-
-        </div>
-        
-          <p class="post-continue">
-            <a href="/2017/05/01/read-HBase-source-code/">Read on &rarr;</a>
-          </p>
-        
-      </li>
-    
-      
-      
-
-      <li>
-        <header class="post-header">
-          <h1 class="post-title">
-            <a class="post-link" href="/2017/04/27/JVM-performance-snippets/">Jvm Performance Snippets</a>
-          </h1>
-
-          <p class="post-meta">Apr 27, 2017</p>
-        </header>
-
-        <div class="post-content">
-          
-
-        </div>
-        
-      </li>
-    
-      
-      
-
-      <li>
-        <header class="post-header">
-          <h1 class="post-title">
-            <a class="post-link" href="/2017/04/25/Mapreduce-Design-Pattern/">关于 MapReduce 设计模式</a>
-          </h1>
-
-          <p class="post-meta">Apr 25, 2017 • 
-  
-  
-
-</p>
-        </header>
-
-        <div class="post-content">
-          <h4 id="实现统计-uv">实现统计 UV</h4>
-
-<p>类似于 SQL 中的 count(distinct *)</p>
-
-<p>我所实现的第一种：</p>
-
-<p>map:emit(null,key)</p>
-
-<p>reduce:TreeSet 存储元素，cleanup():写入，得到 length</p>
-
-<p>优势：跑一次 MapReduce Job 即可得到最终结果
-劣势：只能有一个 reduce
-待优化：在 combiner 阶段可以写一个处理类来减少 shuffle 的数量</p>
-
-<p>书中的第二种：
-map:emit(key,null)
-reduce:迭代任意一个 Iterrator 时只需要 O(1) 操作</p>
-
-<p>优势：利用 MR 框架自带的去重特性，在处理大量数据时有优势
-劣势：需要跑两次 MR 来得到最终的统计结果</p>
-
-<hr />
-
-<h4 id="实现数据库-leftinnerright-join">实现数据库 left/inner/right join</h4>
-
-<p>这里可以参考 Quora 的这个问题：https://www.quora.com/How-does-Hive-implement-joins-in-Map-Reduce</p>
-
-<p>存在 Map-side 和 Reduce-side 两种情况来区分讨论</p>
-
-<p>MultiInput 用 ArrayList 存储</p>
-
-<p>劣势：在一个表中有上千万数据时可能会 OOM</p>
-
-<hr />
-
-<p>####</p>
-
-        </div>
-        
-          <p class="post-continue">
-            <a href="/2017/04/25/Mapreduce-Design-Pattern/">Read on &rarr;</a>
+            <a href="/2017/05/21/Scala-Test-Junit-Sbt-Problem/">Read on &rarr;</a>
           </p>
         
       </li>
@@ -1694,170 +1636,6 @@ At the time of the study, I wrote a calculator demo that adds genuine. When the 
       <li>
         <header class="post-header">
           <h1 class="post-title">
-            <a class="post-link" href="/2015/03/11/Python-Import-Mechanism/">Python 中的引用机制</a>
-          </h1>
-
-          <p class="post-meta">Mar 11, 2015 • 
-  
-  
-
-</p>
-        </header>
-
-        <div class="post-content">
-          <p>解决 <code class="highlighter-rouge">No module named</code> 和 <code class="highlighter-rouge">Attempted relative import</code> 这两个问题
-<!-- more --></p>
-
-<h2 id="两个引用时最常见的问题">两个引用时最常见的问题</h2>
-
-<h3 id="no-module-named-xxxz">No module named XXXz</h3>
-
-<p>在编译时遇到 <code class="highlighter-rouge">No Module Named XX</code> 。这个问题曾经遇到过，并且用命令行执行时会报错，但用 Pycharm 的运行按钮就可以顺利执行。最后发现错误的过程也很简&gt;单，在编辑配置一项里勾选 “show command line afterwards”，然后执行　<code class="highlighter-rouge">import sys;sys.path</code> 命令，和在命令行里的选项进行对比，发现前者多了一个 <code class="highlighter-rouge">/home/hzcortex/projects...</code> 的模块。也就是说 Python 并没有把执行命令的这个脚本所在的目录加入 sys.path 中。</p>
-
-<hr />
-
-<p>解决方法是在报错的文件目录下加入：</p>
-
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">sys</span>
-<span class="kn">from</span> <span class="nn">os</span> <span class="kn">import</span> <span class="n">path</span>
-<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">__file__</span><span class="p">))))</span></code></pre></figure>
-
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">sys</span>
-<span class="kn">from</span> <span class="nn">os</span> <span class="kn">import</span> <span class="n">path</span>
-<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">__file__</span><span class="p">))))</span></code></pre></figure>
-
-<h3 id="attempted-relative-import-in-non--package">Attempted relative import in non  package</h3>
-
-<p>这个问题要分两类来进行讨论：</p>
-
-<p>① 在引用的时候确实发生了循环引用，A 要引用 B，B 要引用 C，而 C 同时要引用 B 里的一个函数。这时通常的解决办法是修改 C 文件的引用顺序，把 <code class="highlighter-rouge">import</code> 语句放到需要使用引用对象的语句前(参考 《Python 核心编程》 的说法)。最近在开发 <a href="https://github.com/Allianzcortex/FBRank">FBRank</a> 的时候确实遇到了这个问题，项目结构是这样的：</p>
-
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="err">└──</span> <span class="n">utils</span>
-    <span class="err">├──</span> <span class="n">exceptions</span><span class="o">.</span><span class="n">py</span>
-    <span class="err">├──</span> <span class="n">__init__</span><span class="o">.</span><span class="n">py</span>
-
-<span class="c"># utils.py
-</span>
- <span class="kn">from</span> <span class="nn">.exceptions</span> <span class="kn">import</span> <span class="n">NotSupprotedYetException</span>
-
-<span class="k">def</span> <span class="nf">check_before</span><span class="p">(</span><span class="n">attr</span><span class="o">=</span><span class="s">'name'</span><span class="p">):</span>
-    <span class="o">...</span>
-    <span class="k">raise</span> <span class="n">NotSupprotedYetException</span>
-    <span class="o">...</span>
-
-<span class="c"># exceptions.py
-</span>
-<span class="kn">from</span> <span class="nn">.utils</span> <span class="kn">import</span> <span class="n">github_url</span><span class="p">,</span> <span class="n">connect_url</span>
-
-<span class="k">class</span> <span class="nc">NotSupprotedYetException</span><span class="p">(</span><span class="n">FBRankException</span><span class="p">):</span>
-    <span class="s">"""still not supprt
-    """</span></code></pre></figure>
-
-<p>之后在执行程序的时候出现了这样的错误：</p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>File "/home/hzcortex/FBRank/FBRank/parse/League.py", line 13, in &lt;module&gt;
-    from FBRank.utils.exceptions import IllegalArgumentException, NotSupprotedYetException
-  File "/home/hzcortex/FBRank/FBRank/utils/exceptions.py", line 2, in &lt;module&gt;
-    from .utils import github_url, connect_url
-  File "/home/hzcortex/FBRank/FBRank/utils/utils.py", line 5, in &lt;module&gt;
-    from .exceptions import NotSupprotedYetException
-ImportError: cannot import name 'NotSupprotedYetException'
-
-</code></pre>
-</div>
-<p>自上而下看调用的顺序，在 /exceptions.py 里从 .utils.py 调用了 <code class="highlighter-rouge">github_url, connect_url</code> 这两个变量，而在调用 .utils.py 时又从 /exceptions.py 调用了 NotSupprotedYetException，这样就互相循环，永远都无法解决引入。解决办法就是只在需要使用的函数时再加载：</p>
-
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="c"># utils.py
-</span>
-
-<span class="k">def</span> <span class="nf">check_before</span><span class="p">(</span><span class="n">attr</span><span class="o">=</span><span class="s">'name'</span><span class="p">):</span>
-    <span class="kn">from</span> <span class="nn">.exceptions</span> <span class="kn">import</span> <span class="n">NotSupprotedYetException</span>
-    <span class="c"># ......</span></code></pre></figure>
-
-<p>因为 Python 的引用机制并不会重新引入之前已经引入的包(需要的话要用 <code class="highlighter-rouge">imp.reaload()</code>)，所以不用担心这种引入会对性能产生影响</p>
-
-<p>② 如果确实没有循环引用，那么通常是如下的情况：</p>
-
-<p>拿之前写的一个从 Kafka 向 ES 导数据的程序来举例子。整个程序的结构如下(好像紫色对比度比较高…)：</p>
-
-<p><img src="/images/RLTES-2.png" alt="RLTES-Project" /></p>
-
-<p>在主程序 <code class="highlighter-rouge">RealtimeLogToES.py</code> 里有如下的引用：</p>
-
-<p><img src="/images/RLTES-1.png" alt="RLTES-import" /></p>
-
-<p>如果在这种情况下进入到 RLTES 目录里直接执行 <code class="highlighter-rouge">python RealtimeLogToES.py</code>，那么就会报上面的循环引用的错。</p>
-
-<p>解决方法再有以下两种：</p>
-
-<p>① 将 <code class="highlighter-rouge">from .config import</code> 改为和下面一样的绝对引用，<code class="highlighter-rouge">from RLTES.config import</code></p>
-
-<p>② 不修改代码，退回到上一层目录,<code class="highlighter-rouge">cd ..</code>，之后执行 <code class="highlighter-rouge">python -m RLTES.RealtimeLogToES</code></p>
-
-<p>Python 在进行相对引入的时候，判断的根据是当前文件的 <strong>name</strong> 属性。而当你执行一个文件的时候，该文件原有的 <strong>name</strong> 属性被替代为了固定的 ‘<strong>main</strong>‘,所以相对引入就无法工作，而绝对引入是没有问题的。在命令行里加入-m 后，告诉 Python 解释器应该将这个文件作为一个脚本来运行。</p>
-
-<h5 id="为什么会发生这种问题">为什么会发生这种问题</h5>
-
-<p>要真正理解 Python 的 import 机制是如何查找变量的。</p>
-
-<h5 id="到底怎么引用">到底怎么引用</h5>
-
-<p>PEP8 里建议是一直用绝对引用，但就像那个 <code class="highlighter-rouge">annoying double underscore</code> 一样，不喜欢绝对引用的也大有人在。</p>
-
-<p>团队里面保持一致即可。就个人开发来说，还是更喜欢单层采用用 .import，其他用绝对引用。</p>
-
-<p>在 <strong>《Two Scopes Of Django》</strong> 一书里明确说明了禁止使用如 <code class="highlighter-rouge">from A import a</code> 这样的 <strong>implicit import</strong> 语句，但考虑到很多时候写脚本并不会具体到一个大的工程，而是在服务器上建立一个目录去完成一个特定的功能，如果这么写能方便调试和部署，那么也没有大的问题。</p>
-
-<h5 id="__init__py-的作用"><code class="highlighter-rouge">__init__.py</code> 的作用</h5>
-
-<p><code class="highlighter-rouge">__init__.py</code> 最重要的作用就是标记含有该 <code class="highlighter-rouge">__init__.py</code> 目录的文件夹为一个 package ，从而完成对应的引入。</p>
-
-<p>大部分情况下 <code class="highlighter-rouge">__init__.py</code> 里什么内容也不用写，如果一定要写的话基本有以下三个作用：</p>
-
-<ul>
-  <li>
-    <p>写 <code class="highlighter-rouge">__author__</code> 等有关信息</p>
-  </li>
-  <li>
-    <p>写一个 <code class="highlighter-rouge">__all__</code> 的配置，精确定义在 <code class="highlighter-rouge">from x import *</code> 时候会引入的内容</p>
-  </li>
-  <li>
-    <p>如果说前两个都无关紧要的话，那么最后一个就比较多了，可以简化引入方式，用来控制 API 的稳定性。</p>
-
-    <p>还是拿写的 <a href="github.com/Allianzcortex/FBRank">FBRank</a> 来举例子。虽然你看在 README 里写的是只支持命令行工具，但其实它也提供了在代码里引入的能力。举个例子：</p>
-  </li>
-</ul>
-
-<figure class="highlight"><pre><code class="language-python" data-lang="python">  <span class="c"># 想要引入某个异常，需要具体到对应的文件
-</span>
-  <span class="n">In</span> <span class="p">[</span><span class="mi">1</span><span class="p">]:</span> <span class="kn">from</span> <span class="nn">FBRank.utils.exceptions</span> <span class="kn">import</span> <span class="n">IllegalArgumentException</span>
-
-  <span class="c"># 但想要引入某个类，只要具体到对应的 package 就可以了
-</span>
-  <span class="n">In</span> <span class="p">[</span><span class="mi">2</span><span class="p">]:</span> <span class="kn">from</span> <span class="nn">FBRank.object</span> <span class="kn">import</span> <span class="n">Club</span>
-
-  <span class="c"># 具体原因是在 FBRank/object 下的 __init__.py 里有如下代码
-</span>
-  <span class="kn">from</span> <span class="nn">.League</span> <span class="kn">import</span> <span class="n">League</span>
-  <span class="kn">from</span> <span class="nn">.Club</span> <span class="kn">import</span> <span class="n">Club</span>
-  <span class="kn">from</span> <span class="nn">.Player</span> <span class="kn">import</span> <span class="n">Player</span>
-  </code></pre></figure>
-
-
-        </div>
-        
-          <p class="post-continue">
-            <a href="/2015/03/11/Python-Import-Mechanism/">Read on &rarr;</a>
-          </p>
-        
-      </li>
-    
-      
-      
-
-      <li>
-        <header class="post-header">
-          <h1 class="post-title">
             <a class="post-link" href="/2015/03/11/Dynamic-Programming-Explanation/">DP 解题思路</a>
           </h1>
 
@@ -2344,6 +2122,33 @@ C++ 版：</p>
   </li>
   <li>
     <p>部署和运维相对于其他调度工具偏难，参考它的 <a href="https://github.com/alibaba/zeus/wiki/%E5%AE%89%E8%A3%85%E6%8C%87%E5%AF%BC%E6%96%87%E6%A1%A3">安装文档</a></p>
+  </li>
+</ul>
+
+<p>MapReduce 实现细节</p>
+
+<p>实现数据库 left/inner/right join</p>
+
+<p>这里可以参考 Quora 的这个问题：https://www.quora.com/How-does-Hive-implement-joins-in-Map-Reduce</p>
+
+<p>存在 Map-side 和 Reduce-side 两种情况来区分讨论</p>
+
+<p>MultiInput 用 ArrayList 存储</p>
+
+<p>劣势：在一个表中有上千万数据时可能会 OOM</p>
+
+<p>HBase:</p>
+
+<p><img src="/images/HBase-source-code.png" alt="HBase-source-code.png" /></p>
+
+<p>HBase 的特点：</p>
+
+<ul>
+  <li>
+    <p>实现比 redis 持久化存储效果更好的 key-value 键值对</p>
+  </li>
+  <li>
+    <p>实现需要有历史版本的增量存储</p>
   </li>
   <li>
     <p>最近又有需求，在 Ubuntu 环境下用 VirtualBox 重新安装了 Win8.1。具体</p>
