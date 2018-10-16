@@ -100,49 +100,6 @@
       <li>
         <header class="post-header">
           <h1 class="post-title">
-            <a class="post-link" href="/2017/11/07/blockchain-bitcoin-talk/">操作数字货币的一些碎碎念(比特币、区块链、一致性、etc)</a>
-          </h1>
-
-          <p class="post-meta">Nov 7, 2017 • 
-  
-  
-
-</p>
-        </header>
-
-        <div class="post-content">
-          <ol>
-  <li>讨论 BTC 的套利性是否真的有必要</li>
-  <li>讨论比特币的存储，外部交易所的不稳定性</li>
-  <li>讨论数字货币的不靠谱性，白皮书，代码</li>
-  <li>讨论长期持有与其他理财方式(美股)的关系</li>
-  <li>讨论如何在一个自己完全陌生的环境中不被割韭菜</li>
-</ol>
-
-<hr />
-
-<p>讨论 EOS 的图片</p>
-
-<p><img src="/images/EOS.jpg" alt="EOS.png" /></p>
-
-<p>讨论比特币打赏：</p>
-
-<p>欢迎大家：<strong>1KAYM9K6M6Cp7RJwwr4K1m59ETPxB6o8n4</strong></p>
-
-        </div>
-        
-          <p class="post-continue">
-            <a href="/2017/11/07/blockchain-bitcoin-talk/">Read on &rarr;</a>
-          </p>
-        
-      </li>
-    
-      
-      
-
-      <li>
-        <header class="post-header">
-          <h1 class="post-title">
             <a class="post-link" href="/2017/05/22/Python-Import-Mechanism/">The Import Mechanism Of Python And Two Related Problems</a>
           </h1>
 
@@ -157,6 +114,7 @@
           <p>How to solve <code class="highlighter-rouge">No module named</code> and <code class="highlighter-rouge">Attempted relative import</code> ?</p>
 
 <!-- more -->
+
 <p><a href="/../translation/2017-05-22-Python-Import-Mechanism.html">这篇文章对应的中文版</a></p>
 
 <h3 id="no-module-named">No module named</h3>
@@ -812,47 +770,47 @@ tempArray.push(parseInt(jsonData[i].startTime) + 28800000,parseInt(jsonData[i].s
 
 <h4 id="what-is-pythonic-code">What is Pythonic Code</h4>
 
-<p>Pythonic 代码，就是能够把代码逻辑 Pythonic 地实现，试着进行一些小的总结：</p>
+<p>Pythonic code is to implement code in a pythonic way.Having a summary:</p>
 
 <ol>
   <li>
-    <p>OOP,考虑代码复用和扩展，很多都是可以用一个基本类/ABC 来提供接口，其他子类自定义实现方法不要想着写一个大而全的类实现所有功能。</p>
+    <p><code class="highlighter-rouge">OOP</code> considers code reuse and extension. Many can use a basic class / ABC to provide an interface, other sub-class inherit from it just needs to implement the necessary function.</p>
   </li>
   <li>
-    <p>自定义 BaseException，如 <code class="highlighter-rouge">class ProjectBasedException(Exception)</code>,然后用各种继承共有异常类的代码来处理具体异常，从而能够更有针对性地报出提示信息</p>
+    <p>Customize BaseException, such as <code class="highlighter-rouge">class ProjectBasedException(Exception)</code>, and then use the code of the various inheritance exception classes to handle the specific exception, so that the prompt information can be reported more specifically.</p>
   </li>
   <li>
-    <p>在 utils 里定义一些小的和公用的函数，将复用的代码抽象成 @decorators；在 settings 里定义会被使用的配置文件，如 url 等，避免硬编码（hard-coded）</p>
+    <p>Define some small and common functions in utils, abstract the multiplexed code into @decorators; define the configuration files that will be used in settings, such as url, to avoid hard-coded.</p>
   </li>
   <li>
-    <p>防御性编码（defensive programming），虽然可以用 _prefix 来做到某种程度的定义 private 属性，但对 API 传入的参数必须要做类型检测。用合理的数据结构或者其他工具（redis/celery）来限制资源的使用。发现这个时候正向逻辑的代码在整个代码的占比中会大幅下降)</p>
+    <p>Defensive programming. Although _prefix can be used to define the private attribute to some extent, the parameters passed to the API must be type tested. Use a reasonable data structure or other tools (redis/celery) to limit the use of resources.</p>
   </li>
   <li>
-    <p>meta-programming 实现 <code class="highlighter-rouge">User-defined behaviour</code> 行为。实际上所有优秀的 Python 代码都有这一部分</p>
+    <p>meta-programming implements the <code class="highlighter-rouge">User-defined behaviour</code>.</p>
   </li>
   <li>
-    <p><code class="highlighter-rouge">docstring</code> 的标准注释以及自己编写单测，<code class="highlighter-rouge">logging</code> 保留日志</p>
+    <p>Standard comments for <code class="highlighter-rouge">docstring</code> and writing unit tests, logging important actions to files.</p>
   </li>
   <li>
-    <p>在完成以上的基础上，一些细节，像用 <code class="highlighter-rouge">''.join[]</code> 来取代字符串拼接，用 <code class="highlighter-rouge">list-comprehension</code> 来取代循环等</p>
+    <p>On the basis of the above, some details, like replacing the string splicing with <code class="highlighter-rouge">''.join[]</code>, replacing the loop with <code class="highlighter-rouge">list-comprehension</code> also should be noticed.</p>
   </li>
 </ol>
 
 <hr />
 
-<h4 id="阅读列表集合">阅读列表集合</h4>
+<h3 id="projects-list">Projects List</h3>
 
-<p>并不是所有的 Github 上高 star 项目都具有借鉴性，比如说某个 <code class="highlighter-rouge">1000+ star</code> 的项目的代码风格并不好，有大量的代码不符合 <code class="highlighter-rouge">DRY(Don't Repeat Yourself)</code> 的原则。还有许多项目直接 Hack 了 Python 本身，看到那么多以 __ 开头的变量和函数，很难理清背后的逻辑到底是什么（说的就是 Django…….）最后主要看了以下的一些代码：</p>
+<p>Not all high-star projects on Github are useful. For example, the code style of a <code class="highlighter-rouge">1000+ star</code> project is not good, and a lot of code does not meet the principle of <code class="highlighter-rouge">DRY(Don't Repeat Yourself)</code> . There are still many projects that directly hack Python itself(so many variables and functions begin with <code class="highlighter-rouge">__</code>, it’s hard to understand what the logic behind it is)</p>
 
 <hr />
 
-<h5 id="lepture-所写的-june">@lepture 所写的 <a href="https://github.com/pythoncn/june">june</a></h5>
+<h5 id="june"><a href="https://github.com/pythoncn/june">june</a></h5>
 
-<p>虽然项目在描述上已经被废弃（deprecated），但还是可以顺利运行。一个论坛项目，包含了常见的 Node/Topic/Reply 三级主题。</p>
+<p>Although the project has been deprecated in the description, it can still run smoothly. A forum project that includes the <code class="highlighter-rouge">Node/Topic/Reply</code>.</p>
 
-<p>a. 对 OOP 贯彻的非常彻底，以下为例：</p>
+<p>a. The implementation of OOP is very thorough, the following is an example:</p>
 
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="c"># 在 models 模型里定义了保存的方法
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="c"># Define saving method in Topic model
 </span>
 <span class="k">class</span> <span class="nc">Topic</span><span class="p">(</span><span class="n">db</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
     <span class="c">#...
@@ -863,7 +821,7 @@ tempArray.push(parseInt(jsonData[i].startTime) + 28800000,parseInt(jsonData[i].s
             <span class="n">db</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
             <span class="k">return</span> <span class="bp">self</span>
 
-<span class="c"># 在 forms 表单里调用了 models 里的保存方法
+<span class="c"># Form uses save method of Topic Model
 </span>
 <span class="k">class</span> <span class="nc">TopicForm</span><span class="p">(</span><span class="n">BaseForm</span><span class="p">):</span>
     <span class="c">#...
@@ -871,7 +829,7 @@ tempArray.push(parseInt(jsonData[i].startTime) + 28800000,parseInt(jsonData[i].s
     <span class="n">topic</span> <span class="o">=</span> <span class="n">Topic</span><span class="p">(</span><span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">Topic</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">user</span><span class="o">=</span><span class="n">user</span><span class="p">,</span><span class="n">node</span><span class="o">=</span><span class="n">node</span><span class="p">)</span>
 
-<span class="c"># 在 views 视图里调用了 forms 里的方法
+<span class="c"># Views uses method of Form
 </span>
 <span class="nd">@bp.route</span><span class="p">(</span><span class="s">'/create/&lt;int:id&gt;'</span><span class="p">,</span><span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s">'GET'</span><span class="p">,</span><span class="s">'POST'</span><span class="p">])</span>
 <span class="nd">@require_user</span>
@@ -884,11 +842,13 @@ tempArray.push(parseInt(jsonData[i].startTime) + 28800000,parseInt(jsonData[i].s
         <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="n">url_for</span><span class="p">(</span><span class="s">'.view'</span><span class="p">,</span><span class="n">uid</span><span class="o">=</span><span class="n">topic</span><span class="o">.</span><span class="nb">id</span><span class="p">))</span>
     <span class="k">return</span> <span class="n">render_template</span><span class="p">(</span><span class="s">'topic/create.html'</span><span class="p">,</span> <span class="n">node</span><span class="o">=</span><span class="n">node</span><span class="p">,</span> <span class="n">form</span><span class="o">=</span><span class="n">form</span><span class="p">)</span>
 
-<span class="c"># 这样就避免了在 views 里调用模型和 db.session.add(topic) 的麻烦</span></code></pre></figure>
+<span class="c"># So avoiding the hassle of calling the model and db.session.add(topic) in views.</span></code></pre></figure>
 
-<p>b. 在上面看到了有一个装饰器 <code class="highlighter-rouge">@require_user</code>,这是对用户进行的权限管理。实际上试着想一下，一名用户可能会有多个角色，如果对这些角色每个都定义一个装饰器，就会有太多的重复了。在这种情况下我们来看看作者是怎么做的：</p>
+<hr />
 
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="c"># 定义了一个基本类
+<p>b.  there is a decorator <code class="highlighter-rouge">@require_user</code>, which is the permission management for the user. A user may have multiple roles. If you define a decorator for each of these roles, there will be too many repetitions. In this case let’s see what the author did:</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="c"># Define a base class
 </span>
 
 <span class="k">class</span> <span class="nc">require_role</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
@@ -928,7 +888,7 @@ tempArray.push(parseInt(jsonData[i].startTime) + 28800000,parseInt(jsonData[i].s
             <span class="k">return</span> <span class="n">method</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">wrapper</span>
 
-<span class="c"># 之后定义不同的权限限制
+<span class="c"># Then define different permission limits for different roles
 </span>
 
 <span class="n">require_login</span> <span class="o">=</span> <span class="n">require_role</span><span class="p">(</span><span class="bp">None</span><span class="p">)</span>
@@ -938,22 +898,24 @@ tempArray.push(parseInt(jsonData[i].startTime) + 28800000,parseInt(jsonData[i].s
 
 <hr />
 
-<h5 id="7sdream七秒不觉梦-所写的-zhihu-oauth">@7sDream(七秒不觉梦) 所写的 <a href="https://github.com/7sDream/zhihu-oauth">zhihu-oauth</a></h5>
+<h5 id="zhihu-oauth-by-7sdream"><a href="https://github.com/7sDream/zhihu-oauth">zhihu-oauth</a> by @7sDream</h5>
 
-<p>第二个项目是 @7sDream(七秒不觉梦) 所写的 <a href="https://github.com/7sDream/zhihu-oauth">zhihu-oauth</a>。整体结构非常漂亮，meta-programming 也做的非常好。特别是考虑到作者和我是同龄人，真的是厉害厉害。顺便提了两个 PR:<a href="https://github.com/7sDream/zhihu-oauth/pull/27">pull-27</a> 和 <a href="https://github.com/7sDream/zhihu-oauth/pull/28">pull-28</a> ~</p>
+<p>The second project is <a href="https://github.com/7sDream/zhihu-oauth">zhihu-oauth</a> written by @7sDream. The overall structure is very beautiful, and the meta-programming is also very good. Especially considering that the author and I are peers, it is especially amazing. BTW, I also provide two PRs: 
+<a href="https://github.com/7sDream/zhihu-oauth/pull/27">pull-27</a> and 
+<a href="https://github.com/7sDream/zhihu- Oauth/pull/28">pull-28</a></p>
 
-<p>整体项目是这样的，作者逆解析了知乎的安卓客户端，将其中的 oauth 接口进行了封装，不同于其他的利用模拟登陆和 BeautifuoSoup 解析网页内容的库，zhihu-oauth 能提供更加稳定的接口，也更不容易被封 ip ⊙﹏⊙b</p>
+<p>The author reversely parses the zhihu Android client and encapsulates the oauth interface. Unlike other libraries that use simulated login and Beautifuoup to parse web content, zhihu-oauth can provide a more stable API. And it is also less likely to be blocked by ip.</p>
 
-<p>整个项目分为三部分：<code class="highlighter-rouge">oauth</code> 进行验证，<code class="highlighter-rouge">zhcls</code> 进行类的描述，<code class="highlighter-rouge">client</code> 将两者结合起来提供登陆的接口</p>
+<p>The whole project is divided into three parts: <code class="highlighter-rouge">oauth</code> for verification, <code class="highlighter-rouge">zhcls</code> for class description, and <code class="highlighter-rouge">client</code> for combining the two to provide a login API.</p>
 
-<p>对 oauth 部分：</p>
+<p>For <code class="highlighter-rouge">oauth</code>:</p>
 
 <ul>
   <li>
-    <p>在 im_android.py 中定义了 imZhihuAndroidClient 类，继承了 requests.authbase 。在 <code class="highlighter-rouge">__init__</code> 中定义了 api_version/app_version/zpp_za/ua 等在构建参数时会用到的方法。同时用 self._api_version=api_version or API_VERSION(来自 setting.py) 的方法来允许用户自定义一些参数。之后的 <code class="highlighter-rouge">__call__(self,r)</code> 则是 authbase 的机制，会在 requests 时自动调用。</p>
+    <p>The <code class="highlighter-rouge">imZhihuAndroidClient class</code> is defined in im_android.py, inheriting requests.authbase. The methods that are used in building parameters such as api_version/app_version/zpp_za/ua are defined in <code class="highlighter-rouge">__init__</code>. Also use the method self._api_version=api_version or API_VERSION (from setting.py) to allow the user to customize some parameters. The following <code class="highlighter-rouge">__call__(self,r)</code> is the mechanism of authbase and will be called automatically when posting a request.</p>
   </li>
   <li>
-    <p>在 before_login_auth.py 中则定义了 BeforeLoginAuth 类，继承了上面的 imZhihuAndroidClient 类，在 imZhihuAndroidClient 的基础上增加了 client_id,用 self._client_id=client_id 来进行登陆之前的基础验证。而 <code class="highlighter-rouge">__call__</code> 的实现如下：</p>
+    <p>Before_login_auth.py defines the BeforeLoginAuth class, inherits the imZhihuAndroidClient class above, adds client_id to imZhihuAndroidClient, and uses self._client_id=client_id to execute validation before login. The implementation of <code class="highlighter-rouge">__call__</code> is as follows:</p>
   </li>
 </ul>
 
@@ -964,13 +926,14 @@ tempArray.push(parseInt(jsonData[i].startTime) + 28800000,parseInt(jsonData[i].s
 
 <ul>
   <li>
-    <p>在 setting.py 中则定义了一些会用到的参数，如 ZHIHU_API_ROOT,LOGIN_URL=ZHIHU_API_ROOT+’/signin’,全部用大写</p>
+    <p>In setting.py, some parameters are used, such as <code class="highlighter-rouge">ZHIHU_API_ROOT</code>, <code class="highlighter-rouge">LOGIN_URL=ZHIHU_API_ROOT+'/signin'</code>, all in uppercase.</p>
   </li>
   <li>
-    <p>在 token.py 中则定义了 ZhihuToken 类，访问知乎后所产生的 token。所以很显然根据 OOP 的思想，可以做如下工作：
-在 <code class="highlighter-rouge">__init__</code> 中定义了 self._cretate_at=time.time(),self._expires_in=expires_in 初始化工具，同时还提供了这些：</p>
+    <p>In token.py, the ZhihuToken class is defined, and the token is generated after the access is known. So obviously, according to OOP’s thoughts, the following job can be done:</p>
   </li>
 </ul>
+
+<p>The <code class="highlighter-rouge">self._cretate_at=time.time(), self._expires_in=expires_in</code> initialization tool is defined in <code class="highlighter-rouge">__init__</code> and these are also provided:</p>
 
 <figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">class</span> <span class="nc">ZhihuToken</span><span class="p">:</span>
 
@@ -991,12 +954,12 @@ tempArray.push(parseInt(jsonData[i].startTime) + 28800000,parseInt(jsonData[i].s
     <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">from_file</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
         <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span><span class="s">'rb'</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">pickle</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span> <span class="c"># 本地持久化存储
+            <span class="k">return</span> <span class="n">pickle</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span> <span class="c"># pickle ,long-time storage
 </span>
 
     <span class="k">def</span> <span class="nf">save</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">filename</span><span class="p">):</span>
         <span class="s">"""
-        将 token 保存为文件
+        saving token to file
         """</span>
         <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span><span class="s">'wb'</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
             <span class="n">pickle</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">f</span><span class="p">)</span>
@@ -1005,289 +968,74 @@ tempArray.push(parseInt(jsonData[i].startTime) + 28800000,parseInt(jsonData[i].s
     <span class="k">def</span> <span class="nf">user_id</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_user_id</span></code></pre></figure>
 
-<ul>
-  <li>
-    <p>在 utils.py 中则定义了 <code class="highlighter-rouge">login_signature(data,secret)</code> 函数，为经过签名后的 dict 添加了 timestamp 和 signature 两项（这就是业务相关了，将签名和主体的验证函数分开）</p>
-  </li>
-  <li>
-    <p>在 zhihu_oauth.py 中定义了 ZhihuOAuth,相比于 BeforeLoginAuth,这个类同样继承了 imZhihuAndroidClient,所不同的是增加了发送 token 的功能，参见：</p>
-  </li>
-</ul>
+<p>Look again at the implementation of <code class="highlighter-rouge">exception.py</code>. As mentioned earlier,base exception should be provided for the entire project.</p>
 
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">r</span><span class="p">):</span>
-    <span class="n">r</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span><span class="n">ZhihuOAuth</span><span class="p">,</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__call__</span><span class="p">(</span><span class="n">r</span><span class="p">)</span>
-    <span class="n">r</span><span class="o">.</span><span class="n">headers</span><span class="p">[</span><span class="s">'Authorization'</span><span class="p">]</span> <span class="o">=</span> <span class="s">'{type} {token}'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
-        <span class="nb">type</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_token</span><span class="o">.</span><span class="nb">type</span><span class="o">.</span><span class="n">capitialize</span><span class="p">()),</span> <span class="c"># self._token 是在 __init__ 里定义的
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="c"># deal python2 and python3 respectively.
 </span>
-        <span class="n">token</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_token</span><span class="o">.</span><span class="nb">type</span><span class="p">)</span> <span class="c"># self._token.type 就再次看到了 OOP 的存在
+<span class="c"># Also you can use `if py2:import ..;else import ..`,but it's against the   
 </span>
-        <span class="p">)</span>
-    <span class="k">return</span> <span class="n">r</span></code></pre></figure>
+<span class="c"># principle of `easier to ask for forgiveness than permission`
+</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">json</span> <span class="kn">import</span> <span class="n">JSONDecodeError</span> <span class="k">as</span> <span class="n">MyJSONDecodeError</span>
+<span class="k">except</span> <span class="nb">ImportError</span><span class="p">:</span>
+    <span class="n">MyJSONDecodeError</span> <span class="o">=</span> <span class="nb">Exception</span></code></pre></figure>
 
-<p>下面进行 zhcls 的分析，在分析之前先看一下 exception.py 的实现。正如前面所说，exception 应该提供一个整个项目的错误。</p>
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">class</span> <span class="nc">UnexpectedResponseException</span><span class="p">(</span><span class="nb">Exception</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">url</span><span class="p">,</span><span class="n">res</span><span class="p">):</span>
+        <span class="s">"""
+        For all situations that json cannot be decoded,this exception will be used.
+        """</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">url</span> <span class="o">=</span> <span class="n">url</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">res</span> <span class="o">=</span> <span class="n">res</span>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>try:
-    from json import JSONDecodeError as MyJSONDecodeError
-except ImportError:
-    MyJSONDecodeError = Exception
+    <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s">"when visit {self.url},get an unexpected response {self.res.text}"</span><span class="o">.</span>
+            <span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">=</span><span class="bp">self</span><span class="p">)</span>
 
-# 对 py3 用 JSONDecodeError,而用 py2 每次都用纯 exception 来处理 JSON 格式解析错误也
-# 太不 Pythonic 了
+    <span class="n">__str__</span> <span class="o">=</span> <span class="n">__repr__</span></code></pre></figure>
 
-</code></pre>
-</div>
-<p>在实现的各种异常里最有通用性的还是 UnexpectedResponseException:</p>
+<hr />
 
-<div class="highlighter-rouge"><pre class="highlight"><code>class UnexpectedResponseException(Exception):
-    def __init__(self,url,res):
-        """
-        此处做了适当演绎
-        对于所有 JSON 没有符合预期的错误，都可以用该异常来处理
-        """
-        self.url = url
-        self.res = res
+<p>Java 代码</p>
 
-    def __repr__(self):
-        return "when visit {self.url},get an unexpected response {self.res.text}".
-            format(self=self)
+<p>Based on requirements,I ever investigaed the use of <code class="highlighter-rouge">jedis</code> to see how it handlers multi-thread situation.</p>
 
-    __str__ = __repr__
+<p>It inherits <code class="highlighter-rouge">Apache.commons.pool</code> and it is called
+The <code class="highlighter-rouge">super.getResource()</code> method, which in turn calls the <code class="highlighter-rouge">borrowObject</code> method in the pool.In the <code class="highlighter-rouge">borrowObject</code> method, it has implemented the consideration of multithreading:</p>
 
-</code></pre>
-</div>
+<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="kt">long</span> <span class="n">starttime</span> <span class="o">=</span> <span class="n">System</span><span class="o">.</span><span class="na">currentTimeMillis</span><span class="o">();</span>
+<span class="n">Latch</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">latch</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Latch</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;();</span>
+<span class="kt">byte</span> <span class="n">whenExhaustedAction</span><span class="o">;</span>
+<span class="kt">long</span> <span class="n">maxWait</span><span class="o">;</span>
+<span class="kd">synchronized</span> <span class="o">(</span><span class="k">this</span><span class="o">)</span> <span class="o">{</span>
+<span class="cm">/* 
+Get local copy of current config. Can't sync when used 
+later as it can result in a deadlock. Has the added 
+advantage that config is consistent for entire execution
 
-<p>在 zhcls 中，Base.py 定义了基本类，从而可以被各种类来继承：</p>
+*/</span>
+<span class="n">whenExhaustedAction</span> <span class="o">=</span> <span class="n">_whenExhaustedAction</span><span class="o">;</span>
+<span class="n">maxWait</span> <span class="o">=</span> <span class="n">_maxWait</span><span class="o">;</span>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>class Base(object):
-    def __init__(self,zhihu_obj_id,cache,session):
-        """
-        Base 中的 cache 类表示已知的属性值，一般由另一个对象的 JSON 数据中的一个属性充当
-
-         比如 :any:`Answer.author` 方法，由于在请求 :any:`Answer` 的数据时，
-         原始 JSON 数据中就有关于作者的一些简单信息。比如 name，id，headline。
-         在使用此方法时就会将这些不完整的数据传递到 ``answer`` 对象 （类型为
-         :any:`People`）的 ``cache`` 中。这样一来，在执行
-         ``answer.author.name`` 时，取出名字的操作可以省去一次网络请求。
-
-         在使用 @normal_attr,@other_obj,@streaming 时都会优先使用 cache 中的数据，在获取失败时
-         才会调用 _get_data 方法请求数据
-
-         // 这里的 cache 还是挺复杂的,相比之下 session 还是好理解的～
-        """
-        self._id = zhihu_obj_id
-        self._cache = cache
-        self._session = session
-
-    def _get_data(self):
-        """
-        它需要用到 4 个方法，都是类里面的
-        """
-        if self._data is None:
-            url = self._build_url()
-            res = self._session.request(
-                method = self._method(),
-                url = url,
-                params = self._build_params,
-                data = self._build_data())
-            e=GetDataErrorException(
-                url,res,'valid zhihu {0} JSON data'.format(self.__class__.__name__))
-            try:
-                json_dict = res.json()
-                if 'error' in json_dict:
-                    raise e
-                self._data = json_dict
-            except JSONDecodedError:
-                raise e
-
-    @abc.abstractmethod
-    def _build_url(self):
-        """
-        子类必须重载这一方法
-        """
-        return ''
-
-        def _build_params(self):
-            return None
-
-        def _build_data(self):
-            return None
-
-        def _method(self):
-            return 'GET'
-
-</code></pre>
-</div>
-
-<ul>
-  <li>对于很多像同一问题下的答案，answers，需要用 generator.py 来定义并生成了一系列的生成器</li>
-</ul>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>class BaseGenerator(object):
-    def __init__(self,url,session):
-        self._url = url
-        self._session = session
-        self._index = 0
-        self._data = []
-        self._up = 0
-        self._next_url = self._url
-        self._need_sleep = 0.5
-        self._extra_params = {}
-
-    def _fetch_more(self):
-        # 这一部分是关于具体的实现，就不多写了
-        # 大概就是说要设置一个 wait_time 如果不大于 MAX_WAITTIME 就
-
-    @abc.abstractmethod
-    def _build_obj(self,data):
-        """
-        进行构造对象
-        """
-        return None
-
-    def __getitem__(self,item):
-        """ 对　范围进行迭代 """
-        if not isinstance(item,int):
-            raise TypeError('{0} must be int'.format(item))
-
-        while item&gt;=self._up:
-            if self._next_url is nont None:
-                self._fetch_more() # 在 fetch_more 的过程中会使得 self._up 增加
-            else:
-                raise IndexError('Index out of range')
-        # 写代码的时候先写下面的，再写上面的，对异常处理
-        return self._build_obj(self._data[item])
-
-    def __iter__(self):
-        return self # 默认进行迭代的方式，可以直接用 yield 直接生成
-
-    def __next__(self):
-        """ 提供迭代方式访问数据，for xx in obj.xxxs　
-        用 self._index 来存储下一次迭代的下标"""
-        try:
-            obj=self._data[self._index] # 突然意识到它和 obj=self[self._index]
-            # 效果是一样的，可以可以，非常 Pythonic
-        except IndexError:
-            self._idnex=0
-            raise StopIteration # 学以致用
-        self._index+=1
-        return obj
-
-    next=__next__ # 适配 Py2 和 Py3
-</code></pre>
-</div>
-
-<p>下面以生成答案 AnswerGenerator 为例：</p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>class AnswerGenerator(BaseGenerator):
-    def __init__(self,url,session):
-        super(AnswerGenerator,self).__init__(url,session)
-    def _build_obj(self):
-        from .answer imoprt Answer # 避免循环引用还有其他
-        return Answer(data['id'],data,self._session) # 哪来的 data。。。这个变量是怎么来的
-</code></pre>
-</div>
-
-<p>下面就是一个装饰器，用来循环生成列表：</p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>
-def generator_of(url_pattern, class_name=None):
-    def wrappers_wrapper(func):
-        @functools.wraps(func)
-        def wrapper(self, *args, **kwargs):
-            cls_name = class_name or func.__name__
-
-            if cls_name.endswith('s'):
-                cls_name = cls_name[:-1]
-            cls_name = cls_name.capitalize()
-
-            gen_cls_name = cls_name + 'Generator'
-            try:
-                gen_cls = getattr(sys.modules[__name__], gen_cls_name)
-            except AttributeError:
-                return func(*args, **kwargs)
-
-            self._get_data()
-
-            return gen_cls(url_pattern.format(self.id), self._session)
-
-        return wrapper
-
-    return wrappers_wrapper
-</code></pre>
-</div>
-
-<p>还用到了一个装饰器是 normal_attr,直接从 data 中提取属性并返回：</p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>def normal_attr(name_in_json=None):
-    """
-    标志这个属性为常规属性，自动从对象的数据中提取对应属性返回
-    """
-    def wrappers(func):
-        @functools.wraps(func)
-        def wrapped_func(self,*args,**kwargs):
-            def use_data_or_func(name,data):
-                if can_get_from(the_name,data):
-                    return data[name]
-                else:
-                    return func(*args,**kwargs)
-            name=name_in_json if name_in_json else func.__name__ 
-            if self._data:
-                return use_data_or_func(name,self._data)
-            elif self._cache and can_get_from(name,self._cache):
-                return self._cache[name]
-            else:
-                # 对于 id ,需要特殊对待
-                if name=='id':
-                    return func(self,*args,**kwargs)
-                self._get_data() # 来取得数据
-
-                if self._data:
-                    return use_data_or_func(name,self._data)
-
-        return wrapped_func
-
-    return wrappers
-
-</code></pre>
-</div>
-
-<ul>
-  <li>关于 StreamingJSON 数据这里就不详细写了</li>
-</ul>
-
-<p>Java Version</p>
-
-<p>Update：最近又遇到了这个问题。具体的原因就是最近在处理的程序用了一个自建的 redis pool。
-它在 getInstance() 方法这里用了 synchronized 关键字来加锁。</p>
-
-<p>但我们看一下 redis 是怎么实现这一点的。它继承了 Apache.commons.pool ，里面调用了
-<code class="highlighter-rouge">super.getResource()</code> 方法，而它又调用了 pool 里面的 <code class="highlighter-rouge">borrowObject</code> 方法。
-在 <code class="highlighter-rouge">borrowObject</code> 方法里，它已经实现了对多线程的考虑：</p>
-
-<p>long starttime = System.currentTimeMillis();
-Latch<T> latch = new Latch<T>();
-byte whenExhaustedAction;
-long maxWait;
-synchronized (this) {
-            // Get local copy of current config. Can't sync when used // later as it can result in a deadlock. Has the added // advantage that config is consistent for entire execution
-whenExhaustedAction = _whenExhaustedAction;
-maxWait = _maxWait;</T></T></p>
-
-<p>// activate &amp; validate the object
-try {
-    _factory.activateObject(latch.getPair().value);
-    if(_testOnBorrow &amp;&amp;
-            !_factory.validateObject(latch.getPair().value)) {
-        throw new Exception(“ValidateObject failed”);
-    }
-    synchronized(this) {
-        _numInternalProcessing–;
-        _numActive++;
-    }
-    return latch.getPair().value;
-}
-catch (Throwable e) {
-}</p>
+<span class="c1">// activate &amp; validate the object
+</span>
+<span class="k">try</span> <span class="o">{</span>
+    <span class="n">_factory</span><span class="o">.</span><span class="na">activateObject</span><span class="o">(</span><span class="n">latch</span><span class="o">.</span><span class="na">getPair</span><span class="o">().</span><span class="na">value</span><span class="o">);</span>
+    <span class="k">if</span><span class="o">(</span><span class="n">_testOnBorrow</span> <span class="o">&amp;&amp;</span>
+            <span class="o">!</span><span class="n">_factory</span><span class="o">.</span><span class="na">validateObject</span><span class="o">(</span><span class="n">latch</span><span class="o">.</span><span class="na">getPair</span><span class="o">().</span><span class="na">value</span><span class="o">))</span> <span class="o">{</span>
+        <span class="k">throw</span> <span class="k">new</span> <span class="nf">Exception</span><span class="o">(</span><span class="s">"ValidateObject failed"</span><span class="o">);</span>
+    <span class="o">}</span>
+    <span class="kd">synchronized</span><span class="o">(</span><span class="k">this</span><span class="o">)</span> <span class="o">{</span>
+        <span class="c1">// only one thread can execute at the moment
+</span>
+        <span class="n">_numInternalProcessing</span><span class="o">--;</span>
+        <span class="n">_numActive</span><span class="o">++;</span>
+    <span class="o">}</span>
+    <span class="k">return</span> <span class="n">latch</span><span class="o">.</span><span class="na">getPair</span><span class="o">().</span><span class="na">value</span><span class="o">;</span>
+<span class="o">}</span>
+<span class="k">catch</span> <span class="o">(</span><span class="n">Throwable</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+<span class="o">}</span></code></pre></figure>
 
         </div>
         
@@ -1970,7 +1718,7 @@ Then <code class="highlighter-rouge">dp[i][j]=max(dp[i-1][j]+grid[i][j],dp[i][j-
       <li>
         <header class="post-header">
           <h1 class="post-title">
-            <a class="post-link" href="/2014/11/21/some-techniques/">碎碎念...</a>
+            <a class="post-link" href="/2014/11/21/some-techniques/">Mumbler About Techonology(Continually updated)</a>
           </h1>
 
           <p class="post-meta">Nov 21, 2014 • 
@@ -1981,166 +1729,111 @@ Then <code class="highlighter-rouge">dp[i][j]=max(dp[i-1][j]+grid[i][j],dp[i][j-
         </header>
 
         <div class="post-content">
-          <p>Actually I’m trying to express some light knowledge about coding and interesting experience in my daily life.And this post will be divided into 2 parts: the 1st part will be written in english,and the corresponding Chinese translation can be found in <a href="/Chinese_translation.html">chinese</a></p>
+          <p>Mumblers about technology…too short to write a novel</p>
 
-<p>一些碎碎念…
-<img src="/images/HBase-source-code.png" alt="HBase-source-code.png" />
-<!-- more --></p>
+<!-- more -->
 
-<ul>
-  <li>之前代码是这样的：
-    <div class="highlighter-rouge"><pre class="highlight"><code> private static byte[] decrypt(byte[] data, byte[] key) throws Exception {
-      SecureRandom sr = new SecureRandom();
-      DESKeySpec dks = new DESKeySpec(key);
-      SecretKeyFactory keyFactory = SecretKeyFactory.getInstance("DES");
-      SecretKey securekey = keyFactory.generateSecret(dks);
-      Cipher cipher = Cipher.getInstance("DES");
-      cipher.init(2, securekey, sr);
-      return cipher.doFinal(data);
-  }
-</code></pre>
-    </div>
-  </li>
-</ul>
+<p><a href="/../translation/2014-11-21-some-techniques.html">这篇文章对应的中文版</a></p>
 
-<p>各种 debug，看 DES 解法对应的 mode，最后还是要感谢 https://www.tools4noobs.com/online_tools/decrypt/ ，其实两行就用 Python 写好了：</p>
+<p>About crypto,mainly I want to discuss the <code class="highlighter-rouge">Bitcoin arbitrage</code>,<code class="highlighter-rouge">Bitcoin storage, instability of external exchanges(such as binance)</code>,<code class="highlighter-rouge">relationship between concept、code and white paper</code></p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>def decrypt_des(input_):
-    """
-    :param input_: 加密的密文
-    :return: 经过 des 解密后的密文
-    """
-    des = DES.new("naidnefi", DES.MODE_ECB)
-    return "".join(x for x in des.decrypt(b64decode(input_)) if 31 &lt; ord(x) &lt; 127)
-</code></pre>
-</div>
-<p>最后解密出来一堆 ‘\x5’，可以看 http://donsnotes.com/tech/charsets/ascii.html 来得到具体的含义，解决方法参考：https://stackoverflow.com/questions/14256593/remove-special-characters-from-the-string</p>
+<p>My bitcoin address is :<strong>1KAYM9K6M6Cp7RJwwr4K1m59ETPxB6o8n4</strong></p>
 
-<ul>
-  <li>
-    <p>今天帮我司算法团队调一个 Bug，调的心好累……本来用 Python2 处理中文就很闹心，还要用正则来调。调试了一大堆 unicode 字符以后终于能跑了……结果在测试服务器能跑，在对方的线上服务器就不能跑，擦……最后搜到了这个 ！<a href="https://stackoverflow.com/questions/1446347/how-to-find-out-if-python-is-compiled-with-ucs-2-or-ucs-4">链接</a>，一试，果然……测试的是用 ucs4 编译的，而线上的是用 ucs2 编译的。两个有什么区别……我不知道啊……现在到家都已经 12 点了，我要睡觉……明天再说</p>
-  </li>
-  <li>
-    <p>自从 Google Reader 解散之后就没有怎么再用过 RSS 了，但最近发现还是很有用啊，类似 Push 和 Pull。这个 <a href="http://wokuang-blog.logdown.com/posts/208334-use-gmail-to-read-rss-data">链接</a> 里说直接用 IFTTT 连接 Feedly 和 Gmail 就可以，但连接时候发现 IFTTT 必须要付费升级到 Pro 版才行。所以参考 <a href="http://www.jianshu.com/p/26b5c66e8546">简书的这篇文章</a>，连接 RSS 和 Gmail。不过 IFTTT 改版后界面需要在右上角的个人主页那里点击 <code class="highlighter-rouge">New Applet</code>。有些 rss 的地址不一定好找，那就用 feedly 订阅后再导出 opml 文件，找到里面的 xmlUrl 属性对应内容。最后的截图如下：</p>
-  </li>
-</ul>
+<p>Below is tredency of <code class="highlighter-rouge">EOS</code>:</p>
 
-<p><img src="/images/rss.png" alt="rss.png" /></p>
+<p><img src="/images/EOS.jpg" alt="EOS.png" /></p>
 
-<ul>
-  <li>
-    <p>帮搜了一个 foursquare 的数据集。开始的链接地址是在 http://www.public.asu.edu/~hgao16/dataset.html，但链接失效了，用 Google 搜的话在犄角旮旯里找到个 reddit 的帖子 https://www.reddit.com/r/datasets/comments/1nywu2/foursquare_data_set/，里面到在 https://archive.org/download/201309_foursquare_dataset_umn 提供了下载zip 格式的文件，150M+。</p>
-  </li>
-  <li>
-    <p>Java 上 StringUtils 里最常见的一个就是把首字母变成小写，一般来实现的话就是</p>
-  </li>
-</ul>
+<hr />
 
-<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">static</span> <span class="n">String</span> <span class="nf">firstCharToLower</span><span class="o">(</span><span class="n">String</span> <span class="n">input</span><span class="o">){</span>
-    <span class="k">if</span><span class="o">(</span><span class="n">input</span> <span class="o">==</span> <span class="n">nulll</span><span class="o">)</span>
-    
-<span class="o">}</span></code></pre></figure>
+<p>Recently I’m writing java dedipher code,the initial part is written in Java：</p>
 
-<p>但 SO 上还有这么一个回答，提供了另一种思路：</p>
+<figure class="highlight"><pre><code class="language-java" data-lang="java"> <span class="kd">private</span> <span class="kd">static</span> <span class="kt">byte</span><span class="o">[]</span> <span class="nf">decrypt</span><span class="o">(</span><span class="kt">byte</span><span class="o">[]</span> <span class="n">data</span><span class="o">,</span> <span class="kt">byte</span><span class="o">[]</span> <span class="n">key</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+        <span class="n">SecureRandom</span> <span class="n">sr</span> <span class="o">=</span> <span class="k">new</span> <span class="n">SecureRandom</span><span class="o">();</span>
+        <span class="n">DESKeySpec</span> <span class="n">dks</span> <span class="o">=</span> <span class="k">new</span> <span class="n">DESKeySpec</span><span class="o">(</span><span class="n">key</span><span class="o">);</span>
+        <span class="n">SecretKeyFactory</span> <span class="n">keyFactory</span> <span class="o">=</span> <span class="n">SecretKeyFactory</span><span class="o">.</span><span class="na">getInstance</span><span class="o">(</span><span class="s">"DES"</span><span class="o">);</span>
+        <span class="n">SecretKey</span> <span class="n">securekey</span> <span class="o">=</span> <span class="n">keyFactory</span><span class="o">.</span><span class="na">generateSecret</span><span class="o">(</span><span class="n">dks</span><span class="o">);</span>
+        <span class="n">Cipher</span> <span class="n">cipher</span> <span class="o">=</span> <span class="n">Cipher</span><span class="o">.</span><span class="na">getInstance</span><span class="o">(</span><span class="s">"DES"</span><span class="o">);</span>
+        <span class="n">cipher</span><span class="o">.</span><span class="na">init</span><span class="o">(</span><span class="mi">2</span><span class="o">,</span> <span class="n">securekey</span><span class="o">,</span> <span class="n">sr</span><span class="o">);</span>
+        <span class="k">return</span> <span class="n">cipher</span><span class="o">.</span><span class="na">doFinal</span><span class="o">(</span><span class="n">data</span><span class="o">);</span>
+    <span class="o">}</span></code></pre></figure>
+
+<p>I need to translate it into Python.Thanks for <a href="https://www.tools4noobs.com/online_tools/decrypt/">decrypt</a> ，It can be implemented in 2 lines:</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">decrypt_des</span><span class="p">(</span><span class="n">input_</span><span class="p">):</span>
+    <span class="s">"""
+    :param input_: ciphered text
+    :return: DES deciphered text
+    """</span>
+    <span class="n">des</span> <span class="o">=</span> <span class="n">DES</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s">"naidnefi"</span><span class="p">,</span> <span class="n">DES</span><span class="o">.</span><span class="n">MODE_ECB</span><span class="p">)</span>
+    <span class="k">return</span> <span class="s">""</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">des</span><span class="o">.</span><span class="n">decrypt</span><span class="p">(</span><span class="n">b64decode</span><span class="p">(</span><span class="n">input_</span><span class="p">))</span> <span class="k">if</span> <span class="mi">31</span> <span class="o">&lt;</span> <span class="nb">ord</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">127</span><span class="p">)</span></code></pre></figure>
+
+<p>But the result contains much ‘\x5’，you can review <a href="http://donsnotes.com/tech/charsets/ascii.html">ascii</a> to get the exact meaning,solution is based on this link <a href="https://stackoverflow.com/questions/14256593/remove-special-characters-from-the-string">remove-special-characters-from-the-string</a></p>
+
+<hr />
+
+<p>Today I helped the algorithm team debug…weired… It was very troublesome to deal with Chinese with Python2, especially when using regular rules to adjust. After debugging a lot of unicode characters, It can finally run… The phenomenon is it can run in the test server , but cannot run in  the online server. Finally, I found this                                                <a href="https://stackoverflow.com/questions/1446347/how-to-find-out-if-python-is-compiled-with-ucs-2-or-ucs-4">ucs-2-or-ucs-4</a>. So the reason is that test server is compiled with ucs4, while online server is compiled with ucs2.</p>
+
+<hr />
+
+<p>subscribe the blog via <strong>IFTTT</strong> successfully,it can send the new blog into your email 
+<img src="/images/rss.png" alt="rss.png" /></p>
+
+<hr />
+
+<p>Helping others to search for a foursquare data set. The starting link address is at <a href="http://www.public.asu.edu/~hgao16/dataset.html">dateset</a>, but the link is invalid. If you search with Google, you can find a reddit post in the corner of the page <a href="https://www.reddit .com/r/datasets/comments/1nywu2/foursquare_data_set/">foursquare_data_set</a>, which provides downloadable zip file,about 150M+.</p>
+
+<hr />
+
+<p>The most common function in StringUtils of Java is to make the first letter lowercase, which is usually implemented as this:.</p>
+
+<p>There is an elegant answer in SO:</p>
 
 <figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="kt">char</span> <span class="n">c</span><span class="o">[]</span> <span class="o">=</span> <span class="n">string</span><span class="o">.</span><span class="na">toCharArray</span><span class="o">();</span>
 <span class="n">c</span><span class="o">[</span><span class="mi">0</span><span class="o">]</span> <span class="o">=</span> <span class="n">Character</span><span class="o">.</span><span class="na">toLowerCase</span><span class="o">(</span><span class="n">c</span><span class="o">[</span><span class="mi">0</span><span class="o">]);</span>
 <span class="n">string</span> <span class="o">=</span> <span class="k">new</span> <span class="n">String</span><span class="o">(</span><span class="n">c</span><span class="o">);</span></code></pre></figure>
 
-<p>其实是以牺牲可读性来换取了性能的增加</p>
+<p>A tradeoff between performance and readability.</p>
 
-<ul>
-  <li>Curator 是 Linkedin 开源的一款对 zookeeper 封装的工具，里面提供了各种方便实现的功能，包括更新配置文件，选取 leader 节点等。今天在 Spark 上看见了这个实现，具体对应代码在：<code class="highlighter-rouge">spark/core/src/main/scala/org/apache/spark/deploy/master/ZooKeeperPersistenceEngine.scala</code></li>
-</ul>
+<hr />
 
-<h4 id="what-happened">What Happened</h4>
+<p>Curator is a open source tool by Linkedin for zookeeper encapsulation that provides a variety of handy features, including updating configuration files and selecting leader nodes. There is an implementation on Spark.Corresponding code link is : <code class="highlighter-rouge">spark/core/src/main/scala/org/apache/spark/deploy/master/ZooKeeperPersistenceEngine.scala</code></p>
 
-<p>最近所做的一些事。还是挺有趣的。</p>
+<hr />
 
-<p>ETL 过程，代指 <strong>Extract-&gt;Transform-&gt;Load</strong>，进行数据抽取处理的过程</p>
+<p>Some records.</p>
 
-<p>HDFS 文件路径下面的数据来源一般有以下几种：</p>
+<p><strong>ETL</strong> means <strong>Extract-&gt;Transform-&gt;Load</strong></p>
 
-<ul>
-  <li>
-    <p>从已有的 RDBMS 数据库中导入，方便和业务进行分析</p>
-  </li>
-  <li>
-    <p>从已有的 HDFS 数据中进行连接和抽样，生成新的复合需求的数据</p>
-  </li>
-  <li>
-    <p>一些其他的路径，包括从 Flume 中用 HDFS Sink 写入，或者用 <code class="highlighter-rouge">hadoop fs -put</code> 来把本地的文件导入到 HDFS 中。</p>
-  </li>
-</ul>
-
-<p>第一种工具包括 Apache 出品的 Sqoop 和阿里出品的 DataX(京东是根据 DataX 的原理自己搞了一套)。二者的对比可以查看这个 <a href="https://chu888chu888.gitbooks.io/hadoopstudy/content/Content/11/chapter11.html">链接</a>。</p>
-
-<p>第二种工具则在大多数情况下都是在用 Hive 来解决需求。Hive 是 FaceBook 出品的可以把 HQL(类 SQL 语法)转化为 MapReduce 执行的工具，方便数据分析师进行操作。</p>
-
-<p>同时还调研了调度系统。从原理上来说只要写好执行脚本，直接用 crontab 设置好定时任务就好。但一方面随着业务量上升我们要管理多个脚本，另一方面还想要添加进度提醒、查看日志、失败重试、邮件预警、管理多个相互依赖任务等功能。在这种情况下调研了 <strong>Ozzie/Azkaban/Airflow/Zeus/Kettle</strong> 等项目。</p>
-
-<h4 id="关于-sqoop">关于 sqoop</h4>
-
-<h4 id="关于-hive">关于 Hive</h4>
-
-<h4 id="调度系统">调度系统</h4>
-
-<h5 id="关于-airflow">关于 Airflow</h5>
-
-<p>要求团队里至少有一个人会 Python。严格来说这不算是什么多的要求，特别是在 ML/DL/AI 如火如荼的当下，上手 Python 可能也就是一两天的事情。但总归是多了一些成本。</p>
-
-<p>附录 A 里补充了 Airflow 的安装和使用</p>
-
-<h5 id="关于-zeus">关于 Zeus</h5>
-
-<p>其实我司之前用的就是 Zeus：-D 但如果要重新开始选型的话，可以有更多的选择。</p>
+<p>HDFS Data always comes from：</p>
 
 <ul>
   <li>
-    <p>更新缓慢。最近一次和代码有关的提交是在 2013 年，源代码长时间没有进行更新，一个非常明显的 <a href="https://github.com/alibaba/zeus/pull/66">Bug Fix PR</a> 有一个月没有合并到主分支里</p>
+    <p>Import from existing RDBMS database for business analysis.An example of the first tool is <a href="">Sqoop</a> from Apache.</p>
   </li>
   <li>
-    <p>部署和运维相对于其他调度工具偏难，参考它的 <a href="https://github.com/alibaba/zeus/wiki/%E5%AE%89%E8%A3%85%E6%8C%87%E5%AF%BC%E6%96%87%E6%A1%A3">安装文档</a></p>
+    <p>Connect and sample from existing HDFS data to generate new composite data</p>
+  </li>
+  <li>
+    <p>Some other ways, including writing from HDF Sink in Flume, or using <code class="highlighter-rouge">hadoop fs -put</code> to import local files into HDFS</p>
   </li>
 </ul>
 
-<p>MapReduce 实现细节</p>
+<p>The second tool in most cases uses Hive to meet the requirements. Hive is a tool from FaceBook that converts HQL (SQL-like syntax) into MapReduce implementations for data analysts to manipulate. It actually is the symbol of the distributed SQL.There are many projetcts that are trying to do the distributed SQL query,such as <a href="https://spark.apache.org/">Spark</a> with scala and <a href="https://www.pingcap.com/en/">TiDB</a> with golang.But the basic steps are same,converting the AST(Abstarct Syntax Tree) into LogicalPlanner and execute it in multiple nodes.</p>
 
-<p>实现数据库 left/inner/right join</p>
+<p>Tthe scheduling system is also attractive. In principle, you just neet to write the execution script, set up the timing task directly with crontab. But on the one hand, we have to manage multiple scripts as the volume of business increases. On the other hand, we want to add progress reminders, logs view, failure retry, email alerts, and manage multiple interdependent tasks. In this case, <strong>Ozzie/Azkaban/Airflow</strong> and other projects are always best choices.</p>
 
-<p>这里可以参考 Quora 的这个问题：https://www.quora.com/How-does-Hive-implement-joins-in-Map-Reduce</p>
+<hr />
 
-<p>存在 Map-side 和 Reduce-side 两种情况来区分讨论</p>
+<p>How to implement the <code class="highlighter-rouge">join/left join/right join</code> in MapReduce ? you can review this question <a href="https://www.quora.com/How-does-Hive-implement-joins-in-Map-Reduce">How-does-Hive-implement-joins-in-Map-Reduce</a>.There are two cases:<code class="highlighter-rouge">Map-side</code> and <code class="highlighter-rouge">Reduce-side</code>.Usually you can use ArrayList to store MultiInput,but the obvious flaw is that the system will crash or hang when data are intensive.</p>
 
-<p>MultiInput 用 ArrayList 存储</p>
+<hr />
 
-<p>劣势：在一个表中有上千万数据时可能会 OOM</p>
+<p>Trying to use GitLab CI today.It is not much different from Github’s travis-CI(distinguished by stages:build/deploy) in terms of personal experience. But the  problem happens below:</p>
 
-<p>HBase:</p>
+<p><img src="/images/build-failure.png" alt="build-failure.png" />
+Based on <a href="https://docs.gitlab.com/runner/install/linux-repository.html">link</a>,you need to install <strong>runner</strong> and <strong>Gitlab</strong> at the same server.</p>
 
-<p><img src="/images/HBase-source-code.png" alt="HBase-source-code.png" /></p>
-
-<p>HBase 的特点：</p>
-
-<ul>
-  <li>
-    <p>实现比 redis 持久化存储效果更好的 key-value 键值对</p>
-  </li>
-  <li>
-    <p>实现需要有历史版本的增量存储</p>
-  </li>
-  <li>
-    <p>最近又有需求，在 Ubuntu 环境下用 VirtualBox 重新安装了 Win8.1。具体</p>
-  </li>
-  <li>
-    <p>今天试着用了一下 GitLab CI，从个人体验来说和 Github 的 travis-CI 没有什么太大区别啦，按照 stages 和 build/deploy 来区分，但最后问题发生在下面：
-<img src="/images/build-failure.png" alt="build-failure.png" /></p>
-  </li>
-</ul>
-
-<p>根据它的说法，你需要在安装 GitLab 的服务器上安装 Runner,参见 <a href="https://docs.gitlab.com/runner/install/linux-repository.html">这个</a>。但之前安装 GitLab 的人都不在了，既没有运维的权限，同时也没有像创业公司那样必须用 CI 的迫切性(不存在一天上线七八次这种情况啊……)。所以真的是……</p>
-
-<p>最后把写的 .gitlab-ci.yml 脚本立此存照一下：</p>
+<p>Record my <code class="highlighter-rouge">.gitlab-ci.yml</code> script:</p>
 
 <div class="highlighter-rouge"><pre class="highlight"><code>before_script:
     - sudo yum install maven2
@@ -2156,71 +1849,56 @@ build_job:
 </code></pre>
 </div>
 
-<p>其中 <code class="highlighter-rouge">mvn '-Dtest=com.xxx.example.*Test' test</code> 用来运行所有匹配的测试用例</p>
+<p><code class="highlighter-rouge">mvn '-Dtest=com.xxx.example.*Test' test</code> is used to run all unit test in one package.</p>
 
-<ul>
-  <li>
-    <p>今天在讨论的时候知道阿里和百度都开始用 DL 来做 CRT 预估了，记得一段时间以前都在说深度学习都还是黑匣子，可解释性遭到 challenge 的话是不能在生产环境上用的，但转眼间都开始用了</p>
-  </li>
-  <li>
-    <p>大部分讨论操作系统的问题最后都变成了要不要用 SSD 的问题……哇咔咔</p>
-  </li>
-  <li>
-    <p>因为最近要从事的是现场办公，某司要访问开发环境的话，不能用 openvpn 或类似的工具，而是用启明星辰所提供的<a href="http://www.venustech.com.cn/SafeProductInfo/11/25.Html">天玥安全审计</a>。哼哧哼哧配好了 ip 和 dns 后(其中还踩了 Ubuntu Desktop 版不能直接用编辑配置文件方式修改 ip 的坑)，登陆到 Web 端来访问。但发现登陆工具怎么都选择不了，看了 css 以后发现选择器没问题啊……花了一天的时间各种配，最后申了一份当时发给运维的文档看，FAQ 里第一个就是：</p>
-  </li>
-</ul>
+<hr />
+
+<p>Discovering that after IDEA is configured, you can’t use Socks5 to download SBT dependencies…After a few hours of trial,I give up to find the reason but to add <code class="highlighter-rouge">-Dhttps.proxyHost=127.0.0.1 -Dhttps.proxyPort=8080</code> in the SBT.Anyway it works……</p>
+
+<hr />
+
+<p>When debugging the Spark Streaming program in the Spark source code on your laptop, you need to change the corresponding <strong>VM Options</strong> to <code class="highlighter-rouge">-Dspark.master=local[2]</code>, otherwise
+there will be an error like  <strong>netword connection refused</strong></p>
+
+<hr />
+
+<p>One of the most important features of a distributed system is that <strong>CAP</strong> cannot be met at the same time. The first link Google found was [Quora’s answer] (https://www.quora.com/Can-someone-provide-an-intuitive-proof-explanation-of-CAP-theorem), which mentioned a Very good [InfoQ article] (https://www.infoq.com/articles/cap-twelve-years-later-how-the-rules-have-changed), let me try to re-explain it. <strong>C</strong> refers to <strong>Consistency</strong>, <strong>A</strong> refers to <strong>Availability</strong>, and <strong>P</strong> refers to <strong>Partition Tolerance</strong>. Always we have to ensure that multiple nodes are running(preventing <a href="https://en.wikipedia.org/wiki/Single_point_of_failure">SPOF</a>, so <strong>P</strong> is definitely to be satisfied. For <strong>C</strong> and <strong>A</strong>, you can only choose one, for example:</p>
 
 <blockquote>
-  <p>问题1：如果我的操作系统是Linux或者是Mac的怎么办？
-Linux和Mac系统的用户可以使用web界面操作，web地址为 ××××××，操作方法和windows客户端版是一样的，web存在兼容性问题，建议使用客户端版。</p>
+  <p>A cluster has two machines, A and B (here simplified for the sake of example, in production environments it is usually required to be odd bigger than 1).
+Whenever A/B has data written, it will be synchronized on B/A at the same time.
+But suddenly the network connection has failed and communication between A and B is not possible. At this time, for A, there are two options:</p>
 </blockquote>
 
-<p>我……</p>
-
-<ul>
+<ol>
   <li>
-    <p>发现 IDEA 配置好以后不能用设 Socks5 的方式来翻墙下载 SBT 的依赖，但 manual configuration 应该是没问题的啊。最后在 SBT 的参数里加上 ` -Dhttps.proxyHost=127.0.0.1  -Dhttps.proxyPort=8080`，:-(，但为什么不能用 IDEA 自带的配置呢？…….</p>
+    <p>In order to maintain consistency, external requests should not be accepted to ensure that data does not change, and availability cannot be met.</p>
   </li>
   <li>
-    <p>在调试 Spark 源码里面的 Spark Streaming 程序的时候，需要把对应的 <strong>VM Options</strong> 改为 <code class="highlighter-rouge">-Dspark.master=local[2]</code>，否则
-就一直报 <strong>netword connection refused</strong> 的错误……</p>
+    <p>In order to maintain availability and continue to accept requests, the data on the two machines will be inconsistent, and consistency will not be met.</p>
   </li>
-  <li>
-    <p>分布式系统里一个最重要的特性就是 <strong>CAP</strong> 不能同时满足。Google 搜出来的第一个链接就是 <a href="https://www.quora.com/Can-someone-provide-an-intuitive-proof-explanation-of-CAP-theorem">Quora 的回答</a>，里面提到了一篇非常好的 <a href="https://www.infoq.com/articles/cap-twelve-years-later-how-the-rules-have-changed">InfoQ 文章</a>，我来试着理解一下。<strong>C</strong> 指的是 Consistency(一致性)，<strong>A</strong> 指的是 Availability(可用性)，<strong>P</strong> 指的是 Partition Tolerance(分区容忍性)。通常情况下我们必须要保证多节点运行，所以 <strong>P</strong> 是肯定要满足的。而对 <strong>C</strong> 和 <strong>A</strong>，就只能取舍一个，举例：</p>
-  </li>
-</ul>
+</ol>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>一个集群有两台机器，A 和 B(这里为了举例进行了简化，在生产环境中要求通常为大于 1 的奇数)。
-每当 A/B 有数据写入，都会同时在 B/A 上同步过去。
-但突然网络连接出现了故障，A 和 B 之间无法进行通信。这时候对 A 而言，有两种选择：
-
-1. 为了保持一致性，就不应当再接受对外的请求来确保数据不发生变化，这时候可用性就无法得到满足。
-
-2. 为了保持可用性，继续接受请求，那么两台机器上的数据就会不一致，这时候一致性就无法得到满足。
-
-这时候大多数的选择都是保持对外的可用性，两台机器继续对外提供服务，当可以继续进行通信时再同步数据，
-从而保持最终一致性(eventual consistency)。
-
-</code></pre>
-</div>
+<p>At this time, most of the choices are to maintain external availability. The two machines continue to provide services to the outside world. When the communication can continue, the data is synchronized(you need a replication tool to achieve it,such as binlog of MySQL) .Thereby maintaining the eventual consistency.</p>
 
 <p><img src="/images/CAP.jpg" alt="CAP.jpg" /></p>
 
-<p>在衡量系统的 Availability 的时候有几个概念，一个就是 <strong>X 个9</strong>。说明如下：</p>
+<hr />
 
-<div class="highlighter-rouge"><pre class="highlight"><code>3个9：(1-99.9%)*365*24=8.76小时：
-表示该软件系统在连续运行1年时间里最多可能的业务中断时间是8.76小时。
-4个9：(1-99.99%)*365*24=0.876小时=52.6分钟：
-表示该软件系统在连续运行1年时间里最多可能的业务中断时间是52.6分钟。
-5个9：(1-99.999%)*365*24*60=5.26分钟：
-表示该软件系统在连续运行1年时间里最多可能的业务中断时间是5.26分钟。
+<p>There are several concepts when measuring the availability of a system, one is <strong>X 9</strong>. described as follows:</p>
 
-</code></pre>
-</div>
+<blockquote>
+  <p>3 9: (1-99.9%) * 365 * 24 = 8.76 hours:
+Indicates that the most likely business interruption time of the software system during continuous operation for one year is 8.76 hours.
+4 9:(1-99.99%)<em>365</em>24=0.876 hours=52.6 minutes:
+Indicates that the most likely business interruption time of the software system during continuous operation for 1 year is 52.6 minutes.
+5 9: (1-99.999%) * 365 * 24 * 60 = 5.26 minutes:
+Indicates that the most likely business interruption time of the software system during continuous operation for one year is 5.26 minutes.</p>
+</blockquote>
 
-<ul>
-  <li>最近在写一个 MR 的程序，解析出一堆变量要产生一个字符串。虽然知道 <code class="highlighter-rouge">Guava</code> 库里有 <code class="highlighter-rouge">join</code> 方法，并且用 <code class="highlighter-rouge">hasNext()</code> 来避免结尾加上分隔符的实现高到不知道哪里去了，但就为了这么一个函数引入一个 jar 包是不是不太好啊⊙﹏⊙b。试着自己写一个，实现的稍微 tricky：</li>
-</ul>
+<hr />
+
+<p>I recently wrote a MapReduce program that parses out a bunch of variables to produce a string. Although I know there is a <code class="highlighter-rouge">join</code> method in the <code class="highlighter-rouge">Guava</code> library, and <code class="highlighter-rouge">hasNext()</code> is used to avoid the implementation of the delimiter at the end , but it is not proper to import a jar package for such a small function.I try to implement one:</p>
 
 <figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">static</span> <span class="n">String</span> <span class="nf">join</span><span class="o">(</span><span class="n">Character</span> <span class="n">separator</span><span class="o">,</span> <span class="n">String</span><span class="o">...</span> <span class="n">input</span><span class="o">)</span> <span class="o">{</span>
         <span class="k">if</span> <span class="o">(</span><span class="n">input</span> <span class="o">==</span> <span class="kc">null</span> <span class="o">||</span> <span class="n">input</span><span class="o">.</span><span class="na">length</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="o">)</span>
@@ -2233,14 +1911,13 @@ Linux和Mac系统的用户可以使用web界面操作，web地址为 ×××××�
         <span class="k">return</span> <span class="n">res</span><span class="o">.</span><span class="na">toString</span><span class="o">();</span>
     <span class="o">}</span></code></pre></figure>
 
-<ul>
-  <li>
-    <p>日常日常超量的话要进行处理，如果是我的话估计就写个脚本了，但今天才被教做人…Linux 下的 <strong>/etc/logrotate.conf</strong> 直接进行编辑就好了，压缩，移除，时间设置，各种功能都有……</p>
-  </li>
-  <li>
-    <p>最近在看 JStorm 的源码,其中有一段代码是这样的……kill the process 5 times……make sure the process be killed definitely……作者是个有故事的人……</p>
-  </li>
-</ul>
+<hr />
+
+<p>If the log file is too large, it should be processed. If it is me, I would write a Python/Golang script.But today I was taught a new skill.You can just edit <strong>/etc/logrotate.conf</strong> file under Linux. compressing,Removing,time settings, various features…</p>
+
+<hr />
+
+<p>I’ve been reading <a href="http://120.25.204.125/">JStorm</a> source code recently, and there’s a block of code like this…kill the process 5 times…make sure the process be killed definitely(???</p>
 
 <figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">ensure_process_killed</span><span class="o">(</span><span class="n">Integer</span> <span class="n">pid</span><span class="o">)</span> <span class="o">{</span>
         <span class="c1">// in this function, just kill the process 5 times
@@ -2260,89 +1937,67 @@ Linux和Mac系统的用户可以使用web界面操作，web地址为 ×××××�
         <span class="o">}</span>
     <span class="o">}</span></code></pre></figure>
 
-<ul>
-  <li><code class="highlighter-rouge">concurrency(并发)</code> 和 <code class="highlighter-rouge">parallelism(并行)</code> 两个概念常常混淆。今天又遇到了这个问题，结果发现为知里 2014 年就有这个记录了……好尴……那么用一句话来总结，就是说并发是针对程序的设计来讲的(concurrency as a property of a program or system)，一个设计良好的并发程序使得程序可以做到在重叠的时间段内执行不同任务。而并行指的是在实际运行中在物理上有多个任务在运行(parallelism as the run-time behaviour of executing multiple tasks at the same time)。所以如果一个并发的程序在一个单 cpu 的机器上运行，那么它仍然是并发的，但却不是并行。</li>
-</ul>
+<hr />
 
-<p>这个问题解释最好的中文文章在 <a href="https://laike9m.com/blog/huan-zai-yi-huo-bing-fa-he-bing-xing,61/">这里</a>，英文资料就是 Go 语言的那篇 <a href="https://talks.golang.org/2012/concurrency.slide">slide</a> 了</p>
+<p>The two concepts of <code class="highlighter-rouge">concurrency</code> and <code class="highlighter-rouge">parallelism</code> are often confused.Having a summary about it: concurrency is for the design of the program. (<strong>concurrency as a property of a program or system</strong>), a well-designed concurrent program allows the program to perform different tasks in overlapping time periods. Parallelism refers to the parallelism as the <strong>run-time behaviour of the multiple tasks at the same time</strong>. So if a concurrent program runs on a single cpu machine, it is still concurrent, but not parallel.</p>
 
-<ul>
-  <li>
-    <p>除了 MongoDB 外 ES 也有被人黑啊……为了开发方便就不取消 <code class="highlighter-rouge">curl delete</code> 了，但必须只有内网能访问……到底是怎么做到每笔交易都是可回溯验证但无法关联到具体账户的……根据这个 <a href="https://blockchain.info/address/13zaxGVjj9MNc2jyvDRhLyYpkCh323MsMq">blockchain 地址</a> 看一下，收了 32 笔 0.2 BTC，总共 6.4 BTC，根据 2017.01.18-11:36 上午的汇率，等价 5696.64 $，也等价 39202.73 ¥……</p>
-  </li>
-  <li>
-    <p>有一个 600M+ 的 CSV 文件，因为要实验转化读取，所以就用 split 来按大小分割一下。但之后怎么处理都是乱码，以为是源文件的问题，但 <code class="highlighter-rouge">head -10</code> 读出来也没问题啊。也怀疑是自己没有加后缀，但文本文件又不是二进制啊……最后才意识到不应该按大小来分割的……按大小来分割是为了方便后续合并啊……要用 <code class="highlighter-rouge">split -l</code> 按行来分……</p>
-  </li>
-</ul>
+<p>This Chinese article that explains the best is in [here] (https://laike9m.com/blog/huan-zai-yi-huo-bing-fa-he-bing-xing), English novel is a talk about Go language <a href="https://talks.golang.org/2012/concurrency.slide">slide</a></p>
+
+<hr />
+
+<p>There is a 600M+ CSV file, because I need to experiment with conversion reads, so just splitting it by size. But after that, the file is garbled and can’t be presented in a proper way.  <code class="highlighter-rouge">head -10</code> read out is fine. I also suspect that I didn’t add a suffix, but the text file is not binary file…finally I realized that I shouldn’t divide it by size… I should use <code class="highlighter-rouge">split -l</code> to divide by line so it is conveniet for subquent merge.</p>
 
 <p><img src="/images/青蛙.jpg" alt="无话可说" /></p>
 
-<ul>
-  <li>
-    <p>所以到底发生了什么……为什么要用图片处理……今天遇到不少事情……比如说要用 <code class="highlighter-rouge">pillow</code> 来把一个字体显示到图像上。需要用到 ImageFont 的 TrueType ，下载 <code class="highlighter-rouge">simsun.ttc</code>，包含宋体和新宋体，但使用的时候会报 <code class="highlighter-rouge">OSError</code>的错误，无法识别 fileformat ，需要换成 Linux 下对应的字体。但如果用 <code class="highlighter-rouge">/usr/share/fonts/</code> 目录下的随便一个，又不会正常显示，只会出现 “?”。需要选择一个对中文支持友好的字体，可以在命令行里用 <code class="highlighter-rouge">fc-list :lang=zh-cn</code> 来找。用 <code class="highlighter-rouge">numpy.asarray() 和 numpy.fromarray()</code> 来做到在图像和矩阵之间相互转化，中间添加随机数干扰会让字体扭曲变形，但这个更适配于对手写体的识别。如果是对拍照的印刷体，合适的场景是用 rotate() 来旋转一定角度。但这样会出现一些黑色空间，用 crop()再截取一下就好了：-D</p>
-  </li>
-  <li>
-    <p>虽然一直在用 requests，但今天才意识到可以这样: <a href="http://sh3ll.me/2014/06/18/python-requests-encoding/">requests-code-read-content-auto-encode</a>。关于 <code class="highlighter-rouge">chardet</code> 识别编码的原理之前在看《Fluent Python》的时候也提到过，根据字符前缀出现的频率来判定。</p>
-  </li>
-</ul>
+<hr />
 
-<div class="highlighter-rouge"><pre class="highlight"><code>In [7]: chardet.detect('再也不被编码问题困扰了2333ShakaLaka!!!'.encode('GBK'))
-Out[7]: {'confidence': 0.99, 'encoding': 'GB2312'}
-</code></pre>
-</div>
-<ul>
-  <li>
-    <p>supervisor 项目配置下有一个 user 选项，可以选择以什么用户来启动命令。但是必须用 root 账号来启动 supervisor</p>
-  </li>
-  <li>
-    <p>今天遇到了一个挺崩溃的问题。简单来说就是这样：数据校验的脚本有这样一句sql 查询:<code class="highlighter-rouge">count_sql = "select count(*) from...</code> 但 <code class="highlighter-rouge">print count_sql</code> 的时候总是会把第一个 ‘s’ 字符和最后的一个单引号 <code class="highlighter-rouge">'</code> 丢掉。查来查去最后甚至怀疑到了 <code class="highlighter-rouge">XShell</code> 的显示问题，但在我电脑上显示也不对，那就还是代码的问题。最后不用 print 来 debug 了，决定把 count_sql 写入到文件里来看(一直在用 Linux，读写模式里没有加 ‘b’…)，然后发现显示的语句后面多了一个 <code class="highlighter-rouge">^M</code>。问题就出在这里，以前创建这个文件的时候用的是 txt 文本编辑器而不是 notepad++，换行符用的是 ‘\r\n’，而 Linux 下用的是 ‘\n’。换句话来说就是 <code class="highlighter-rouge">Unix uses 0xA for a newline character. Windows uses a combination of two characters: 0xD 0xA. 0xD is the carriage return character. ^M happens to be the way vim displays 0xD.</code>(参考 <a href="http://stackoverflow.com/questions/5843495/what-does-m-character-mean-in-vim">这个</a>)。在 Py2 的范畴内解决办法就是读取后再用 strip() 处理一次。当然换到 Py3 就没有这个问题了(虽然离 2020 还有 3 年，但还是赶紧换啊啊啊)。这种问题还是第一次遇见，记录一下：-D</p>
-  </li>
-  <li>
-    <p>装 Kafka 的 UI，最后选型用的是 Yahoo 的 Kafka Manager。但它要用的是 JDK8 …能检测单位时间内的信息量。最后界面还好啦，就是浓厚的 Bootstrap 风格让人不忍直视：</p>
-  </li>
-</ul>
+<p>Using <code class="highlighter-rouge">numpy.asarray() and numpy.fromarray()</code> to convert between the image and the matrix. Adding random number interference in the middle will make the font distorted, but this is more suitable for the recognition of handwriting. If it is a print for the photo, the appropriate method is to rotate a certain angle with rotate(). But there will be some black space, so just use crop() to intercept it.</p>
+
+<hr />
+
+<p>Although <a href="http://docs.python-requests.org/en/master/">requests</a> have been used all the time, I realize it today: <a href="http://sh3ll.me/2014/06/18/python-requests-encoding/">requests-code-read-content-auto-encode</a>. The principle of <code class="highlighter-rouge">chardet</code> recognition encoding was also mentioned in the 《Fluent Python》 before, based on the frequency of occurrence of the character prefix.</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">In</span> <span class="p">[</span><span class="mi">7</span><span class="p">]:</span> <span class="n">chardet</span><span class="o">.</span><span class="n">detect</span><span class="p">(</span><span class="s">'No longer plagued by coding problems 2333ShakaLaka!!!'</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s">'GBK'</span><span class="p">))</span>
+<span class="n">Out</span><span class="p">[</span><span class="mi">7</span><span class="p">]:</span> <span class="p">{</span><span class="s">'confidence'</span><span class="p">:</span> <span class="mf">0.99</span><span class="p">,</span> <span class="s">'encoding'</span><span class="p">:</span> <span class="s">'GB2312'</span><span class="p">}</span></code></pre></figure>
+
+<hr />
+
+<p>There is a <code class="highlighter-rouge">user option</code> under the supervisor project configuration to choose which user to start the command with. But you must use the root account to start the supervisor.</p>
+
+<hr />
+
+<p>Previously, this file was created with a Windows text editor instead of notepad++,newline is represented with ‘\r\n’;and newLine in Linux is represented with ‘\n’. In other words, <code class="highlighter-rouge">Unix uses 0xA for a newline character. Windows uses a combination of two characters: 0xD 0xA. 0xD is the carriage return character. ^M happens to be the way vim displays 0xD.</code> (Refer to [this] (http://stackoverflow.com/questions/5843495/what-does-m-character-mean-in-vim)). The solution in the context of Py2 is to read it and then use<code class="highlighter-rouge"> strip()</code> to process it once.</p>
+
+<hr />
+
+<p>Kafka’s UI is installed, and the final selection is Yahoo’s <a href="https://github.com/yahoo/kafka-manager">Kafka Manager</a>. But it uses JDK8 … detecting the amount of message per unit time. The final interface is okay, that is, the strong Bootstrap style:</p>
 
 <p><img src="/images/KafkaUI.png" alt="KafkaUI" /></p>
 
-<p>同时补充一下 Centos 下安装 JDK8 的使用方法:</p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>① 在现有的环境下 java -version 显示 1.7.0,目录在 /usr/lib 下。参考 Ubuntu 上的安装经验，我们不希望它发生冲突，所以在 /opt 目录下安装。
-② cd /opt,之后使用 
-wget --no-cookies --no-check-certificate --header "Cookie: gpw_e24=http%3A%2F%2Fwww.oracle.com%2F; oraclelicense=accept-securebackup-cookie" "http://download.oracle.com/otn-pub/java/jdk/8u101-b13/jdk-8u101-linux-x64.tar.gz"
-来安装,之后使用 tar -xzf jdk-8u101-linux-i586.tar.gz 来解压。
-③ cd /opt/jdk1.8.0_101/ 来进入安装环境。java 提供了 alternatives 选项来允许在同一系统内存在多个 java 版本。执行 
-alternatives --install /usr/bin/java java /opt/jdk1.8.0_101/bin/java 2 
-来安装。执行 
-alternatives --config java
-来选择，只需要输入对应的编号即可（在 158 环境需要输入的是 3，对应的正是 /opt 对应的 JDK8）。执行 java -version 可以看到已经变为 1.8。
-④ 接下来需要设置环境变量，直接执行下面三个命令：
-export JAVA_HOME=/opt/jdk1.8.0_101
-export JRE_HOME=/opt/jdk1.8.0_101/jre
-export PATH=$PATH:/opt/jdk1.8.0_101/bin:/opt/jdk1.8.0_101/jre/bin
-
-</code></pre>
-</div>
+<hr />
 
 <ul>
-  <li>
-    <p>准备去看 <code class="highlighter-rouge">《Web Analytics 2.0》 </code>了，虽然与技术关联不大，但没事的时候翻一番～～</p>
-  </li>
-  <li>
-    <p>对于定时清空的日志文件，用命令 <code class="highlighter-rouge">&gt; ToDelete.log</code>…</p>
-  </li>
-  <li>
-    <p>NLPchina 提供了一个 <a href="https://github.com/NLPchina/elasticsearch-sql">elasticsearch-sql</a> 的插件，能用类 sql 的方式来对 ES 进行查询。但用 <code class="highlighter-rouge">select</code> 查询的时候如果不指定 limit 的数量，默认始终是 200</p>
-  </li>
-  <li>
-    <p>想起以前看过的一个挺有意思的 <a href="https://www.zhihu.com/question/38331955">问题</a>，刚好最近在学 Scala，试着写一个</p>
-  </li>
+  <li>If you want to delete log files,<code class="highlighter-rouge">rm -rf  &amp;&amp; touch</code> is not a good choise.Using  <code class="highlighter-rouge">&gt; ToDelete.log</code> instead</li>
+</ul>
+
+<hr />
+
+<ul>
+  <li>Recently we use a plugin [elasticsearch-sql] (https://github.com/NLPchina/elasticsearch-sql) so querying the ES in the same way as sql is possible. But if you do not specify the number of limit when using <code class="highlighter-rouge">select</code> query, the default is always 200</li>
+</ul>
+
+<hr />
+
+<ul>
+  <li>There was a <a href="https://www.zhihu.com/question/38331955">question</a>.Recently I’m just learning Scala,So I tried to solve it:</li>
 </ul>
 
 <figure class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">var</span> <span class="n">boyfriendList</span> <span class="k">=</span> <span class="nc">Array</span><span class="o">.</span><span class="n">fill</span><span class="o">(</span><span class="mi">12</span><span class="o">)(</span><span class="mi">0</span><span class="o">)</span>
 
 <span class="k">def</span> <span class="n">calculate</span><span class="o">(</span><span class="n">total</span><span class="k">:</span><span class="kt">Int</span><span class="o">=</span><span class="mi">0</span><span class="o">,</span><span class="n">freq</span><span class="k">:</span><span class="kt">Int</span><span class="o">=</span><span class="mi">0</span><span class="o">)</span><span class="k">:</span><span class="kt">Int</span> <span class="o">=</span> <span class="n">total</span> <span class="k">match</span> <span class="o">{</span>
-    <span class="k">case</span> <span class="mi">12</span> <span class="k">=&gt;</span> <span class="o">{</span>
-        <span class="n">println</span><span class="o">(</span><span class="n">s</span><span class="s">"总次数为 $freq "</span><span class="o">)</span>
+    <span class="c1">// Using Pattern Matching
+</span>    <span class="k">case</span> <span class="mi">12</span> <span class="k">=&gt;</span> <span class="o">{</span>
+        <span class="n">println</span><span class="o">(</span><span class="n">s</span><span class="s">"Total number is $freq "</span><span class="o">)</span>
         <span class="n">freq</span>
     <span class="o">}</span>
     <span class="k">case</span> <span class="k">_</span> <span class="k">=&gt;</span> <span class="o">{</span>
@@ -2363,29 +2018,29 @@ export PATH=$PATH:/opt/jdk1.8.0_101/bin:/opt/jdk1.8.0_101/jre/bin
     <span class="o">}</span>
     <span class="n">println</span><span class="o">(</span><span class="n">sum</span><span class="o">.</span><span class="n">toFloat</span><span class="o">/</span><span class="mi">50</span><span class="o">)</span>  <span class="o">//</span> <span class="mf">34.64</span></code></pre></figure>
 
-<p>啊，Pattern Matching 这里还比较好，但 var 和 val 变量这里自己做的太 tricky 了 ……</p>
+<hr />
 
-<ul>
-  <li>
-    <p>今天群里在讨论爬虫被抓的一个问题，有人提到可以模拟搜索引擎，就搜了一下…还真有这种数据，看这个 <a href="https://support.google.com/webmasters/answer/1061943?hl=en">Google Crawler</a> ，把 <code class="highlighter-rouge">UA</code> 配置成 <code class="highlighter-rouge">Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)</code></p>
-  </li>
-  <li>
-    <p>Python 2.6 里一个输出语句 <code class="highlighter-rouge">print '{}'.format(1)</code> 会报错，提示 <code class="highlighter-rouge">ValueError: zero length field name in format</code>，必须指明顺序，<code class="highlighter-rouge">print '{0}'.format(1)</code>。啊…连 2.7 和 2.6 都不能做到完全兼容，有毒…</p>
-  </li>
-  <li>
-    <p>今天遇到一个挺有意思的问题。日志打码用的是 pageName&amp;{key1:value1,key2:value2} 的形式，通常情况下用 split(“&amp;”)[1] 得到 JSON 字符串后用 get_json_object 来查就可以了。但如果所提供的 value 里面有多个 “&amp;”(如含参的 url)，那么分隔开后就会产生只有一个 <code class="highlighter-rouge">"</code> 的字符串，读不出 JSON 格式。所以就写了一个 UDF 来解决(额，貌似 Hadoop.io.Text 效率比 Java 的 String 高……)</p>
-  </li>
-</ul>
+<p>The group is discussing a problem about catching crawlers. Some people mentioned that they can simulate a search engine and searched for it…it is really reasonable, see this article [Google Crawler] (https://support.google.com/ Webmasters/answer/1061943?hl=en) , configure <code class="highlighter-rouge">UA</code> to <code class="highlighter-rouge">Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)</code></p>
+
+<hr />
+
+<p>In Python 2.6, an output statement <code class="highlighter-rouge">print '{}'.format(1)</code> will report an error, indicating <code class="highlighter-rouge">ValueError: zero length field name in format</code>.You must indicate the order, <code class="highlighter-rouge">print '{0}'.format(1)</code> . Ah… even 2.7 and 2.6 can’t be fully compatible</p>
+
+<hr />
+
+<p>There is  a very interesting question today. The logging is in the form of <strong>pageName&amp;{key1:value1,key2:value2}</strong>. Usually, spliting(“&amp;”)[1] is used to get the JSON string and then using <code class="highlighter-rouge">get_json_object</code> to check it. However, if there is more than one “&amp;” in the value provided (such as the url containing the parameter), then the separator will produce a string with only <code class="highlighter-rouge">""</code>.So I wrote a <a href="https://cwiki.apache.org/confluence/display/Hive/LanguageManual+UDF">UDF:User Defined Function</a> to make the program robust.</p>
 
 <figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="cm">/**
- * 主要处理 url 中包含 &amp; 从而不能用 split("&amp;") 来分割的情形
+ * 
  * input:String
  * output:JSON-like Object
  */</span>
 
 <span class="kn">import</span> <span class="nn">org.apache.hadoop.hive.ql.exec.UDF</span><span class="o">;</span>
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">dealJSONWithUrl</span> <span class="kd">extends</span> <span class="n">UDF</span> <span class="o">{</span>
 
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">dealJSONWithUrl</span> <span class="kd">extends</span> <span class="n">UDF</span> <span class="o">{</span>
+    <span class="c1">// handling cases where url contains &amp; can't be split with split("&amp;")
+</span>
     <span class="kd">public</span> <span class="n">String</span> <span class="nf">evaluate</span><span class="o">(</span><span class="n">String</span> <span class="n">input</span><span class="o">)</span> <span class="o">{</span>
         <span class="k">if</span> <span class="o">(!</span><span class="n">input</span><span class="o">.</span><span class="na">contains</span><span class="o">(</span><span class="s">"&amp;"</span><span class="o">))</span>
             <span class="k">return</span> <span class="n">input</span><span class="o">;</span>
@@ -2401,88 +2056,53 @@ export PATH=$PATH:/opt/jdk1.8.0_101/bin:/opt/jdk1.8.0_101/jre/bin
     <span class="o">}</span>
 <span class="o">}</span></code></pre></figure>
 
-<ul>
-  <li>
-    <p>crontab 总会有一些非常 tricky 的问题…今天遇到的是运维老师写的一个<code class="highlighter-rouge">redis-cli</code> 清数据的时候在 shell 脚本里不能直接用 <code class="highlighter-rouge">redis-cli</code>，而是一定要用绝对路径（线上服务器的绝对路径是在 <code class="highlighter-rouge">/usr/local/lib</code>，测试服务器上是 <code class="highlighter-rouge">/usr/bin</code>，后者可以在 shell 里直接删…所以是这个原因吗？）。还想起之前一个 Python 程序总是不能正常运行，最后发现是因为自己用了 <code class="highlighter-rouge">os.chdir('..')</code>，要先 <code class="highlighter-rouge">cd</code> 到目录再跑。这个坑踩过的人还不少啊…<a href="https://www.digitalocean.com/community/questions/unable-to-execute-a-python-script-via-crontab-but-can-execute-it-manually-what-gives">这个</a>…supervisor 里能指定 <code class="highlighter-rouge">Directory</code> 实在太幸福了…</p>
-  </li>
-  <li>
-    <p>有一段时间搜狗输入法会莫名其妙崩溃，突然就无法输入中文了。没有办法，写了个 <code class="highlighter-rouge">alias sogou='pkill sogou-qimpanel &amp;&amp; fcitx &amp;&amp; sogou-qimpanel&amp;'</code> 的命令，一有崩溃就重启。</p>
-  </li>
-  <li>
-    <p>上面说的这个故障应该是搜狗输入法云端输入后台的故障，因为大概在某一个时间段内同时在 PC 和自己的笔记本上遇到这个 Bug，在此之前和在此之后都没有能复现这个问题…</p>
-  </li>
-  <li>
-    <p>row_number() over 查询分组，用 row_id 来选择指定</p>
-  </li>
-  <li>
-    <p>之前用 <code class="highlighter-rouge">ssh-copy-id</code> 配置免密码登陆后一般都是在 bash 里面设置一个 alias，比如 <code class="highlighter-rouge">ssh-75='ssh root@10.10.8.75'</code> 这种，今天又学习了一点新的人生经验，可以在 ~/.ssh 里直接配一个 config 文件。看看 <a href="https://www.cyberciti.biz/faq/create-ssh-config-file-on-linux-unix/">create-ssh-config-file-on-linux-unit</a></p>
-  </li>
-  <li>
-    <p>ubuntu 上最喜欢的命令行工具是 <code class="highlighter-rouge">guake</code>，<code class="highlighter-rouge">F12</code> 一键呼出，再配合上 <code class="highlighter-rouge">tmux</code> 分屏…可惜的是我不是纯 vim 党啊…有时候 guake 会突然变空白，这个时候杀掉进程就好了，但之前运行的一些程序会还运行。当然像 <code class="highlighter-rouge">shadowsocks</code> 这些程序会提醒你端口被占用，但 <code class="highlighter-rouge">openvpn</code> 是不会告诉你已经有一个实例运行了啊…再开一个就会造成你在服务器上动不动就被踢下去…</p>
-  </li>
-  <li>
-    <p>今天用到了 pip 的一个功能… 把所有项目的依赖下下来并且不安装: <code class="highlighter-rouge">pip install --download /path module_name</code>，scp 上传后用
-<code class="highlighter-rouge">pip insall --no-index -f /path module_name</code> 来安装</p>
-  </li>
-  <li>
-    <p>又是 Hive 时间的问题…..在 unix_timestamp 转化时，如果时间格式如 <code class="highlighter-rouge">2016-06-27 11:00</code> 因为没有秒数，所以实际上是无法进行转化的。它查询时也不会报错，但也永远不会有合乎要求的结果。最后用 concat() 连接上不会影响时间的 <code class="highlighter-rouge">':','00'</code>再查。</p>
-  </li>
-  <li>
-    <p>需要用 JStorm 调用一个运维接口来发短信。但只有 Nimbus 服务器可以发短信，Supervisor 服务器没有对应的权限（host 地址设置问题）。这种分布式的问题总是由奇奇怪怪的原因产生…</p>
-  </li>
-  <li>
-    <p>Java 的 jedis 只能在 getResource() 取得实例后再用 select 来选择分库，但 Python 的 redis client 是可以在构造函数里就指定的。</p>
-  </li>
-  <li>
-    <p>有时间要学学 docker 啊，真的要能统一开发环境和生产环境，那就很厉害了…</p>
-  </li>
-  <li>
-    <p>踩了 Hive SQL 的一个坑，不同表的时间格式不一样，转的时候要这么用：from_unixtime(unix_timestamp(‘20160521’,’yyyyMMdd’),’yyyy-MM-dd’)</p>
-  </li>
-  <li>
-    <p>Gunicorn 部署。一个空格引发的惨案，噗</p>
-  </li>
-  <li>
-    <p>Anaconda 突然发现 .condarc 好像不起作用了，不从清华的源安装。看了看 <code class="highlighter-rouge">conda install -h</code>，用 <code class="highlighter-rouge">--channel https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/</code> 来指定以后就可以了。还有问题是提示没有权限，，，看了一下，文件上显示锁，chown + chmod ~~</p>
-  </li>
-  <li>
-    <p>几百行的 SQL 到底是怎么维护</p>
-  </li>
-</ul>
+<hr />
+
+<p>There are always some very tricky issues with crontab… Today my case is to use <code class="highlighter-rouge">redis-cli</code> to operate some instructions . When using the data, you can’t use <code class="highlighter-rouge">redis-cli</code> directly in the shell script, but you must use the Absolute path. there was also  a Python program which always didn’t work properly. The final reason is because <code class="highlighter-rouge">os.chdir('..')</code> is used in script file. You need to use  <code class="highlighter-rouge">cd</code> to enter into the target directory at first. There are  a lot of people who have stepped on this pit…such as <a href="https://www.digitalocean.com/community/questions/unable-to-execute-a-python-script-via-crontab-but-can -execute-it-manually-what-gives">unable-to-execute-a-python-script-via-crontab-but-can-execute-it-manually-what-gives</a>…The ability to specify <code class="highlighter-rouge">Directory</code> in supervisor is so wonderful by contrast</p>
 
 <hr />
 
-<ul>
-  <li>
-    <p>等待毕设结果，有些焦虑……写了个模拟登陆教务处的脚本，下载完验证码后输入到命令行中……没有能明确显示登陆结果的标志，最后发现可以用返回 header 的 Content-Type 来判断，如果后缀是 <code class="highlighter-rouge">gb2312</code> 就登陆成功，而后缀是 <code class="highlighter-rouge">GBK</code> 就登录失败(好奇葩是不是……当时是谁写的这个网站⊙﹏⊙b)。本来想再分析一下课表的，但发现 post 请求的结果是一个 js 函数……竟然有这种 Web 开发方式……虽然也能解析但……还是算了……并且它的登陆逻辑是有问题的啊，填完一次验证码后就能多次尝试登陆，按照大多数人的习惯，如果还是六位数密码，那么最多跑 10**6 次就肯定能破出密码来~~~
+<p>For a while, the Sogou input method will inexplicably collapse, and suddenly it is impossible to input Chinese. I am uncapable of analyzing the source code,so just write a script like<code class="highlighter-rouge">alias sogou='pkill sogou-qimpanel &amp;&amp; fcitx &amp;&amp; sogou-qimpanel&amp;'</code> restart when there is a crash</p>
+
+<hr />
+
+<p>Using <code class="highlighter-rouge">row_number() over</code> to query group，and identifying it by row_id</p>
+
+<hr />
+
+<p>In the past I always  use <code class="highlighter-rouge">ssh-copy-id</code> to configure password-free login, generally set an alias in bash, such as <code class="highlighter-rouge">ssh-75='ssh root@10.10.8.75'</code>.today I learned a new skill today,you can directly match a config file in <code class="highlighter-rouge">~/.ssh.</code>. Take a look at <a href="https://www.cyberciti.biz/faq/create-ssh-config-file-on-linux-unix/">create-ssh-config-file-on-linux-unit</a></p>
+
+<hr />
+
+<p>The favorite command line tool on ubuntu is <code class="highlighter-rouge">guake</code>, using <code class="highlighter-rouge">F12</code> to call it with a single click, and using <code class="highlighter-rouge">tmux</code> to split screen.They are perfect couples. sometimes guake will suddenly become blank It’s fine to kill the process at this time, and some of the programs that were run before will still run. Of course, Programs like <code class="highlighter-rouge">shadowsocks</code> will remind you that the port is occupied, but <code class="highlighter-rouge">openvpn</code> will not tell you there is already an instance running.Reopening one will make you be kicked on the server…</p>
+
+<hr />
+
+<p>using a function of pip today.Downloading all the dependencies of the project and did not install it: <code class="highlighter-rouge">pip install --download /path module_name</code>,after uploading the file into a non-network-connect server, execute <code class="highlighter-rouge">pip insall --no-index -f /path module_name</code> to install</p>
+
+<hr />
+
+<p>It is also a problem with Hive time….. When the unix_timestamp is converted, if the time format is like <code class="highlighter-rouge">2016-06-27 11:00</code>, because there is no second, it is actually impossible to convert. But it  will not report an error when it is queried, so it will never have a satisfactory result. one solution is to query after using concat() to connect to <code class="highlighter-rouge">':', '00'</code> which will not affect the time.</p>
+
+<hr />
+
+<p>Java’s <a href="https://github.com/xetorthio/jedis">jedis</a> can only use <code class="highlighter-rouge">select</code> to select the library after getResource() gets the instance, but Python’s <a href="https://redislabs.com/lp/python-redis/">redis client</a> can be specified in the constructor.</p>
+
+<hr />
+
+<p>For Hive,if there are different time formats on different tables,you should convert like this:<code class="highlighter-rouge">from_unixtime(unix_timestamp('20160521','yyyyMMdd'),'yyyy-MM-dd')</code></p>
+
+<hr />
+
+<p>Writing a script that simulates logging into the Academic Affairs Office. After downloading the verification code and entering it into the command line… There is no flag that clearly shows the login result. Finally, I found that I can use the <code class="highlighter-rouge">Content-Type</code> of the return header to judge. if suffix is <code class="highlighter-rouge">gb2312</code> , logging is successful;if suffix is <code class="highlighter-rouge">GBK</code>,if failed. I wanted to analyze the class list again, but found that the result of the post request is a js function…so difficult to be parsed.And its login logic is not complete. After filling in a verification code, you can try to log in multiple times. According to initial rules, if you still have a six-digit password, you can definitely break the password after running up to 1000000 times,
 <img src="/images/lesson-course-list.jpg" alt="lesson-course-list" />
 <img src="/images/brute-force.jpg" alt="brute-force" /></p>
-  </li>
-  <li>
-    <p>花在写论文上的时间比在代码上的时间还多：-D</p>
-  </li>
-  <li>
-    <p>中期答辩前终于把简化版的结果做出来了…但中文字符前都会有一个 u’’ Unicode 标识符，影响美观</p>
-  </li>
-  <li>
-    <p>为何要作死…用 <code class="highlighter-rouge">sudo shutdown now</code> 来关机,然后黑屏状态-&gt;强制关机-&gt;重启后发现怎么输入密码都不对.重装系统…</p>
-  </li>
-  <li>
-    <p>用 ubuntu 用多了会在某些时候觉得真的不方便啊,大概是 auto-remove 和 purge 之间的混乱关系,或者是自己编译 OpenSSL 和安装后的 OpenSSL 产生冲突…<code class="highlighter-rouge">Arch wiki</code>能和 <code class="highlighter-rouge">ask ubuntu</code> 提供一样的帮助,随时升级内核比不敢 <code class="highlighter-rouge">upgrade</code> 高到不知道哪里去了…但路径依赖…再在这上面折腾就太耗时间了…</p>
-  </li>
-  <li>
-    <p>被 STL 的 Vector 坑大了==&gt;!!!!</p>
-  </li>
-  <li>
-    <p>Sublime 的列操作，<code class="highlighter-rouge">ctrl + shift + L</code></p>
-  </li>
-  <li>
-    <p>Windows 下的命令行终端还是推荐 cmder，能使用 <code class="highlighter-rouge">cd/ls</code> 等常用命令，切换磁盘(以D盘为例)请直接用 <code class="highlighter-rouge">D:</code>，要使中文字符不产生缩进可以选择右侧的设置(ctrl+alt+p),勾选 monospace 为不使用状态，并且自带对 git 的支持。再也不用 <code class="highlighter-rouge">git bash</code> 了…</p>
-  </li>
-  <li>
-    <p>在 VMWare 上安装 Ubuntu 镜像遇到了桌面无法显示边栏和顶栏问题，最后用的是 ccsm 来解决(<code class="highlighter-rouge">sudo apt-get install ccsm</code>，执行软件，并选中 Unity，执行，关机重启)</p>
-  </li>
-</ul>
+
+<hr />
+
+<p>Installing Ubuntu image on VMWare encountered the problem that the desktop could not display the sidebar and top bar. Finally, it was solved by ccsm (<code class="highlighter-rouge">sudo apt-get install ccsm</code>, execute the software, and select Unity, execute, shutdown and restart)</p>
+
+<hr />
 
 <!-- 数万人的流离失所比不上一张孩童溺水的照片所引起的影响力大。心理学的理论再一次得到了令人心悸的验证。 -->
 
@@ -2521,36 +2141,17 @@ I will decide during the next 48 hours
 跑了5圈就已经受不了了。
 -->
 
-<ul>
-  <li>之前在用 Intellij IDEA 和 Pycharm 时候一直用的是 Sublime Text2 的配色，来自<a href="http://www.ideacolorthemes.org/home/">Intellij theme</a>虽然配色很好，但还是和 ST 有差距。今天修改了一下 Line Comment 的颜色，改成 RGB(138,130,107)，评论颜色为淡灰色，更容易和正文区分开，给原作者发了封邮件，邮件秒回，发邮件这个真的是美帝人民的天赋技能…自己当时是怎么写出 is not very good 这种小学英语的…我的天…</li>
-</ul>
+<p>Previously, when using Intellij IDEA and Pycharm, the theme from <a href="http://www.ideacolorthemes.org/home/">Intellij theme</a> has been used. Although the color matching is very good, it still has a gap with Sublime Text. I modified the color of the Line Comment, changing it to RGB (138, 130, 107).The color of the comment is light gray, and it is easier to distinguish it from the text. Sending an email to the original author,the email is sent back in seconds.</p>
 
 <p><img src="/images/contact.JPG" alt="Email And Send" /></p>
 
-<ul>
-  <li>jkeyll竟然不支持Pagination下的categories/tags 集合，试了半天啊…</li>
-</ul>
+<hr />
+
+<p>Jkeyll even does not support the categories/tags collection under Pagination</p>
 
 <blockquote>
   <p>Pagination does not support tags or categories.Pagination pages through every post in the posts variable regardless of variables defined in the YAML Front Matter of each. It does not currently allow paging over groups of posts linked by a common tag or category. It cannot include any collection of documents because it is restricted to posts.</p>
 </blockquote>
-
-<ul>
-  <li>
-    <p>计算机系统结构试验要求是用WInDLX平台来模拟，现在才知道不同平台汇编语言标准不统一…其他语言都是标准一样实现不一样的</p>
-  </li>
-  <li>
-    <p>计算机网络实验，用微软的 network monitor 来监控，用 display fliter 来过滤，但是为什么不用 fiddler 呀</p>
-  </li>
-  <li>
-    <p>手写 Parser 和 Token …</p>
-  </li>
-  <li>
-    <p>写《通信原理》的结课论文，发现一本扫描版的书也给搜出来了，Google…OCR…ORZ…</p>
-  </li>
-</ul>
-
-<hr />
 
 
         </div>
@@ -2642,33 +2243,30 @@ calculate the md5 value for files under one directory
 <p>There are something to mention：</p>
 
 <ul>
-  <li>
-    <p>If the <code class="highlighter-rouge">shuflle</code> operation is performed on the generated file list to make the file unordered,then all the time will be longer. Explain that the thread is <code class="highlighter-rouge">I/O Bound</code> when it manipulates the file.</p>
-  </li>
-  <li>
-    <p>Line 22 calculates the factorial from 1-300, which is very typical of CPU consumption. In this case the time health is:</p>
+  <li>If the <code class="highlighter-rouge">shuflle</code> operation is performed on the generated file list to make the file unordered,then all the time will be longer. Explain that the thread is <code class="highlighter-rouge">I/O Bound</code> when it manipulates the file.</li>
+</ul>
 
-    <div class="highlighter-rouge"><pre class="highlight"><code>  There are 403345 files
-  normal case: 16.230872
-  multi-process: 4.874608
-  multi-thread: 21.812273
+<p>Line 22 calculates the factorial from 1-300, which is very typical of CPU consumption. In this case the time health is:</p>
 
+<div class="highlighter-rouge"><pre class="highlight"><code>There are 403345 files
+normal case: 16.230872
+multi-process: 4.874608
+multi-thread: 21.812273
 </code></pre>
-    </div>
-    <p>There are obvious multi-process advantages on multi=progress. <code class="highlighter-rouge">4&lt;16&lt;21</code> it is not difficult to choose.</p>
+</div>
+<p>There are obvious multi-process advantages on multi=progress. <code class="highlighter-rouge">4&lt;16&lt;21</code> it is not difficult to choose.</p>
 
-    <p>If we comment the line 22,then situation will be:</p>
-    <div class="highlighter-rouge"><pre class="highlight"><code>  There are 403365 files
-  normal case: 0.182251
-  multi-process: 0.39652
-  multi-thread: 0.234787
+<p>If we comment the line 22,then situation will be:</p>
 
+<div class="highlighter-rouge"><pre class="highlight"><code>There are 403365 files
+normal case: 0.182251
+multi-process: 0.39652
+multi-thread: 0.234787
 </code></pre>
-    </div>
-  </li>
-  <li>
-    <p>For security, you can add <code class="highlighter-rouge">pool.close() pool.join()</code> after map() . The role of <code class="highlighter-rouge">close()</code> is <code class="highlighter-rouge">Prevents any more tasks from being submitted to the pool. Once all the tasks have been completed , the worker processes will exit.</code>, <code class="highlighter-rouge">join</code> is <code class="highlighter-rouge">Wait for the worker processes to exit</code></p>
-  </li>
+</div>
+
+<ul>
+  <li>For security, you can add <code class="highlighter-rouge">pool.close() pool.join()</code> after map() . The role of <code class="highlighter-rouge">close()</code> is <code class="highlighter-rouge">Prevents any more tasks from being submitted to the pool. Once all the tasks have been completed , the worker processes will exit.</code>, <code class="highlighter-rouge">join</code> is <code class="highlighter-rouge">Wait for the worker processes to exit</code></li>
 </ul>
 
 <h5 id="lock">Lock</h5>
@@ -2764,7 +2362,7 @@ calculate the md5 value for files under one directory
     <span class="n">pool</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
     <span class="n">pool</span><span class="o">.</span><span class="n">join</span><span class="p">()</span></code></pre></figure>
 
-<p>对 pool.apply_async ，显示结果如下。可以很明显看出一旦结果执行完就返回。</p>
+<p>Result of <code class="highlighter-rouge">pool.apply_async</code>. Each task returns result the moment it is finished.</p>
 
 <div class="highlighter-rouge"><pre class="highlight"><code>1 occurs
 2 occurs
@@ -2788,8 +2386,7 @@ Total cost time is：5.700147
 
 </code></pre>
 </div>
-
-<p>对 pool.map，显示结果如下。可以看出它在等待所有的结果都运行完，存在明显的 block 。</p>
+<p>Result of <code class="highlighter-rouge">pool.map</code>. It is waiting for all results to be finished.</p>
 
 <div class="highlighter-rouge"><pre class="highlight"><code>1 occurs
 2 occurs
@@ -2815,12 +2412,13 @@ Total cost time is: 5.706731
 </code></pre>
 </div>
 
-<p>关于性能，在做的大量测试下所花费的时间都是类似的，在这种情况下性能不应该成为考量的瓶颈。apply_async 更适合于希望能立刻得到执行结果的场合：-D</p>
+<p>Regarding performance, the time spent remain contant while doing a lot of testing So performance should not be a bottleneck. <code class="highlighter-rouge">Apply_async</code> is more suitable for occasions where you want immediate results.</p>
 
-<h4 id="一个更加复杂的例子">一个更加复杂的例子</h4>
+<h4 id="a-complicated-example">A Complicated Example</h4>
 
-<p>上面的方法在大多数情况下已经足够开发用了。但如果我们想要对多进程/线程操作有更好的掌控，如共享状态(share state)，就需要了解的更深。
-曾经在学习的时候写过一个用 <code class="highlighter-rouge">mp.Process</code> 来运行，并用 <code class="highlighter-rouge">mp.Queue</code> 来作为队列的例子，参见如下。有时间的话再加上注释吧：</p>
+<p>The above method is sufficient for development in most cases. But if we want to have better control over multi-process/thread operations such as sharing state among different threads. we need to understand more.</p>
+
+<p>I used to write an example of running with <code class="highlighter-rouge">mp.Process</code> and using <code class="highlighter-rouge">mp.Queue</code> as a queue, as shown below.</p>
 
 <figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="c">#!/usr/bin/env python
 </span>
@@ -2850,12 +2448,10 @@ Total cost time is: 5.706731
                 break
             '''</span>
         <span class="k">except</span> <span class="n">Queue</span><span class="o">.</span><span class="n">Empty</span><span class="p">:</span>
-            <span class="c">#print 'error happened'
-</span>
-
             <span class="c"># task_queue.task_done()
 </span>
             <span class="k">break</span>
+
         <span class="k">if</span> <span class="n">visited_set</span><span class="o">.</span><span class="n">has_key</span><span class="p">(</span><span class="n">url</span><span class="p">):</span>
             <span class="k">print</span> <span class="s">'{}has been added'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
             <span class="n">task_queue</span><span class="o">.</span><span class="n">task_done</span><span class="p">()</span>
@@ -2866,6 +2462,7 @@ Total cost time is: 5.706731
         <span class="n">visited_set</span><span class="p">[</span><span class="n">url</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
         <span class="n">task_queue</span><span class="o">.</span><span class="n">task_done</span><span class="p">()</span>
         <span class="n">result_queue</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">title</span><span class="p">)</span>
+
     <span class="k">return</span>
 
 
@@ -2916,38 +2513,41 @@ Total cost time is: 5.706731
         <span class="k">try</span><span class="p">:</span>
             <span class="k">print</span> <span class="n">results</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">False</span><span class="p">),</span>
         <span class="k">except</span> <span class="n">Queue</span><span class="o">.</span><span class="n">Empty</span><span class="p">:</span>
-            <span class="k">print</span> <span class="s">'停止'</span>
+            <span class="k">print</span> <span class="s">'stop'</span>
             <span class="k">break</span>
 
     <span class="k">print</span> <span class="s">'cost {}'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span><span class="o">-</span><span class="n">t1</span><span class="p">)</span></code></pre></figure>
 
-<h4 id="python3-里的-threadprocess-poolexecutor">Python3 里的 Thread/Process PoolExecutor</h4>
+<h4 id="threadprocess-and-poolexecutor-in-python3">Thread/Process And PoolExecutor In Python3</h4>
 
-<p>Python3 里为进程和线程提供了进一步的抽象。使用方法有两种：</p>
+<p>Python3 provides a high-level abstraction。There are two ways to use:</p>
 
-<h5 id="使用-map">使用 map</h5>
+<h3 id="using-map">Using Map</h3>
 
-<p>一个典型的函数如下：</p>
+<p>A standard example is：</p>
 
 <figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">with</span> <span class="n">ProcessPoolExecutor</span><span class="p">(</span><span class="n">max_workers</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span> <span class="k">as</span> <span class="n">executor</span><span class="p">:</span>
         <span class="n">executor</span><span class="o">.</span><span class="nb">map</span><span class="p">(</span><span class="n">create_hash</span><span class="p">,</span> <span class="n">file_list</span><span class="p">)</span></code></pre></figure>
 
-<p>在对上面的代码稍作改动之后在 Python3 里运行，在最好的情况里结果如下：</p>
+<p>put it in the above example.The result is:</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>普通执行状况: 12.71012
-多进程运行状况: 5.799454
-多线程运行状况: 18.085609
-ThreadPoolExecutor 运行状况: 18.403806
-ProcessPoolExecutor 运行状况: 5.764657
+<div class="highlighter-rouge"><pre class="highlight"><code>normal case: 12.71012
+multi-process case: 5.799454
+multi-thread: 18.085609
+ThreadPoolExecutor case: 18.403806
+ProcessPoolExecutor case: 5.764657
 </code></pre>
 </div>
-<p>其他大部分的情况 ThreadPoolExecutor 和 ProcessPoolExecutor 都比 multiprocessing 的效果差。原因可以参考 <a href="http://stackoverflow.com/questions/18671528/processpoolexecutor-from-concurrent-futures-way-slower-than-multiprocessing-pool">processpoolexecutor-from-concurrent-futures-way-slower-than-multiprocessing-pool</a>也就是说 PoolExecutor 里最好的适用情况是用 submit() 来监测即时更新的结果，而非套用 mp 。这就引到了第二种使用，使用 <code class="highlighter-rouge">submit()</code>:</p>
 
-<h5 id="使用-submit">使用 submit</h5>
+<p>In most cases,<code class="highlighter-rouge">ThreadPoolExecutor</code> and <code class="highlighter-rouge">ProcessPoolExecutor</code>, are less effective than <code class="highlighter-rouge">multiprocessing</code>. The reason can be referred to <a href="http://stackoverflow.com/questions/18671528/processpoolexecutor-from-concurrent-futures-way-slower-than-multiprocessing -pool">processpoolexecutor-from-concurrent-futures-way-slower-than-multiprocessing-pool</a> That is to say, the best application in PoolExecutor is to use submit() to monitor the results of instant updates instead of applying mp.</p>
 
-<p>正如上面所说，对 PoolExecutor 用 map 的意义不大。下面就主要对 submit　进行讨论。
-submit 这里很明显可以看到 Java 的影子。future 特性最好的是一旦完成就返回，而不必等到所有阻塞返回。和 apply_async 相比更抽象。
-对官网的例子略作改进，一个使用如下：</p>
+<h5 id="using-submit">Using submit</h5>
+
+<p>As mentioned above, the use of map for PoolExecutor is of little significance. The main discussion of submit is as follows.</p>
+
+<p>It is obvious that you can see the shadow of Java. The best feature of the future feature is to return once it’s done, without having to wait for all blocking to return. It is more abstract than apply_async.</p>
+
+<p>The example of the official website is slightly improved. It can be used as follows:</p>
 
 <figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">from</span> <span class="nn">concurrent.futures</span> <span class="kn">import</span> <span class="n">ThreadPoolExecutor</span><span class="p">,</span><span class="n">as_completed</span>
 

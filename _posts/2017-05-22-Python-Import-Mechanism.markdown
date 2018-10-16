@@ -9,6 +9,7 @@ comments: true
 How to solve `No module named` and `Attempted relative import` ?
 
 <!-- more -->
+
 [这篇文章对应的中文版](/../translation/2017-05-22-Python-Import-Mechanism.html)
 
 ### No module named 

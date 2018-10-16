@@ -1,19 +1,30 @@
 ---
 layout: post
-title: 碎碎念...
+title: Mumbler About Techonology(Continually updated)
 date: 2014-11-21 19:40:01
 categories: techniques
 comments: true
 ---
 
-Actually I'm trying to express some light knowledge about coding and interesting experience in my daily life.And this post will be divided into 2 parts: the 1st part will be written in english,and the corresponding Chinese translation can be found in [chinese](/Chinese_translation.html)
+Mumblers about technology...too short to write a novel
 
-一些碎碎念...
-![HBase-source-code.png](/images/HBase-source-code.png)
 <!-- more -->
 
-- 之前代码是这样的：
-```
+[这篇文章对应的中文版](/../translation/2014-11-21-some-techniques.html)
+
+About crypto,mainly I want to discuss the `Bitcoin arbitrage`,`Bitcoin storage, instability of external exchanges(such as binance)`,`relationship between concept、code and white paper`
+
+My bitcoin address is :**1KAYM9K6M6Cp7RJwwr4K1m59ETPxB6o8n4**
+
+Below is tredency of `EOS`:
+
+![EOS.png](/images/EOS.jpg)
+
+---
+
+Recently I'm writing java dedipher code,the initial part is written in Java：
+
+{% highlight java %}
  private static byte[] decrypt(byte[] data, byte[] key) throws Exception {
         SecureRandom sr = new SecureRandom();
         DESKeySpec dks = new DESKeySpec(key);
@@ -23,40 +34,40 @@ Actually I'm trying to express some light knowledge about coding and interesting
         cipher.init(2, securekey, sr);
         return cipher.doFinal(data);
     }
-```
+{% endhighlight %}
 
-各种 debug，看 DES 解法对应的 mode，最后还是要感谢 https://www.tools4noobs.com/online_tools/decrypt/ ，其实两行就用 Python 写好了：
+I need to translate it into Python.Thanks for [decrypt](https://www.tools4noobs.com/online_tools/decrypt/) ，It can be implemented in 2 lines:
 
-```
+{% highlight Python %}
 def decrypt_des(input_):
     """
-    :param input_: 加密的密文
-    :return: 经过 des 解密后的密文
+    :param input_: ciphered text
+    :return: DES deciphered text
     """
     des = DES.new("naidnefi", DES.MODE_ECB)
     return "".join(x for x in des.decrypt(b64decode(input_)) if 31 < ord(x) < 127)
-```
-最后解密出来一堆 '\x5'，可以看 http://donsnotes.com/tech/charsets/ascii.html 来得到具体的含义，解决方法参考：https://stackoverflow.com/questions/14256593/remove-special-characters-from-the-string
-
-- 今天帮我司算法团队调一个 Bug，调的心好累......本来用 Python2 处理中文就很闹心，还要用正则来调。调试了一大堆 unicode 字符以后终于能跑了......结果在测试服务器能跑，在对方的线上服务器就不能跑，擦......最后搜到了这个 ！[链接](https://stackoverflow.com/questions/1446347/how-to-find-out-if-python-is-compiled-with-ucs-2-or-ucs-4)，一试，果然......测试的是用 ucs4 编译的，而线上的是用 ucs2 编译的。两个有什么区别......我不知道啊......现在到家都已经 12 点了，我要睡觉......明天再说
-
-- 自从 Google Reader 解散之后就没有怎么再用过 RSS 了，但最近发现还是很有用啊，类似 Push 和 Pull。这个 [链接](http://wokuang-blog.logdown.com/posts/208334-use-gmail-to-read-rss-data) 里说直接用 IFTTT 连接 Feedly 和 Gmail 就可以，但连接时候发现 IFTTT 必须要付费升级到 Pro 版才行。所以参考 [简书的这篇文章](http://www.jianshu.com/p/26b5c66e8546)，连接 RSS 和 Gmail。不过 IFTTT 改版后界面需要在右上角的个人主页那里点击 `New Applet`。有些 rss 的地址不一定好找，那就用 feedly 订阅后再导出 opml 文件，找到里面的 xmlUrl 属性对应内容。最后的截图如下：
-
-![rss.png](/images/rss.png)
-
-- 帮搜了一个 foursquare 的数据集。开始的链接地址是在 http://www.public.asu.edu/~hgao16/dataset.html，但链接失效了，用 Google 搜的话在犄角旮旯里找到个 reddit 的帖子 https://www.reddit.com/r/datasets/comments/1nywu2/foursquare_data_set/，里面到在 https://archive.org/download/201309_foursquare_dataset_umn 提供了下载zip 格式的文件，150M+。
-
-- Java 上 StringUtils 里最常见的一个就是把首字母变成小写，一般来实现的话就是
-
-{% highlight Java %}
-public static String firstCharToLower(String input){
-    if(input == nulll)
-    
-}
-
 {% endhighlight %}
 
-但 SO 上还有这么一个回答，提供了另一种思路： 
+But the result contains much '\x5'，you can review [ascii](http://donsnotes.com/tech/charsets/ascii.html) to get the exact meaning,solution is based on this link [remove-special-characters-from-the-string](https://stackoverflow.com/questions/14256593/remove-special-characters-from-the-string)
+
+---
+
+Today I helped the algorithm team debug...weired... It was very troublesome to deal with Chinese with Python2, especially when using regular rules to adjust. After debugging a lot of unicode characters, It can finally run... The phenomenon is it can run in the test server , but cannot run in  the online server. Finally, I found this                                                [ucs-2-or-ucs-4](https://stackoverflow.com/questions/1446347/how-to-find-out-if-python-is-compiled-with-ucs-2-or-ucs-4). So the reason is that test server is compiled with ucs4, while online server is compiled with ucs2.
+
+---
+
+subscribe the blog via **IFTTT** successfully,it can send the new blog into your email 
+![rss.png](/images/rss.png)
+
+---
+
+Helping others to search for a foursquare data set. The starting link address is at [dateset](http://www.public.asu.edu/~hgao16/dataset.html), but the link is invalid. If you search with Google, you can find a reddit post in the corner of the page [foursquare_data_set](https://www.reddit .com/r/datasets/comments/1nywu2/foursquare_data_set/), which provides downloadable zip file,about 150M+.
+
+---
+
+The most common function in StringUtils of Java is to make the first letter lowercase, which is usually implemented as this:.
+
+There is an elegant answer in SO: 
 
 {% highlight Java %}
 char c[] = string.toCharArray();
@@ -64,85 +75,42 @@ c[0] = Character.toLowerCase(c[0]);
 string = new String(c);
 {% endhighlight %}
 
-其实是以牺牲可读性来换取了性能的增加
+A tradeoff between performance and readability.
 
-- Curator 是 Linkedin 开源的一款对 zookeeper 封装的工具，里面提供了各种方便实现的功能，包括更新配置文件，选取 leader 节点等。今天在 Spark 上看见了这个实现，具体对应代码在：`spark/core/src/main/scala/org/apache/spark/deploy/master/ZooKeeperPersistenceEngine.scala`
+---
 
-#### What Happened
+Curator is a open source tool by Linkedin for zookeeper encapsulation that provides a variety of handy features, including updating configuration files and selecting leader nodes. There is an implementation on Spark.Corresponding code link is : `spark/core/src/main/scala/org/apache/spark/deploy/master/ZooKeeperPersistenceEngine.scala`
 
-最近所做的一些事。还是挺有趣的。
+---
 
-ETL 过程，代指 **Extract->Transform->Load**，进行数据抽取处理的过程
+Some records.
 
-HDFS 文件路径下面的数据来源一般有以下几种：
+**ETL** means **Extract->Transform->Load** 
 
-- 从已有的 RDBMS 数据库中导入，方便和业务进行分析
+HDFS Data always comes from：
 
-- 从已有的 HDFS 数据中进行连接和抽样，生成新的复合需求的数据
+- Import from existing RDBMS database for business analysis.An example of the first tool is [Sqoop]() from Apache.
 
-- 一些其他的路径，包括从 Flume 中用 HDFS Sink 写入，或者用 `hadoop fs -put` 来把本地的文件导入到 HDFS 中。
+- Connect and sample from existing HDFS data to generate new composite data
 
-第一种工具包括 Apache 出品的 Sqoop 和阿里出品的 DataX(京东是根据 DataX 的原理自己搞了一套)。二者的对比可以查看这个 [链接](https://chu888chu888.gitbooks.io/hadoopstudy/content/Content/11/chapter11.html)。
+- Some other ways, including writing from HDF Sink in Flume, or using `hadoop fs -put` to import local files into HDFS
 
-第二种工具则在大多数情况下都是在用 Hive 来解决需求。Hive 是 FaceBook 出品的可以把 HQL(类 SQL 语法)转化为 MapReduce 执行的工具，方便数据分析师进行操作。
+The second tool in most cases uses Hive to meet the requirements. Hive is a tool from FaceBook that converts HQL (SQL-like syntax) into MapReduce implementations for data analysts to manipulate. It actually is the symbol of the distributed SQL.There are many projetcts that are trying to do the distributed SQL query,such as [Spark](https://spark.apache.org/) with scala and [TiDB](https://www.pingcap.com/en/) with golang.But the basic steps are same,converting the AST(Abstarct Syntax Tree) into LogicalPlanner and execute it in multiple nodes.
 
-同时还调研了调度系统。从原理上来说只要写好执行脚本，直接用 crontab 设置好定时任务就好。但一方面随着业务量上升我们要管理多个脚本，另一方面还想要添加进度提醒、查看日志、失败重试、邮件预警、管理多个相互依赖任务等功能。在这种情况下调研了 **Ozzie/Azkaban/Airflow/Zeus/Kettle** 等项目。
+Tthe scheduling system is also attractive. In principle, you just neet to write the execution script, set up the timing task directly with crontab. But on the one hand, we have to manage multiple scripts as the volume of business increases. On the other hand, we want to add progress reminders, logs view, failure retry, email alerts, and manage multiple interdependent tasks. In this case, **Ozzie/Azkaban/Airflow** and other projects are always best choices.
 
-#### 关于 sqoop
+---
 
-#### 关于 Hive
+How to implement the `join/left join/right join` in MapReduce ? you can review this question [How-does-Hive-implement-joins-in-Map-Reduce](https://www.quora.com/How-does-Hive-implement-joins-in-Map-Reduce).There are two cases:`Map-side` and `Reduce-side`.Usually you can use ArrayList to store MultiInput,but the obvious flaw is that the system will crash or hang when data are intensive.
 
-#### 调度系统
+---
 
-##### 关于 Airflow
+Trying to use GitLab CI today.It is not much different from Github's travis-CI(distinguished by stages:build/deploy) in terms of personal experience. But the  problem happens below:
 
-要求团队里至少有一个人会 Python。严格来说这不算是什么多的要求，特别是在 ML/DL/AI 如火如荼的当下，上手 Python 可能也就是一两天的事情。但总归是多了一些成本。
-
-附录 A 里补充了 Airflow 的安装和使用
-
-##### 关于 Zeus
-
-其实我司之前用的就是 Zeus：-D 但如果要重新开始选型的话，可以有更多的选择。
-
-- 更新缓慢。最近一次和代码有关的提交是在 2013 年，源代码长时间没有进行更新，一个非常明显的 [Bug Fix PR](https://github.com/alibaba/zeus/pull/66) 有一个月没有合并到主分支里
-
-- 部署和运维相对于其他调度工具偏难，参考它的 [安装文档](https://github.com/alibaba/zeus/wiki/%E5%AE%89%E8%A3%85%E6%8C%87%E5%AF%BC%E6%96%87%E6%A1%A3)
-
-
-
-
-MapReduce 实现细节
-
-实现数据库 left/inner/right join
-
-这里可以参考 Quora 的这个问题：https://www.quora.com/How-does-Hive-implement-joins-in-Map-Reduce
-
-存在 Map-side 和 Reduce-side 两种情况来区分讨论
-
-MultiInput 用 ArrayList 存储
-
-劣势：在一个表中有上千万数据时可能会 OOM
-
-
-HBase:
-
-![HBase-source-code.png](/images/HBase-source-code.png)
-
-HBase 的特点：
-
-- 实现比 redis 持久化存储效果更好的 key-value 键值对
-
-- 实现需要有历史版本的增量存储
-
-
-- 最近又有需求，在 Ubuntu 环境下用 VirtualBox 重新安装了 Win8.1。具体
-
-- 今天试着用了一下 GitLab CI，从个人体验来说和 Github 的 travis-CI 没有什么太大区别啦，按照 stages 和 build/deploy 来区分，但最后问题发生在下面：
 ![build-failure.png](/images/build-failure.png)
+Based on [link](https://docs.gitlab.com/runner/install/linux-repository.html),you need to install **runner** and **Gitlab** at the same server.
 
-根据它的说法，你需要在安装 GitLab 的服务器上安装 Runner,参见 [这个](https://docs.gitlab.com/runner/install/linux-repository.html)。但之前安装 GitLab 的人都不在了，既没有运维的权限，同时也没有像创业公司那样必须用 CI 的迫切性(不存在一天上线七八次这种情况啊......)。所以真的是......
-
-最后把写的 .gitlab-ci.yml 脚本立此存照一下：
+Record my `.gitlab-ci.yml` script:
 
 ```
 before_script:
@@ -158,55 +126,47 @@ build_job:
       - mvn '-Dtest=com.xxx.example.*Test' test
 ```
 
-其中 `mvn '-Dtest=com.xxx.example.*Test' test` 用来运行所有匹配的测试用例
+`mvn '-Dtest=com.xxx.example.*Test' test` is used to run all unit test in one package.
 
-- 今天在讨论的时候知道阿里和百度都开始用 DL 来做 CRT 预估了，记得一段时间以前都在说深度学习都还是黑匣子，可解释性遭到 challenge 的话是不能在生产环境上用的，但转眼间都开始用了
+---
 
-- 大部分讨论操作系统的问题最后都变成了要不要用 SSD 的问题......哇咔咔
+Discovering that after IDEA is configured, you can't use Socks5 to download SBT dependencies...After a few hours of trial,I give up to find the reason but to add `-Dhttps.proxyHost=127.0.0.1 -Dhttps.proxyPort=8080` in the SBT.Anyway it works......
 
-- 因为最近要从事的是现场办公，某司要访问开发环境的话，不能用 openvpn 或类似的工具，而是用启明星辰所提供的[天玥安全审计](http://www.venustech.com.cn/SafeProductInfo/11/25.Html)。哼哧哼哧配好了 ip 和 dns 后(其中还踩了 Ubuntu Desktop 版不能直接用编辑配置文件方式修改 ip 的坑)，登陆到 Web 端来访问。但发现登陆工具怎么都选择不了，看了 css 以后发现选择器没问题啊......花了一天的时间各种配，最后申了一份当时发给运维的文档看，FAQ 里第一个就是：
+---
 
->问题1：如果我的操作系统是Linux或者是Mac的怎么办？
-Linux和Mac系统的用户可以使用web界面操作，web地址为 ××××××，操作方法和windows客户端版是一样的，web存在兼容性问题，建议使用客户端版。
+When debugging the Spark Streaming program in the Spark source code on your laptop, you need to change the corresponding **VM Options** to `-Dspark.master=local[2]`, otherwise
+there will be an error like  **netword connection refused** 
 
-  我......
+---
 
-- 发现 IDEA 配置好以后不能用设 Socks5 的方式来翻墙下载 SBT 的依赖，但 manual configuration 应该是没问题的啊。最后在 SBT 的参数里加上 ` -Dhttps.proxyHost=127.0.0.1  -Dhttps.proxyPort=8080`，:-(，但为什么不能用 IDEA 自带的配置呢？.......
+One of the most important features of a distributed system is that **CAP** cannot be met at the same time. The first link Google found was [Quora's answer] (https://www.quora.com/Can-someone-provide-an-intuitive-proof-explanation-of-CAP-theorem), which mentioned a Very good [InfoQ article] (https://www.infoq.com/articles/cap-twelve-years-later-how-the-rules-have-changed), let me try to re-explain it. **C** refers to **Consistency**, **A** refers to **Availability**, and **P** refers to **Partition Tolerance**. Always we have to ensure that multiple nodes are running(preventing [SPOF](https://en.wikipedia.org/wiki/Single_point_of_failure), so **P** is definitely to be satisfied. For **C** and **A**, you can only choose one, for example:
 
-- 在调试 Spark 源码里面的 Spark Streaming 程序的时候，需要把对应的 **VM Options** 改为 `-Dspark.master=local[2]`，否则
-就一直报 **netword connection refused** 的错误......
+> A cluster has two machines, A and B (here simplified for the sake of example, in production environments it is usually required to be odd bigger than 1).
+Whenever A/B has data written, it will be synchronized on B/A at the same time.
+But suddenly the network connection has failed and communication between A and B is not possible. At this time, for A, there are two options:
 
-- 分布式系统里一个最重要的特性就是 **CAP** 不能同时满足。Google 搜出来的第一个链接就是 [Quora 的回答](https://www.quora.com/Can-someone-provide-an-intuitive-proof-explanation-of-CAP-theorem)，里面提到了一篇非常好的 [InfoQ 文章](https://www.infoq.com/articles/cap-twelve-years-later-how-the-rules-have-changed)，我来试着理解一下。**C** 指的是 Consistency(一致性)，**A** 指的是 Availability(可用性)，**P** 指的是 Partition Tolerance(分区容忍性)。通常情况下我们必须要保证多节点运行，所以 **P** 是肯定要满足的。而对 **C** 和 **A**，就只能取舍一个，举例：
+1. In order to maintain consistency, external requests should not be accepted to ensure that data does not change, and availability cannot be met.
 
-```
-一个集群有两台机器，A 和 B(这里为了举例进行了简化，在生产环境中要求通常为大于 1 的奇数)。
-每当 A/B 有数据写入，都会同时在 B/A 上同步过去。
-但突然网络连接出现了故障，A 和 B 之间无法进行通信。这时候对 A 而言，有两种选择：
+2. In order to maintain availability and continue to accept requests, the data on the two machines will be inconsistent, and consistency will not be met.
 
-1. 为了保持一致性，就不应当再接受对外的请求来确保数据不发生变化，这时候可用性就无法得到满足。
-
-2. 为了保持可用性，继续接受请求，那么两台机器上的数据就会不一致，这时候一致性就无法得到满足。
-
-这时候大多数的选择都是保持对外的可用性，两台机器继续对外提供服务，当可以继续进行通信时再同步数据，
-从而保持最终一致性(eventual consistency)。
-
-```
+At this time, most of the choices are to maintain external availability. The two machines continue to provide services to the outside world. When the communication can continue, the data is synchronized(you need a replication tool to achieve it,such as binlog of MySQL) .Thereby maintaining the eventual consistency.
 
 ![CAP.jpg](/images/CAP.jpg)
 
-在衡量系统的 Availability 的时候有几个概念，一个就是 **X 个9**。说明如下：
+---
 
-```
-3个9：(1-99.9%)*365*24=8.76小时：
-表示该软件系统在连续运行1年时间里最多可能的业务中断时间是8.76小时。
-4个9：(1-99.99%)*365*24=0.876小时=52.6分钟：
-表示该软件系统在连续运行1年时间里最多可能的业务中断时间是52.6分钟。
-5个9：(1-99.999%)*365*24*60=5.26分钟：
-表示该软件系统在连续运行1年时间里最多可能的业务中断时间是5.26分钟。
+There are several concepts when measuring the availability of a system, one is **X 9**. described as follows:
 
-```
+> 3 9: (1-99.9%) * 365 * 24 = 8.76 hours:
+Indicates that the most likely business interruption time of the software system during continuous operation for one year is 8.76 hours.
+4 9:(1-99.99%)*365*24=0.876 hours=52.6 minutes:
+Indicates that the most likely business interruption time of the software system during continuous operation for 1 year is 52.6 minutes.
+5 9: (1-99.999%) * 365 * 24 * 60 = 5.26 minutes:
+Indicates that the most likely business interruption time of the software system during continuous operation for one year is 5.26 minutes.
 
-- 最近在写一个 MR 的程序，解析出一堆变量要产生一个字符串。虽然知道 `Guava` 库里有 `join` 方法，并且用 `hasNext()` 来避免结尾加上分隔符的实现高到不知道哪里去了，但就为了这么一个函数引入一个 jar 包是不是不太好啊⊙﹏⊙b。试着自己写一个，实现的稍微 tricky：
+---
+
+I recently wrote a MapReduce program that parses out a bunch of variables to produce a string. Although I know there is a `join` method in the `Guava` library, and `hasNext()` is used to avoid the implementation of the delimiter at the end , but it is not proper to import a jar package for such a small function.I try to implement one:
 
 {% highlight Java %}
 public static String join(Character separator, String... input) {
@@ -221,9 +181,13 @@ public static String join(Character separator, String... input) {
     }
 {% endhighlight %}
 
-- 日常日常超量的话要进行处理，如果是我的话估计就写个脚本了，但今天才被教做人...Linux 下的 **/etc/logrotate.conf** 直接进行编辑就好了，压缩，移除，时间设置，各种功能都有......
+---
 
-- 最近在看 JStorm 的源码,其中有一段代码是这样的......kill the process 5 times......make sure the process be killed definitely......作者是个有故事的人......
+If the log file is too large, it should be processed. If it is me, I would write a Python/Golang script.But today I was taught a new skill.You can just edit **/etc/logrotate.conf** file under Linux. compressing,Removing,time settings, various features...
+
+---
+
+I’ve been reading [JStorm](http://120.25.204.125/) source code recently, and there’s a block of code like this...kill the process 5 times...make sure the process be killed definitely(???
 
 {% highlight Java %}
 public static void ensure_process_killed(Integer pid) {
@@ -243,65 +207,65 @@ public static void ensure_process_killed(Integer pid) {
     }
 {% endhighlight %}
 
-- `concurrency(并发)` 和 `parallelism(并行)` 两个概念常常混淆。今天又遇到了这个问题，结果发现为知里 2014 年就有这个记录了......好尴......那么用一句话来总结，就是说并发是针对程序的设计来讲的(concurrency as a property of a program or system)，一个设计良好的并发程序使得程序可以做到在重叠的时间段内执行不同任务。而并行指的是在实际运行中在物理上有多个任务在运行(parallelism as the run-time behaviour of executing multiple tasks at the same time)。所以如果一个并发的程序在一个单 cpu 的机器上运行，那么它仍然是并发的，但却不是并行。
+---
 
-这个问题解释最好的中文文章在 [这里](https://laike9m.com/blog/huan-zai-yi-huo-bing-fa-he-bing-xing,61/)，英文资料就是 Go 语言的那篇 [slide](https://talks.golang.org/2012/concurrency.slide) 了
+The two concepts of `concurrency` and `parallelism` are often confused.Having a summary about it: concurrency is for the design of the program. (**concurrency as a property of a program or system**), a well-designed concurrent program allows the program to perform different tasks in overlapping time periods. Parallelism refers to the parallelism as the **run-time behaviour of the multiple tasks at the same time**. So if a concurrent program runs on a single cpu machine, it is still concurrent, but not parallel.
 
-- 除了 MongoDB 外 ES 也有被人黑啊......为了开发方便就不取消 `curl delete` 了，但必须只有内网能访问......到底是怎么做到每笔交易都是可回溯验证但无法关联到具体账户的......根据这个 [blockchain 地址](https://blockchain.info/address/13zaxGVjj9MNc2jyvDRhLyYpkCh323MsMq) 看一下，收了 32 笔 0.2 BTC，总共 6.4 BTC，根据 2017.01.18-11:36 上午的汇率，等价 5696.64 $，也等价 39202.73 ¥......
+This Chinese article that explains the best is in [here] (https://laike9m.com/blog/huan-zai-yi-huo-bing-fa-he-bing-xing), English novel is a talk about Go language [slide](https://talks.golang.org/2012/concurrency.slide)
 
-- 有一个 600M+ 的 CSV 文件，因为要实验转化读取，所以就用 split 来按大小分割一下。但之后怎么处理都是乱码，以为是源文件的问题，但 `head -10` 读出来也没问题啊。也怀疑是自己没有加后缀，但文本文件又不是二进制啊......最后才意识到不应该按大小来分割的......按大小来分割是为了方便后续合并啊......要用 `split -l` 按行来分......
+---
+
+There is a 600M+ CSV file, because I need to experiment with conversion reads, so just splitting it by size. But after that, the file is garbled and can't be presented in a proper way.  `head -10` read out is fine. I also suspect that I didn't add a suffix, but the text file is not binary file...finally I realized that I shouldn't divide it by size... I should use `split -l` to divide by line so it is conveniet for subquent merge.
+
 
 ![无话可说](/images/青蛙.jpg)
 
-- 所以到底发生了什么......为什么要用图片处理......今天遇到不少事情......比如说要用 `pillow` 来把一个字体显示到图像上。需要用到 ImageFont 的 TrueType ，下载 `simsun.ttc`，包含宋体和新宋体，但使用的时候会报 `OSError`的错误，无法识别 fileformat ，需要换成 Linux 下对应的字体。但如果用 `/usr/share/fonts/` 目录下的随便一个，又不会正常显示，只会出现 "?"。需要选择一个对中文支持友好的字体，可以在命令行里用 `fc-list :lang=zh-cn` 来找。用 `numpy.asarray() 和 numpy.fromarray()` 来做到在图像和矩阵之间相互转化，中间添加随机数干扰会让字体扭曲变形，但这个更适配于对手写体的识别。如果是对拍照的印刷体，合适的场景是用 rotate() 来旋转一定角度。但这样会出现一些黑色空间，用 crop()再截取一下就好了：-D
+---
 
-- 虽然一直在用 requests，但今天才意识到可以这样: [requests-code-read-content-auto-encode](http://sh3ll.me/2014/06/18/python-requests-encoding/)。关于 `chardet` 识别编码的原理之前在看《Fluent Python》的时候也提到过，根据字符前缀出现的频率来判定。
+Using `numpy.asarray() and numpy.fromarray()` to convert between the image and the matrix. Adding random number interference in the middle will make the font distorted, but this is more suitable for the recognition of handwriting. If it is a print for the photo, the appropriate method is to rotate a certain angle with rotate(). But there will be some black space, so just use crop() to intercept it.
 
-```
-In [7]: chardet.detect('再也不被编码问题困扰了2333ShakaLaka!!!'.encode('GBK'))
+---
+
+Although [requests](http://docs.python-requests.org/en/master/) have been used all the time, I realize it today: [requests-code-read-content-auto-encode](http://sh3ll.me/2014/06/18/python-requests-encoding/). The principle of `chardet` recognition encoding was also mentioned in the 《Fluent Python》 before, based on the frequency of occurrence of the character prefix.
+
+{% highlight Python %}
+In [7]: chardet.detect('No longer plagued by coding problems 2333ShakaLaka!!!'.encode('GBK'))
 Out[7]: {'confidence': 0.99, 'encoding': 'GB2312'}
-```
-- supervisor 项目配置下有一个 user 选项，可以选择以什么用户来启动命令。但是必须用 root 账号来启动 supervisor
+{% endhighlight %}
 
-- 今天遇到了一个挺崩溃的问题。简单来说就是这样：数据校验的脚本有这样一句sql 查询:`count_sql = "select count(*) from...` 但 `print count_sql` 的时候总是会把第一个 's' 字符和最后的一个单引号 `'` 丢掉。查来查去最后甚至怀疑到了 `XShell` 的显示问题，但在我电脑上显示也不对，那就还是代码的问题。最后不用 print 来 debug 了，决定把 count_sql 写入到文件里来看(一直在用 Linux，读写模式里没有加 'b'...)，然后发现显示的语句后面多了一个 `^M`。问题就出在这里，以前创建这个文件的时候用的是 txt 文本编辑器而不是 notepad++，换行符用的是 '\r\n'，而 Linux 下用的是 '\n'。换句话来说就是 `Unix uses 0xA for a newline character. Windows uses a combination of two characters: 0xD 0xA. 0xD is the carriage return character. ^M happens to be the way vim displays 0xD.`(参考 [这个](http://stackoverflow.com/questions/5843495/what-does-m-character-mean-in-vim))。在 Py2 的范畴内解决办法就是读取后再用 strip() 处理一次。当然换到 Py3 就没有这个问题了(虽然离 2020 还有 3 年，但还是赶紧换啊啊啊)。这种问题还是第一次遇见，记录一下：-D
+---
 
-- 装 Kafka 的 UI，最后选型用的是 Yahoo 的 Kafka Manager。但它要用的是 JDK8 ...能检测单位时间内的信息量。最后界面还好啦，就是浓厚的 Bootstrap 风格让人不忍直视：
+There is a `user option` under the supervisor project configuration to choose which user to start the command with. But you must use the root account to start the supervisor.
+
+---
+
+Previously, this file was created with a Windows text editor instead of notepad++,newline is represented with '\r\n';and newLine in Linux is represented with '\n'. In other words, `Unix uses 0xA for a newline character. Windows uses a combination of two characters: 0xD 0xA. 0xD is the carriage return character. ^M happens to be the way vim displays 0xD.` (Refer to [this] (http://stackoverflow.com/questions/5843495/what-does-m-character-mean-in-vim)). The solution in the context of Py2 is to read it and then use` strip()` to process it once.
+
+---
+
+Kafka's UI is installed, and the final selection is Yahoo's [Kafka Manager](https://github.com/yahoo/kafka-manager). But it uses JDK8 ... detecting the amount of message per unit time. The final interface is okay, that is, the strong Bootstrap style:
 
 ![KafkaUI](/images/KafkaUI.png)
 
-同时补充一下 Centos 下安装 JDK8 的使用方法:
+---
 
-```
-① 在现有的环境下 java -version 显示 1.7.0,目录在 /usr/lib 下。参考 Ubuntu 上的安装经验，我们不希望它发生冲突，所以在 /opt 目录下安装。
-② cd /opt,之后使用 
-wget --no-cookies --no-check-certificate --header "Cookie: gpw_e24=http%3A%2F%2Fwww.oracle.com%2F; oraclelicense=accept-securebackup-cookie" "http://download.oracle.com/otn-pub/java/jdk/8u101-b13/jdk-8u101-linux-x64.tar.gz"
-来安装,之后使用 tar -xzf jdk-8u101-linux-i586.tar.gz 来解压。
-③ cd /opt/jdk1.8.0_101/ 来进入安装环境。java 提供了 alternatives 选项来允许在同一系统内存在多个 java 版本。执行 
-alternatives --install /usr/bin/java java /opt/jdk1.8.0_101/bin/java 2 
-来安装。执行 
-alternatives --config java
-来选择，只需要输入对应的编号即可（在 158 环境需要输入的是 3，对应的正是 /opt 对应的 JDK8）。执行 java -version 可以看到已经变为 1.8。
-④ 接下来需要设置环境变量，直接执行下面三个命令：
-export JAVA_HOME=/opt/jdk1.8.0_101
-export JRE_HOME=/opt/jdk1.8.0_101/jre
-export PATH=$PATH:/opt/jdk1.8.0_101/bin:/opt/jdk1.8.0_101/jre/bin
+- If you want to delete log files,`rm -rf  && touch` is not a good choise.Using  `> ToDelete.log` instead
 
-```
+---
 
-- 准备去看 `《Web Analytics 2.0》 `了，虽然与技术关联不大，但没事的时候翻一番～～
+- Recently we use a plugin [elasticsearch-sql] (https://github.com/NLPchina/elasticsearch-sql) so querying the ES in the same way as sql is possible. But if you do not specify the number of limit when using `select` query, the default is always 200
 
-- 对于定时清空的日志文件，用命令 `> ToDelete.log`...
+---
 
-- NLPchina 提供了一个 [elasticsearch-sql](https://github.com/NLPchina/elasticsearch-sql) 的插件，能用类 sql 的方式来对 ES 进行查询。但用 `select` 查询的时候如果不指定 limit 的数量，默认始终是 200
-
-- 想起以前看过的一个挺有意思的 [问题](https://www.zhihu.com/question/38331955)，刚好最近在学 Scala，试着写一个
+- There was a [question](https://www.zhihu.com/question/38331955).Recently I'm just learning Scala,So I tried to solve it:
 
 {% highlight Scala %}
 var boyfriendList = Array.fill(12)(0)
 
 def calculate(total:Int=0,freq:Int=0):Int = total match {
+    // Using Pattern Matching
     case 12 => {
-        println(s"总次数为 $freq ")
+        println(s"Total number is $freq ")
         freq
     }
     case _ => {
@@ -323,24 +287,29 @@ object Application extends App {
     println(sum.toFloat/50)  // 34.64
 {% endhighlight %}
 
-啊，Pattern Matching 这里还比较好，但 var 和 val 变量这里自己做的太 tricky 了 ......
+---
 
-- 今天群里在讨论爬虫被抓的一个问题，有人提到可以模拟搜索引擎，就搜了一下...还真有这种数据，看这个 [Google Crawler](https://support.google.com/webmasters/answer/1061943?hl=en) ，把 `UA` 配置成 `Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)`
+The group is discussing a problem about catching crawlers. Some people mentioned that they can simulate a search engine and searched for it...it is really reasonable, see this article [Google Crawler] (https://support.google.com/ Webmasters/answer/1061943?hl=en) , configure `UA` to `Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)`
 
-- Python 2.6 里一个输出语句 `print '{}'.format(1)` 会报错，提示 `ValueError: zero length field name in format`，必须指明顺序，`print '{0}'.format(1)`。啊...连 2.7 和 2.6 都不能做到完全兼容，有毒...
+---
 
-- 今天遇到一个挺有意思的问题。日志打码用的是 pageName&{key1:value1,key2:value2} 的形式，通常情况下用 split("&")[1] 得到 JSON 字符串后用 get_json_object 来查就可以了。但如果所提供的 value 里面有多个 "&"(如含参的 url)，那么分隔开后就会产生只有一个 `"` 的字符串，读不出 JSON 格式。所以就写了一个 UDF 来解决(额，貌似 Hadoop.io.Text 效率比 Java 的 String 高......)
+In Python 2.6, an output statement `print '{}'.format(1)` will report an error, indicating `ValueError: zero length field name in format`.You must indicate the order, `print '{0}'.format(1)` . Ah... even 2.7 and 2.6 can't be fully compatible
+
+---
+
+There is  a very interesting question today. The logging is in the form of **pageName&{key1:value1,key2:value2}**. Usually, spliting("&")[1] is used to get the JSON string and then using `get_json_object` to check it. However, if there is more than one "&" in the value provided (such as the url containing the parameter), then the separator will produce a string with only `""`.So I wrote a [UDF:User Defined Function](https://cwiki.apache.org/confluence/display/Hive/LanguageManual+UDF) to make the program robust.
 
 {% highlight Java %}
 /**
- * 主要处理 url 中包含 & 从而不能用 split("&") 来分割的情形
+ * 
  * input:String
  * output:JSON-like Object
  */
 
 import org.apache.hadoop.hive.ql.exec.UDF;
-public class dealJSONWithUrl extends UDF {
 
+public class dealJSONWithUrl extends UDF {
+    // handling cases where url contains & can't be split with split("&")
     public String evaluate(String input) {
         if (!input.contains("&"))
             return input;
@@ -358,58 +327,53 @@ public class dealJSONWithUrl extends UDF {
 
 {% endhighlight %}
 
-- crontab 总会有一些非常 tricky 的问题...今天遇到的是运维老师写的一个`redis-cli` 清数据的时候在 shell 脚本里不能直接用 `redis-cli`，而是一定要用绝对路径（线上服务器的绝对路径是在 `/usr/local/lib`，测试服务器上是 `/usr/bin`，后者可以在 shell 里直接删...所以是这个原因吗？）。还想起之前一个 Python 程序总是不能正常运行，最后发现是因为自己用了 `os.chdir('..')`，要先 `cd` 到目录再跑。这个坑踩过的人还不少啊...[这个](https://www.digitalocean.com/community/questions/unable-to-execute-a-python-script-via-crontab-but-can-execute-it-manually-what-gives)...supervisor 里能指定 `Directory` 实在太幸福了...
+---
 
-- 有一段时间搜狗输入法会莫名其妙崩溃，突然就无法输入中文了。没有办法，写了个 `alias sogou='pkill sogou-qimpanel && fcitx && sogou-qimpanel&'` 的命令，一有崩溃就重启。
-
-- 上面说的这个故障应该是搜狗输入法云端输入后台的故障，因为大概在某一个时间段内同时在 PC 和自己的笔记本上遇到这个 Bug，在此之前和在此之后都没有能复现这个问题...
-
-- row_number() over 查询分组，用 row_id 来选择指定
-
-- 之前用 `ssh-copy-id` 配置免密码登陆后一般都是在 bash 里面设置一个 alias，比如 `ssh-75='ssh root@10.10.8.75'` 这种，今天又学习了一点新的人生经验，可以在 ~/.ssh 里直接配一个 config 文件。看看 [create-ssh-config-file-on-linux-unit](https://www.cyberciti.biz/faq/create-ssh-config-file-on-linux-unix/) 
-
-- ubuntu 上最喜欢的命令行工具是 `guake`，`F12` 一键呼出，再配合上 `tmux` 分屏...可惜的是我不是纯 vim 党啊...有时候 guake 会突然变空白，这个时候杀掉进程就好了，但之前运行的一些程序会还运行。当然像 `shadowsocks` 这些程序会提醒你端口被占用，但 `openvpn` 是不会告诉你已经有一个实例运行了啊...再开一个就会造成你在服务器上动不动就被踢下去...
-
-- 今天用到了 pip 的一个功能... 把所有项目的依赖下下来并且不安装: `pip install --download /path module_name`，scp 上传后用
-`pip insall --no-index -f /path module_name` 来安装
-
-- 又是 Hive 时间的问题.....在 unix_timestamp 转化时，如果时间格式如 `2016-06-27 11:00` 因为没有秒数，所以实际上是无法进行转化的。它查询时也不会报错，但也永远不会有合乎要求的结果。最后用 concat() 连接上不会影响时间的 `':','00'`再查。
-
-- 需要用 JStorm 调用一个运维接口来发短信。但只有 Nimbus 服务器可以发短信，Supervisor 服务器没有对应的权限（host 地址设置问题）。这种分布式的问题总是由奇奇怪怪的原因产生...
-
-- Java 的 jedis 只能在 getResource() 取得实例后再用 select 来选择分库，但 Python 的 redis client 是可以在构造函数里就指定的。
-
-- 有时间要学学 docker 啊，真的要能统一开发环境和生产环境，那就很厉害了...
-
-- 踩了 Hive SQL 的一个坑，不同表的时间格式不一样，转的时候要这么用：from_unixtime(unix_timestamp('20160521','yyyyMMdd'),'yyyy-MM-dd')
-
-- Gunicorn 部署。一个空格引发的惨案，噗
-
-- Anaconda 突然发现 .condarc 好像不起作用了，不从清华的源安装。看了看 `conda install -h`，用 `--channel https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/` 来指定以后就可以了。还有问题是提示没有权限，，，看了一下，文件上显示锁，chown + chmod ~~
-
-- 几百行的 SQL 到底是怎么维护
+There are always some very tricky issues with crontab... Today my case is to use `redis-cli` to operate some instructions . When using the data, you can't use `redis-cli` directly in the shell script, but you must use the Absolute path. there was also  a Python program which always didn't work properly. The final reason is because `os.chdir('..')` is used in script file. You need to use  `cd` to enter into the target directory at first. There are  a lot of people who have stepped on this pit...such as [unable-to-execute-a-python-script-via-crontab-but-can-execute-it-manually-what-gives](https://www.digitalocean.com/community/questions/unable-to-execute-a-python-script-via-crontab-but-can -execute-it-manually-what-gives)...The ability to specify `Directory` in supervisor is so wonderful by contrast
 
 ---
 
-- 等待毕设结果，有些焦虑......写了个模拟登陆教务处的脚本，下载完验证码后输入到命令行中......没有能明确显示登陆结果的标志，最后发现可以用返回 header 的 Content-Type 来判断，如果后缀是 `gb2312` 就登陆成功，而后缀是 `GBK` 就登录失败(好奇葩是不是......当时是谁写的这个网站⊙﹏⊙b)。本来想再分析一下课表的，但发现 post 请求的结果是一个 js 函数......竟然有这种 Web 开发方式......虽然也能解析但......还是算了......并且它的登陆逻辑是有问题的啊，填完一次验证码后就能多次尝试登陆，按照大多数人的习惯，如果还是六位数密码，那么最多跑 10**6 次就肯定能破出密码来~~~
+For a while, the Sogou input method will inexplicably collapse, and suddenly it is impossible to input Chinese. I am uncapable of analyzing the source code,so just write a script like`alias sogou='pkill sogou-qimpanel && fcitx && sogou-qimpanel&'` restart when there is a crash
+
+---
+
+Using `row_number() over` to query group，and identifying it by row_id 
+
+---
+
+In the past I always  use `ssh-copy-id` to configure password-free login, generally set an alias in bash, such as `ssh-75='ssh root@10.10.8.75'`.today I learned a new skill today,you can directly match a config file in `~/.ssh.`. Take a look at [create-ssh-config-file-on-linux-unit](https://www.cyberciti.biz/faq/create-ssh-config-file-on-linux-unix/)
+
+---
+
+The favorite command line tool on ubuntu is `guake`, using `F12` to call it with a single click, and using `tmux` to split screen.They are perfect couples. sometimes guake will suddenly become blank It's fine to kill the process at this time, and some of the programs that were run before will still run. Of course, Programs like `shadowsocks` will remind you that the port is occupied, but `openvpn` will not tell you there is already an instance running.Reopening one will make you be kicked on the server...
+
+---
+
+using a function of pip today.Downloading all the dependencies of the project and did not install it: `pip install --download /path module_name`,after uploading the file into a non-network-connect server, execute `pip insall --no-index -f /path module_name` to install
+
+---
+
+It is also a problem with Hive time..... When the unix_timestamp is converted, if the time format is like `2016-06-27 11:00`, because there is no second, it is actually impossible to convert. But it  will not report an error when it is queried, so it will never have a satisfactory result. one solution is to query after using concat() to connect to `':', '00'` which will not affect the time.
+
+---
+
+Java's [jedis](https://github.com/xetorthio/jedis) can only use `select` to select the library after getResource() gets the instance, but Python's [redis client](https://redislabs.com/lp/python-redis/) can be specified in the constructor.
+
+---
+
+For Hive,if there are different time formats on different tables,you should convert like this:`from_unixtime(unix_timestamp('20160521','yyyyMMdd'),'yyyy-MM-dd')`
+
+---
+
+Writing a script that simulates logging into the Academic Affairs Office. After downloading the verification code and entering it into the command line... There is no flag that clearly shows the login result. Finally, I found that I can use the `Content-Type` of the return header to judge. if suffix is `gb2312` , logging is successful;if suffix is `GBK`,if failed. I wanted to analyze the class list again, but found that the result of the post request is a js function...so difficult to be parsed.And its login logic is not complete. After filling in a verification code, you can try to log in multiple times. According to initial rules, if you still have a six-digit password, you can definitely break the password after running up to 1000000 times,
 ![lesson-course-list](/images/lesson-course-list.jpg)
 ![brute-force](/images/brute-force.jpg)
 
-- 花在写论文上的时间比在代码上的时间还多：-D
+---
 
-- 中期答辩前终于把简化版的结果做出来了...但中文字符前都会有一个 u'' Unicode 标识符，影响美观
+Installing Ubuntu image on VMWare encountered the problem that the desktop could not display the sidebar and top bar. Finally, it was solved by ccsm (`sudo apt-get install ccsm`, execute the software, and select Unity, execute, shutdown and restart)
 
-- 为何要作死...用 `sudo shutdown now` 来关机,然后黑屏状态->强制关机->重启后发现怎么输入密码都不对.重装系统...
-
-- 用 ubuntu 用多了会在某些时候觉得真的不方便啊,大概是 auto-remove 和 purge 之间的混乱关系,或者是自己编译 OpenSSL 和安装后的 OpenSSL 产生冲突...`Arch wiki`能和 `ask ubuntu` 提供一样的帮助,随时升级内核比不敢 `upgrade` 高到不知道哪里去了...但路径依赖...再在这上面折腾就太耗时间了...
-
-- 被 STL 的 Vector 坑大了==>!!!!
-
-- Sublime 的列操作，`ctrl + shift + L`
-
-- Windows 下的命令行终端还是推荐 cmder，能使用 `cd/ls` 等常用命令，切换磁盘(以D盘为例)请直接用 `D:`，要使中文字符不产生缩进可以选择右侧的设置(ctrl+alt+p),勾选 monospace 为不使用状态，并且自带对 git 的支持。再也不用 `git bash` 了...
-
-- 在 VMWare 上安装 Ubuntu 镜像遇到了桌面无法显示边栏和顶栏问题，最后用的是 ccsm 来解决(`sudo apt-get install ccsm`，执行软件，并选中 Unity，执行，关机重启)
+---
 
 <!-- 数万人的流离失所比不上一张孩童溺水的照片所引起的影响力大。心理学的理论再一次得到了令人心悸的验证。 -->
 
@@ -448,24 +412,17 @@ I will decide during the next 48 hours
 跑了5圈就已经受不了了。
 -->
 
-
-- 之前在用 Intellij IDEA 和 Pycharm 时候一直用的是 Sublime Text2 的配色，来自[Intellij theme](http://www.ideacolorthemes.org/home/)虽然配色很好，但还是和 ST 有差距。今天修改了一下 Line Comment 的颜色，改成 RGB(138,130,107)，评论颜色为淡灰色，更容易和正文区分开，给原作者发了封邮件，邮件秒回，发邮件这个真的是美帝人民的天赋技能...自己当时是怎么写出 is not very good 这种小学英语的...我的天...
+Previously, when using Intellij IDEA and Pycharm, the theme from [Intellij theme](http://www.ideacolorthemes.org/home/) has been used. Although the color matching is very good, it still has a gap with Sublime Text. I modified the color of the Line Comment, changing it to RGB (138, 130, 107).The color of the comment is light gray, and it is easier to distinguish it from the text. Sending an email to the original author,the email is sent back in seconds.
 
 ![Email And Send](/images/contact.JPG)
 
-- jkeyll竟然不支持Pagination下的categories/tags 集合，试了半天啊...
+---
+
+Jkeyll even does not support the categories/tags collection under Pagination
 
 > Pagination does not support tags or categories.Pagination pages through every post in the posts variable regardless of variables defined in the YAML Front Matter of each. It does not currently allow paging over groups of posts linked by a common tag or category. It cannot include any collection of documents because it is restricted to posts.
 
-- 计算机系统结构试验要求是用WInDLX平台来模拟，现在才知道不同平台汇编语言标准不统一...其他语言都是标准一样实现不一样的
 
-- 计算机网络实验，用微软的 network monitor 来监控，用 display fliter 来过滤，但是为什么不用 fiddler 呀
-
-- 手写 Parser 和 Token ...
-
-- 写《通信原理》的结课论文，发现一本扫描版的书也给搜出来了，Google...OCR...ORZ...
-
----
 
 
 

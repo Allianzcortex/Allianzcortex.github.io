@@ -71,26 +71,25 @@ There are something to mention：
 
 - If the `shuflle` operation is performed on the generated file list to make the file unordered,then all the time will be longer. Explain that the thread is `I/O Bound` when it manipulates the file.
 
-- Line 22 calculates the factorial from 1-300, which is very typical of CPU consumption. In this case the time health is:
+Line 22 calculates the factorial from 1-300, which is very typical of CPU consumption. In this case the time health is:
 
-    ```
-    There are 403345 files
-    normal case: 16.230872
-    multi-process: 4.874608
-    multi-thread: 21.812273
+```
+There are 403345 files
+normal case: 16.230872
+multi-process: 4.874608
+multi-thread: 21.812273
+```
+There are obvious multi-process advantages on multi=progress. `4<16<21` it is not difficult to choose.
 
-    ```
-   There are obvious multi-process advantages on multi=progress. `4<16<21` it is not difficult to choose.
+If we comment the line 22,then situation will be:
 
-   If we comment the line 22,then situation will be:
-    ```
-    There are 403365 files
-    normal case: 0.182251
-    multi-process: 0.39652
-    multi-thread: 0.234787
+```
+There are 403365 files
+normal case: 0.182251
+multi-process: 0.39652
+multi-thread: 0.234787
+```
 
-    ```
-  
 
 - For security, you can add `pool.close() pool.join()` after map() . The role of `close()` is `Prevents any more tasks from being submitted to the pool. Once all the tasks have been completed , the worker processes will exit.`, `join` is `Wait for the worker processes to exit`
 
@@ -175,7 +174,7 @@ if __name__=='__main__':
 
 {% endhighlight %}
 
-对 pool.apply_async ，显示结果如下。可以很明显看出一旦结果执行完就返回。
+Result of `pool.apply_async`. Each task returns result the moment it is finished.
 
 ```
 1 occurs
@@ -199,8 +198,7 @@ calculate 9 result is 512
 Total cost time is：5.700147
 
 ```
-
-对 pool.map，显示结果如下。可以看出它在等待所有的结果都运行完，存在明显的 block 。
+Result of `pool.map`. It is waiting for all results to be finished.
 
 ```
 1 occurs
@@ -226,12 +224,13 @@ Total cost time is: 5.706731
 
 ```
 
-关于性能，在做的大量测试下所花费的时间都是类似的，在这种情况下性能不应该成为考量的瓶颈。apply_async 更适合于希望能立刻得到执行结果的场合：-D
+Regarding performance, the time spent remain contant while doing a lot of testing So performance should not be a bottleneck. `Apply_async` is more suitable for occasions where you want immediate results.
 
-#### 一个更加复杂的例子
+#### A Complicated Example
 
-上面的方法在大多数情况下已经足够开发用了。但如果我们想要对多进程/线程操作有更好的掌控，如共享状态(share state)，就需要了解的更深。
-曾经在学习的时候写过一个用 `mp.Process` 来运行，并用 `mp.Queue` 来作为队列的例子，参见如下。有时间的话再加上注释吧：
+The above method is sufficient for development in most cases. But if we want to have better control over multi-process/thread operations such as sharing state among different threads. we need to understand more.
+
+I used to write an example of running with `mp.Process` and using `mp.Queue` as a queue, as shown below. 
 
 {% highlight Python %}
 #!/usr/bin/env python
@@ -259,10 +258,9 @@ def run(task_queue, result_queue, visited_set):
                 break
             '''
         except Queue.Empty:
-            #print 'error happened'
-
             # task_queue.task_done()
             break
+
         if visited_set.has_key(url):
             print '{}has been added'.format(url)
             task_queue.task_done()
@@ -273,6 +271,7 @@ def run(task_queue, result_queue, visited_set):
         visited_set[url] = 1
         task_queue.task_done()
         result_queue.put(title)
+
     return
 
 
@@ -320,7 +319,7 @@ if __name__ == '__main__':
         try:
             print results.get(False),
         except Queue.Empty:
-            print '停止'
+            print 'stop'
             break
 
     print 'cost {}'.format(time.time()-t1)
@@ -328,35 +327,38 @@ if __name__ == '__main__':
 {% endhighlight %}
 
 
-#### Python3 里的 Thread/Process PoolExecutor
+####  Thread/Process And PoolExecutor In Python3
 
-Python3 里为进程和线程提供了进一步的抽象。使用方法有两种：
+Python3 provides a high-level abstraction。There are two ways to use:
 
-##### 使用 map
+### Using Map
 
-一个典型的函数如下：
+A standard example is：
 
 {% highlight Python %}
 with ProcessPoolExecutor(max_workers=4) as executor:
         executor.map(create_hash, file_list)
 {% endhighlight %}
 
-在对上面的代码稍作改动之后在 Python3 里运行，在最好的情况里结果如下：
+put it in the above example.The result is:
 
 ```
-普通执行状况: 12.71012
-多进程运行状况: 5.799454
-多线程运行状况: 18.085609
-ThreadPoolExecutor 运行状况: 18.403806
-ProcessPoolExecutor 运行状况: 5.764657
+normal case: 12.71012
+multi-process case: 5.799454
+multi-thread: 18.085609
+ThreadPoolExecutor case: 18.403806
+ProcessPoolExecutor case: 5.764657
 ```
-其他大部分的情况 ThreadPoolExecutor 和 ProcessPoolExecutor 都比 multiprocessing 的效果差。原因可以参考 [processpoolexecutor-from-concurrent-futures-way-slower-than-multiprocessing-pool](http://stackoverflow.com/questions/18671528/processpoolexecutor-from-concurrent-futures-way-slower-than-multiprocessing-pool)也就是说 PoolExecutor 里最好的适用情况是用 submit() 来监测即时更新的结果，而非套用 mp 。这就引到了第二种使用，使用 `submit()`:
 
-##### 使用 submit
+In most cases,`ThreadPoolExecutor` and `ProcessPoolExecutor`, are less effective than `multiprocessing`. The reason can be referred to [processpoolexecutor-from-concurrent-futures-way-slower-than-multiprocessing-pool](http://stackoverflow.com/questions/18671528/processpoolexecutor-from-concurrent-futures-way-slower-than-multiprocessing -pool) That is to say, the best application in PoolExecutor is to use submit() to monitor the results of instant updates instead of applying mp.
 
-正如上面所说，对 PoolExecutor 用 map 的意义不大。下面就主要对 submit　进行讨论。
-submit 这里很明显可以看到 Java 的影子。future 特性最好的是一旦完成就返回，而不必等到所有阻塞返回。和 apply_async 相比更抽象。
-对官网的例子略作改进，一个使用如下：
+##### Using submit
+
+As mentioned above, the use of map for PoolExecutor is of little significance. The main discussion of submit is as follows.
+
+It is obvious that you can see the shadow of Java. The best feature of the future feature is to return once it's done, without having to wait for all blocking to return. It is more abstract than apply_async.
+
+The example of the official website is slightly improved. It can be used as follows:
 
 {% highlight Python %}
 from concurrent.futures import ThreadPoolExecutor,as_completed
