@@ -22,6 +22,10 @@ Below is tredency of `EOS`:
 
 ---
 
+I reviewed `Angular` yesterday and found a fantastic project which clearly states the logic of the FE framework.But 
+
+---
+
 Recently I'm writing java dedipher code,the initial part is written in Java：
 
 {% highlight java %}
