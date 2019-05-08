@@ -5,4 +5,4 @@ permalink: /board/
 comments: true
 ---
 
-leave something...
+Just leave anything(:D

@@ -17,6 +17,24 @@ and scores for various soccer leagues
 
 ---
 
+- [Scala-Problem](https://github.com/Infra-Intern/Scala-Problem)
+
+Implemented some OJ Solutions in Scala including Scala99
+
+- Wrote full test cased with Junit and ScalaTest while testing them in both `Intellij IDEA` and `Travis CI`
+
+---
+
+- [golean](https://github.com/Allianzcortex/golean)
+
+A Golang tool that can be used to join screenshots of teleplay while also specifying the caption height
+
+below is the generated picture:
+
+![golean](/images/golean.jpg)
+
+---
+
 - [LaraForum](https://github.com/Allianzcortex/LaraForum)
 
 A Forum based on `Spring Boot/Spring MVC/Spring Data JPA/MySQL/Angular/Restful`
@@ -41,7 +59,7 @@ A recommender website that provides recommendation music you may like
 
 - [AccountBook](https://github.com/Allianzcortex/AcountBook)
 
-A family asset management software based on `QT`
+A family asset management software based on [QT](https://www.qt.io/)
 
 ---
 
