@@ -35,6 +35,17 @@ below is the generated picture:
 
 ---
 
+- [code collection](https://github.com/Allianzcortex/code_collection)
+
+A bunch of code `misc/projects/demos`
+
+- Demos of different programming languages
+
+- Using a [makefile](https://github.com/Allianzcortex/code_collection/blob/master/makefile) to run unit tests for `single directory`
+
+
+---
+
 - [LaraForum](https://github.com/Allianzcortex/LaraForum)
 
 A Forum based on `Spring Boot/Spring MVC/Spring Data JPA/MySQL/Angular/Restful`
