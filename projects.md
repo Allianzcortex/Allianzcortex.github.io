@@ -6,7 +6,7 @@ permalink: /projects/
 
 Some projects I wrote：
 
-- [FBRank](https://github.com/Allianzcortex/FBRank)    <img src="https://camo.githubusercontent.com/679ca6ebb312875e15236daf218fc068060083b8/68747470733a2f2f62616467652e667572792e696f2f70792f464252616e6b2e737667" alt="PyPI version" data-canonical-src="https://badge.fury.io/py/FBRank.svg" style="max-width:100%;">
+- [FBRank](https://github.com/Allianzcortex/FBRank)    <img src="https://camo.githubusercontent.com/679ca6ebb312875e15236daf218fc068060083b8/68747470733a2f2f62616467652e667572792e696f2f70792f464252616e6b2e737667" alt="PyPI version" data-canonical-src="https://badge.fury.io/py/FBRank.svg" style="max-width:100%;"> ![continuous-development](https://travis-ci.org/Allianzcortex/FBRank.svg?branch=master)
 
 <!-- <iframe src="https://ghbtns.com/github-btn.html?user=Allianzcortex&repo=FBRank&type=star&count=true" frameborder="0" scrolling="0" width="170px" height="20px"></iframe> -->
 
@@ -17,7 +17,7 @@ and scores for various soccer leagues
 
 ---
 
-- [Scala-Problem](https://github.com/Infra-Intern/Scala-Problem)
+- [Scala-Problem](https://github.com/Infra-Intern/Scala-Problem) [![Build Status](https://travis-ci.org/Infra-Intern/Scala-Problem.svg?branch=master)](https://travis-ci.org/Infra-Intern/Scala-Problem)
 
 Implemented some OJ Solutions in Scala including Scala99
 
@@ -35,7 +35,7 @@ below is the generated picture:
 
 ---
 
-- [code collection](https://github.com/Allianzcortex/code_collection)
+- [code collection](https://github.com/Allianzcortex/code_collection) ![build](https://api.travis-ci.org/Allianzcortex/code_collection.svg?branch=master)
 
 A bunch of code `misc/projects/demos`
 
@@ -46,7 +46,9 @@ A bunch of code `misc/projects/demos`
 
 ---
 
-- [LaraForum](https://github.com/Allianzcortex/LaraForum)
+- [LaraForum](https://github.com/Allianzcortex/LaraForum) [![Build Status](https://travis-ci.com/Allianzcortex/LaraForum.svg?token=eY1dQPtFsNYcmsgAHTB5&branch=master)](https://travis-ci.com/Allianzcortex/LaraForum)
+
+
 
 A Forum based on `Spring Boot/Spring MVC/Spring Data JPA/MySQL/Angular/Restful`
 
