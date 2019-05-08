@@ -4,54 +4,110 @@ title: "Projects"
 permalink: /projects/
 ---
 
-写的一些小项目：
+Some projects I wrote：
 
-- [FBRank](https://github.com/Allianzcortex/FBRank)
+- [FBRank](https://github.com/Allianzcortex/FBRank)    <img src="https://camo.githubusercontent.com/679ca6ebb312875e15236daf218fc068060083b8/68747470733a2f2f62616467652e667572792e696f2f70792f464252616e6b2e737667" alt="PyPI version" data-canonical-src="https://badge.fury.io/py/FBRank.svg" style="max-width:100%;">
 
-一个在线查看命令足球信息的命令行工具 
+<!-- <iframe src="https://ghbtns.com/github-btn.html?user=Allianzcortex&repo=FBRank&type=star&count=true" frameborder="0" scrolling="0" width="170px" height="20px"></iframe> -->
 
-<iframe src="https://ghbtns.com/github-btn.html?user=Allianzcortex&repo=FBRank&type=star&count=true" frameborder="0" scrolling="0" width="170px" height="20px"></iframe>
-<img src="https://camo.githubusercontent.com/679ca6ebb312875e15236daf218fc068060083b8/68747470733a2f2f62616467652e667572792e696f2f70792f464252616e6b2e737667" alt="PyPI version" data-canonical-src="https://badge.fury.io/py/FBRank.svg" style="max-width:100%;">
+A Python command line tool published in `pypi` that was created to view league rankings, up to date news
+and scores for various soccer leagues
 
+![FBRank](/images/FBRank.png)
 
-- [cortexForum](https://github.com/Allianzcortex/cortexForum)
+---
 
-一款基于 `Django` 所做的论坛（人人都有一个写 v2ex 的梦...）
+- [LaraForum](https://github.com/Allianzcortex/LaraForum)
 
-<iframe src="https://ghbtns.com/github-btn.html?user=Allianzcortex&repo=cortexForum&type=star&count=true" frameborder="0" scrolling="0" width="170px" height="20px"></iframe>
+A Forum based on `Spring Boot/Spring MVC/Spring Data JPA/MySQL/Angular/Restful`
+
+- Implemented authentication by `JWT(Json Web Token)` and authorization by `AspectJ(AOP Programming)` without intrusion to function code
+- Integrated Travis with `Unit/Integration Test` written in `JUnit` and `Mockito` to achieve Continuous Integration
+
+<!-- <iframe src="https://ghbtns.com/github-btn.html?user=Allianzcortex&repo=cortexForum&type=star&count=true" frameborder="0" scrolling="0" width="170px" height="20px"></iframe> -->
+
+---
+
+- [MusicRecommenderSystem](https://github.com/Allianzcortex/MusicRecommenderSystem)
+
+A recommender website that provides recommendation music you may like
+
+- Used [requests](https://2.python-requests.org/en/master/) to write the `multi-threaded crawler` that extracted album/song information used as train dataset
+- Implemnted the `Item-CF` algorithm used to calculate the item similarities and provide the recommended results
+- Built the system based on `MVC architecture(Bootstrap/Jquery/Django)` and deployed it with `Nginx/Gunicorn`
+- Performed `data visualization` based on user feedback(e.g. fresh rate) via Google `Highcharts` library
+
+---
 
 - [AccountBook](https://github.com/Allianzcortex/AcountBook)
 
-一项基于 `QT` 的家庭资产管理软件
+A family asset management software based on `QT`
 
 ---
 
-参与过的项目：
+Projects I participated：
 
-- 为 `@7SDream` 写的 [zhih-oauth](https://github.com/7sDream/zhihu-oauth) 提了两个 PR。BTW,这个项目非常漂亮，装饰器实现的好哇。<br>
+- Provided 2 PRs for  [zhih-oauth](https://github.com/7sDream/zhihu-oauth) written by `@7SDream` 
   [PR1](https://github.com/7sDream/zhihu-oauth/commit/6ac68940b1661c07c6d2758695eb00510733976c) [PR2](https://github.com/7sDream/zhihu-oauth/commit/bb68a4774a188be07e2f004493429166dcef6294)
 
-- 为 `@yumendy` 写的 [LibraryManagement](https://github.com/yumendy/LibraryManagement) 提供了一个修正版 [LibraryManagement](https://github.com/Allianzcortex/myLM), 在原本的基础上增加了 `form 表单`，从而用 `form.cleaned_data.get()` 取代了 `request.POST.get()`，更容易实现前后端的分离，增加了对错误条件的判断，将数据库由 SQLite 改为 `MySQL`。
-<iframe src="https://ghbtns.com/github-btn.html?user=Allianzcortex&repo=myLM&type=star&count=true" frameborder="0" scrolling="0" width="170px" height="20px"></iframe>
+- provided a revised version [myLM](https://github.com/Allianzcortex/myLM) for [LibraryManagement](https://github.com/yumendy/LibraryManagement) written by `@yumendy`.
+Used  `form` to replace `request.POST.get()` with `form.cleaned_data.get()`, which made it easier to separate the front and back ends. Increasing the judgment of error conditions, while migrating the database from `SQLite` to `MySQL`
 
 ---
 
-待填坑的项目：
+Projects in the pending：
 
-- [Seaeels](https://github.com/Allianzcortex/Seaeels) 一个爬虫框架。不知道什么时候能继续写完啊......不过 `crawlProxy` 文件夹里实现了从
-`xici 秘密花园 peuland ip84` 里爬代理 IP 的几个方法。
+<!-- - [Seaeels](https://github.com/Allianzcortex/Seaeels) 一个爬虫框架。不知道什么时候能继续写完啊......不过 `crawlProxy` 文件夹里实现了从
+`xici 秘密花园 peuland ip84` 里爬代理 IP 的几个方法。 -->
 
-<iframe src="https://ghbtns.com/github-btn.html?user=Allianzcortex&repo=Seaeels&type=star&count=true" frameborder="0" scrolling="0" width="170px" height="20px"></iframe>
+<!-- <iframe src="https://ghbtns.com/github-btn.html?user=Allianzcortex&repo=Seaeels&type=star&count=true" frameborder="0" scrolling="0" width="170px" height="20px"></iframe> -->
 
-- [bweever](https://github.com/Allianzcortex/bweever) 当初的一个脑洞，想实现一个附带文档和算法说明的算法库。现在已经衍变成了一堆算法实现的集合......
+- [bweever](https://github.com/Allianzcortex/bweever)
 
-<iframe src="https://ghbtns.com/github-btn.html?user=Allianzcortex&repo=bweever&type=star&count=true" frameborder="0" scrolling="0" width="170px" height="20px"></iframe>
+Based on some features of `Python`, we can implement the following codes:
 
----
+{% highlight python %}
+class AlgorithmImplementation(object):
 
-业余时间维护了一个 [infra-intern](https://github.com/Infra-Intern) 的组织账号，来记录学习 infra 相关知识时做的笔记。
+    @staticmethod
+    def _get_doc():
+        doc_en = """some English illustration"""
+        doc_fn = """some French illustration"""
+        help_doc = {'en': doc_en, 'fn': doc_fn}
+        return help_doc
+
+    def __doc__(self):
+        return AlgorithmImplementation._get_doc().get('en')
+
+    def __call__(self):
+         """ now execute the real sort """ 
+{% endhighlight %}
+
+using  `__call__` to call the real function , using __doc__ to call the default documentation,like :
+
+{% highlight python %}
+def help_cn(problem):
+    return problem._get_doc().get('en')
+
+def help_en(problem):
+    return problem._get_doc().get('cn')
+{% endhighlight %}
+
+Then we will be able to type the input in shell：
+
+```
+>>> from bweever import SomeAlgorithm,help_en,help_fn
+>>> help_en(SomeAlgorithm) # check explanation of Algorithm with French
+>>> help_fn(SomeAlgorithm) # check explanation of Algorithm with English
+>>> SomeAlgorithm(input)   # execute the real algorithm function
+```
+
+<!-- 
+<iframe src="https://ghbtns.com/github-btn.html?user=Allianzcortex&repo=bweever&type=star&count=true" frameborder="0" scrolling="0" width="170px" height="20px"></iframe> -->
+
+<!-- 业余时间维护了一个 [infra-intern](https://github.com/Infra-Intern) 的组织账号，来记录学习 infra 相关知识时做的笔记。
 其中里面一个相对有趣的项目是 [Scala-Leetcode](https://github.com/Infra-Intern/Scala-LeetCode)
 <iframe src="https://ghbtns.com/github-btn.html?user=Infra-Intern&repo=Scala-LeetCode&type=star&count=true" frameborder="0" scrolling="0" width="170px" height="20px"></iframe>
 
 其他的一些项目包括 [消息队列](https://github.com/Infra-Intern/MQ-DOC)、[RPC 框架]()、[分布式文件存储](https://github.com/Infra-Intern/LearnHDFS)、[分布式计算](https://github.com/Infra-Intern/LearnSpark)、[分布式缓存](https://github.com/Infra-Intern/LearnCodis)、[Netty 聊天系统](https://github.com/Infra-Intern/NettyCommunicationSystem)
-
+ -->

@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  
+  
+  <title>How To Design A Follower And Followee</title>
+  <meta name="description" content="这里主要说的是如何实现一个 follow 的表 followee 的定义参见：https://en.oxforddictionaries.com/definition/followee 具体思路分为两种： 用关系型数据库 MySQL 设计来实现 用 NoSQL 如 redis 设计来实现 有的人会担心 redis 的稳定性，因为通常 redis 的作用是缓存，分担查询压力，对于准确性要求并没有那么高。对于 这种，我们需要主要到关注行为和【钱的数额】这类数据不一样，前者是允许一定量的误差。 就算是用户点击了关注行为发现没有关注，过其中一个非常重要的特点是">
+  
+
+  <link rel="stylesheet" href="/assets/main.css">
+  <link rel="canonical" href="http://localhost:4000/2019/02/10/How-To-Design-A-Follower-And-Followee/">
+  
+  
+  <link rel="alternate" type="application/rss+xml" title="Allianzcortex-Blog" href="http://localhost:4000/feed.xml">
+
+  
+
+  
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:site" content="hzcortex">
+  <meta name="twitter:title" content="How To Design A Follower And Followee">
+  <meta name="twitter:description" content="这里主要说的是如何实现一个 follow 的表 followee 的定义参见：https://en.oxforddictionaries.com/definition/followee 具体思路分为两种： 用关系型数据库 MySQL 设计来实现 用 NoSQL 如 redis 设计来实现 有的人会担心 redis 的稳定性，因为通常 redis 的作用是缓存，分担查询压力，对于准确性要求并没...">
+  
+    <meta name="twitter:creator" content="hzcortex">
+  
+  
+
+  <script type="text/javascript">
+  WebFontConfig = {
+    google: { families: [ 'Bitter:400,700,400italic:latin' ] }
+  };
+  (function() {
+    var wf = document.createElement('script');
+    wf.src = ('https:' == document.location.protocol ? 'https' : 'http') +
+      '://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
+    wf.type = 'text/javascript';
+    wf.async = 'true';
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(wf, s);
+  })();
+</script>
+
+  
+
+</head>
+
+
+  <body>
+
+    <header class="site-header">
+
+  <div class="wrapper">
+
+    <a class="site-title" href="/">Allianzcortex-Blog</a>
+
+    <nav class="site-nav">
+      
+        
+        <a class="page-link" href="/archives/">Archives</a>
+      
+        
+        <a class="page-link" href="/projects/">Projects</a>
+      
+        
+        <a class="page-link" href="/about/">About</a>
+      
+        
+        <a class="page-link" href="/board/">board</a>
+      
+        
+        <a class="page-link" href="/feed.xml">RSS</a>
+      
+    </nav>
+
+  </div>
+
+</header>
+
+
+    <main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    
+      <h1 class="post-title" itemprop="name headline">How To Design A Follower And Followee</h1>
+    
+    <p class="post-meta"><time datetime="2019-02-10T00:00:00-04:00" itemprop="datePublished">Feb 10, 2019</time></p>
+  </header>
+
+  <div class="post-content" itemprop="articleBody">
+    
+<p>这里主要说的是如何实现一个 follow 的表</p>
+
+<p>followee 的定义参见：https://en.oxforddictionaries.com/definition/followee</p>
+
+<p>具体思路分为两种：</p>
+
+<ol>
+  <li>用关系型数据库 MySQL 设计来实现</li>
+  <li>用 NoSQL 如 redis 设计来实现</li>
+</ol>
+
+<p>有的人会担心 redis 的稳定性，因为通常 redis 的作用是缓存，分担查询压力，对于准确性要求并没有那么高。对于
+这种，我们需要主要到关注行为和【钱的数额】这类数据不一样，前者是允许一定量的误差。
+就算是用户点击了关注行为发现没有关注，过其中一个非常重要的特点是</p>
+
+  </div>
+
+</article>
+
+        
+
+
+    </main>
+    <footer class="site-footer">
+
+  <div class="wrapper">
+
+    <p>
+      
+
+Pro Land
+    </p>
+
+  </div>
+
+</footer>
+
+
+  </body>
+
+</html>
