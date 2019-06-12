@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Data on BBBB LLLL OOOO GGGG</title>
+    <link>https://Allianzcortex.github.io/categories/data/</link>
+    <description>Recent content in Data on BBBB LLLL OOOO GGGG</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 08 Sep 2016 14:30:05 +0000</lastBuildDate>
+    
+	<atom:link href="https://Allianzcortex.github.io/categories/data/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Data Visualize With Flask and Highcharts</title>
+      <link>https://Allianzcortex.github.io/2016/09/data-visualize-with-flask-and-highcharts/</link>
+      <pubDate>Thu, 08 Sep 2016 14:30:05 +0000</pubDate>
+      
+      <guid>https://Allianzcortex.github.io/2016/09/data-visualize-with-flask-and-highcharts/</guid>
+      <description>&lt;p&gt;data visualization with the back-end Flask and front-end Highcharts&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>A real world Hadoop example with word-count building in local tutorial</title>
+      <link>https://Allianzcortex.github.io/2016/02/a-real-world-hadoop-example-with-word-count-building-in-local-tutorial/</link>
+      <pubDate>Mon, 22 Feb 2016 18:52:22 +0000</pubDate>
+      
+      <guid>https://Allianzcortex.github.io/2016/02/a-real-world-hadoop-example-with-word-count-building-in-local-tutorial/</guid>
+      <description>&lt;p&gt;There will be two parts in this post :&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;How to build run your first hadoop application in local with &lt;code&gt;IntellijIDEA&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;How to use Hadoop to explore user relationship inside &lt;code&gt;GB/TB&lt;/code&gt; data&lt;/li&gt;
+&lt;/ol&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

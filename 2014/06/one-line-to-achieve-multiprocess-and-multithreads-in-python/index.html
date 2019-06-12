@@ -1,0 +1,865 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="generator" content="Hugo 0.69.2 with theme Tranquilpeak 0.4.7-BETA">
+<meta name="author" content="Haozhou Wang">
+<meta name="keywords" content="tech">
+<meta name="description" content="Using multiprocessing and multiprocessing.dummy to implement multi-process and multi-threading(with the use of ThreadPoolExecutor)">
+
+
+<meta property="og:description" content="Using multiprocessing and multiprocessing.dummy to implement multi-process and multi-threading(with the use of ThreadPoolExecutor)">
+<meta property="og:type" content="article">
+<meta property="og:title" content=" One Line To Achieve MultiProcess and MultiThreads In Python">
+<meta name="twitter:title" content=" One Line To Achieve MultiProcess and MultiThreads In Python">
+<meta property="og:url" content="https://Allianzcortex.github.io/2014/06/one-line-to-achieve-multiprocess-and-multithreads-in-python/">
+<meta property="twitter:url" content="https://Allianzcortex.github.io/2014/06/one-line-to-achieve-multiprocess-and-multithreads-in-python/">
+<meta property="og:site_name" content="BBBB LLLL OOOO GGGG">
+<meta property="og:description" content="Using multiprocessing and multiprocessing.dummy to implement multi-process and multi-threading(with the use of ThreadPoolExecutor)">
+<meta name="twitter:description" content="Using multiprocessing and multiprocessing.dummy to implement multi-process and multi-threading(with the use of ThreadPoolExecutor)">
+<meta property="og:locale" content="en-us">
+
+  
+    <meta property="article:published_time" content="2014-06-22T10:49:24">
+  
+  
+    <meta property="article:modified_time" content="2014-06-22T10:49:24">
+  
+  
+  
+    
+      <meta property="article:section" content="Python">
+    
+  
+  
+    
+      <meta property="article:tag" content="Multi-threading">
+    
+      <meta property="article:tag" content="Python">
+    
+  
+
+
+<meta name="twitter:card" content="summary">
+
+
+
+
+
+
+
+
+
+
+
+  <meta property="og:image" content="https://Allianzcortex.github.io/avatar.jpg">
+  <meta property="twitter:image" content="https://Allianzcortex.github.io/avatar.jpg">
+
+
+    <title> One Line To Achieve MultiProcess and MultiThreads In Python</title>
+
+    <link rel="icon" href="https://Allianzcortex.github.io/favicon.png">
+    
+
+    
+
+    <link rel="canonical" href="https://Allianzcortex.github.io/2014/06/one-line-to-achieve-multiprocess-and-multithreads-in-python/">
+
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/jquery.fancybox.min.css" integrity="sha256-vuXZ9LGmmwtjqFX1F+EKin1ThZMub58gKULUyf0qECk=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/helpers/jquery.fancybox-thumbs.min.css" integrity="sha256-SEa4XYAHihTcEP1f5gARTB2K26Uk8PsndQYHQC1f4jU=" crossorigin="anonymous" />
+    
+    
+    <link rel="stylesheet" href="https://Allianzcortex.github.io/css/style-twzjdbqhmnnacqs0pwwdzcdbt8yhv8giawvjqjmyfoqnvazl0dalmnhdkvp7.min.css" />
+    
+    
+
+    
+      
+    
+    
+  </head>
+
+  <body>
+    <div id="blog">
+      <header id="header" data-behavior="4">
+  <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+  <div class="header-title">
+    <a class="header-title-link" href="https://Allianzcortex.github.io/">BBBB LLLL OOOO GGGG</a>
+  </div>
+  
+    
+      <a class="header-right-picture "
+         href="https://Allianzcortex.github.io/#about">
+    
+    
+    
+      
+        <img class="header-picture" src="https://Allianzcortex.github.io/avatar.jpg" alt="Author&#39;s picture" />
+      
+    
+    </a>
+  
+</header>
+
+      <nav id="sidebar" data-behavior="4">
+  <div class="sidebar-container">
+    
+      <div class="sidebar-profile">
+        <a href="https://Allianzcortex.github.io/#about">
+          <img class="sidebar-profile-picture" src="https://Allianzcortex.github.io/avatar.jpg" alt="Author&#39;s picture" />
+        </a>
+       
+        
+          <h5 class="sidebar-profile-bio">@Arctic Wolf, ex-coop @Dash Hudson</h5>
+        
+      </div>
+    
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://Allianzcortex.github.io/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-home"></i>
+      
+      <span class="sidebar-button-desc">Home</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://Allianzcortex.github.io/categories">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-bookmark"></i>
+      
+      <span class="sidebar-button-desc">Categories</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://Allianzcortex.github.io/tags">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
+      
+      <span class="sidebar-button-desc">Tags</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://Allianzcortex.github.io/archives">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-archive"></i>
+      
+      <span class="sidebar-button-desc">Archives</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://Allianzcortex.github.io/#about">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-question"></i>
+      
+      <span class="sidebar-button-desc">About</span>
+    </a>
+  </li>
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://github.com/Allianzcortex" target="_blank" rel="noopener">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-github"></i>
+      
+      <span class="sidebar-button-desc">GitHub</span>
+    </a>
+  </li>
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://Allianzcortex.github.io/index.xml">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-rss"></i>
+      
+      <span class="sidebar-button-desc">RSS</span>
+    </a>
+  </li>
+
+
+    </ul>
+  </div>
+</nav>
+
+      
+
+      <div id="main" data-behavior="4"
+        class="
+               hasCoverMetaIn
+               ">
+        <article class="post" itemscope itemType="http://schema.org/BlogPosting">
+          
+          
+            <div class="post-header main-content-wrap text-left">
+  
+    <h1 class="post-title" itemprop="headline">
+       One Line To Achieve MultiProcess and MultiThreads In Python
+    </h1>
+  
+  
+  <div class="postShorten-meta post-meta">
+    
+      <time itemprop="datePublished" datetime="2014-06-22T10:49:24Z">
+        
+  June 22, 2014
+
+      </time>
+    
+    
+  
+  
+    <span>in</span>
+    
+      <a class="category-link" href="https://Allianzcortex.github.io/categories/python">Python</a>
+    
+  
+
+  </div>
+
+</div>
+          
+          <div class="post-content markdown" itemprop="articleBody">
+            <div class="main-content-wrap">
+              <p>Using <code>multiprocessing</code> and <code>multiprocessing.dummy</code> to implement multi-process and multi-threading(with the use of ThreadPoolExecutor)</p>
+<p>There is not much description about pros and cons between multiprocessing and Thread, because the key is that we want our code to be parallel:-D</p>
+<p>Read this article [parallelism-in-one-line] (<a href="http://chriskiehl.com/article/parallelism-in-one-line/">http://chriskiehl.com/article/parallelism-in-one-line/</a>) to get a rough impression.</p>
+<p>Providing an example written:</p>
+<p><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#e6db74">&#34;&#34;&#34;
+</span><span style="color:#e6db74">calculate the md5 value for files under one directory
+</span><span style="color:#e6db74">&#34;&#34;&#34;</span>
+
+<span style="color:#f92672">import</span> os
+<span style="color:#f92672">import</span> hashlib
+<span style="color:#f92672">from</span> multiprocessing <span style="color:#f92672">import</span> Pool <span style="color:#66d9ef">as</span> ProcessPool
+<span style="color:#f92672">from</span> multiprocessing.dummy <span style="color:#f92672">import</span> Pool <span style="color:#66d9ef">as</span> ThreadPool
+<span style="color:#f92672">from</span> datetime <span style="color:#f92672">import</span> datetime
+
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">traverse_dir</span>(dir_<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;/home/&#39;</span>):
+    <span style="color:#66d9ef">for</span> origin_dir, current_dir, filename <span style="color:#f92672">in</span> os<span style="color:#f92672">.</span>walk(dir_):
+        <span style="color:#66d9ef">for</span> file_ <span style="color:#f92672">in</span> filename:
+            <span style="color:#66d9ef">yield</span> origin_dir <span style="color:#f92672">+</span> file_
+
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">create_hash</span>(filename):
+    hashlib<span style="color:#f92672">.</span>md5(filename)
+    temp <span style="color:#f92672">=</span> reduce(<span style="color:#66d9ef">lambda</span> x, y: x <span style="color:#f92672">*</span> y, range(<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">300</span>))
+
+<span style="color:#66d9ef">if</span> __name__ <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;__main__&#39;</span>:
+
+    file_list <span style="color:#f92672">=</span> list(traverse_dir())
+    <span style="color:#75715e"># import random</span>
+    <span style="color:#75715e"># random.shuffle(file_list)</span>
+    <span style="color:#66d9ef">print</span> <span style="color:#e6db74">&#39;There are {} files&#39;</span><span style="color:#f92672">.</span>format(len(file_list))
+    time1 <span style="color:#f92672">=</span> datetime<span style="color:#f92672">.</span>now()
+    <span style="color:#66d9ef">for</span> filename <span style="color:#f92672">in</span> file_list:
+        create_hash(filename)
+    <span style="color:#66d9ef">print</span> <span style="color:#e6db74">&#39;normal case: {}&#39;</span><span style="color:#f92672">.</span>format((datetime<span style="color:#f92672">.</span>now() <span style="color:#f92672">-</span> time1)<span style="color:#f92672">.</span>total_seconds())
+
+    pool <span style="color:#f92672">=</span> ProcessPool(<span style="color:#ae81ff">4</span>)
+    time2 <span style="color:#f92672">=</span> datetime<span style="color:#f92672">.</span>now()
+    pool<span style="color:#f92672">.</span>map(create_hash, file_list)
+    <span style="color:#66d9ef">print</span> <span style="color:#e6db74">&#39;multi-process case: {}&#39;</span><span style="color:#f92672">.</span>format((datetime<span style="color:#f92672">.</span>now() <span style="color:#f92672">-</span> time2)<span style="color:#f92672">.</span>total_seconds())
+
+    pool <span style="color:#f92672">=</span> ThreadPool(<span style="color:#ae81ff">4</span>)
+    time3 <span style="color:#f92672">=</span> datetime<span style="color:#f92672">.</span>now()
+    pool<span style="color:#f92672">.</span>map(create_hash, file_list)
+    <span style="color:#66d9ef">print</span> <span style="color:#e6db74">&#39;multi-thread: {}&#39;</span><span style="color:#f92672">.</span>format((datetime<span style="color:#f92672">.</span>now() <span style="color:#f92672">-</span> time3)<span style="color:#f92672">.</span>total_seconds())
+
+<span style="color:#e6db74">&#34;</span></code></pre></div>&rdquo;</p>
+<p>There is something to mention：</p>
+<ul>
+<li>If the <code>shuflle</code> operation is performed on the generated file list to make the file unordered,then all the time will be longer. Explain that the thread is <code>I/O Bound</code> when it manipulates the file.</li>
+</ul>
+<p>Line 22 calculates the factorial from 1-300, which is very typical of CPU consumption. In this case the time health is:</p>
+<pre><code>There are 403345 files
+normal case: 16.230872
+multi-process: 4.874608
+multi-thread: 21.812273
+</code></pre><p>There are obvious multi-process advantages on multi=progress. <code>4&lt;16&lt;21</code> it is not difficult to choose.</p>
+<p>If we comment the line 22,then situation will be:</p>
+<pre><code>There are 403365 files
+normal case: 0.182251
+multi-process: 0.39652
+multi-thread: 0.234787
+</code></pre><ul>
+<li>For security, you can add <code>pool.close() pool.join()</code> after map() . The role of <code>close()</code> is <code>Prevents any more tasks from being submitted to the pool. Once all the tasks have been completed , the worker processes will exit.</code>, <code>join</code> is <code>Wait for the worker processes to exit</code></li>
+</ul>
+<h5 id="lock">Lock</h5>
+<p>The role of <code>Lock</code> is for some sensitive functions or variables, ensuring that only one process/thread is running. Also because Lock is not pickable, it cannot be passed as a parameter to map() . Use global variables directly to solve.</p>
+<p>An example is as follows:</p>
+<p>&ldquo;starthighlight&rdquo;
+import multiprocessing.Lock</p>
+<p>l = Lock()</p>
+<p>def func1():
+# some key function
+l.acquire()
+# do-something
+l.release()</p>
+<p>def func2():
+# or use next method
+with l:
+# do-something,it will release automatic</p>
+<p>&ldquo;endhighlight&rdquo;</p>
+<p><code>With lock</code> implements the context manager, which can be compared to Java&rsquo;s <code>Synchronized</code> keyword. During the test, it was found that if all the functions to be executed were placed under lock, the execution time of multiple processes was even worse than the sequential execution.</p>
+<h5 id="about-apply_async">About apply_async</h5>
+<p>In the multiprocessing pool, <code>apply/apply_async</code> is provided in addition to map/map_async. The main differences include:</p>
+<ul>
+<li>
+<p>map/map_async can accept a list containing a large number of arguments and send each element of the list to the function to be executed. Apply/apply_async only accepts one parameter like tuple, such as <code>(1,)</code></p>
+</li>
+<li>
+<p>map/apply is block-type, that is, the return time depends on the longest execution time and returns after all tasks have been executed. Map_async/apply_async returns an AsyncResult object when it starts executing the task, and then uses the <code>.get()</code> method to get the result.</p>
+</li>
+<li>
+<p>map_async/apply_async has one more parameter than map/apply: callback. Callback is a function that accepts only one parameter and is used to perform operations such as <code>write file/read into database</code> on the result of the execution.</p>
+</li>
+<li>
+<p>The two favorite ones are map and apply_async, where the output of map is the same as the order of the input, and the apply_async output is independent of the input order.</p>
+</li>
+</ul>
+<p>Make a simple comparison as follows:</p>
+<p>&ldquo;starthighlight&rdquo;
+import multiprocessing
+from datetime import datetime
+from functools import reduce</p>
+<p>l = multiprocessing.Lock()</p>
+<p>def cal(f):
+# test lock
+# with l:
+#     #print f
+#     for _ in range(f):
+#         temp = reduce(lambda x, y: x * y, range(1, 400))
+#     #temp = reduce(lambda x, y: x * y, range(1, f))
+#     return 2<strong>f
+print ('{} occurs&rsquo;.format(f))
+for _ in range(f):
+temp = reduce(lambda x, y: x * y, range(1, 40000))
+# temp = reduce(lambda x, y: x * y, range(1, f))
+return &lsquo;calculate {} result is {}'.format(f,2</strong>f)</p>
+<p>if __name__==&rsquo;<strong>main</strong>':</p>
+<pre><code>pool = multiprocessing.Pool(4)
+date3 = datetime.now()
+for c in [pool.apply_async(cal,(x,)) for x in range(1,10)]:
+    print (c.get())
+print ('Total cost time is: {}'.format((datetime.now()-date3).total_seconds()))
+pool.close()
+pool.join()
+
+pool = multiprocessing.Pool(4)
+date1 = datetime.now()
+for x in pool.map(cal,range(1,10)):
+    print (x)
+print ('Total cost time is: {}'.format((datetime.now() - date1).total_seconds()))
+pool.close()
+pool.join()
+</code></pre>
+<p>&ldquo;endhighlight&rdquo;</p>
+<p>Result of <code>pool.apply_async</code>. Each task returns result the moment it is finished.</p>
+<pre><code>1 occurs
+2 occurs
+3 occurs
+4 occurs
+calculate 1 result is 2
+5 occurs
+calculate 2 result is 4
+6 occurs
+calculate 3 result is 8
+7 occurs
+calculate 4 result is 16
+8 occurs
+calculate 5 result is 32
+9 occurs
+calculate 6 result is 64
+calculate 7 result is 128
+calculate 8 result is 256
+calculate 9 result is 512
+Total cost time is：5.700147
+
+</code></pre><p>Result of <code>pool.map</code>. It is waiting for all results to be finished.</p>
+<pre><code>1 occurs
+2 occurs
+3 occurs
+4 occurs
+5 occurs
+6 occurs
+7 occurs
+8 occurs
+9 occurs
+// it will pause for a few seconds
+calculate 1 result is 2
+calculate 2 result is 4
+calculate 3 result is 8
+calculate 4 result is 16
+calculate 5 result is 32
+calculate 6 result is 64
+calculate 7 result is 128
+calculate 8 result is 256
+calculate 9 result is 512
+Total cost time is: 5.706731
+
+</code></pre><p>Regarding performance, the time spent remain contant while doing a lot of testing So performance should not be a bottleneck. <code>Apply_async</code> is more suitable for occasions where you want immediate results.</p>
+<h4 id="a-complicated-example">A Complicated Example</h4>
+<p>The above method is sufficient for development in most cases. But if we want to have better control over multi-process/thread operations such as sharing state among different threads. we need to understand more.</p>
+<p>I used to write an example of running with <code>mp.Process</code> and using <code>mp.Queue</code> as a queue, as shown below.</p>
+<p>&ldquo;starthighlight&rdquo;
+#!/usr/bin/env python</p>
+<h1 id="---codingutf-8---">-<em>- coding:utf-8 -</em>-</h1>
+<p>import multiprocessing as mp
+import Queue
+import time
+import re</p>
+<p>import requests</p>
+<p>def run(task_queue, result_queue, visited_set):
+name = mp.current_process().name
+while True:
+try:
+# return an item if one is immediately available
+new_task = task_queue.get(False)
+url=new_task
+'&rsquo;&rsquo;
+if not next_task:
+print &lsquo;{} exiting&rsquo;.format(next_task)
+task_queue.task_done()
+break
+'&rsquo;&rsquo;
+except Queue.Empty:
+# task_queue.task_done()
+break</p>
+<pre><code>    if visited_set.has_key(url):
+        print '{}has been added'.format(url)
+        task_queue.task_done()
+        continue
+
+    title = crawl(url)
+    print '{}:{}'.format(name,title)
+    visited_set[url] = 1
+    task_queue.task_done()
+    result_queue.put(title)
+
+return
+</code></pre>
+<p>def crawl(url):
+#time.sleep(5.0/1000)
+r=requests.get(url)
+title=re.findall(r'<title>(.*?).</title>&rsquo;,r.content)
+return title</p>
+<p>if <strong>name</strong> == &lsquo;<strong>main</strong>':
+t1=time.time()</p>
+<pre><code>tasks = mp.JoinableQueue()
+results = mp.Queue()
+manager = mp.Manager()
+# completeFlag 
+vset = manager.dict()
+
+num_consumers = mp.cpu_count() * 2
+print 'Creating {} consumers'.format(num_consumers)
+num_jobs = 10
+
+url_list=['http://www.qunar.com','http://www.douban.com',
+'http://www.github.com','http://www.ctrip.com','http://www.v2ex.com']
+
+for u in url_list:
+    tasks.put(u, False)
+tasks.put(url_list[2], False)
+tasks.put(url_list[3], False)
+processes = [mp.Process(target=run, args=(tasks, results, vset))
+             for i in xrange(num_consumers)]
+
+for p in processes:
+    p.start()
+
+# wait until all the items in taskqueue are processed
+tasks.join()
+
+for p in processes:
+    p.join()
+
+
+while True:
+    try:
+        print results.get(False),
+    except Queue.Empty:
+        print 'stop'
+        break
+
+print 'cost {}'.format(time.time()-t1)
+</code></pre>
+<p>&ldquo;endhighlight&rdquo;</p>
+<h4 id="threadprocess-and-poolexecutor-in-python3">Thread/Process And PoolExecutor In Python3</h4>
+<p>Python3 provides a high-level abstraction。There are two ways to use:</p>
+<h3 id="using-map">Using Map</h3>
+<p>A standard example is：</p>
+<p>&ldquo;starthighlight&rdquo;
+with ProcessPoolExecutor(max_workers=4) as executor:
+executor.map(create_hash, file_list)
+&ldquo;endhighlight&rdquo;</p>
+<p>put it in the above example.The result is:</p>
+<pre><code>normal case: 12.71012
+multi-process case: 5.799454
+multi-thread: 18.085609
+ThreadPoolExecutor case: 18.403806
+ProcessPoolExecutor case: 5.764657
+</code></pre><p>In most cases,<code>ThreadPoolExecutor</code> and <code>ProcessPoolExecutor</code>, are less effective than <code>multiprocessing</code>. The reason can be referred to [processpoolexecutor-from-concurrent-futures-way-slower-than-multiprocessing-pool](<a href="http://stackoverflow.com/questions/18671528/processpoolexecutor-from-concurrent-futures-way-slower-than-multiprocessing">http://stackoverflow.com/questions/18671528/processpoolexecutor-from-concurrent-futures-way-slower-than-multiprocessing</a> -pool) That is to say, the best application in PoolExecutor is to use submit() to monitor the results of instant updates instead of applying mp.</p>
+<h5 id="using-submit">Using submit</h5>
+<p>As mentioned above, the use of map for PoolExecutor is of little significance. The main discussion of submit is as follows.</p>
+<p>It is obvious that you can see the shadow of Java. The best feature of the future feature is to return once it&rsquo;s done, without having to wait for all blocking to return. It is more abstract than apply_async.</p>
+<p>The example of the official website is slightly improved. It can be used as follows:</p>
+<p>&ldquo;starthighlight&rdquo;
+from concurrent.futures import ThreadPoolExecutor,as_completed</p>
+<p>import requests</p>
+<p>URLS = [&lsquo;http://www.foxnews.com/',
+&lsquo;http://www.cnn.com/',
+&lsquo;http://europe.wsj.com/',
+&lsquo;http://www.bbc.co.uk/',
+&lsquo;http://some-made-up-domain.com/']</p>
+<p>def load_url(url):
+return requests.get(url).content().decode(&lsquo;utf-8&rsquo;)</p>
+<p>if <strong>name</strong> == &lsquo;<strong>main</strong>':
+with ThreadPoolExecutor(max_workers=4) as executor:
+future_to_url = {executor.submit(load_url,url):url for url in URLS}
+for future in as_completed(future_to_url):
+url = future_to_url.get(future)
+try:
+data = future.result()
+except Exception as ex:
+print (&lsquo;raise exception&rsquo;)
+else:
+print ('{url} content is {content}'.format(url=url,content=data))</p>
+<p>&ldquo;endhighlight&rdquo;</p>
+              
+            </div>
+          </div>
+          <div id="post-footer" class="post-footer main-content-wrap">
+            
+              
+                
+                
+                  <div class="post-footer-tags">
+                    <span class="text-color-light text-small">TAGGED IN</span><br/>
+                    
+  <a class="tag tag--primary tag--small" href="https://Allianzcortex.github.io/tags/multi-threading/">Multi-threading</a>
+
+  <a class="tag tag--primary tag--small" href="https://Allianzcortex.github.io/tags/python/">Python</a>
+
+                  </div>
+                
+              
+            
+            <div class="post-actions-wrap">
+  
+      <nav >
+        <ul class="post-actions post-action-nav">
+          
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://Allianzcortex.github.io/2015/03/thoughts-of-solving-dynamic-programming-problems/" data-tooltip="Thoughts Of Solving Dynamic Programming Problems">
+              
+                  <i class="fa fa-angle-left"></i>
+                  <span class="hide-xs hide-sm text-small icon-ml">NEXT</span>
+                </a>
+            </li>
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--disabled">
+              
+                  <span class="hide-xs hide-sm text-small icon-mr">PREVIOUS</span>
+                  <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+          
+        </ul>
+      </nav>
+    <ul class="post-actions post-action-share" >
+      
+        <li class="post-action hide-lg hide-md hide-sm">
+          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
+            <i class="fa fa-share-alt"></i>
+          </a>
+        </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://Allianzcortex.github.io/2014/06/one-line-to-achieve-multiprocess-and-multithreads-in-python/">
+              <i class="fa fa-facebook-official"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=https://Allianzcortex.github.io/2014/06/one-line-to-achieve-multiprocess-and-multithreads-in-python/">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=https://Allianzcortex.github.io/2014/06/one-line-to-achieve-multiprocess-and-multithreads-in-python/">
+              <i class="fa fa-google-plus"></i>
+            </a>
+          </li>
+        
+      
+      
+        <li class="post-action">
+          <a class="post-action-btn btn btn--default" href="#disqus_thread">
+            <i class="fa fa-comment-o"></i>
+          </a>
+        </li>
+      
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--default" href="#">
+        
+          <i class="fa fa-list"></i>
+        </a>
+      </li>
+    </ul>
+  
+</div>
+
+            
+              
+                <div id="disqus_thread">
+  <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+              
+            
+          </div>
+        </article>
+        <footer id="footer" class="main-content-wrap">
+  <span class="copyrights">
+    &copy; 2020 Haozhou Wang. All Rights Reserved
+  </span>
+</footer>
+
+      </div>
+      <div id="bottom-bar" class="post-bottom-bar" data-behavior="4">
+        <div class="post-actions-wrap">
+  
+      <nav >
+        <ul class="post-actions post-action-nav">
+          
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://Allianzcortex.github.io/2015/03/thoughts-of-solving-dynamic-programming-problems/" data-tooltip="Thoughts Of Solving Dynamic Programming Problems">
+              
+                  <i class="fa fa-angle-left"></i>
+                  <span class="hide-xs hide-sm text-small icon-ml">NEXT</span>
+                </a>
+            </li>
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--disabled">
+              
+                  <span class="hide-xs hide-sm text-small icon-mr">PREVIOUS</span>
+                  <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+          
+        </ul>
+      </nav>
+    <ul class="post-actions post-action-share" >
+      
+        <li class="post-action hide-lg hide-md hide-sm">
+          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
+            <i class="fa fa-share-alt"></i>
+          </a>
+        </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://Allianzcortex.github.io/2014/06/one-line-to-achieve-multiprocess-and-multithreads-in-python/">
+              <i class="fa fa-facebook-official"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=https://Allianzcortex.github.io/2014/06/one-line-to-achieve-multiprocess-and-multithreads-in-python/">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=https://Allianzcortex.github.io/2014/06/one-line-to-achieve-multiprocess-and-multithreads-in-python/">
+              <i class="fa fa-google-plus"></i>
+            </a>
+          </li>
+        
+      
+      
+        <li class="post-action">
+          <a class="post-action-btn btn btn--default" href="#disqus_thread">
+            <i class="fa fa-comment-o"></i>
+          </a>
+        </li>
+      
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--default" href="#">
+        
+          <i class="fa fa-list"></i>
+        </a>
+      </li>
+    </ul>
+  
+</div>
+
+      </div>
+      <div id="share-options-bar" class="share-options-bar" data-behavior="4">
+  <i id="btn-close-shareoptions" class="fa fa-close"></i>
+  <ul class="share-options">
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2FAllianzcortex.github.io%2F2014%2F06%2Fone-line-to-achieve-multiprocess-and-multithreads-in-python%2F">
+          <i class="fa fa-facebook-official"></i><span>Share on Facebook</span>
+        </a>
+      </li>
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=https%3A%2F%2FAllianzcortex.github.io%2F2014%2F06%2Fone-line-to-achieve-multiprocess-and-multithreads-in-python%2F">
+          <i class="fa fa-twitter"></i><span>Share on Twitter</span>
+        </a>
+      </li>
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://plus.google.com/share?url=https%3A%2F%2FAllianzcortex.github.io%2F2014%2F06%2Fone-line-to-achieve-multiprocess-and-multithreads-in-python%2F">
+          <i class="fa fa-google-plus"></i><span>Share on Google&#43;</span>
+        </a>
+      </li>
+    
+  </ul>
+</div>
+<div id="share-options-mask" class="share-options-mask"></div>
+    </div>
+    
+    <div id="about">
+  <div id="about-card">
+    <div id="about-btn-close">
+      <i class="fa fa-remove"></i>
+    </div>
+    
+      <img id="about-card-picture" src="https://Allianzcortex.github.io/avatar.jpg" alt="Author&#39;s picture" />
+    
+    
+    
+      <div id="about-card-bio">@Arctic Wolf, ex-coop @Dash Hudson</div>
+    
+    
+      <div id="about-card-job">
+        <i class="fa fa-briefcase"></i>
+        <br/>
+        Full Stack / Backend Developer
+      </div>
+    
+    
+      <div id="about-card-location">
+        <i class="fa fa-map-marker"></i>
+        <br/>
+        Halifax,NS
+      </div>
+    
+  </div>
+</div>
+
+    
+
+    
+  
+    
+      <div id="cover" style="background-image:url('https://Allianzcortex.github.io/images/cover-v1.2.0.jpg');"></div>
+    
+  
+
+
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js" integrity="sha256-/BfiIkHlHoVihZdc6TFuj7MmJ0TWcWsMXkeDFwhi0zw=" crossorigin="anonymous"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.7/js/jquery.fancybox.min.js" integrity="sha256-GEAnjcTqVP+vBp3SSc8bEDQqvWAZMiHyUSIorrWwH50=" crossorigin="anonymous"></script>
+
+
+<script src="https://Allianzcortex.github.io/js/script-pcw6v3xilnxydl1vddzazdverrnn9ctynvnxgwho987mfyqkuylcb1nlt.min.js"></script>
+
+
+<script lang="javascript">
+window.onload = updateMinWidth;
+window.onresize = updateMinWidth;
+document.getElementById("sidebar").addEventListener("transitionend", updateMinWidth);
+function updateMinWidth() {
+  var sidebar = document.getElementById("sidebar");
+  var main = document.getElementById("main");
+  main.style.minWidth = "";
+  var w1 = getComputedStyle(main).getPropertyValue("min-width");
+  var w2 = getComputedStyle(sidebar).getPropertyValue("width");
+  var w3 = getComputedStyle(sidebar).getPropertyValue("left");
+  main.style.minWidth = `calc(${w1} - ${w2} - ${w3})`;
+}
+</script>
+
+<script>
+$(document).ready(function() {
+  hljs.configure({ classPrefix: '', useBR: false });
+  $('pre.code-highlight > code, pre > code').each(function(i, block) {
+    if (!$(this).hasClass('codeblock')) {
+      $(this).addClass('codeblock');
+    }
+    hljs.highlightBlock(block);
+  });
+});
+</script>
+
+
+  
+    
+      <script>
+        var disqus_config = function () {
+          this.page.url = 'https:\/\/Allianzcortex.github.io\/2014\/06\/one-line-to-achieve-multiprocess-and-multithreads-in-python\/';
+          
+            this.page.identifier = '\/2014\/06\/one-line-to-achieve-multiprocess-and-multithreads-in-python\/'
+          
+        };
+        (function() {
+          
+          
+          if (window.location.hostname == "localhost") {
+            return;
+          }
+          var d = document, s = d.createElement('script');
+          var disqus_shortname = 'hugo-tranquilpeak-theme';
+          s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+
+          s.setAttribute('data-timestamp', +new Date());
+          (d.head || d.body).appendChild(s);
+        })();
+      </script>
+    
+  
+
+
+
+
+    
+  </body>
+</html>
+

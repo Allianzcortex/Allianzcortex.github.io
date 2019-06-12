@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="generator" content="Hugo 0.69.2 with theme Tranquilpeak 0.4.7-BETA">
+<meta name="author" content="Haozhou Wang">
+<meta name="keywords" content="tech">
+<meta name="description" content="In this novel,I&rsquo;ll demonstrate how to read the database and display it , with Python&rsquo;s dynamic mechanism and Qt&rsquo;s signal slot.">
+
+
+<meta property="og:description" content="In this novel,I&rsquo;ll demonstrate how to read the database and display it , with Python&rsquo;s dynamic mechanism and Qt&rsquo;s signal slot.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Develop a desktop client with PyQT">
+<meta name="twitter:title" content="Develop a desktop client with PyQT">
+<meta property="og:url" content="https://Allianzcortex.github.io/2015/09/develop-a-desktop-client-with-pyqt/">
+<meta property="twitter:url" content="https://Allianzcortex.github.io/2015/09/develop-a-desktop-client-with-pyqt/">
+<meta property="og:site_name" content="BBBB LLLL OOOO GGGG">
+<meta property="og:description" content="In this novel,I&rsquo;ll demonstrate how to read the database and display it , with Python&rsquo;s dynamic mechanism and Qt&rsquo;s signal slot.">
+<meta name="twitter:description" content="In this novel,I&rsquo;ll demonstrate how to read the database and display it , with Python&rsquo;s dynamic mechanism and Qt&rsquo;s signal slot.">
+<meta property="og:locale" content="en-us">
+
+  
+    <meta property="article:published_time" content="2015-09-14T19:46:30">
+  
+  
+    <meta property="article:modified_time" content="2015-09-14T19:46:30">
+  
+  
+  
+    
+      <meta property="article:section" content="Python">
+    
+  
+  
+    
+      <meta property="article:tag" content="Python">
+    
+  
+
+
+<meta name="twitter:card" content="summary">
+
+
+
+
+
+
+
+
+
+
+
+  <meta property="og:image" content="https://Allianzcortex.github.io/avatar.jpg">
+  <meta property="twitter:image" content="https://Allianzcortex.github.io/avatar.jpg">
+
+
+    <title>Develop a desktop client with PyQT</title>
+
+    <link rel="icon" href="https://Allianzcortex.github.io/favicon.png">
+    
+
+    
+
+    <link rel="canonical" href="https://Allianzcortex.github.io/2015/09/develop-a-desktop-client-with-pyqt/">
+
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/jquery.fancybox.min.css" integrity="sha256-vuXZ9LGmmwtjqFX1F+EKin1ThZMub58gKULUyf0qECk=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/helpers/jquery.fancybox-thumbs.min.css" integrity="sha256-SEa4XYAHihTcEP1f5gARTB2K26Uk8PsndQYHQC1f4jU=" crossorigin="anonymous" />
+    
+    
+    <link rel="stylesheet" href="https://Allianzcortex.github.io/css/style-twzjdbqhmnnacqs0pwwdzcdbt8yhv8giawvjqjmyfoqnvazl0dalmnhdkvp7.min.css" />
+    
+    
+
+    
+      
+    
+    
+  </head>
+
+  <body>
+    <div id="blog">
+      <header id="header" data-behavior="4">
+  <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+  <div class="header-title">
+    <a class="header-title-link" href="https://Allianzcortex.github.io/">BBBB LLLL OOOO GGGG</a>
+  </div>
+  
+    
+      <a class="header-right-picture "
+         href="https://Allianzcortex.github.io/#about">
+    
+    
+    
+      
+        <img class="header-picture" src="https://Allianzcortex.github.io/avatar.jpg" alt="Author&#39;s picture" />
+      
+    
+    </a>
+  
+</header>
+
+      <nav id="sidebar" data-behavior="4">
+  <div class="sidebar-container">
+    
+      <div class="sidebar-profile">
+        <a href="https://Allianzcortex.github.io/#about">
+          <img class="sidebar-profile-picture" src="https://Allianzcortex.github.io/avatar.jpg" alt="Author&#39;s picture" />
+        </a>
+       
+        
+          <h5 class="sidebar-profile-bio">@Arctic Wolf, ex-coop @Dash Hudson</h5>
+        
+      </div>
+    
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://Allianzcortex.github.io/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-home"></i>
+      
+      <span class="sidebar-button-desc">Home</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://Allianzcortex.github.io/categories">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-bookmark"></i>
+      
+      <span class="sidebar-button-desc">Categories</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://Allianzcortex.github.io/tags">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
+      
+      <span class="sidebar-button-desc">Tags</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://Allianzcortex.github.io/archives">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-archive"></i>
+      
+      <span class="sidebar-button-desc">Archives</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://Allianzcortex.github.io/#about">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-question"></i>
+      
+      <span class="sidebar-button-desc">About</span>
+    </a>
+  </li>
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://github.com/Allianzcortex" target="_blank" rel="noopener">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-github"></i>
+      
+      <span class="sidebar-button-desc">GitHub</span>
+    </a>
+  </li>
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://Allianzcortex.github.io/index.xml">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-rss"></i>
+      
+      <span class="sidebar-button-desc">RSS</span>
+    </a>
+  </li>
+
+
+    </ul>
+  </div>
+</nav>
+
+      
+
+      <div id="main" data-behavior="4"
+        class="
+               hasCoverMetaIn
+               ">
+        <article class="post" itemscope itemType="http://schema.org/BlogPosting">
+          
+          
+            <div class="post-header main-content-wrap text-left">
+  
+    <h1 class="post-title" itemprop="headline">
+      Develop a desktop client with PyQT
+    </h1>
+  
+  
+  <div class="postShorten-meta post-meta">
+    
+      <time itemprop="datePublished" datetime="2015-09-14T19:46:30Z">
+        
+  September 14, 2015
+
+      </time>
+    
+    
+  
+  
+    <span>in</span>
+    
+      <a class="category-link" href="https://Allianzcortex.github.io/categories/python">Python</a>
+    
+  
+
+  </div>
+
+</div>
+          
+          <div class="post-content markdown" itemprop="articleBody">
+            <div class="main-content-wrap">
+              <p>In this novel,I&rsquo;ll demonstrate how to read the database and display it , with Python&rsquo;s dynamic mechanism and Qt&rsquo;s signal slot.</p>
+<p>This is a program that can detect network connections. The screenshot of the interface is as follows</p>
+<p><img src="https://Allianzcortex.github.io/images/pyqt-example.png" alt="PyQt"></p>
+<p>There will be very few opportunities to write the client in the future(I mean many professional clients are mainly developed by C#/.net,although actually dropbox developed its&rsquo; client with PyQT)&hellip; So I won&rsquo;t pursue the best practices. I just need to make a <strong>poke-marked GUI</strong> .⊙﹏⊙b</p>
+<h4 id="ui-and-interface-corresponding">UI and interface corresponding</h4>
+<p>PyQt itself is similar to Qt&rsquo;s signal slot mechanism. When a button is clicked, a signal is sent and the processing mechanism of the signal needs to be defined.</p>
+<p>The design interface is designed directly with the <strong>designer</strong>. Drag <code>button/listview/model</code> and customize the name.</p>
+<p>After generating the .ui file, use <code>pyuic4 –x ping_ui.ui –o ping_ui.py</code> to see that the ping_ui.py file contains <code>class Ui_Form(object)</code>, which has various lengths/locations defined. It&rsquo;s More convenient than handwriting</p>
+<p>Then define a <code>pyqt_example2.py</code> which contains the following files:</p>
+<p>&ldquo;starthighlight&rdquo;
+class CalculateForm(QWidget):
+def <strong>init</strong>(self, parent=None):
+super(CalculateForm, self).<strong>init</strong>(parent)</p>
+<pre><code>    self.ui = Ui_Form()
+    self.ui.setupUi(self)
+</code></pre>
+<p>&ldquo;endhighlight&rdquo;</p>
+<p>then define the execution function：</p>
+<p>&ldquo;starthighlight&rdquo;
+if <strong>name</strong> == &lsquo;<strong>main</strong>':
+app = QApplication(sys.argv)
+calculator = CalculateForm()
+calculator.show()
+sys.exit(app.exec_())</p>
+<p>&ldquo;endhighlight&rdquo;</p>
+<p>After execution, you can see that the interface has been successfully displayed.</p>
+<p>The next step is to establish a signal slot mechanism. For example, when the button of the ui was originally defined, there is a button named <code>add_url</code> . We want to associate it with the function of <code>add_url</code> , just define it as follows (preferably in <strong>init</strong> ):</p>
+<p>&ldquo;starthighlight&rdquo;
+self.ui.add_url.clicked.connect(self.add_url_func) # click function
+&ldquo;endhighlight&rdquo;</p>
+<h4 id="crud-and-display">CRUD and Display</h4>
+<p>The model defined in PyQt is <code>QSqlTableModel</code>, and the definition of table is <code>listview</code>.
+For example, define the method of initialize_model() :</p>
+<p>&ldquo;starthighlight&rdquo;
+db = QtSql.QSqlDatabase.addDatabase(&lsquo;QSQLITE&rsquo;)
+db.setDatabaseName(&lsquo;test_ping.db&rsquo;)</p>
+<p>def initialize_model(model):
+model.setTable(&lsquo;url_ping&rsquo;)
+model.setEditStrategy(QtSql.QSqlTableModel.OnManualSubmit)
+model.select()
+model.setHeaderData(0, QtCore.Qt.Horizontal, u&quot;url&rdquo;) # url link
+&ldquo;endhighlight&rdquo;</p>
+<p>To display, just connect the listview with the corresponding model:</p>
+<p>&ldquo;starthighlight&rdquo;
+def show_view(self):
+model = QSqlTableModel()
+initialize_model(model)
+self.ui.url_list.setModel(model) # self.ui.url_list is  listview
+self.ui.url_list.show()
+&ldquo;endhighlight&rdquo;</p>
+<p>You can see the latest database, equivalent to refreshing, by calling the self.show_view() method after each addition, deletion, and change.</p>
+<h5 id="how-to-execute-a-query">How to execute a query</h5>
+<p>For example, to find the content containing &lsquo;test&rsquo;, the code is as follows:</p>
+<p>&ldquo;starthighlight&rdquo;
+query = QtSql.QSqlQuery()
+query.exec_(&ldquo;select * from test where value like &lsquo;%test%'&quot;)
+&ldquo;endhighlight&rdquo;</p>
+<p>And if you want to show with a better way,then redefine QSqlQueryModel</p>
+<p>&ldquo;starthighlight&rdquo;
+sqlQueryModel.setQuery(&ldquo;select * from test where value like &lsquo;%test%&rsquo; &ldquo;)
+self.ui.url_list.setModel(sqlQueryModel)
+self.ui.url_list.show()
+&ldquo;endhighlight&rdquo;</p>
+<p>Define the popup: Use the simplest of the following functions:</p>
+<p>&ldquo;starthighlight&rdquo;
+def show_messagebox(self):
+msg = QMessageBox()
+msg.setText(u&rsquo;detect successfully&rsquo;)
+msg.setStandardButtons(QMessageBox.Ok)
+msg.exec_()
+&ldquo;endhighlight&rdquo;</p>
+<h4 id="ui-and-execution-thread-separation">Ui and execution thread separation</h4>
+<p>How to set the ui and execute task thread separation so that the application won&rsquo;t be non-reactive:</p>
+<p>There are many ways to do this. I chose the following method:</p>
+<p>&ldquo;starthighlight&rdquo;
+from PyQt4.QtCore import QThread</p>
+<p>class PingThread(QThread):
+&quot;&rdquo;&rdquo; define PingThread &quot;&rdquo;&rdquo;
+def <strong>init</strong>(self, url):
+QThread.<strong>init</strong>(self)
+self._url = url</p>
+<pre><code>def run(self):
+    ping_url(self._url)
+    self.emit(SIGNAL('ping url'))
+    return
+</code></pre>
+<p>&quot;&rdquo;&rdquo; Then call it in the main thread. &quot;&rdquo;&rdquo;</p>
+<p>self.pingThread = PingThread(target_url)</p>
+<h1 id="selfconnectselfpingthread-signalping-url-selfshow_messagebox-可选">self.connect(self.pingThread, SIGNAL(&lsquo;ping url&rsquo;), self.show_messagebox) 可选</h1>
+<p>self.pingThread.start()</p>
+<p>&ldquo;endhighlight&rdquo;</p>
+<h4 id="progressbar">ProgressBar</h4>
+<p>The progress bar in PyQt is displayed using QProgressBar. When set in ui, there will be a minimum value (default is 0) and a maximum value (default is 100).</p>
+<p>Just set it when updating</p>
+<p>&ldquo;starthighlight&rdquo;
+self.ui.click_progrress.setValue(30) #  progresses to 30%</p>
+<h1 id="click_progress-是-ui-里对应的-progressbar">click_progress 是 ui 里对应的 ProgressBar</h1>
+<p>&ldquo;endhighlight&rdquo;</p>
+<h4 id="other-stuffs">Other Stuffs</h4>
+<p>The ping calls the ping API that comes with the system.</p>
+<p>Tracert calls the tracert API in windows (the corresponding Linux command is traceroute)</p>
+<p>Telnet is to detect if the port is open. Directly calling the system command has two drawbacks:</p>
+<p>1 Windows requires the user to manually open the configuration</p>
+<p>2 telnet uses the cursor to flash to determine the port status with no return value, it is not convenient for program processing.</p>
+<p>So final decision is to use socket to connect:</p>
+<p>&ldquo;starthighlight&rdquo;
+sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+result = sock.connect_ex((url_name, 80))
+port_open = True if result == 0 else False
+&ldquo;endhighlight&rdquo;</p>
+<p>PyQt comes with a lot of demos in site-packages, and it&rsquo;s faster to see the code directly than the documentation.
+At the time of the study, I wrote a calculator demo that adds genuine. When the input number or the selected calculation symbol changes, the calculation result is automatically changed (well, eval()~ and the Python decorator is used. characteristic.</p>
+              
+            </div>
+          </div>
+          <div id="post-footer" class="post-footer main-content-wrap">
+            
+              
+                
+                
+                  <div class="post-footer-tags">
+                    <span class="text-color-light text-small">TAGGED IN</span><br/>
+                    
+  <a class="tag tag--primary tag--small" href="https://Allianzcortex.github.io/tags/python/">Python</a>
+
+                  </div>
+                
+              
+            
+            <div class="post-actions-wrap">
+  
+      <nav >
+        <ul class="post-actions post-action-nav">
+          
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://Allianzcortex.github.io/2016/02/a-real-world-hadoop-example-with-word-count-building-in-local-tutorial/" data-tooltip="A real world Hadoop example with word-count building in local tutorial">
+              
+                  <i class="fa fa-angle-left"></i>
+                  <span class="hide-xs hide-sm text-small icon-ml">NEXT</span>
+                </a>
+            </li>
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://Allianzcortex.github.io/2015/03/thoughts-of-solving-dynamic-programming-problems/" data-tooltip="Thoughts Of Solving Dynamic Programming Problems">
+              
+                  <span class="hide-xs hide-sm text-small icon-mr">PREVIOUS</span>
+                  <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+          
+        </ul>
+      </nav>
+    <ul class="post-actions post-action-share" >
+      
+        <li class="post-action hide-lg hide-md hide-sm">
+          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
+            <i class="fa fa-share-alt"></i>
+          </a>
+        </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://Allianzcortex.github.io/2015/09/develop-a-desktop-client-with-pyqt/">
+              <i class="fa fa-facebook-official"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=https://Allianzcortex.github.io/2015/09/develop-a-desktop-client-with-pyqt/">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=https://Allianzcortex.github.io/2015/09/develop-a-desktop-client-with-pyqt/">
+              <i class="fa fa-google-plus"></i>
+            </a>
+          </li>
+        
+      
+      
+        <li class="post-action">
+          <a class="post-action-btn btn btn--default" href="#disqus_thread">
+            <i class="fa fa-comment-o"></i>
+          </a>
+        </li>
+      
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--default" href="#">
+        
+          <i class="fa fa-list"></i>
+        </a>
+      </li>
+    </ul>
+  
+</div>
+
+            
+              
+                <div id="disqus_thread">
+  <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+              
+            
+          </div>
+        </article>
+        <footer id="footer" class="main-content-wrap">
+  <span class="copyrights">
+    &copy; 2020 Haozhou Wang. All Rights Reserved
+  </span>
+</footer>
+
+      </div>
+      <div id="bottom-bar" class="post-bottom-bar" data-behavior="4">
+        <div class="post-actions-wrap">
+  
+      <nav >
+        <ul class="post-actions post-action-nav">
+          
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://Allianzcortex.github.io/2016/02/a-real-world-hadoop-example-with-word-count-building-in-local-tutorial/" data-tooltip="A real world Hadoop example with word-count building in local tutorial">
+              
+                  <i class="fa fa-angle-left"></i>
+                  <span class="hide-xs hide-sm text-small icon-ml">NEXT</span>
+                </a>
+            </li>
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://Allianzcortex.github.io/2015/03/thoughts-of-solving-dynamic-programming-problems/" data-tooltip="Thoughts Of Solving Dynamic Programming Problems">
+              
+                  <span class="hide-xs hide-sm text-small icon-mr">PREVIOUS</span>
+                  <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+          
+        </ul>
+      </nav>
+    <ul class="post-actions post-action-share" >
+      
+        <li class="post-action hide-lg hide-md hide-sm">
+          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
+            <i class="fa fa-share-alt"></i>
+          </a>
+        </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://Allianzcortex.github.io/2015/09/develop-a-desktop-client-with-pyqt/">
+              <i class="fa fa-facebook-official"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=https://Allianzcortex.github.io/2015/09/develop-a-desktop-client-with-pyqt/">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=https://Allianzcortex.github.io/2015/09/develop-a-desktop-client-with-pyqt/">
+              <i class="fa fa-google-plus"></i>
+            </a>
+          </li>
+        
+      
+      
+        <li class="post-action">
+          <a class="post-action-btn btn btn--default" href="#disqus_thread">
+            <i class="fa fa-comment-o"></i>
+          </a>
+        </li>
+      
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--default" href="#">
+        
+          <i class="fa fa-list"></i>
+        </a>
+      </li>
+    </ul>
+  
+</div>
+
+      </div>
+      <div id="share-options-bar" class="share-options-bar" data-behavior="4">
+  <i id="btn-close-shareoptions" class="fa fa-close"></i>
+  <ul class="share-options">
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2FAllianzcortex.github.io%2F2015%2F09%2Fdevelop-a-desktop-client-with-pyqt%2F">
+          <i class="fa fa-facebook-official"></i><span>Share on Facebook</span>
+        </a>
+      </li>
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=https%3A%2F%2FAllianzcortex.github.io%2F2015%2F09%2Fdevelop-a-desktop-client-with-pyqt%2F">
+          <i class="fa fa-twitter"></i><span>Share on Twitter</span>
+        </a>
+      </li>
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://plus.google.com/share?url=https%3A%2F%2FAllianzcortex.github.io%2F2015%2F09%2Fdevelop-a-desktop-client-with-pyqt%2F">
+          <i class="fa fa-google-plus"></i><span>Share on Google&#43;</span>
+        </a>
+      </li>
+    
+  </ul>
+</div>
+<div id="share-options-mask" class="share-options-mask"></div>
+    </div>
+    
+    <div id="about">
+  <div id="about-card">
+    <div id="about-btn-close">
+      <i class="fa fa-remove"></i>
+    </div>
+    
+      <img id="about-card-picture" src="https://Allianzcortex.github.io/avatar.jpg" alt="Author&#39;s picture" />
+    
+    
+    
+      <div id="about-card-bio">@Arctic Wolf, ex-coop @Dash Hudson</div>
+    
+    
+      <div id="about-card-job">
+        <i class="fa fa-briefcase"></i>
+        <br/>
+        Full Stack / Backend Developer
+      </div>
+    
+    
+      <div id="about-card-location">
+        <i class="fa fa-map-marker"></i>
+        <br/>
+        Halifax,NS
+      </div>
+    
+  </div>
+</div>
+
+    
+
+    
+  
+    
+      <div id="cover" style="background-image:url('https://Allianzcortex.github.io/images/cover-v1.2.0.jpg');"></div>
+    
+  
+
+
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js" integrity="sha256-/BfiIkHlHoVihZdc6TFuj7MmJ0TWcWsMXkeDFwhi0zw=" crossorigin="anonymous"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.7/js/jquery.fancybox.min.js" integrity="sha256-GEAnjcTqVP+vBp3SSc8bEDQqvWAZMiHyUSIorrWwH50=" crossorigin="anonymous"></script>
+
+
+<script src="https://Allianzcortex.github.io/js/script-pcw6v3xilnxydl1vddzazdverrnn9ctynvnxgwho987mfyqkuylcb1nlt.min.js"></script>
+
+
+<script lang="javascript">
+window.onload = updateMinWidth;
+window.onresize = updateMinWidth;
+document.getElementById("sidebar").addEventListener("transitionend", updateMinWidth);
+function updateMinWidth() {
+  var sidebar = document.getElementById("sidebar");
+  var main = document.getElementById("main");
+  main.style.minWidth = "";
+  var w1 = getComputedStyle(main).getPropertyValue("min-width");
+  var w2 = getComputedStyle(sidebar).getPropertyValue("width");
+  var w3 = getComputedStyle(sidebar).getPropertyValue("left");
+  main.style.minWidth = `calc(${w1} - ${w2} - ${w3})`;
+}
+</script>
+
+<script>
+$(document).ready(function() {
+  hljs.configure({ classPrefix: '', useBR: false });
+  $('pre.code-highlight > code, pre > code').each(function(i, block) {
+    if (!$(this).hasClass('codeblock')) {
+      $(this).addClass('codeblock');
+    }
+    hljs.highlightBlock(block);
+  });
+});
+</script>
+
+
+  
+    
+      <script>
+        var disqus_config = function () {
+          this.page.url = 'https:\/\/Allianzcortex.github.io\/2015\/09\/develop-a-desktop-client-with-pyqt\/';
+          
+            this.page.identifier = '\/2015\/09\/develop-a-desktop-client-with-pyqt\/'
+          
+        };
+        (function() {
+          
+          
+          if (window.location.hostname == "localhost") {
+            return;
+          }
+          var d = document, s = d.createElement('script');
+          var disqus_shortname = 'hugo-tranquilpeak-theme';
+          s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+
+          s.setAttribute('data-timestamp', +new Date());
+          (d.head || d.body).appendChild(s);
+        })();
+      </script>
+    
+  
+
+
+
+
+    
+  </body>
+</html>
+

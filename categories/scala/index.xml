@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Scala on BBBB LLLL OOOO GGGG</title>
+    <link>https://Allianzcortex.github.io/categories/scala/</link>
+    <description>Recent content in Scala on BBBB LLLL OOOO GGGG</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 21 May 2017 16:29:10 +0000</lastBuildDate>
+    
+	<atom:link href="https://Allianzcortex.github.io/categories/scala/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Run ScalaTest And JUnit On TravisCI And Some Scala99 Solutions</title>
+      <link>https://Allianzcortex.github.io/2017/05/run-scalatest-and-junit-on-travisci-and-some-scala99-solutions/</link>
+      <pubDate>Sun, 21 May 2017 16:29:10 +0000</pubDate>
+      
+      <guid>https://Allianzcortex.github.io/2017/05/run-scalatest-and-junit-on-travisci-and-some-scala99-solutions/</guid>
+      <description>&lt;p&gt;After integrating &lt;code&gt;ScalaTest&lt;/code&gt; with &lt;code&gt;JUnit&lt;/code&gt;, execute &lt;code&gt;sbt test&lt;/code&gt; prompt &lt;code&gt;no tests are executed&lt;/code&gt;.How to solve it ?&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,859 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="generator" content="Hugo 0.69.2 with theme Tranquilpeak 0.4.7-BETA">
+<meta name="author" content="Haozhou Wang">
+<meta name="keywords" content="tech">
+<meta name="description" content="Solving the dynamic programming problems">
+
+
+<meta property="og:description" content="Solving the dynamic programming problems">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Thoughts Of Solving Dynamic Programming Problems">
+<meta name="twitter:title" content="Thoughts Of Solving Dynamic Programming Problems">
+<meta property="og:url" content="https://Allianzcortex.github.io/2015/03/thoughts-of-solving-dynamic-programming-problems/">
+<meta property="twitter:url" content="https://Allianzcortex.github.io/2015/03/thoughts-of-solving-dynamic-programming-problems/">
+<meta property="og:site_name" content="BBBB LLLL OOOO GGGG">
+<meta property="og:description" content="Solving the dynamic programming problems">
+<meta name="twitter:description" content="Solving the dynamic programming problems">
+<meta property="og:locale" content="en-us">
+
+  
+    <meta property="article:published_time" content="2015-03-11T13:22:10">
+  
+  
+    <meta property="article:modified_time" content="2015-03-11T13:22:10">
+  
+  
+  
+    
+      <meta property="article:section" content="Algorithm">
+    
+  
+  
+    
+      <meta property="article:tag" content="DP">
+    
+      <meta property="article:tag" content="Algorithm">
+    
+  
+
+
+<meta name="twitter:card" content="summary">
+
+
+
+
+
+
+
+
+
+
+
+  <meta property="og:image" content="https://Allianzcortex.github.io/avatar.jpg">
+  <meta property="twitter:image" content="https://Allianzcortex.github.io/avatar.jpg">
+
+
+    <title>Thoughts Of Solving Dynamic Programming Problems</title>
+
+    <link rel="icon" href="https://Allianzcortex.github.io/favicon.png">
+    
+
+    
+
+    <link rel="canonical" href="https://Allianzcortex.github.io/2015/03/thoughts-of-solving-dynamic-programming-problems/">
+
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/jquery.fancybox.min.css" integrity="sha256-vuXZ9LGmmwtjqFX1F+EKin1ThZMub58gKULUyf0qECk=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/helpers/jquery.fancybox-thumbs.min.css" integrity="sha256-SEa4XYAHihTcEP1f5gARTB2K26Uk8PsndQYHQC1f4jU=" crossorigin="anonymous" />
+    
+    
+    <link rel="stylesheet" href="https://Allianzcortex.github.io/css/style-twzjdbqhmnnacqs0pwwdzcdbt8yhv8giawvjqjmyfoqnvazl0dalmnhdkvp7.min.css" />
+    
+    
+
+    
+      
+    
+    
+  </head>
+
+  <body>
+    <div id="blog">
+      <header id="header" data-behavior="4">
+  <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+  <div class="header-title">
+    <a class="header-title-link" href="https://Allianzcortex.github.io/">BBBB LLLL OOOO GGGG</a>
+  </div>
+  
+    
+      <a class="header-right-picture "
+         href="https://Allianzcortex.github.io/#about">
+    
+    
+    
+      
+        <img class="header-picture" src="https://Allianzcortex.github.io/avatar.jpg" alt="Author&#39;s picture" />
+      
+    
+    </a>
+  
+</header>
+
+      <nav id="sidebar" data-behavior="4">
+  <div class="sidebar-container">
+    
+      <div class="sidebar-profile">
+        <a href="https://Allianzcortex.github.io/#about">
+          <img class="sidebar-profile-picture" src="https://Allianzcortex.github.io/avatar.jpg" alt="Author&#39;s picture" />
+        </a>
+       
+        
+          <h5 class="sidebar-profile-bio">@Arctic Wolf, ex-coop @Dash Hudson</h5>
+        
+      </div>
+    
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://Allianzcortex.github.io/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-home"></i>
+      
+      <span class="sidebar-button-desc">Home</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://Allianzcortex.github.io/categories">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-bookmark"></i>
+      
+      <span class="sidebar-button-desc">Categories</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://Allianzcortex.github.io/tags">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
+      
+      <span class="sidebar-button-desc">Tags</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://Allianzcortex.github.io/archives">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-archive"></i>
+      
+      <span class="sidebar-button-desc">Archives</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://Allianzcortex.github.io/#about">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-question"></i>
+      
+      <span class="sidebar-button-desc">About</span>
+    </a>
+  </li>
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://github.com/Allianzcortex" target="_blank" rel="noopener">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-github"></i>
+      
+      <span class="sidebar-button-desc">GitHub</span>
+    </a>
+  </li>
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://Allianzcortex.github.io/index.xml">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-rss"></i>
+      
+      <span class="sidebar-button-desc">RSS</span>
+    </a>
+  </li>
+
+
+    </ul>
+  </div>
+</nav>
+
+      
+
+      <div id="main" data-behavior="4"
+        class="
+               hasCoverMetaIn
+               ">
+        <article class="post" itemscope itemType="http://schema.org/BlogPosting">
+          
+          
+            <div class="post-header main-content-wrap text-left">
+  
+    <h1 class="post-title" itemprop="headline">
+      Thoughts Of Solving Dynamic Programming Problems
+    </h1>
+  
+  
+  <div class="postShorten-meta post-meta">
+    
+      <time itemprop="datePublished" datetime="2015-03-11T13:22:10Z">
+        
+  March 11, 2015
+
+      </time>
+    
+    
+  
+  
+    <span>in</span>
+    
+      <a class="category-link" href="https://Allianzcortex.github.io/categories/algorithm">Algorithm</a>
+    
+  
+
+  </div>
+
+</div>
+          
+          <div class="post-content markdown" itemprop="articleBody">
+            <div class="main-content-wrap">
+              <p>Solving the dynamic programming problems</p>
+<h4 id="about-dp">About DP</h4>
+<ul>
+<li>
+<p>Dynamic programming is a very important algorithm, and mastery of it should be the basic skills for computer science students.</p>
+</li>
+<li>
+<p>Let&rsquo;s explain as much as possible about the understanding of this type of algorithm.</p>
+</li>
+<li>
+<p>The key is <code>state definition</code> and <code>state transition equation</code></p>
+</li>
+</ul>
+<hr>
+<h4 id="longest-increasing-subsequence">Longest Increasing Subsequence</h4>
+<blockquote>
+<p>Given a sequence of K integers { N1, N2, &hellip;, NK }, any contiguous subsequence can be expressed as { Ni, Ni+1, &hellip;, Nj }, where 1 &lt;= i &lt;= j &lt; = K. The largest contiguous subsequence is the element and the largest one of all consecutive subsequences, such as the given sequence { -2, 11, -4, 13, -5, -2 }, whose largest contiguous subsequence is { 11, -4, 13 } and the maximum sum is 20.</p>
+</blockquote>
+<ul>
+<li>
+<p>Define <code>sum[i]</code> as the <code>maximum value of contiguous subsequence with A[i] as the last end</code></p>
+</li>
+<li>
+<p>The state transition equation is: <code>sum[i]=max(sum[i-1]+a[i], a[i])</code></p>
+</li>
+<li>
+<p>T he actual solution is, as long as sum&gt;0, then adding a[i] is still possible to increase max; but if sum&lt;0, it should be discarded immediately, starting from 0 to calculate the next</p>
+</li>
+</ul>
+<p>&ldquo;starthighlight&rdquo;
+a = {4, 8, -12, 3, 7, 9}
+n = len(a)
+sum = 0
+max = 0
+for i in range(n):
+sum += a[i]
+if sum &gt; max:
+max = sum
+if sum &lt; 0:
+sum = a[i]
+return sum
+&ldquo;endhighlight&rdquo;</p>
+<p>{% highlight Java %}</p>
+<p>public int LIS(int[] arr) {
+int i, j, max = 0;
+int n = arr.length;
+int[] list = new int[n]; // length
+Arrays.fill(list, 1);
+int[] index = new int[n]; // distance
+Arrays.fill(index, -1);</p>
+<pre><code>    for (i = 1; i &lt; n; i++)
+        for (j = 0; j &lt; i; j++) {
+            if (arr[i] &gt; arr[j] &amp;&amp; list[i] &lt; list[j] + 1) {
+                list[i] = list[j] + 1;
+                index[i] = j;
+            }
+        }
+
+    // choose the max
+    int max_index = 0;
+
+    for (i = 0; i &lt; n; i++)
+        if (list[i] &gt; max) {
+            max = list[i];
+            max_index = i;
+        }
+
+
+    StringBuilder builder = new StringBuilder();
+    builder.insert(0, arr[max_index]);
+    int next_index = index[max_index];
+    while (next_index != -1) {
+        builder.insert(0, arr[next_index] + &quot; &quot;);
+        next_index = index[next_index];
+    }
+    System.out.println(builder.toString()); // print the result
+    return max;
+</code></pre>
+<p>&ldquo;endhighlight&rdquo;</p>
+<hr>
+<h4 id="number-tower-problem">Number tower problem</h4>
+<p><img src="https://Allianzcortex.github.io/images/hdu-2084.jpg" alt="img"></p>
+<blockquote>
+<p>From the top layer to the bottom layer, each layer can only go to the adjacent node, and calculate the sum of the numbers</p>
+</blockquote>
+<ul>
+<li>
+<p>Define the state equation: <code>max[i,j]</code> represents the sum of the largest numbers passed by [i,j] as the starting point. Then <code>max[1,1]</code> is our target</p>
+</li>
+<li>
+<p>Define the state transition equation: <code>max[i,j]=num[i,j]+max(max(i+1,j),max(i+1,j+1))</code></p>
+</li>
+<li>
+<p>Then you can choose to solve it from top to bottom or from bottom to top</p>
+</li>
+</ul>
+<p>{% highlight C %}
+#include<iostream><br>
+#include<cstring><br>
+using namespace std;<br>
+#define maxnum 1000<br>
+int num[maxnum][maxnum];<br>
+int d[maxnum][maxnum];<br>
+int main(void)<br>
+{<br>
+int i,j,k;<br>
+int n,m;<br>
+cin&raquo;n;<br>
+while(n&ndash;){<br>
+cin&raquo;m;<br>
+for(i=1;i&lt;=m;i++)<br>
+for(j=1;j&lt;=i;j++)<br>
+cin&raquo;num[i][j];<br>
+for(j=1;j&lt;=m;j++) d[m][j]=num[m][j];</p>
+<pre><code>    for(i=m-1;i&gt;=1;i--)  
+        for(j=1;j&lt;=i;j++)  
+        d[i][j]=num[i][j]+max(d[i+1][j+1],d[i+1][j]);  
+    cout&lt;&lt;d[1][1]&lt;&lt;endl;  
+    memset(d,0,sizeof(d));  
+}  
+</code></pre>
+<p>}<br>
+&ldquo;endhighlight&rdquo;</p>
+<hr>
+<h4 id="backpack-problem">Backpack Problem</h4>
+<ul>
+<li>There are different versions of backpack problem.Let me illustrate the basic one.</li>
+</ul>
+<blockquote>
+<p>There are N items and a backpack with a capacity of V. The cost of the i-th item is c[i] and the value is w[i]. Decide which items are loaded into the backpack so the sum of the values can be max.</p>
+</blockquote>
+<ul>
+<li>Solve it with Java.There are two types of answer,see the comment.</li>
+</ul>
+<p>{% highlight Java %}
+public int Knapsack1(int[] value, int[] weight, int capacity, int number) {
+if (capacity &lt;= 0 || number == 0)
+return 0;
+if (weight[number - 1] &gt; capacity)
+return Knapsack1(value, weight, capacity, number - 1);
+else
+return max(value[number - 1] + Knapsack1(value, weight, capacity - weight[number - 1], number - 1),
+Knapsack1(value, weight, capacity, number - 1));</p>
+<pre><code>}
+
+public int Knapsack2(int[] value, int[] weight, int capacity, int index) {
+    if (capacity &lt;= 0 || index &gt;= value.length)
+        return 0;
+    if (weight[index] &gt; capacity)
+        return Knapsack2(value, weight, capacity, index + 1);
+    else
+        return max(value[index] + Knapsack2(value, weight, capacity - weight[index], index + 1),
+                Knapsack2(value, weight, capacity, index + 1));
+}
+
+    // two ways to solve it
+    int[] value = {60, 100, 120};
+    int[] weight = {10, 20, 30};
+    int capacity = 50;
+    int number = value.length;
+    System.out.println(dp.Knapsack1(value, weight, capacity, number)); // final result is 220
+    int index = 0;
+    System.out.println(dp.Knapsack2(value, weight, capacity, index));  // final result is also 220
+</code></pre>
+<p>&ldquo;endhighlight&rdquo;</p>
+<hr>
+<h3 id="303-range-sum-quwey---immutable">303 Range Sum Quwey - Immutable</h3>
+<ul>
+<li>
+<p><a href="https://leetcode.com/problems/range-sum-query-immutable/">Link</a></p>
+</li>
+<li>
+<p>About the meaning：Give an array that returns the value of any two range of ranges</p>
+</li>
+<li>
+<p>Idea: The rpblem content says <code>many calls to function</code>, so the traversal solution will definitely be <strong>TLE</strong>（Time Limit Exceeded); and <code>sum[i,j]=sum[j]-sum[i-1]</code> is obvious, so all the sums are found in one pass. After the value is done, subtraction is fine. Note you may need to use global variables</p>
+</li>
+<li>
+<p>code:</p>
+</li>
+</ul>
+<p>{% highlight C %}
+// written in c++
+// Using vector<int> to add status will be better
+class NumArray {
+int dp[100000];
+public:
+NumArray(vector<int> &amp;nums) {
+if (nums.empty())
+return ;
+int length=nums.size();
+memset(dp,0,sizeof(dp));
+dp[0]=nums[0];
+for(int i=1;i&lt;length;i++)
+dp[i]=dp[i-1]+nums[i];
+}</p>
+<pre><code>int sumRange(int i, int j) {
+    if (i==0)
+        return dp[j];
+    else
+        return dp[j]-dp[i-1];    
+}
+</code></pre>
+<p>};
+&ldquo;endhighlight&rdquo;</p>
+<p>Writen in Python：</p>
+<p>&ldquo;starthighlight&rdquo;
+class NumArray(object):
+def <strong>init</strong>(self, nums):</p>
+<pre><code>    self.dp = nums
+    for i in range(1,len(nums)):
+        self.dp[i] += self.dp[i-1]
+
+def sumRange(self, i, j):
+    return self.dp[j] - (self.dp[i-1] if i &gt; 0 else 0)
+</code></pre>
+<p>&ldquo;endhighlight&rdquo;</p>
+<hr>
+<h5 id="70-climbstatirs">70 climbStatirs</h5>
+<ul>
+<li>
+<p><a href="https://leetcode.com/problems/climbing-stairs/">link</a></p>
+</li>
+<li>
+<p>About the meaning：Ascend a staircase, you can take 1 step or  take two steps.if you go to n steps, how many solutions will you have?</p>
+</li>
+<li>
+<p>Idea: Use dp[n] to indicate the number of methods to go to n steps. For dp[n-1], you can only choose to take 1 step; for dp[n-2],
+If you choose 1+1, it will overlap with dp[n-1], you can only choose 2 steps.</p>
+</li>
+<li>
+<p>Code：</p>
+</li>
+</ul>
+<p>{% highlight C %}
+Written in C++
+class Solution {
+public:
+int climbStairs(int n) {
+int dp[n]={0};
+dp[0]=0;
+dp[1]=1;
+dp[2]=2;
+for(int i=3;i&lt;=n;i++)
+dp[i]=(dp[i-1]+dp[i-2]);
+return dp[n];
+}
+};
+&ldquo;endhighlight&rdquo;</p>
+<p>&ldquo;starthighlight&rdquo;</p>
+<h1 id="written-in-python">written in Python</h1>
+<p>class Solution(object):
+def <strong>init</strong>(self):
+self.dp={}</p>
+<pre><code>def climbStairs(self, n):
+    self.dp[1]=1
+    self.dp[2]=2
+    for i in range(3,n+1):
+        self.dp[i]=self.dp[i-1]+self.dp[i-2]
+    return self.dp[n]  
+</code></pre>
+<p>&ldquo;endhighlight&rdquo;</p>
+<hr>
+<h5 id="64-minimum-path-sum">64 Minimum Path Sum</h5>
+<ul>
+<li>
+<p><a href="https://leetcode.com/problems/minimum-path-sum/">link</a></p>
+</li>
+<li>
+<p>About the meaning: <code>m*n</code> is a matrix of all positive numbers, which can be moved downwards to the right,find the sum of the distances from the upper left to the lower right.</p>
+</li>
+<li>
+<p>Idea: Dynamic programming.using dp[i][j] to represent the shortest number of steps taken with i, j as the last square.
+Then <code>dp[i][j]=max(dp[i-1][j]+grid[i][j],dp[i][j-1]+gird[i][j]</code>,we just need to implement the equation.</p>
+</li>
+<li>
+<p>Code:</p>
+</li>
+</ul>
+<p>{% highlight C %}
+// written in C++
+class Solution {
+public:
+int minPathSum(vector&lt;vector<int>&gt;&amp; grid) {
+if (grid.empty()) return 0;
+int m=grid.size();
+int n=grid[0].size();
+int dp[m][n]={0};
+int i,j,k;
+dp[0][0]=grid[0][0];
+for(i=1;i&lt;m;i++)
+dp[i][0]=(dp[i-1][0]+grid[i][0]);
+for(i=1;i&lt;n;i++)
+dp[0][i]=(dp[0][i-1]+grid[0][i]);
+for(i=1;i&lt;m;i++)
+for(j=1;j&lt;n;j++)
+dp[i][j]=min(dp[i-1][j]+grid[i][j],dp[i][j-1]+grid[i][j]);
+return dp[m-1][n-1];
+}
+};
+&ldquo;endhighlight&rdquo;</p>
+              
+            </div>
+          </div>
+          <div id="post-footer" class="post-footer main-content-wrap">
+            
+              
+                
+                
+                  <div class="post-footer-tags">
+                    <span class="text-color-light text-small">TAGGED IN</span><br/>
+                    
+  <a class="tag tag--primary tag--small" href="https://Allianzcortex.github.io/tags/dp/">DP</a>
+
+  <a class="tag tag--primary tag--small" href="https://Allianzcortex.github.io/tags/algorithm/">Algorithm</a>
+
+                  </div>
+                
+              
+            
+            <div class="post-actions-wrap">
+  
+      <nav >
+        <ul class="post-actions post-action-nav">
+          
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://Allianzcortex.github.io/2015/09/develop-a-desktop-client-with-pyqt/" data-tooltip="Develop a desktop client with PyQT">
+              
+                  <i class="fa fa-angle-left"></i>
+                  <span class="hide-xs hide-sm text-small icon-ml">NEXT</span>
+                </a>
+            </li>
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://Allianzcortex.github.io/2014/06/one-line-to-achieve-multiprocess-and-multithreads-in-python/" data-tooltip=" One Line To Achieve MultiProcess and MultiThreads In Python">
+              
+                  <span class="hide-xs hide-sm text-small icon-mr">PREVIOUS</span>
+                  <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+          
+        </ul>
+      </nav>
+    <ul class="post-actions post-action-share" >
+      
+        <li class="post-action hide-lg hide-md hide-sm">
+          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
+            <i class="fa fa-share-alt"></i>
+          </a>
+        </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://Allianzcortex.github.io/2015/03/thoughts-of-solving-dynamic-programming-problems/">
+              <i class="fa fa-facebook-official"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=https://Allianzcortex.github.io/2015/03/thoughts-of-solving-dynamic-programming-problems/">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=https://Allianzcortex.github.io/2015/03/thoughts-of-solving-dynamic-programming-problems/">
+              <i class="fa fa-google-plus"></i>
+            </a>
+          </li>
+        
+      
+      
+        <li class="post-action">
+          <a class="post-action-btn btn btn--default" href="#disqus_thread">
+            <i class="fa fa-comment-o"></i>
+          </a>
+        </li>
+      
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--default" href="#">
+        
+          <i class="fa fa-list"></i>
+        </a>
+      </li>
+    </ul>
+  
+</div>
+
+            
+              
+                <div id="disqus_thread">
+  <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+              
+            
+          </div>
+        </article>
+        <footer id="footer" class="main-content-wrap">
+  <span class="copyrights">
+    &copy; 2020 Haozhou Wang. All Rights Reserved
+  </span>
+</footer>
+
+      </div>
+      <div id="bottom-bar" class="post-bottom-bar" data-behavior="4">
+        <div class="post-actions-wrap">
+  
+      <nav >
+        <ul class="post-actions post-action-nav">
+          
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://Allianzcortex.github.io/2015/09/develop-a-desktop-client-with-pyqt/" data-tooltip="Develop a desktop client with PyQT">
+              
+                  <i class="fa fa-angle-left"></i>
+                  <span class="hide-xs hide-sm text-small icon-ml">NEXT</span>
+                </a>
+            </li>
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://Allianzcortex.github.io/2014/06/one-line-to-achieve-multiprocess-and-multithreads-in-python/" data-tooltip=" One Line To Achieve MultiProcess and MultiThreads In Python">
+              
+                  <span class="hide-xs hide-sm text-small icon-mr">PREVIOUS</span>
+                  <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+          
+        </ul>
+      </nav>
+    <ul class="post-actions post-action-share" >
+      
+        <li class="post-action hide-lg hide-md hide-sm">
+          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
+            <i class="fa fa-share-alt"></i>
+          </a>
+        </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://Allianzcortex.github.io/2015/03/thoughts-of-solving-dynamic-programming-problems/">
+              <i class="fa fa-facebook-official"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=https://Allianzcortex.github.io/2015/03/thoughts-of-solving-dynamic-programming-problems/">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=https://Allianzcortex.github.io/2015/03/thoughts-of-solving-dynamic-programming-problems/">
+              <i class="fa fa-google-plus"></i>
+            </a>
+          </li>
+        
+      
+      
+        <li class="post-action">
+          <a class="post-action-btn btn btn--default" href="#disqus_thread">
+            <i class="fa fa-comment-o"></i>
+          </a>
+        </li>
+      
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--default" href="#">
+        
+          <i class="fa fa-list"></i>
+        </a>
+      </li>
+    </ul>
+  
+</div>
+
+      </div>
+      <div id="share-options-bar" class="share-options-bar" data-behavior="4">
+  <i id="btn-close-shareoptions" class="fa fa-close"></i>
+  <ul class="share-options">
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2FAllianzcortex.github.io%2F2015%2F03%2Fthoughts-of-solving-dynamic-programming-problems%2F">
+          <i class="fa fa-facebook-official"></i><span>Share on Facebook</span>
+        </a>
+      </li>
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=https%3A%2F%2FAllianzcortex.github.io%2F2015%2F03%2Fthoughts-of-solving-dynamic-programming-problems%2F">
+          <i class="fa fa-twitter"></i><span>Share on Twitter</span>
+        </a>
+      </li>
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://plus.google.com/share?url=https%3A%2F%2FAllianzcortex.github.io%2F2015%2F03%2Fthoughts-of-solving-dynamic-programming-problems%2F">
+          <i class="fa fa-google-plus"></i><span>Share on Google&#43;</span>
+        </a>
+      </li>
+    
+  </ul>
+</div>
+<div id="share-options-mask" class="share-options-mask"></div>
+    </div>
+    
+    <div id="about">
+  <div id="about-card">
+    <div id="about-btn-close">
+      <i class="fa fa-remove"></i>
+    </div>
+    
+      <img id="about-card-picture" src="https://Allianzcortex.github.io/avatar.jpg" alt="Author&#39;s picture" />
+    
+    
+    
+      <div id="about-card-bio">@Arctic Wolf, ex-coop @Dash Hudson</div>
+    
+    
+      <div id="about-card-job">
+        <i class="fa fa-briefcase"></i>
+        <br/>
+        Full Stack / Backend Developer
+      </div>
+    
+    
+      <div id="about-card-location">
+        <i class="fa fa-map-marker"></i>
+        <br/>
+        Halifax,NS
+      </div>
+    
+  </div>
+</div>
+
+    
+
+    
+  
+    
+      <div id="cover" style="background-image:url('https://Allianzcortex.github.io/images/cover-v1.2.0.jpg');"></div>
+    
+  
+
+
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js" integrity="sha256-/BfiIkHlHoVihZdc6TFuj7MmJ0TWcWsMXkeDFwhi0zw=" crossorigin="anonymous"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.7/js/jquery.fancybox.min.js" integrity="sha256-GEAnjcTqVP+vBp3SSc8bEDQqvWAZMiHyUSIorrWwH50=" crossorigin="anonymous"></script>
+
+
+<script src="https://Allianzcortex.github.io/js/script-pcw6v3xilnxydl1vddzazdverrnn9ctynvnxgwho987mfyqkuylcb1nlt.min.js"></script>
+
+
+<script lang="javascript">
+window.onload = updateMinWidth;
+window.onresize = updateMinWidth;
+document.getElementById("sidebar").addEventListener("transitionend", updateMinWidth);
+function updateMinWidth() {
+  var sidebar = document.getElementById("sidebar");
+  var main = document.getElementById("main");
+  main.style.minWidth = "";
+  var w1 = getComputedStyle(main).getPropertyValue("min-width");
+  var w2 = getComputedStyle(sidebar).getPropertyValue("width");
+  var w3 = getComputedStyle(sidebar).getPropertyValue("left");
+  main.style.minWidth = `calc(${w1} - ${w2} - ${w3})`;
+}
+</script>
+
+<script>
+$(document).ready(function() {
+  hljs.configure({ classPrefix: '', useBR: false });
+  $('pre.code-highlight > code, pre > code').each(function(i, block) {
+    if (!$(this).hasClass('codeblock')) {
+      $(this).addClass('codeblock');
+    }
+    hljs.highlightBlock(block);
+  });
+});
+</script>
+
+
+  
+    
+      <script>
+        var disqus_config = function () {
+          this.page.url = 'https:\/\/Allianzcortex.github.io\/2015\/03\/thoughts-of-solving-dynamic-programming-problems\/';
+          
+            this.page.identifier = '\/2015\/03\/thoughts-of-solving-dynamic-programming-problems\/'
+          
+        };
+        (function() {
+          
+          
+          if (window.location.hostname == "localhost") {
+            return;
+          }
+          var d = document, s = d.createElement('script');
+          var disqus_shortname = 'hugo-tranquilpeak-theme';
+          s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+
+          s.setAttribute('data-timestamp', +new Date());
+          (d.head || d.body).appendChild(s);
+        })();
+      </script>
+    
+  
+
+
+
+
+    
+  </body>
+</html>
+

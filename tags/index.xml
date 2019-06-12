@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Tags on BBBB LLLL OOOO GGGG</title>
+    <link>https://Allianzcortex.github.io/tags/</link>
+    <description>Recent content in Tags on BBBB LLLL OOOO GGGG</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 10 May 2020 22:02:23 -0300</lastBuildDate>
+    
+	<atom:link href="https://Allianzcortex.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>misc</title>
+      <link>https://Allianzcortex.github.io/tags/misc/</link>
+      <pubDate>Sun, 10 May 2020 22:02:23 -0300</pubDate>
+      
+      <guid>https://Allianzcortex.github.io/tags/misc/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Java</title>
+      <link>https://Allianzcortex.github.io/tags/java/</link>
+      <pubDate>Sun, 10 May 2020 22:00:40 -0300</pubDate>
+      
+      <guid>https://Allianzcortex.github.io/tags/java/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Python</title>
+      <link>https://Allianzcortex.github.io/tags/python/</link>
+      <pubDate>Mon, 22 May 2017 13:29:10 +0000</pubDate>
+      
+      <guid>https://Allianzcortex.github.io/tags/python/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Scala</title>
+      <link>https://Allianzcortex.github.io/tags/scala/</link>
+      <pubDate>Sun, 21 May 2017 16:29:10 +0000</pubDate>
+      
+      <guid>https://Allianzcortex.github.io/tags/scala/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>FrontEnd</title>
+      <link>https://Allianzcortex.github.io/tags/frontend/</link>
+      <pubDate>Thu, 08 Sep 2016 14:30:05 +0000</pubDate>
+      
+      <guid>https://Allianzcortex.github.io/tags/frontend/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>BigData</title>
+      <link>https://Allianzcortex.github.io/tags/bigdata/</link>
+      <pubDate>Mon, 22 Feb 2016 18:52:22 +0000</pubDate>
+      
+      <guid>https://Allianzcortex.github.io/tags/bigdata/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Algorithm</title>
+      <link>https://Allianzcortex.github.io/tags/algorithm/</link>
+      <pubDate>Wed, 11 Mar 2015 13:22:10 +0000</pubDate>
+      
+      <guid>https://Allianzcortex.github.io/tags/algorithm/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>DP</title>
+      <link>https://Allianzcortex.github.io/tags/dp/</link>
+      <pubDate>Wed, 11 Mar 2015 13:22:10 +0000</pubDate>
+      
+      <guid>https://Allianzcortex.github.io/tags/dp/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>everything</title>
+      <link>https://Allianzcortex.github.io/tags/everything/</link>
+      <pubDate>Fri, 21 Nov 2014 19:40:01 +0000</pubDate>
+      
+      <guid>https://Allianzcortex.github.io/tags/everything/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Multi-threading</title>
+      <link>https://Allianzcortex.github.io/tags/multi-threading/</link>
+      <pubDate>Sun, 22 Jun 2014 10:49:24 +0000</pubDate>
+      
+      <guid>https://Allianzcortex.github.io/tags/multi-threading/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

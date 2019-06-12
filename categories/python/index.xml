@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Python on BBBB LLLL OOOO GGGG</title>
+    <link>https://Allianzcortex.github.io/categories/python/</link>
+    <description>Recent content in Python on BBBB LLLL OOOO GGGG</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 22 May 2017 13:29:10 +0000</lastBuildDate>
+    
+	<atom:link href="https://Allianzcortex.github.io/categories/python/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>The Import Mechanism Of Python And Two Related Problems</title>
+      <link>https://Allianzcortex.github.io/2017/05/the-import-mechanism-of-python-and-two-related-problems/</link>
+      <pubDate>Mon, 22 May 2017 13:29:10 +0000</pubDate>
+      
+      <guid>https://Allianzcortex.github.io/2017/05/the-import-mechanism-of-python-and-two-related-problems/</guid>
+      <description>&lt;p&gt;How to solve &lt;code&gt;No module named&lt;/code&gt; and &lt;code&gt;Attempted relative import&lt;/code&gt; ?&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>What do I get after Reading Python Open Source Projects</title>
+      <link>https://Allianzcortex.github.io/2016/05/what-do-i-get-after-reading-python-open-source-projects/</link>
+      <pubDate>Mon, 23 May 2016 15:01:33 +0000</pubDate>
+      
+      <guid>https://Allianzcortex.github.io/2016/05/what-do-i-get-after-reading-python-open-source-projects/</guid>
+      <description>&lt;p&gt;To write &lt;code&gt;fluent/elegant/idiomatic&lt;/code&gt; code&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Develop a desktop client with PyQT</title>
+      <link>https://Allianzcortex.github.io/2015/09/develop-a-desktop-client-with-pyqt/</link>
+      <pubDate>Mon, 14 Sep 2015 19:46:30 +0000</pubDate>
+      
+      <guid>https://Allianzcortex.github.io/2015/09/develop-a-desktop-client-with-pyqt/</guid>
+      <description>&lt;p&gt;In this novel,I&amp;rsquo;ll demonstrate how to read the database and display it , with Python&amp;rsquo;s dynamic mechanism and Qt&amp;rsquo;s signal slot.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title> One Line To Achieve MultiProcess and MultiThreads In Python</title>
+      <link>https://Allianzcortex.github.io/2014/06/one-line-to-achieve-multiprocess-and-multithreads-in-python/</link>
+      <pubDate>Sun, 22 Jun 2014 10:49:24 +0000</pubDate>
+      
+      <guid>https://Allianzcortex.github.io/2014/06/one-line-to-achieve-multiprocess-and-multithreads-in-python/</guid>
+      <description>&lt;p&gt;Using &lt;code&gt;multiprocessing&lt;/code&gt; and &lt;code&gt;multiprocessing.dummy&lt;/code&gt; to implement multi-process and multi-threading(with the use of ThreadPoolExecutor)&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

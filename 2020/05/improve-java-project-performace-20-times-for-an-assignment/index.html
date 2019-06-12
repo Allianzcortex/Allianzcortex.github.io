@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="generator" content="Hugo 0.69.2 with theme Tranquilpeak 0.4.7-BETA">
+<meta name="author" content="Haozhou Wang">
+<meta name="keywords" content="tech">
+<meta name="description" content="">
+
+
+<meta property="og:description" content="">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Improve Java Project Performace 20 times ！(for an assignment)">
+<meta name="twitter:title" content="Improve Java Project Performace 20 times ！(for an assignment)">
+<meta property="og:url" content="https://Allianzcortex.github.io/2020/05/improve-java-project-performace-20-times-for-an-assignment/">
+<meta property="twitter:url" content="https://Allianzcortex.github.io/2020/05/improve-java-project-performace-20-times-for-an-assignment/">
+<meta property="og:site_name" content="BBBB LLLL OOOO GGGG">
+<meta property="og:description" content="">
+<meta name="twitter:description" content="">
+<meta property="og:locale" content="en-us">
+
+  
+    <meta property="article:published_time" content="2020-05-10T22:00:40">
+  
+  
+    <meta property="article:modified_time" content="2020-05-10T22:00:40">
+  
+  
+  
+    
+      <meta property="article:section" content="Java">
+    
+  
+  
+    
+      <meta property="article:tag" content="Java">
+    
+  
+
+
+<meta name="twitter:card" content="summary">
+
+
+
+
+
+
+
+
+
+
+
+  <meta property="og:image" content="https://Allianzcortex.github.io/avatar.jpg">
+  <meta property="twitter:image" content="https://Allianzcortex.github.io/avatar.jpg">
+
+
+    <title>Improve Java Project Performace 20 times ！(for an assignment)</title>
+
+    <link rel="icon" href="https://Allianzcortex.github.io/favicon.png">
+    
+
+    
+
+    <link rel="canonical" href="https://Allianzcortex.github.io/2020/05/improve-java-project-performace-20-times-for-an-assignment/">
+
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/jquery.fancybox.min.css" integrity="sha256-vuXZ9LGmmwtjqFX1F+EKin1ThZMub58gKULUyf0qECk=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/helpers/jquery.fancybox-thumbs.min.css" integrity="sha256-SEa4XYAHihTcEP1f5gARTB2K26Uk8PsndQYHQC1f4jU=" crossorigin="anonymous" />
+    
+    
+    <link rel="stylesheet" href="https://Allianzcortex.github.io/css/style-twzjdbqhmnnacqs0pwwdzcdbt8yhv8giawvjqjmyfoqnvazl0dalmnhdkvp7.min.css" />
+    
+    
+
+    
+      
+    
+    
+  </head>
+
+  <body>
+    <div id="blog">
+      <header id="header" data-behavior="4">
+  <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+  <div class="header-title">
+    <a class="header-title-link" href="https://Allianzcortex.github.io/">BBBB LLLL OOOO GGGG</a>
+  </div>
+  
+    
+      <a class="header-right-picture "
+         href="https://Allianzcortex.github.io/#about">
+    
+    
+    
+      
+        <img class="header-picture" src="https://Allianzcortex.github.io/avatar.jpg" alt="Author&#39;s picture" />
+      
+    
+    </a>
+  
+</header>
+
+      <nav id="sidebar" data-behavior="4">
+  <div class="sidebar-container">
+    
+      <div class="sidebar-profile">
+        <a href="https://Allianzcortex.github.io/#about">
+          <img class="sidebar-profile-picture" src="https://Allianzcortex.github.io/avatar.jpg" alt="Author&#39;s picture" />
+        </a>
+       
+        
+          <h5 class="sidebar-profile-bio">@Arctic Wolf, ex-coop @Dash Hudson</h5>
+        
+      </div>
+    
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://Allianzcortex.github.io/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-home"></i>
+      
+      <span class="sidebar-button-desc">Home</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://Allianzcortex.github.io/categories">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-bookmark"></i>
+      
+      <span class="sidebar-button-desc">Categories</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://Allianzcortex.github.io/tags">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
+      
+      <span class="sidebar-button-desc">Tags</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://Allianzcortex.github.io/archives">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-archive"></i>
+      
+      <span class="sidebar-button-desc">Archives</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://Allianzcortex.github.io/#about">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-question"></i>
+      
+      <span class="sidebar-button-desc">About</span>
+    </a>
+  </li>
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://github.com/Allianzcortex" target="_blank" rel="noopener">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-github"></i>
+      
+      <span class="sidebar-button-desc">GitHub</span>
+    </a>
+  </li>
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://Allianzcortex.github.io/index.xml">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-rss"></i>
+      
+      <span class="sidebar-button-desc">RSS</span>
+    </a>
+  </li>
+
+
+    </ul>
+  </div>
+</nav>
+
+      
+
+      <div id="main" data-behavior="4"
+        class="
+               hasCoverMetaIn
+               ">
+        <article class="post" itemscope itemType="http://schema.org/BlogPosting">
+          
+          
+            <div class="post-header main-content-wrap text-left">
+  
+    <h1 class="post-title" itemprop="headline">
+      Improve Java Project Performace 20 times ！(for an assignment)
+    </h1>
+  
+  
+  <div class="postShorten-meta post-meta">
+    
+      <time itemprop="datePublished" datetime="2020-05-10T22:00:40-03:00">
+        
+  May 10, 2020
+
+      </time>
+    
+    
+  
+  
+    <span>in</span>
+    
+      <a class="category-link" href="https://Allianzcortex.github.io/categories/java">Java</a>
+    
+  
+
+  </div>
+
+</div>
+          
+          <div class="post-content markdown" itemprop="articleBody">
+            <div class="main-content-wrap">
+              <p>Recently, I completed the first Assignment of Business Development. The teacher has already publish the course requirements to his <a href="https://github.com/DanielPenny/MCDA5510_Assignments/blob/master/Assignment%201.pdf">github</a>.
+To sum it up, <strong>you need to read all the CSV files in a folder and write the contents of the file to the new same CSV file.</strong></p>
+<p>I will not discuss the code itself much as required, mainly talk about the idea.</p>
+<p>In addition to the trivial requirements of using log to record execution time and valid rows, this project can be divided into three parts:</p>
+<ol>
+<li>Read the absolute path of all files in a folder</li>
+<li>Read the contents of a CSV file</li>
+<li>Write to the CSV file</li>
+</ol>
+<p>Performance improvement itself mainly can be done from two ways:</p>
+<hr>
+<h4 id="firstuse-apaches-csvprinter">First:Use Apache&rsquo;s CSVPrinter</h4>
+<p>If we open the CSV file with any text editor (vscode/sublime/vim), we can see that its&rsquo; difference from the .txt file is mainly  that it
+Use <code>,</code> to separate objects as columns, so I used this idea to write to the CSV file at the beginning:</p>
+<p>{% highlight Java %}
+BufferedWriter writer = null;
+try {
+Writer = new BufferedWriter(new OutputStreamWriter(
+New FileOutputStream(&ldquo;result.csv&rdquo;), &ldquo;utf-8&rdquo;));
+} catch (IOException ex) {
+ex.printStackTrace();
+}
+StringBuilder sb = new StringBuilder();
+For (String item : input) {
+Sb.append(item);
+Sb.append(&quot;,&quot;);
+}
+Sb.append(&quot;\n&rdquo;);
+Writer.write(sb.toString());
+&ldquo;endhighlight&rdquo;</p>
+<p>But as we said, CSV is a very common file format, so there must be a library optimized for this,  and CSVPrinter in the apache common CSV library is exactly what we need:</p>
+<p>{% highlight Java %}
+Import org.apache.commons.csv.CSVPrinter;</p>
+<p>CSVPrinter writer = null;
+try {
+//initialize FileWriter object
+FileWriter fileWriter = new FileWriter(config.ResulF
+CSVFormat csvFileFormat = CSVFormat.DEFAULT.withRecordSeparator(&quot;\n&rdquo;);
+Writer = new CSVPrinter(fileWriter, csvFileFormat);
+} catch (IOException ex) {
+ex.printStackTrace();
+}</p>
+<p>printer.printRecord(input);
+validRows += 1;</p>
+<p>&ldquo;endhighlight&rdquo;</p>
+<hr>
+<h4 id="secondchange-time-processing-logic">Second:Change Time Processing Logic</h4>
+<p>The second optimization part is mainly for the bonus point mentioned in the Assignment. Simply put, there is a string such as <code>prefix2019/01/27suffix</code> which needs to be converted to <code>2019/01/27</code> format that conforms to <code>YYYY/MM/DD</code>.</p>
+<p>In the beginning, my approach was to split string to get the value of year/month/date and then add leading zero to satisfy  conversion such as &ldquo;1&rdquo;-&gt;&quot;01&rdquo;, &ldquo;12&rdquo;-&gt;&quot;12&rdquo; .So naturally my idea is:</p>
+<pre><code>Month = String.format(&quot;%02d&quot;, Integer.parseInt(month));
+</code></pre><p>This practice also works but it takes too long. Hundreds of files contain a total of 280,000 lines, and  approach took nearly 800,000 ms. My optimization method is quite similar to an optimization technique in ACM/ICPC:</p>
+<p>Because there is only a maximum of 12 months in a total, and only 31 days in a month, as long as the conversion relationship is listed, we can use HashMap to achieve O(1) time complexity.</p>
+<p><img src="https://Allianzcortex.github.io/images/playtable.PNG" alt="playtable.PNG"></p>
+<p>The increase in efficiency is obvious, and the time has dropped to 4000ms. From 80000 to 4000, the program has increased incredibly 20 times!</p>
+<hr>
+<p>Last but not the least, there is still one way to solve it .If you search in Google: <strong>java format date string to another format</strong>, the number one link gives us the light:</p>
+<pre><code>SimpleDateFormat format1 = new SimpleDateFormat(&quot;yyyy-MM-dd&quot;);
+SimpleDateFormat format2 = new SimpleDateFormat(&quot;dd-MM-yyyy&quot;);
+Date date = format1.parse(&quot;2013-02-21&quot;);
+System.out.println(format2.format(date));
+</code></pre><p>But the essence of this requirement is to complete the conversion of string-&gt;string. The circle of the method above is string-&gt;date-&gt;date-&gt;string. too tedious, isn&rsquo;t it ?, so this is only a theoretical possibility, I have not adopted it.</p>
+              
+            </div>
+          </div>
+          <div id="post-footer" class="post-footer main-content-wrap">
+            
+              
+                
+                
+                  <div class="post-footer-tags">
+                    <span class="text-color-light text-small">TAGGED IN</span><br/>
+                    
+  <a class="tag tag--primary tag--small" href="https://Allianzcortex.github.io/tags/java/">Java</a>
+
+                  </div>
+                
+              
+            
+            <div class="post-actions-wrap">
+  
+      <nav >
+        <ul class="post-actions post-action-nav">
+          
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://Allianzcortex.github.io/2020/05/2019-02-27-cache-design-pattern/" data-tooltip="2019 02 27 Cache Design Pattern">
+              
+                  <i class="fa fa-angle-left"></i>
+                  <span class="hide-xs hide-sm text-small icon-ml">NEXT</span>
+                </a>
+            </li>
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://Allianzcortex.github.io/2017/05/the-import-mechanism-of-python-and-two-related-problems/" data-tooltip="The Import Mechanism Of Python And Two Related Problems">
+              
+                  <span class="hide-xs hide-sm text-small icon-mr">PREVIOUS</span>
+                  <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+          
+        </ul>
+      </nav>
+    <ul class="post-actions post-action-share" >
+      
+        <li class="post-action hide-lg hide-md hide-sm">
+          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
+            <i class="fa fa-share-alt"></i>
+          </a>
+        </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://Allianzcortex.github.io/2020/05/improve-java-project-performace-20-times-for-an-assignment/">
+              <i class="fa fa-facebook-official"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=https://Allianzcortex.github.io/2020/05/improve-java-project-performace-20-times-for-an-assignment/">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=https://Allianzcortex.github.io/2020/05/improve-java-project-performace-20-times-for-an-assignment/">
+              <i class="fa fa-google-plus"></i>
+            </a>
+          </li>
+        
+      
+      
+        <li class="post-action">
+          <a class="post-action-btn btn btn--default" href="#disqus_thread">
+            <i class="fa fa-comment-o"></i>
+          </a>
+        </li>
+      
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--default" href="#">
+        
+          <i class="fa fa-list"></i>
+        </a>
+      </li>
+    </ul>
+  
+</div>
+
+            
+              
+                <div id="disqus_thread">
+  <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+              
+            
+          </div>
+        </article>
+        <footer id="footer" class="main-content-wrap">
+  <span class="copyrights">
+    &copy; 2020 Haozhou Wang. All Rights Reserved
+  </span>
+</footer>
+
+      </div>
+      <div id="bottom-bar" class="post-bottom-bar" data-behavior="4">
+        <div class="post-actions-wrap">
+  
+      <nav >
+        <ul class="post-actions post-action-nav">
+          
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://Allianzcortex.github.io/2020/05/2019-02-27-cache-design-pattern/" data-tooltip="2019 02 27 Cache Design Pattern">
+              
+                  <i class="fa fa-angle-left"></i>
+                  <span class="hide-xs hide-sm text-small icon-ml">NEXT</span>
+                </a>
+            </li>
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://Allianzcortex.github.io/2017/05/the-import-mechanism-of-python-and-two-related-problems/" data-tooltip="The Import Mechanism Of Python And Two Related Problems">
+              
+                  <span class="hide-xs hide-sm text-small icon-mr">PREVIOUS</span>
+                  <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+          
+        </ul>
+      </nav>
+    <ul class="post-actions post-action-share" >
+      
+        <li class="post-action hide-lg hide-md hide-sm">
+          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
+            <i class="fa fa-share-alt"></i>
+          </a>
+        </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://Allianzcortex.github.io/2020/05/improve-java-project-performace-20-times-for-an-assignment/">
+              <i class="fa fa-facebook-official"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=https://Allianzcortex.github.io/2020/05/improve-java-project-performace-20-times-for-an-assignment/">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=https://Allianzcortex.github.io/2020/05/improve-java-project-performace-20-times-for-an-assignment/">
+              <i class="fa fa-google-plus"></i>
+            </a>
+          </li>
+        
+      
+      
+        <li class="post-action">
+          <a class="post-action-btn btn btn--default" href="#disqus_thread">
+            <i class="fa fa-comment-o"></i>
+          </a>
+        </li>
+      
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--default" href="#">
+        
+          <i class="fa fa-list"></i>
+        </a>
+      </li>
+    </ul>
+  
+</div>
+
+      </div>
+      <div id="share-options-bar" class="share-options-bar" data-behavior="4">
+  <i id="btn-close-shareoptions" class="fa fa-close"></i>
+  <ul class="share-options">
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2FAllianzcortex.github.io%2F2020%2F05%2Fimprove-java-project-performace-20-times-for-an-assignment%2F">
+          <i class="fa fa-facebook-official"></i><span>Share on Facebook</span>
+        </a>
+      </li>
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=https%3A%2F%2FAllianzcortex.github.io%2F2020%2F05%2Fimprove-java-project-performace-20-times-for-an-assignment%2F">
+          <i class="fa fa-twitter"></i><span>Share on Twitter</span>
+        </a>
+      </li>
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://plus.google.com/share?url=https%3A%2F%2FAllianzcortex.github.io%2F2020%2F05%2Fimprove-java-project-performace-20-times-for-an-assignment%2F">
+          <i class="fa fa-google-plus"></i><span>Share on Google&#43;</span>
+        </a>
+      </li>
+    
+  </ul>
+</div>
+<div id="share-options-mask" class="share-options-mask"></div>
+    </div>
+    
+    <div id="about">
+  <div id="about-card">
+    <div id="about-btn-close">
+      <i class="fa fa-remove"></i>
+    </div>
+    
+      <img id="about-card-picture" src="https://Allianzcortex.github.io/avatar.jpg" alt="Author&#39;s picture" />
+    
+    
+    
+      <div id="about-card-bio">@Arctic Wolf, ex-coop @Dash Hudson</div>
+    
+    
+      <div id="about-card-job">
+        <i class="fa fa-briefcase"></i>
+        <br/>
+        Full Stack / Backend Developer
+      </div>
+    
+    
+      <div id="about-card-location">
+        <i class="fa fa-map-marker"></i>
+        <br/>
+        Halifax,NS
+      </div>
+    
+  </div>
+</div>
+
+    
+
+    
+  
+    
+      <div id="cover" style="background-image:url('https://Allianzcortex.github.io/images/cover-v1.2.0.jpg');"></div>
+    
+  
+
+
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js" integrity="sha256-/BfiIkHlHoVihZdc6TFuj7MmJ0TWcWsMXkeDFwhi0zw=" crossorigin="anonymous"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.7/js/jquery.fancybox.min.js" integrity="sha256-GEAnjcTqVP+vBp3SSc8bEDQqvWAZMiHyUSIorrWwH50=" crossorigin="anonymous"></script>
+
+
+<script src="https://Allianzcortex.github.io/js/script-pcw6v3xilnxydl1vddzazdverrnn9ctynvnxgwho987mfyqkuylcb1nlt.min.js"></script>
+
+
+<script lang="javascript">
+window.onload = updateMinWidth;
+window.onresize = updateMinWidth;
+document.getElementById("sidebar").addEventListener("transitionend", updateMinWidth);
+function updateMinWidth() {
+  var sidebar = document.getElementById("sidebar");
+  var main = document.getElementById("main");
+  main.style.minWidth = "";
+  var w1 = getComputedStyle(main).getPropertyValue("min-width");
+  var w2 = getComputedStyle(sidebar).getPropertyValue("width");
+  var w3 = getComputedStyle(sidebar).getPropertyValue("left");
+  main.style.minWidth = `calc(${w1} - ${w2} - ${w3})`;
+}
+</script>
+
+<script>
+$(document).ready(function() {
+  hljs.configure({ classPrefix: '', useBR: false });
+  $('pre.code-highlight > code, pre > code').each(function(i, block) {
+    if (!$(this).hasClass('codeblock')) {
+      $(this).addClass('codeblock');
+    }
+    hljs.highlightBlock(block);
+  });
+});
+</script>
+
+
+  
+    
+      <script>
+        var disqus_config = function () {
+          this.page.url = 'https:\/\/Allianzcortex.github.io\/2020\/05\/improve-java-project-performace-20-times-for-an-assignment\/';
+          
+            this.page.identifier = '\/2020\/05\/improve-java-project-performace-20-times-for-an-assignment\/'
+          
+        };
+        (function() {
+          
+          
+          if (window.location.hostname == "localhost") {
+            return;
+          }
+          var d = document, s = d.createElement('script');
+          var disqus_shortname = 'hugo-tranquilpeak-theme';
+          s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+
+          s.setAttribute('data-timestamp', +new Date());
+          (d.head || d.body).appendChild(s);
+        })();
+      </script>
+    
+  
+
+
+
+
+    
+  </body>
+</html>
+

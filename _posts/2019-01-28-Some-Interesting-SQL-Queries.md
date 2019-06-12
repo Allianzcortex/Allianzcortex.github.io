@@ -1,3 +1,0 @@
-
-Grouping sites/window function
-

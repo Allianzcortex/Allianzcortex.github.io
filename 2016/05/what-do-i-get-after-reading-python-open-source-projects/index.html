@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="generator" content="Hugo 0.69.2 with theme Tranquilpeak 0.4.7-BETA">
+<meta name="author" content="Haozhou Wang">
+<meta name="keywords" content="tech">
+<meta name="description" content="To write fluent/elegant/idiomatic code">
+
+
+<meta property="og:description" content="To write fluent/elegant/idiomatic code">
+<meta property="og:type" content="article">
+<meta property="og:title" content="What do I get after Reading Python Open Source Projects">
+<meta name="twitter:title" content="What do I get after Reading Python Open Source Projects">
+<meta property="og:url" content="https://Allianzcortex.github.io/2016/05/what-do-i-get-after-reading-python-open-source-projects/">
+<meta property="twitter:url" content="https://Allianzcortex.github.io/2016/05/what-do-i-get-after-reading-python-open-source-projects/">
+<meta property="og:site_name" content="BBBB LLLL OOOO GGGG">
+<meta property="og:description" content="To write fluent/elegant/idiomatic code">
+<meta name="twitter:description" content="To write fluent/elegant/idiomatic code">
+<meta property="og:locale" content="en-us">
+
+  
+    <meta property="article:published_time" content="2016-05-23T15:01:33">
+  
+  
+    <meta property="article:modified_time" content="2016-05-23T15:01:33">
+  
+  
+  
+    
+      <meta property="article:section" content="Python">
+    
+  
+  
+    
+      <meta property="article:tag" content="Python">
+    
+  
+
+
+<meta name="twitter:card" content="summary">
+
+
+
+
+
+
+
+
+
+
+
+  <meta property="og:image" content="https://Allianzcortex.github.io/avatar.jpg">
+  <meta property="twitter:image" content="https://Allianzcortex.github.io/avatar.jpg">
+
+
+    <title>What do I get after Reading Python Open Source Projects</title>
+
+    <link rel="icon" href="https://Allianzcortex.github.io/favicon.png">
+    
+
+    
+
+    <link rel="canonical" href="https://Allianzcortex.github.io/2016/05/what-do-i-get-after-reading-python-open-source-projects/">
+
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/jquery.fancybox.min.css" integrity="sha256-vuXZ9LGmmwtjqFX1F+EKin1ThZMub58gKULUyf0qECk=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/helpers/jquery.fancybox-thumbs.min.css" integrity="sha256-SEa4XYAHihTcEP1f5gARTB2K26Uk8PsndQYHQC1f4jU=" crossorigin="anonymous" />
+    
+    
+    <link rel="stylesheet" href="https://Allianzcortex.github.io/css/style-twzjdbqhmnnacqs0pwwdzcdbt8yhv8giawvjqjmyfoqnvazl0dalmnhdkvp7.min.css" />
+    
+    
+
+    
+      
+    
+    
+  </head>
+
+  <body>
+    <div id="blog">
+      <header id="header" data-behavior="4">
+  <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+  <div class="header-title">
+    <a class="header-title-link" href="https://Allianzcortex.github.io/">BBBB LLLL OOOO GGGG</a>
+  </div>
+  
+    
+      <a class="header-right-picture "
+         href="https://Allianzcortex.github.io/#about">
+    
+    
+    
+      
+        <img class="header-picture" src="https://Allianzcortex.github.io/avatar.jpg" alt="Author&#39;s picture" />
+      
+    
+    </a>
+  
+</header>
+
+      <nav id="sidebar" data-behavior="4">
+  <div class="sidebar-container">
+    
+      <div class="sidebar-profile">
+        <a href="https://Allianzcortex.github.io/#about">
+          <img class="sidebar-profile-picture" src="https://Allianzcortex.github.io/avatar.jpg" alt="Author&#39;s picture" />
+        </a>
+       
+        
+          <h5 class="sidebar-profile-bio">@Arctic Wolf, ex-coop @Dash Hudson</h5>
+        
+      </div>
+    
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://Allianzcortex.github.io/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-home"></i>
+      
+      <span class="sidebar-button-desc">Home</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://Allianzcortex.github.io/categories">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-bookmark"></i>
+      
+      <span class="sidebar-button-desc">Categories</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://Allianzcortex.github.io/tags">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
+      
+      <span class="sidebar-button-desc">Tags</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://Allianzcortex.github.io/archives">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-archive"></i>
+      
+      <span class="sidebar-button-desc">Archives</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://Allianzcortex.github.io/#about">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-question"></i>
+      
+      <span class="sidebar-button-desc">About</span>
+    </a>
+  </li>
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://github.com/Allianzcortex" target="_blank" rel="noopener">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-github"></i>
+      
+      <span class="sidebar-button-desc">GitHub</span>
+    </a>
+  </li>
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://Allianzcortex.github.io/index.xml">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-rss"></i>
+      
+      <span class="sidebar-button-desc">RSS</span>
+    </a>
+  </li>
+
+
+    </ul>
+  </div>
+</nav>
+
+      
+
+      <div id="main" data-behavior="4"
+        class="
+               hasCoverMetaIn
+               ">
+        <article class="post" itemscope itemType="http://schema.org/BlogPosting">
+          
+          
+            <div class="post-header main-content-wrap text-left">
+  
+    <h1 class="post-title" itemprop="headline">
+      What do I get after Reading Python Open Source Projects
+    </h1>
+  
+  
+  <div class="postShorten-meta post-meta">
+    
+      <time itemprop="datePublished" datetime="2016-05-23T15:01:33Z">
+        
+  May 23, 2016
+
+      </time>
+    
+    
+  
+  
+    <span>in</span>
+    
+      <a class="category-link" href="https://Allianzcortex.github.io/categories/python">Python</a>
+    
+  
+
+  </div>
+
+</div>
+          
+          <div class="post-content markdown" itemprop="articleBody">
+            <div class="main-content-wrap">
+              <p>To write <code>fluent/elegant/idiomatic</code> code</p>
+<p>The benefits of reading open source projects have been demonstrated by many people. Whether it is to increase the understanding of tools used in daily development, or to learn to divide the project structure and improve the quality of the code better, reading open source projects is essential.</p>
+<p>There are some interesting findings during the progress.Take the famous <a href="https://github.com/requests/requests">requests</a> which gained over 3.5K stars as an example. There is a file (core.py) in the first version v0.2.3 listed on github that used tab as a whitespace,it certainly doesn&rsquo;t satisfy the requirements of PEP8 (:D</p>
+<hr>
+<h4 id="what-is-pythonic-code">What is Pythonic Code</h4>
+<p>Pythonic code is to implement code in a pythonic way.Having a summary:</p>
+<ol>
+<li>
+<p><code>OOP</code> considers code reuse and extension. Many can use a basic class / ABC to provide an interface, other sub-class inherit from it just needs to implement the necessary function.</p>
+</li>
+<li>
+<p>Customize BaseException, such as <code>class ProjectBasedException(Exception)</code>, and then use the code of the various inheritance exception classes to handle the specific exception, so that the prompt information can be reported more specifically.</p>
+</li>
+<li>
+<p>Define some small and common functions in utils, abstract the multiplexed code into @decorators; define the configuration files that will be used in settings, such as url, to avoid hard-coded.</p>
+</li>
+<li>
+<p>Defensive programming. Although _prefix can be used to define the private attribute to some extent, the parameters passed to the API must be type tested. Use a reasonable data structure or other tools (redis/celery) to limit the use of resources.</p>
+</li>
+<li>
+<p>meta-programming implements the <code>User-defined behaviour</code>.</p>
+</li>
+<li>
+<p>Standard comments for <code>docstring</code> and writing unit tests, logging important actions to files.</p>
+</li>
+<li>
+<p>On the basis of the above, some details, like replacing the string splicing with <code>''.join[]</code>, replacing the loop with <code>list-comprehension</code> also should be noticed.</p>
+</li>
+</ol>
+<hr>
+<h3 id="projects-list">Projects List</h3>
+<p>Not all high-star projects on Github are useful. For example, the code style of a <code>1000+ star</code> project is not good, and a lot of code does not meet the principle of <code>DRY(Don't Repeat Yourself)</code> . There are still many projects that directly hack Python itself(so many variables and functions begin with <code>__</code>, it&rsquo;s hard to understand what the logic behind it is)</p>
+<hr>
+<h5 id="junehttpsgithubcompythoncnjune"><a href="https://github.com/pythoncn/june">june</a></h5>
+<p>Although the project has been deprecated in the description, it can still run smoothly. A forum project that includes the <code>Node/Topic/Reply</code>.</p>
+<p>a. The implementation of OOP is very thorough, the following is an example:</p>
+<p>&ldquo;starthighlight&rdquo;</p>
+<h1 id="define-saving-method-in-topic-model">Define saving method in Topic model</h1>
+<p>class Topic(db.Model):
+#&hellip;
+def save(self,user=None,node=None):
+if self.id:
+db.session.add(self)
+db.session.commit()
+return self</p>
+<h1 id="form-uses-save-method-of-topic-model">Form uses save method of Topic Model</h1>
+<p>class TopicForm(BaseForm):
+#&hellip;
+topic = Topic(**self.data)
+return Topic.save(user=user,node=node)</p>
+<h1 id="views-uses-method-of-form">Views uses method of Form</h1>
+<p>@bp.route('/create/<a href="int:id">int:id</a>&rsquo;,methods=[&lsquo;GET&rsquo;,&lsquo;POST&rsquo;])
+@require_user
+def create(url_name):
+#&hellip;
+form = TopicForm()
+if form.validate_on_submit():
+topic = form.save(g.user,node)
+return redirect(url_for('.view&rsquo;,uid=topic.id))
+return render_template(&lsquo;topic/create.html&rsquo;, node=node, form=form)</p>
+<h1 id="so-avoiding-the-hassle-of-calling-the-model-and-dbsessionaddtopic-in-views">So avoiding the hassle of calling the model and db.session.add(topic) in views.</h1>
+<p>&ldquo;endhighlight&rdquo;</p>
+<hr>
+<p>b.  there is a decorator <code>@require_user</code>, which is the permission management for the user. A user may have multiple roles. If you define a decorator for each of these roles, there will be too many repetitions. In this case let&rsquo;s see what the author did:</p>
+<p>&ldquo;starthighlight&rdquo;</p>
+<h1 id="define-a-base-class">Define a base class</h1>
+<p>class require_role(object):
+roles = {
+&lsquo;spam&rsquo;: 0,
+&lsquo;new&rsquo;: 1,
+&lsquo;user&rsquo;: 2,
+&lsquo;staff&rsquo;: 3,
+&lsquo;admin&rsquo;: 4,
+}</p>
+<pre><code>def __init__(self, role):
+    self.role = role
+
+def __call__(self, method):
+    @functools.wraps(method)
+    def wrapper(*args, **kwargs):
+        if not g.user:
+            url = url_for('account.signin')
+            if '?' not in url:
+                url += '?next=' + request.url
+            return redirect(url)
+        if self.role is None:
+            return method(*args, **kwargs)
+        if g.user.id == 1:
+            # this is superuser, have no limitation
+            return method(*args, **kwargs)
+        if g.user.role == 'new':
+            flash(_('Please verify your email'), 'warn')
+            return redirect(url_for('account.setting'))
+        if g.user.role == 'spam':
+            flash(_('You are a spammer'), 'error')
+            return redirect('/')
+        if self.roles[g.user.role] &lt; self.roles[self.role]:
+            return abort(403)
+        return method(*args, **kwargs)
+    return wrapper
+</code></pre>
+<h1 id="then-define-different-permission-limits-for-different-roles">Then define different permission limits for different roles</h1>
+<p>require_login = require_role(None)
+require_user = require_role(&lsquo;user&rsquo;)
+require_staff = require_role(&lsquo;staff&rsquo;)
+require_admin = require_role(&lsquo;admin&rsquo;)
+&ldquo;endhighlight&rdquo;</p>
+<hr>
+<h5 id="zhihu-oauthhttpsgithubcom7sdreamzhihu-oauth-by-7sdream"><a href="https://github.com/7sDream/zhihu-oauth">zhihu-oauth</a> by @7sDream</h5>
+<p>The second project is <a href="https://github.com/7sDream/zhihu-oauth">zhihu-oauth</a> written by @7sDream. The overall structure is very beautiful, and the meta-programming is also very good. Especially considering that the author and I are peers, it is especially amazing. BTW, I also provide two PRs:
+<a href="https://github.com/7sDream/zhihu-oauth/pull/27">pull-27</a> and
+[pull-28](<a href="https://github.com/7sDream/zhihu-">https://github.com/7sDream/zhihu-</a> Oauth/pull/28)</p>
+<p>The author reversely parses the zhihu Android client and encapsulates the oauth interface. Unlike other libraries that use simulated login and Beautifuoup to parse web content, zhihu-oauth can provide a more stable API. And it is also less likely to be blocked by ip.</p>
+<p>The whole project is divided into three parts: <code>oauth</code> for verification, <code>zhcls</code> for class description, and <code>client</code> for combining the two to provide a login API.</p>
+<p>For <code>oauth</code>:</p>
+<ul>
+<li>
+<p>The <code>imZhihuAndroidClient class</code> is defined in im_android.py, inheriting requests.authbase. The methods that are used in building parameters such as api_version/app_version/zpp_za/ua are defined in <code>__init__</code>. Also use the method self._api_version=api_version or API_VERSION (from setting.py) to allow the user to customize some parameters. The following <code>__call__(self,r)</code> is the mechanism of authbase and will be called automatically when posting a request.</p>
+</li>
+<li>
+<p>Before_login_auth.py defines the BeforeLoginAuth class, inherits the imZhihuAndroidClient class above, adds client_id to imZhihuAndroidClient, and uses self._client_id=client_id to execute validation before login. The implementation of <code>__call__</code> is as follows:</p>
+</li>
+</ul>
+<p>&ldquo;starthighlight&rdquo;
+def <strong>call</strong>(self,r):
+r = super(BeforeLoginAuth,self).<strong>call</strong>()
+r.headers[&lsquo;Authorization&rsquo;] = &lsquo;oauth{0}'.format(str(self._client_id))
+return r
+&ldquo;endhighlight&rdquo;</p>
+<ul>
+<li>
+<p>In setting.py, some parameters are used, such as <code>ZHIHU_API_ROOT</code>, <code>LOGIN_URL=ZHIHU_API_ROOT+'/signin'</code>, all in uppercase.</p>
+</li>
+<li>
+<p>In token.py, the ZhihuToken class is defined, and the token is generated after the access is known. So obviously, according to OOP&rsquo;s thoughts, the following job can be done:</p>
+</li>
+</ul>
+<p>The <code>self._cretate_at=time.time(), self._expires_in=expires_in</code> initialization tool is defined in <code>__init__</code> and these are also provided:</p>
+<p>&ldquo;starthighlight&rdquo;
+class ZhihuToken:</p>
+<pre><code>@staticmethod
+def from_dict(json_dict):
+    try:
+        return ZhihuToken(**json_dict)
+    except TypeError:
+        raise ValueError('{} is not a valid zhihu token json'.format(json_dict))
+
+@staticmethod
+def from_str(json_str):
+    try:
+        return ZhihuToken.from_dict(json.loads(json_str))
+    except TypeError:
+        raise ValueError('{} is not a valid zhihu token str'.format(json_str))
+
+@staticmethod
+def from_file(filename):
+    with open(filename,'rb') as f:
+        return pickle.load(f) # pickle ,long-time storage
+
+def save(self,filename):
+    &quot;&quot;&quot;
+    saving token to file
+    &quot;&quot;&quot;
+    with open(filename,'wb') as f:
+        pickle.dump(self,f)
+
+@property
+def user_id(self):
+    return self._user_id
+</code></pre>
+<p>&ldquo;endhighlight&rdquo;</p>
+<p>Look again at the implementation of <code>exception.py</code>. As mentioned earlier,base exception should be provided for the entire project.</p>
+<p>&ldquo;starthighlight&rdquo;</p>
+<h1 id="deal-python2-and-python3-respectively">deal python2 and python3 respectively.</h1>
+<h1 id="also-you-can-use-if-py2import-else-import-but-its-against-the">Also you can use <code>if py2:import ..;else import ..</code>,but it&rsquo;s against the</h1>
+<h1 id="principle-of-easier-to-ask-for-forgiveness-than-permission">principle of <code>easier to ask for forgiveness than permission</code></h1>
+<p>try:
+from json import JSONDecodeError as MyJSONDecodeError
+except ImportError:
+MyJSONDecodeError = Exception
+&ldquo;endhighlight&rdquo;</p>
+<p>&ldquo;starthighlight&rdquo;
+class UnexpectedResponseException(Exception):
+def <strong>init</strong>(self,url,res):
+&quot;&rdquo;&rdquo;
+For all situations that json cannot be decoded,this exception will be used.
+&quot;&rdquo;&rdquo;
+self.url = url
+self.res = res</p>
+<pre><code>def __repr__(self):
+    return &quot;when visit {self.url},get an unexpected response {self.res.text}&quot;.
+        format(self=self)
+
+__str__ = __repr__
+</code></pre>
+<p>&ldquo;endhighlight&rdquo;</p>
+<hr>
+<p>Java 代码</p>
+<p>Based on requirements,I ever investigaed the use of <code>jedis</code> to see how it handlers multi-thread situation.</p>
+<p>It inherits <code>Apache.commons.pool</code> and it is called
+The <code>super.getResource()</code> method, which in turn calls the <code>borrowObject</code> method in the pool.In the <code>borrowObject</code> method, it has implemented the consideration of multithreading:</p>
+<p>{% highlight Java %}
+long starttime = System.currentTimeMillis();
+Latch<T> latch = new Latch<T>();
+byte whenExhaustedAction;
+long maxWait;
+synchronized (this) {
+/*
+Get local copy of current config. Can&rsquo;t sync when used
+later as it can result in a deadlock. Has the added
+advantage that config is consistent for entire execution</p>
+<p>*/
+whenExhaustedAction = _whenExhaustedAction;
+maxWait = _maxWait;</p>
+<p>// activate &amp; validate the object
+try {
+_factory.activateObject(latch.getPair().value);
+if(_testOnBorrow &amp;&amp;
+!_factory.validateObject(latch.getPair().value)) {
+throw new Exception(&ldquo;ValidateObject failed&rdquo;);
+}
+synchronized(this) {
+// only one thread can execute at the moment
+_numInternalProcessing&ndash;;
+_numActive++;
+}
+return latch.getPair().value;
+}
+catch (Throwable e) {
+}
+&ldquo;endhighlight&rdquo;</p>
+              
+            </div>
+          </div>
+          <div id="post-footer" class="post-footer main-content-wrap">
+            
+              
+                
+                
+                  <div class="post-footer-tags">
+                    <span class="text-color-light text-small">TAGGED IN</span><br/>
+                    
+  <a class="tag tag--primary tag--small" href="https://Allianzcortex.github.io/tags/python/">Python</a>
+
+                  </div>
+                
+              
+            
+            <div class="post-actions-wrap">
+  
+      <nav >
+        <ul class="post-actions post-action-nav">
+          
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://Allianzcortex.github.io/2016/09/data-visualize-with-flask-and-highcharts/" data-tooltip="Data Visualize With Flask and Highcharts">
+              
+                  <i class="fa fa-angle-left"></i>
+                  <span class="hide-xs hide-sm text-small icon-ml">NEXT</span>
+                </a>
+            </li>
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://Allianzcortex.github.io/2016/02/a-real-world-hadoop-example-with-word-count-building-in-local-tutorial/" data-tooltip="A real world Hadoop example with word-count building in local tutorial">
+              
+                  <span class="hide-xs hide-sm text-small icon-mr">PREVIOUS</span>
+                  <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+          
+        </ul>
+      </nav>
+    <ul class="post-actions post-action-share" >
+      
+        <li class="post-action hide-lg hide-md hide-sm">
+          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
+            <i class="fa fa-share-alt"></i>
+          </a>
+        </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://Allianzcortex.github.io/2016/05/what-do-i-get-after-reading-python-open-source-projects/">
+              <i class="fa fa-facebook-official"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=https://Allianzcortex.github.io/2016/05/what-do-i-get-after-reading-python-open-source-projects/">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=https://Allianzcortex.github.io/2016/05/what-do-i-get-after-reading-python-open-source-projects/">
+              <i class="fa fa-google-plus"></i>
+            </a>
+          </li>
+        
+      
+      
+        <li class="post-action">
+          <a class="post-action-btn btn btn--default" href="#disqus_thread">
+            <i class="fa fa-comment-o"></i>
+          </a>
+        </li>
+      
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--default" href="#">
+        
+          <i class="fa fa-list"></i>
+        </a>
+      </li>
+    </ul>
+  
+</div>
+
+            
+              
+                <div id="disqus_thread">
+  <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+              
+            
+          </div>
+        </article>
+        <footer id="footer" class="main-content-wrap">
+  <span class="copyrights">
+    &copy; 2020 Haozhou Wang. All Rights Reserved
+  </span>
+</footer>
+
+      </div>
+      <div id="bottom-bar" class="post-bottom-bar" data-behavior="4">
+        <div class="post-actions-wrap">
+  
+      <nav >
+        <ul class="post-actions post-action-nav">
+          
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://Allianzcortex.github.io/2016/09/data-visualize-with-flask-and-highcharts/" data-tooltip="Data Visualize With Flask and Highcharts">
+              
+                  <i class="fa fa-angle-left"></i>
+                  <span class="hide-xs hide-sm text-small icon-ml">NEXT</span>
+                </a>
+            </li>
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://Allianzcortex.github.io/2016/02/a-real-world-hadoop-example-with-word-count-building-in-local-tutorial/" data-tooltip="A real world Hadoop example with word-count building in local tutorial">
+              
+                  <span class="hide-xs hide-sm text-small icon-mr">PREVIOUS</span>
+                  <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+          
+        </ul>
+      </nav>
+    <ul class="post-actions post-action-share" >
+      
+        <li class="post-action hide-lg hide-md hide-sm">
+          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
+            <i class="fa fa-share-alt"></i>
+          </a>
+        </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://Allianzcortex.github.io/2016/05/what-do-i-get-after-reading-python-open-source-projects/">
+              <i class="fa fa-facebook-official"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=https://Allianzcortex.github.io/2016/05/what-do-i-get-after-reading-python-open-source-projects/">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=https://Allianzcortex.github.io/2016/05/what-do-i-get-after-reading-python-open-source-projects/">
+              <i class="fa fa-google-plus"></i>
+            </a>
+          </li>
+        
+      
+      
+        <li class="post-action">
+          <a class="post-action-btn btn btn--default" href="#disqus_thread">
+            <i class="fa fa-comment-o"></i>
+          </a>
+        </li>
+      
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--default" href="#">
+        
+          <i class="fa fa-list"></i>
+        </a>
+      </li>
+    </ul>
+  
+</div>
+
+      </div>
+      <div id="share-options-bar" class="share-options-bar" data-behavior="4">
+  <i id="btn-close-shareoptions" class="fa fa-close"></i>
+  <ul class="share-options">
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2FAllianzcortex.github.io%2F2016%2F05%2Fwhat-do-i-get-after-reading-python-open-source-projects%2F">
+          <i class="fa fa-facebook-official"></i><span>Share on Facebook</span>
+        </a>
+      </li>
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=https%3A%2F%2FAllianzcortex.github.io%2F2016%2F05%2Fwhat-do-i-get-after-reading-python-open-source-projects%2F">
+          <i class="fa fa-twitter"></i><span>Share on Twitter</span>
+        </a>
+      </li>
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://plus.google.com/share?url=https%3A%2F%2FAllianzcortex.github.io%2F2016%2F05%2Fwhat-do-i-get-after-reading-python-open-source-projects%2F">
+          <i class="fa fa-google-plus"></i><span>Share on Google&#43;</span>
+        </a>
+      </li>
+    
+  </ul>
+</div>
+<div id="share-options-mask" class="share-options-mask"></div>
+    </div>
+    
+    <div id="about">
+  <div id="about-card">
+    <div id="about-btn-close">
+      <i class="fa fa-remove"></i>
+    </div>
+    
+      <img id="about-card-picture" src="https://Allianzcortex.github.io/avatar.jpg" alt="Author&#39;s picture" />
+    
+    
+    
+      <div id="about-card-bio">@Arctic Wolf, ex-coop @Dash Hudson</div>
+    
+    
+      <div id="about-card-job">
+        <i class="fa fa-briefcase"></i>
+        <br/>
+        Full Stack / Backend Developer
+      </div>
+    
+    
+      <div id="about-card-location">
+        <i class="fa fa-map-marker"></i>
+        <br/>
+        Halifax,NS
+      </div>
+    
+  </div>
+</div>
+
+    
+
+    
+  
+    
+      <div id="cover" style="background-image:url('https://Allianzcortex.github.io/images/cover-v1.2.0.jpg');"></div>
+    
+  
+
+
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js" integrity="sha256-/BfiIkHlHoVihZdc6TFuj7MmJ0TWcWsMXkeDFwhi0zw=" crossorigin="anonymous"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.7/js/jquery.fancybox.min.js" integrity="sha256-GEAnjcTqVP+vBp3SSc8bEDQqvWAZMiHyUSIorrWwH50=" crossorigin="anonymous"></script>
+
+
+<script src="https://Allianzcortex.github.io/js/script-pcw6v3xilnxydl1vddzazdverrnn9ctynvnxgwho987mfyqkuylcb1nlt.min.js"></script>
+
+
+<script lang="javascript">
+window.onload = updateMinWidth;
+window.onresize = updateMinWidth;
+document.getElementById("sidebar").addEventListener("transitionend", updateMinWidth);
+function updateMinWidth() {
+  var sidebar = document.getElementById("sidebar");
+  var main = document.getElementById("main");
+  main.style.minWidth = "";
+  var w1 = getComputedStyle(main).getPropertyValue("min-width");
+  var w2 = getComputedStyle(sidebar).getPropertyValue("width");
+  var w3 = getComputedStyle(sidebar).getPropertyValue("left");
+  main.style.minWidth = `calc(${w1} - ${w2} - ${w3})`;
+}
+</script>
+
+<script>
+$(document).ready(function() {
+  hljs.configure({ classPrefix: '', useBR: false });
+  $('pre.code-highlight > code, pre > code').each(function(i, block) {
+    if (!$(this).hasClass('codeblock')) {
+      $(this).addClass('codeblock');
+    }
+    hljs.highlightBlock(block);
+  });
+});
+</script>
+
+
+  
+    
+      <script>
+        var disqus_config = function () {
+          this.page.url = 'https:\/\/Allianzcortex.github.io\/2016\/05\/what-do-i-get-after-reading-python-open-source-projects\/';
+          
+            this.page.identifier = '\/2016\/05\/what-do-i-get-after-reading-python-open-source-projects\/'
+          
+        };
+        (function() {
+          
+          
+          if (window.location.hostname == "localhost") {
+            return;
+          }
+          var d = document, s = d.createElement('script');
+          var disqus_shortname = 'hugo-tranquilpeak-theme';
+          s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+
+          s.setAttribute('data-timestamp', +new Date());
+          (d.head || d.body).appendChild(s);
+        })();
+      </script>
+    
+  
+
+
+
+
+    
+  </body>
+</html>
+

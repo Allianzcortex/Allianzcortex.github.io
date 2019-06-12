@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>BigData on BBBB LLLL OOOO GGGG</title>
+    <link>https://Allianzcortex.github.io/tags/bigdata/</link>
+    <description>Recent content in BigData on BBBB LLLL OOOO GGGG</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 22 Feb 2016 18:52:22 +0000</lastBuildDate>
+    
+	<atom:link href="https://Allianzcortex.github.io/tags/bigdata/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>A real world Hadoop example with word-count building in local tutorial</title>
+      <link>https://Allianzcortex.github.io/2016/02/a-real-world-hadoop-example-with-word-count-building-in-local-tutorial/</link>
+      <pubDate>Mon, 22 Feb 2016 18:52:22 +0000</pubDate>
+      
+      <guid>https://Allianzcortex.github.io/2016/02/a-real-world-hadoop-example-with-word-count-building-in-local-tutorial/</guid>
+      <description>&lt;p&gt;There will be two parts in this post :&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;How to build run your first hadoop application in local with &lt;code&gt;IntellijIDEA&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;How to use Hadoop to explore user relationship inside &lt;code&gt;GB/TB&lt;/code&gt; data&lt;/li&gt;
+&lt;/ol&gt;</description>
+    </item>
+    
+  </channel>
+</rss>
