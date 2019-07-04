@@ -9,13 +9,16 @@ permalink: /about/
 
 <br>
 
-- Got the bachelor degree from [HEU](https://english.hrbeu.edu.cn/) 
+- Got the bachelor degree from [HEU](https://english.hrbeu.edu.cn/) where I transfered to `Computer Science` major in 2013
 <!-- - Cureently read the  master degree in SMU(Halifax), and seeking for a full-time internship from 2019.09-2020.04 -->
-- 2012-2013 in `College of Automation`，2013-2016  in `College of Computer Science and Technology`
-- Good at `Java`、`Python`、`Type/Javascript`, also familar with `Golang`、`Scala`、`HTML/CSS`
-- Used the [Spring](https://spring.io/) and [Django](https://www.djangoproject.com/) as main web framework , and added `Nginx,MySQL,Docker,Redis,MongoDB,Jquery,Angular,Linux,Git,Kafka,Storm,Hadoop` into my tech stack
-- `An engineer should no be restricted with certain languages, but to use the proper language to solve different problems`
-<!-- - Email: `iamwanghz#gmail.com`
+- Currently I focus on full-stack development <br>
+  Tech Stack : <br>
+  Language: `Java`、`Python`、`Type/Javascript`、`Golang`、`Scala` \\
+  Backend: `Spring Boot + Spring MVC + JPA` 、`Django/Flask` <br>
+  Frontend: `React`、`Vue`、`JQuery` <br>
+  Others: `Docker & K8s、Nginx、MySQL,Docker,Redis,MongoDB、Linux,Git,Kafka,Storm,Hadoop`
+<br>
 
-> Across the Great Wall, we can reach every corner in the world
+
+<!-- Across the Great Wall, we can reach every corner in the world
  -->

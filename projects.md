@@ -82,7 +82,7 @@ Projects I participated：
   [PR1](https://github.com/7sDream/zhihu-oauth/commit/6ac68940b1661c07c6d2758695eb00510733976c) [PR2](https://github.com/7sDream/zhihu-oauth/commit/bb68a4774a188be07e2f004493429166dcef6294)
 
 - provided a revised version [myLM](https://github.com/Allianzcortex/myLM) for [LibraryManagement](https://github.com/yumendy/LibraryManagement) written by `@yumendy`.
-Used  `form` to replace `request.POST.get()` with `form.cleaned_data.get()`, which made it easier to separate the front and back ends. Increasing the judgment of error conditions, while migrating the database from `SQLite` to `MySQL`
+Used  `form` to replace `request.POST.get()` with `form.cleaned_data.get()`, which made it easier to separate the front and back ends. Increased the judgment of error conditions, while migrating the database from `SQLite` to `MySQL`
 
 ---
 
