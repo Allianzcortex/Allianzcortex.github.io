@@ -4,6 +4,18 @@ title: "Projects"
 permalink: /projects/
 ---
 
+Open Source Projects I participated：
+
+- Provide 2 PRs for [flask-realworld-example-app](https://github.com/gothinkster/flask-realworld-example-app/pull/26) by `@gothinkster`. During [PR1](https://github.com/gothinkster/flask-realworld-example-app/pull/26) and [PR2](https://github.com/gothinkster/flask-realworld-example-app/pull/27), I fixed breaking changes caused by upgrade of [marshmallow](https://marshmallow.readthedocs.io/) and re-write the unittest to pass the CI.
+
+- Provide 1 PR for [vue-realworld-example-app](https://github.com/gothinkster/vue-realworld-example-app). In [PR1](https://github.com/gothinkster/vue-realworld-example-app/pull/170), I provide a better name convention.
+
+- Provided 1 PR for  [zhih-oauth](https://github.com/7sDream/zhihu-oauth) by `@7SDream` 
+  [PR1](https://github.com/7sDream/zhihu-oauth/commit/6ac68940b1661c07c6d2758695eb00510733976c) 
+
+---
+
+
 Some projects I wrote：
 
 - [FBRank](https://github.com/Allianzcortex/FBRank)    <img src="https://camo.githubusercontent.com/679ca6ebb312875e15236daf218fc068060083b8/68747470733a2f2f62616467652e667572792e696f2f70792f464252616e6b2e737667" alt="PyPI version" data-canonical-src="https://badge.fury.io/py/FBRank.svg" style="max-width:100%;"> ![continuous-development](https://travis-ci.org/Allianzcortex/FBRank.svg?branch=master)
@@ -36,6 +48,7 @@ below is the generated picture:
 ---
 
 - [code collection](https://github.com/Allianzcortex/code_collection) ![build](https://api.travis-ci.org/Allianzcortex/code_collection.svg?branch=master)
+
 
 A bunch of code `misc/projects/demos`
 
@@ -76,15 +89,6 @@ A family asset management software based on [QT](https://www.qt.io/)
 
 ---
 
-Projects I participated：
-
-- Provided 2 PRs for  [zhih-oauth](https://github.com/7sDream/zhihu-oauth) written by `@7SDream` 
-  [PR1](https://github.com/7sDream/zhihu-oauth/commit/6ac68940b1661c07c6d2758695eb00510733976c) [PR2](https://github.com/7sDream/zhihu-oauth/commit/bb68a4774a188be07e2f004493429166dcef6294)
-
-- provided a revised version [myLM](https://github.com/Allianzcortex/myLM) for [LibraryManagement](https://github.com/yumendy/LibraryManagement) written by `@yumendy`.
-Used  `form` to replace `request.POST.get()` with `form.cleaned_data.get()`, which made it easier to separate the front and back ends. Increased the judgment of error conditions, while migrating the database from `SQLite` to `MySQL`
-
----
 
 Projects in the pending：
 

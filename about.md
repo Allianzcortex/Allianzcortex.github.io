@@ -9,14 +9,14 @@ permalink: /about/
 
 <br>
 
-- Got the bachelor degree from [HEU](https://english.hrbeu.edu.cn/) where I transfered to `Computer Science` major in 2013
+- Got the Computer Science bachelor degree from [HEU](https://english.hrbeu.edu.cn/)
 <!-- - Cureently read the  master degree in SMU(Halifax), and seeking for a full-time internship from 2019.09-2020.04 -->
-- Currently I focus on full-stack development <br>
+- Currently focusing on `web development/devops/distributed system` <br>
   Tech Stack : <br>
   Language: `Java`、`Python`、`Type/Javascript`、`Golang`、`Scala` \\
   Backend: `Spring Boot + Spring MVC + JPA` 、`Django/Flask` <br>
   Frontend: `React`、`Vue`、`JQuery` <br>
-  Others: `Docker & K8s、Nginx、MySQL,Docker,Redis,MongoDB、Linux,Git,Kafka,Storm,Hadoop`
+  Others: `Docker & K8s、Nginx、MySQL、Docker、Redis、MongoDB、Linux、Git、Kafka、Storm、Hadoop`
 <br>
 
 
