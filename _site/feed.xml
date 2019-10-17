@@ -5,7 +5,7 @@
   
   <link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" />
   <link href="http://localhost:4000/" rel="alternate" type="text/html" />
-  <updated>2019-10-13T20:53:32-03:00</updated>
+  <updated>2019-10-17T11:29:09-03:00</updated>
   <id>http://localhost:4000//</id>
 
   
@@ -735,6 +735,72 @@ ImportError: cannot import name 'NotSupprotedYetException'
   
     <entry>
       
+      <title type="html">How to deploy Errbot with Webserver plugin activated(inside docker)</title>
+      
+      <link href="http://localhost:4000/2017/05/21/How-To-Deploy-Errbot-With-Webserver-Inside-Docker/" rel="alternate" type="text/html" title="How to deploy Errbot with Webserver plugin activated(inside docker)" />
+      <published>2017-05-21T13:29:10-03:00</published>
+      <updated>2017-05-21T13:29:10-03:00</updated>
+      <id>http://localhost:4000/2017/05/21/How-To-Deploy-Errbot-With-Webserver-Inside-Docker</id>
+      <content type="html" xml:base="http://localhost:4000/2017/05/21/How-To-Deploy-Errbot-With-Webserver-Inside-Docker/">&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Connecting the dots when you search through the document &amp;amp; issue &amp;amp; source code&lt;/code&gt;. This passage will show how you can deploy the Errbot in production environemnt with Webserver activated.&lt;/p&gt;
+
+&lt;!-- more --&gt;
+&lt;p&gt;&lt;a href=&quot;/../translation/2017-05-21-Scala-Test-Junit-Sbt-Problem.html&quot;&gt;这篇文章对应的中文版&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;The fix solution:&lt;/p&gt;
+
+&lt;p&gt;TL;DR. Solution:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Ensure that you can run the Webserver normally with interactive mode&lt;/li&gt;
+  &lt;li&gt;Copy&amp;amp;Paste the following 6 files into data folder(if you already have it or run the
+docker inside the same folder, then this step can be skipped)&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;core.db.bak
+core.db.dat
+core.db.dir
+TextCmds.db.bak
+TextCmds.db.dat
+TextCmds.db.dir
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;Copy&amp;amp;Paste the &lt;code class=&quot;highlighter-rouge&quot;&gt;backup.py&lt;/code&gt; from https://github.com/errbotio/errbot/blob/master/errbot/core_plugins/backup.py and put it inside the &lt;code class=&quot;highlighter-rouge&quot;&gt;data/&lt;/code&gt; folder&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;change the command into &lt;code class=&quot;highlighter-rouge&quot;&gt;errbot -r &amp;amp;&amp;amp; errbot&lt;/code&gt;(no matter you deploy it by supervissor or other daemon tool)&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;hr /&gt;</content>
+
+      
+      
+      
+      
+      
+
+      
+
+      
+        <category term="Scala" />
+      
+
+      
+
+      
+        <summary type="html">Connecting the dots when you search through the document &amp;amp; issue &amp;amp; source code. This passage will show how you can deploy the Errbot in production environemnt with Webserver activated. 这篇文章对应的中文版 The fix solution: TL;DR. Solution: Ensure that you can run the Webserver normally with interactive mode Copy&amp;amp;Paste the following 6 files into data folder(if you already have it or run the docker inside the same folder, then this step can be skipped) core.db.bak core.db.dat core.db.dir TextCmds.db.bak TextCmds.db.dat TextCmds.db.dir Copy&amp;amp;Paste the backup.py from https://github.com/errbotio/errbot/blob/master/errbot/core_plugins/backup.py and put it inside the data/ folder change the command into errbot -r &amp;amp;&amp;amp; errbot(no matter you deploy it by supervissor or other daemon tool)</summary>
+      
+
+      
+      
+    </entry>
+  
+  
+  
+    <entry>
+      
       <title type="html">My Database Project — A Full-stack Library Management System with Spring Boot and JQuery</title>
       
       <link href="http://localhost:4000/2017/05/21/How-I-Finish-My-Database-Project/" rel="alternate" type="text/html" title="My Database Project — A Full-stack Library Management System with Spring Boot and JQuery" />
@@ -1269,324 +1335,6 @@ tempArray.push(parseInt(jsonData[i].startTime) + 28800000,parseInt(jsonData[i].s
 
       
         <summary type="html">A data visualization using the back-end Flask and front-end Highcharts 这篇文章对应的中文版 What Happened Our company uses Alibaba’s open source zeus and combines scripts to build a schedule system. There was a phenomenon of sudden collapse of the job in the evening (the early warning SMS burst), and the data could only be rewashed during the day. After research, it is found that the task is way too intensive in a certain period of time and excessive parallel pressure is the cause. The time of the ods/mds/ads table needs to be reasonably distributed. However, the zeus system itself does not provide the function of the query scheduling task, so it is necessary to implement the visualization of a task distribution. Flask Backend Framework Although usually I’m used to use Django, but it is too heavy as a Full-Stack Framework,the registration and login functions inside will not be used. So I switch to Flask:query from MySQL in real time, convert the result with the built-in jsonify and return it to the front-end page. Zeus’s scheduling time format is similar to crontab, so in order to generate the required data directly on the backend, it should convert the time into an int value. such as: original time show time 0 10 1（means 1:10） 110 0 16 0 （means 12:16） 16 0 30 23（means evening 11:30） 2330 If the time does not meet the four positions when you look at it, you need to complete the leading zero to see. The core of time is as follows: for row in cur.fetchall(): key = row[1].split() if key[2]!='0' and key[1]=='0': key=10*int(key[2]+key[1]) else: key = int(key[2] + key[1]) configuring post data: @app.route('/timeserialize', methods=['GET', 'POST']) def get_json(): # calculate some data return jsonify(result) Highcharts FrontEnd Framework There are two famous visualization framework,one is Echarts opensourced by Baidu,and the other is Highcharts opensourced by Google(D3.js is mainly for animation).I choose the latter one. Adding the resource files firstly. &amp;lt;script src=&quot;http://cdn.bootcss.com/bootstrap/3.3.0/js/bootstrap.min.js&quot;&amp;gt;&amp;lt;/script&amp;gt; &amp;lt;link rel=&quot;stylesheet&quot; type=&quot;text/css&quot; href=&quot;&quot;&amp;gt; &amp;lt;!-- jquery.min.js must put before highcharts.js 之前 --&amp;gt; &amp;lt;script src=&quot;&quot;&amp;gt;&amp;lt;/script&amp;gt; &amp;lt;script src=&quot;&quot;&amp;gt;&amp;lt;/script&amp;gt; Then use jquery to configure JSON data in POST format. &amp;lt;script&amp;gt; $(function () { $.getJSON('/timeserialize', function (data) { /*$.getJSON('/configure', function (data) {*/ $('#container').highcharts({ // legend,option...data }); }); }); &amp;lt;/script&amp;gt; First Version The display after the first version is as follows： The number of points refers to the number of jobs running at the current point in time. Drag and drop to see changes in a finer time dimension. Second Version After combining the obtained time format and the specific number of seconds, You can get the specific execution time of the task, and transfer it to unixtime and pass it to the front end, then turn it to specific time, the visual effect will be better. The key is to add a function to the JSON format in $function(). var jsonData = data; var jsonDataSuccess = new Array(); var jsonDataFailed = new Array(); # ... tempArray.push(parseInt(jsonData[i].startTime) + 28800000,parseInt(jsonData[i].spendTime)); # ... In the series, use two types to mark: series:[{ name:'success', color:'rgb(119,152,191)', data:jsonDataSuccess, },{ name:'failed', color:'rgb(255,0,0)', data:jsonDataFailed } ] Using the formatter() option in tooltip to return a more friendly expression: tooltip:{ formatter: function() { //... return 'jobid :' + jobId + '&amp;lt;br&amp;gt;' + &quot;jobName:&quot; + jobName + '&amp;lt;br&amp;gt;' + 'starttime :' + startTime } } The resulting visualization results are as follows:</summary>
-      
-
-      
-      
-    </entry>
-  
-  
-  
-    <entry>
-      
-      <title type="html">Different Open Source Projects I Read</title>
-      
-      <link href="http://localhost:4000/2016/05/23/Read-Python-Open-Source-Project/" rel="alternate" type="text/html" title="Different Open Source Projects I Read" />
-      <published>2016-05-23T12:01:33-03:00</published>
-      <updated>2016-05-23T12:01:33-03:00</updated>
-      <id>http://localhost:4000/2016/05/23/Read-Python-Open-Source-Project</id>
-      <content type="html" xml:base="http://localhost:4000/2016/05/23/Read-Python-Open-Source-Project/">&lt;p&gt;To write &lt;code class=&quot;highlighter-rouge&quot;&gt;fluent/elegant/idiomatic&lt;/code&gt; code
-&lt;!-- more --&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&quot;/../translation/2016-05-23-Read-Python-Open-Source-Project.html&quot;&gt;这篇文章对应的中文版&lt;/a&gt;&lt;/p&gt;
-
-&lt;h4 id=&quot;prologue&quot;&gt;Prologue&lt;/h4&gt;
-
-&lt;p&gt;The benefits of reading open source projects have been demonstrated by many people. Whether it is to increase the understanding of tools used in daily development, or to learn to divide the project structure and improve the quality of the code better, reading open source projects is essential.&lt;/p&gt;
-
-&lt;p&gt;There are some interesting findings during the progress.Take the famous &lt;a href=&quot;https://github.com/requests/requests&quot;&gt;requests&lt;/a&gt; which gained over 3.5K stars as an example. There is a file (core.py) in the first version v0.2.3 listed on github that used tab as a whitespace,it certainly doesn’t satisfy the requirements of PEP8 (:D&lt;/p&gt;
-
-&lt;hr /&gt;
-
-&lt;h4 id=&quot;what-is-pythonic-code&quot;&gt;What is Pythonic Code&lt;/h4&gt;
-
-&lt;p&gt;Pythonic code is to implement code in a pythonic way.Having a summary:&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;OOP&lt;/code&gt; considers code reuse and extension. Many can use a basic class / ABC to provide an interface, other sub-class inherit from it just needs to implement the necessary function.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;Customize BaseException, such as &lt;code class=&quot;highlighter-rouge&quot;&gt;class ProjectBasedException(Exception)&lt;/code&gt;, and then use the code of the various inheritance exception classes to handle the specific exception, so that the prompt information can be reported more specifically.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;Define some small and common functions in utils, abstract the multiplexed code into @decorators; define the configuration files that will be used in settings, such as url, to avoid hard-coded.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;Defensive programming. Although _prefix can be used to define the private attribute to some extent, the parameters passed to the API must be type tested. Use a reasonable data structure or other tools (redis/celery) to limit the use of resources.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;meta-programming implements the &lt;code class=&quot;highlighter-rouge&quot;&gt;User-defined behaviour&lt;/code&gt;.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;Standard comments for &lt;code class=&quot;highlighter-rouge&quot;&gt;docstring&lt;/code&gt; and writing unit tests, logging important actions to files.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;On the basis of the above, some details, like replacing the string splicing with &lt;code class=&quot;highlighter-rouge&quot;&gt;''.join[]&lt;/code&gt;, replacing the loop with &lt;code class=&quot;highlighter-rouge&quot;&gt;list-comprehension&lt;/code&gt; also should be noticed.&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;hr /&gt;
-
-&lt;h3 id=&quot;projects-list&quot;&gt;Projects List&lt;/h3&gt;
-
-&lt;p&gt;Not all high-star projects on Github are useful. For example, the code style of a &lt;code class=&quot;highlighter-rouge&quot;&gt;1000+ star&lt;/code&gt; project is not good, and a lot of code does not meet the principle of &lt;code class=&quot;highlighter-rouge&quot;&gt;DRY(Don't Repeat Yourself)&lt;/code&gt; . There are still many projects that directly hack Python itself(so many variables and functions begin with &lt;code class=&quot;highlighter-rouge&quot;&gt;__&lt;/code&gt;, it’s hard to understand what the logic behind it is)&lt;/p&gt;
-
-&lt;hr /&gt;
-
-&lt;h5 id=&quot;june&quot;&gt;&lt;a href=&quot;https://github.com/pythoncn/june&quot;&gt;june&lt;/a&gt;&lt;/h5&gt;
-
-&lt;p&gt;Although the project has been deprecated in the description, it can still run smoothly. A forum project that includes the &lt;code class=&quot;highlighter-rouge&quot;&gt;Node/Topic/Reply&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;a. The implementation of OOP is very thorough, the following is an example:&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;c&quot;&gt;# Define saving method in Topic model
-&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Topic&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;db&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Model&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
-    &lt;span class=&quot;c&quot;&gt;#...
-&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;save&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;user&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;None&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;node&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;None&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;id&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
-            &lt;span class=&quot;n&quot;&gt;db&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;session&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;add&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-            &lt;span class=&quot;n&quot;&gt;db&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;session&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;commit&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
-            &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;
-
-&lt;span class=&quot;c&quot;&gt;# Form uses save method of Topic Model
-&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;TopicForm&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;BaseForm&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
-    &lt;span class=&quot;c&quot;&gt;#...
-&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;topic&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Topic&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;**&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Topic&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;save&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;user&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;user&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;node&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;node&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-
-&lt;span class=&quot;c&quot;&gt;# Views uses method of Form
-&lt;/span&gt;
-&lt;span class=&quot;nd&quot;&gt;@bp.route&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'/create/&amp;lt;int:id&amp;gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;methods&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'GET'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'POST'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
-&lt;span class=&quot;nd&quot;&gt;@require_user&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;create&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;url_name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
-    &lt;span class=&quot;c&quot;&gt;#...
-&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;form&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TopicForm&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;form&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;validate_on_submit&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;():&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;topic&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;form&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;save&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;g&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;user&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;node&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;redirect&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;url_for&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'.view'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;uid&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;topic&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;id&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;render_template&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'topic/create.html'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;node&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;node&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;form&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;form&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-
-&lt;span class=&quot;c&quot;&gt;# So avoiding the hassle of calling the model and db.session.add(topic) in views.&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;hr /&gt;
-
-&lt;p&gt;b.  there is a decorator &lt;code class=&quot;highlighter-rouge&quot;&gt;@require_user&lt;/code&gt;, which is the permission management for the user. A user may have multiple roles. If you define a decorator for each of these roles, there will be too many repetitions. In this case let’s see what the author did:&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;c&quot;&gt;# Define a base class
-&lt;/span&gt;
-
-&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;require_role&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;object&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;roles&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;s&quot;&gt;'spam'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-        &lt;span class=&quot;s&quot;&gt;'new'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-        &lt;span class=&quot;s&quot;&gt;'user'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-        &lt;span class=&quot;s&quot;&gt;'staff'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-        &lt;span class=&quot;s&quot;&gt;'admin'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-
-    &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;__init__&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;role&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
-        &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;role&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;role&lt;/span&gt;
-
-    &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;__call__&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;method&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
-        &lt;span class=&quot;nd&quot;&gt;@functools.wraps&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;method&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;wrapper&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;args&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;**&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;kwargs&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
-            &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;not&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;g&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;user&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
-                &lt;span class=&quot;n&quot;&gt;url&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;url_for&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'account.signin'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-                &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'?'&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;not&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;url&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
-                    &lt;span class=&quot;n&quot;&gt;url&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'?next='&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;request&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;url&lt;/span&gt;
-                &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;redirect&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;url&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-            &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;role&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;is&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;None&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
-                &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;method&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;args&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;**&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;kwargs&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-            &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;g&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;user&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;id&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
-                &lt;span class=&quot;c&quot;&gt;# this is superuser, have no limitation
-&lt;/span&gt;
-                &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;method&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;args&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;**&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;kwargs&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-            &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;g&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;user&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;role&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'new'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
-                &lt;span class=&quot;n&quot;&gt;flash&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'Please verify your email'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'warn'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-                &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;redirect&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;url_for&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'account.setting'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
-            &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;g&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;user&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;role&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'spam'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
-                &lt;span class=&quot;n&quot;&gt;flash&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'You are a spammer'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'error'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-                &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;redirect&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'/'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-            &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;roles&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;g&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;user&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;role&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;roles&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;role&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]:&lt;/span&gt;
-                &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;abort&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;403&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-            &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;method&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;args&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;**&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;kwargs&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;wrapper&lt;/span&gt;
-
-&lt;span class=&quot;c&quot;&gt;# Then define different permission limits for different roles
-&lt;/span&gt;
-
-&lt;span class=&quot;n&quot;&gt;require_login&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;require_role&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;None&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;require_user&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;require_role&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'user'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;require_staff&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;require_role&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'staff'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;require_admin&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;require_role&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'admin'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;hr /&gt;
-
-&lt;h5 id=&quot;zhihu-oauth-by-7sdream&quot;&gt;&lt;a href=&quot;https://github.com/7sDream/zhihu-oauth&quot;&gt;zhihu-oauth&lt;/a&gt; by @7sDream&lt;/h5&gt;
-
-&lt;p&gt;The second project is &lt;a href=&quot;https://github.com/7sDream/zhihu-oauth&quot;&gt;zhihu-oauth&lt;/a&gt; written by @7sDream. The overall structure is very beautiful, and the meta-programming is also very good. Especially considering that the author and I are peers, it is especially amazing. BTW, I also provide two PRs: 
-&lt;a href=&quot;https://github.com/7sDream/zhihu-oauth/pull/27&quot;&gt;pull-27&lt;/a&gt; and 
-&lt;a href=&quot;https://github.com/7sDream/zhihu- Oauth/pull/28&quot;&gt;pull-28&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;The author reversely parses the zhihu Android client and encapsulates the oauth interface. Unlike other libraries that use simulated login and Beautifuoup to parse web content, zhihu-oauth can provide a more stable API. And it is also less likely to be blocked by ip.&lt;/p&gt;
-
-&lt;p&gt;The whole project is divided into three parts: &lt;code class=&quot;highlighter-rouge&quot;&gt;oauth&lt;/code&gt; for verification, &lt;code class=&quot;highlighter-rouge&quot;&gt;zhcls&lt;/code&gt; for class description, and &lt;code class=&quot;highlighter-rouge&quot;&gt;client&lt;/code&gt; for combining the two to provide a login API.&lt;/p&gt;
-
-&lt;p&gt;For &lt;code class=&quot;highlighter-rouge&quot;&gt;oauth&lt;/code&gt;:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;The &lt;code class=&quot;highlighter-rouge&quot;&gt;imZhihuAndroidClient class&lt;/code&gt; is defined in im_android.py, inheriting requests.authbase. The methods that are used in building parameters such as api_version/app_version/zpp_za/ua are defined in &lt;code class=&quot;highlighter-rouge&quot;&gt;__init__&lt;/code&gt;. Also use the method self._api_version=api_version or API_VERSION (from setting.py) to allow the user to customize some parameters. The following &lt;code class=&quot;highlighter-rouge&quot;&gt;__call__(self,r)&lt;/code&gt; is the mechanism of authbase and will be called automatically when posting a request.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;Before_login_auth.py defines the BeforeLoginAuth class, inherits the imZhihuAndroidClient class above, adds client_id to imZhihuAndroidClient, and uses self._client_id=client_id to execute validation before login. The implementation of &lt;code class=&quot;highlighter-rouge&quot;&gt;__call__&lt;/code&gt; is as follows:&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;__call__&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;r&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;r&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;super&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;BeforeLoginAuth&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;__call__&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;r&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;headers&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'Authorization'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'oauth{0}'&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;format&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;str&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_client_id&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;r&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;In setting.py, some parameters are used, such as &lt;code class=&quot;highlighter-rouge&quot;&gt;ZHIHU_API_ROOT&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;LOGIN_URL=ZHIHU_API_ROOT+'/signin'&lt;/code&gt;, all in uppercase.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;In token.py, the ZhihuToken class is defined, and the token is generated after the access is known. So obviously, according to OOP’s thoughts, the following job can be done:&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;The &lt;code class=&quot;highlighter-rouge&quot;&gt;self._cretate_at=time.time(), self._expires_in=expires_in&lt;/code&gt; initialization tool is defined in &lt;code class=&quot;highlighter-rouge&quot;&gt;__init__&lt;/code&gt; and these are also provided:&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;ZhihuToken&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
-
-    &lt;span class=&quot;nd&quot;&gt;@staticmethod&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;from_dict&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;json_dict&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;try&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
-            &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ZhihuToken&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;**&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;json_dict&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;except&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;TypeError&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
-            &lt;span class=&quot;k&quot;&gt;raise&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;ValueError&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'{} is not a valid zhihu token json'&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;format&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;json_dict&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
-
-    &lt;span class=&quot;nd&quot;&gt;@staticmethod&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;from_str&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;json_str&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;try&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
-            &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ZhihuToken&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;from_dict&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;json&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;loads&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;json_str&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;except&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;TypeError&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
-            &lt;span class=&quot;k&quot;&gt;raise&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;ValueError&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'{} is not a valid zhihu token str'&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;format&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;json_str&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
-
-    &lt;span class=&quot;nd&quot;&gt;@staticmethod&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;from_file&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;filename&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;with&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;open&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;filename&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'rb'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
-            &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pickle&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;load&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;# pickle ,long-time storage
-&lt;/span&gt;
-
-    &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;save&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;filename&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
-        &lt;span class=&quot;s&quot;&gt;&quot;&quot;&quot;
-        saving token to file
-        &quot;&quot;&quot;&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;with&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;open&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;filename&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'wb'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
-            &lt;span class=&quot;n&quot;&gt;pickle&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dump&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-
-    &lt;span class=&quot;nd&quot;&gt;@property&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;user_id&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_user_id&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;Look again at the implementation of &lt;code class=&quot;highlighter-rouge&quot;&gt;exception.py&lt;/code&gt;. As mentioned earlier,base exception should be provided for the entire project.&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;c&quot;&gt;# deal python2 and python3 respectively.
-&lt;/span&gt;
-&lt;span class=&quot;c&quot;&gt;# Also you can use `if py2:import ..;else import ..`,but it's against the   
-&lt;/span&gt;
-&lt;span class=&quot;c&quot;&gt;# principle of `easier to ask for forgiveness than permission`
-&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;try&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
-    &lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;json&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;JSONDecodeError&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;MyJSONDecodeError&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;except&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;ImportError&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;MyJSONDecodeError&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;Exception&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;UnexpectedResponseException&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;Exception&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;__init__&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;url&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;res&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
-        &lt;span class=&quot;s&quot;&gt;&quot;&quot;&quot;
-        For all situations that json cannot be decoded,this exception will be used.
-        &quot;&quot;&quot;&lt;/span&gt;
-        &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;url&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;url&lt;/span&gt;
-        &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;res&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;res&lt;/span&gt;
-
-    &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;__repr__&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;when visit {self.url},get an unexpected response {self.res.text}&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;
-            &lt;span class=&quot;n&quot;&gt;format&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-
-    &lt;span class=&quot;n&quot;&gt;__str__&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;__repr__&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;hr /&gt;
-
-&lt;p&gt;Java 代码&lt;/p&gt;
-
-&lt;p&gt;Based on requirements,I ever investigaed the use of &lt;code class=&quot;highlighter-rouge&quot;&gt;jedis&lt;/code&gt; to see how it handlers multi-thread situation.&lt;/p&gt;
-
-&lt;p&gt;It inherits &lt;code class=&quot;highlighter-rouge&quot;&gt;Apache.commons.pool&lt;/code&gt; and it is called
-The &lt;code class=&quot;highlighter-rouge&quot;&gt;super.getResource()&lt;/code&gt; method, which in turn calls the &lt;code class=&quot;highlighter-rouge&quot;&gt;borrowObject&lt;/code&gt; method in the pool.In the &lt;code class=&quot;highlighter-rouge&quot;&gt;borrowObject&lt;/code&gt; method, it has implemented the consideration of multithreading:&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span class=&quot;kt&quot;&gt;long&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;starttime&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;System&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;currentTimeMillis&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;Latch&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;T&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;latch&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Latch&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;T&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;();&lt;/span&gt;
-&lt;span class=&quot;kt&quot;&gt;byte&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;whenExhaustedAction&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;kt&quot;&gt;long&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;maxWait&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;kd&quot;&gt;synchronized&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-&lt;span class=&quot;cm&quot;&gt;/* 
-Get local copy of current config. Can't sync when used 
-later as it can result in a deadlock. Has the added 
-advantage that config is consistent for entire execution
-
-*/&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;whenExhaustedAction&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;_whenExhaustedAction&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;maxWait&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;_maxWait&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-
-&lt;span class=&quot;c1&quot;&gt;// activate &amp;amp; validate the object
-&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;try&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;_factory&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;activateObject&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;latch&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getPair&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;value&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_testOnBorrow&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt;
-            &lt;span class=&quot;o&quot;&gt;!&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_factory&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;validateObject&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;latch&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getPair&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;value&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;throw&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;Exception&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;ValidateObject failed&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
-    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-    &lt;span class=&quot;kd&quot;&gt;synchronized&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;c1&quot;&gt;// only one thread can execute at the moment
-&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;_numInternalProcessing&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;--;&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;_numActive&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;++;&lt;/span&gt;
-    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;latch&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getPair&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;value&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;catch&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Throwable&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;e&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;</content>
-
-      
-      
-      
-      
-      
-
-      
-
-      
-        <category term="Python" />
-      
-
-      
-        <category term="Python" />
-      
-        <category term="OpenSource" />
-      
-
-      
-        <summary type="html">To write fluent/elegant/idiomatic code 这篇文章对应的中文版 Prologue The benefits of reading open source projects have been demonstrated by many people. Whether it is to increase the understanding of tools used in daily development, or to learn to divide the project structure and improve the quality of the code better, reading open source projects is essential. There are some interesting findings during the progress.Take the famous requests which gained over 3.5K stars as an example. There is a file (core.py) in the first version v0.2.3 listed on github that used tab as a whitespace,it certainly doesn’t satisfy the requirements of PEP8 (:D What is Pythonic Code Pythonic code is to implement code in a pythonic way.Having a summary: OOP considers code reuse and extension. Many can use a basic class / ABC to provide an interface, other sub-class inherit from it just needs to implement the necessary function. Customize BaseException, such as class ProjectBasedException(Exception), and then use the code of the various inheritance exception classes to handle the specific exception, so that the prompt information can be reported more specifically. Define some small and common functions in utils, abstract the multiplexed code into @decorators; define the configuration files that will be used in settings, such as url, to avoid hard-coded. Defensive programming. Although _prefix can be used to define the private attribute to some extent, the parameters passed to the API must be type tested. Use a reasonable data structure or other tools (redis/celery) to limit the use of resources. meta-programming implements the User-defined behaviour. Standard comments for docstring and writing unit tests, logging important actions to files. On the basis of the above, some details, like replacing the string splicing with ''.join[], replacing the loop with list-comprehension also should be noticed. Projects List Not all high-star projects on Github are useful. For example, the code style of a 1000+ star project is not good, and a lot of code does not meet the principle of DRY(Don't Repeat Yourself) . There are still many projects that directly hack Python itself(so many variables and functions begin with __, it’s hard to understand what the logic behind it is) june Although the project has been deprecated in the description, it can still run smoothly. A forum project that includes the Node/Topic/Reply. a. The implementation of OOP is very thorough, the following is an example: # Define saving method in Topic model class Topic(db.Model): #... def save(self,user=None,node=None): if self.id: db.session.add(self) db.session.commit() return self # Form uses save method of Topic Model class TopicForm(BaseForm): #... topic = Topic(**self.data) return Topic.save(user=user,node=node) # Views uses method of Form @bp.route('/create/&amp;lt;int:id&amp;gt;',methods=['GET','POST']) @require_user def create(url_name): #... form = TopicForm() if form.validate_on_submit(): topic = form.save(g.user,node) return redirect(url_for('.view',uid=topic.id)) return render_template('topic/create.html', node=node, form=form) # So avoiding the hassle of calling the model and db.session.add(topic) in views. b. there is a decorator @require_user, which is the permission management for the user. A user may have multiple roles. If you define a decorator for each of these roles, there will be too many repetitions. In this case let’s see what the author did: # Define a base class class require_role(object): roles = { 'spam': 0, 'new': 1, 'user': 2, 'staff': 3, 'admin': 4, } def __init__(self, role): self.role = role def __call__(self, method): @functools.wraps(method) def wrapper(*args, **kwargs): if not g.user: url = url_for('account.signin') if '?' not in url: url += '?next=' + request.url return redirect(url) if self.role is None: return method(*args, **kwargs) if g.user.id == 1: # this is superuser, have no limitation return method(*args, **kwargs) if g.user.role == 'new': flash(_('Please verify your email'), 'warn') return redirect(url_for('account.setting')) if g.user.role == 'spam': flash(_('You are a spammer'), 'error') return redirect('/') if self.roles[g.user.role] &amp;lt; self.roles[self.role]: return abort(403) return method(*args, **kwargs) return wrapper # Then define different permission limits for different roles require_login = require_role(None) require_user = require_role('user') require_staff = require_role('staff') require_admin = require_role('admin') zhihu-oauth by @7sDream The second project is zhihu-oauth written by @7sDream. The overall structure is very beautiful, and the meta-programming is also very good. Especially considering that the author and I are peers, it is especially amazing. BTW, I also provide two PRs: pull-27 and pull-28 The author reversely parses the zhihu Android client and encapsulates the oauth interface. Unlike other libraries that use simulated login and Beautifuoup to parse web content, zhihu-oauth can provide a more stable API. And it is also less likely to be blocked by ip. The whole project is divided into three parts: oauth for verification, zhcls for class description, and client for combining the two to provide a login API. For oauth: The imZhihuAndroidClient class is defined in im_android.py, inheriting requests.authbase. The methods that are used in building parameters such as api_version/app_version/zpp_za/ua are defined in __init__. Also use the method self._api_version=api_version or API_VERSION (from setting.py) to allow the user to customize some parameters. The following __call__(self,r) is the mechanism of authbase and will be called automatically when posting a request. Before_login_auth.py defines the BeforeLoginAuth class, inherits the imZhihuAndroidClient class above, adds client_id to imZhihuAndroidClient, and uses self._client_id=client_id to execute validation before login. The implementation of __call__ is as follows: def __call__(self,r): r = super(BeforeLoginAuth,self).__call__() r.headers['Authorization'] = 'oauth{0}'.format(str(self._client_id)) return r In setting.py, some parameters are used, such as ZHIHU_API_ROOT, LOGIN_URL=ZHIHU_API_ROOT+'/signin', all in uppercase. In token.py, the ZhihuToken class is defined, and the token is generated after the access is known. So obviously, according to OOP’s thoughts, the following job can be done: The self._cretate_at=time.time(), self._expires_in=expires_in initialization tool is defined in __init__ and these are also provided: class ZhihuToken: @staticmethod def from_dict(json_dict): try: return ZhihuToken(**json_dict) except TypeError: raise ValueError('{} is not a valid zhihu token json'.format(json_dict)) @staticmethod def from_str(json_str): try: return ZhihuToken.from_dict(json.loads(json_str)) except TypeError: raise ValueError('{} is not a valid zhihu token str'.format(json_str)) @staticmethod def from_file(filename): with open(filename,'rb') as f: return pickle.load(f) # pickle ,long-time storage def save(self,filename): &quot;&quot;&quot; saving token to file &quot;&quot;&quot; with open(filename,'wb') as f: pickle.dump(self,f) @property def user_id(self): return self._user_id Look again at the implementation of exception.py. As mentioned earlier,base exception should be provided for the entire project. # deal python2 and python3 respectively. # Also you can use `if py2:import ..;else import ..`,but it's against the # principle of `easier to ask for forgiveness than permission` try: from json import JSONDecodeError as MyJSONDecodeError except ImportError: MyJSONDecodeError = Exception class UnexpectedResponseException(Exception): def __init__(self,url,res): &quot;&quot;&quot; For all situations that json cannot be decoded,this exception will be used. &quot;&quot;&quot; self.url = url self.res = res def __repr__(self): return &quot;when visit {self.url},get an unexpected response {self.res.text}&quot;. format(self=self) __str__ = __repr__ Java 代码 Based on requirements,I ever investigaed the use of jedis to see how it handlers multi-thread situation. It inherits Apache.commons.pool and it is called The super.getResource() method, which in turn calls the borrowObject method in the pool.In the borrowObject method, it has implemented the consideration of multithreading: long starttime = System.currentTimeMillis(); Latch&amp;lt;T&amp;gt; latch = new Latch&amp;lt;T&amp;gt;(); byte whenExhaustedAction; long maxWait; synchronized (this) { /* Get local copy of current config. Can't sync when used later as it can result in a deadlock. Has the added advantage that config is consistent for entire execution */ whenExhaustedAction = _whenExhaustedAction; maxWait = _maxWait; // activate &amp;amp; validate the object try { _factory.activateObject(latch.getPair().value); if(_testOnBorrow &amp;amp;&amp;amp; !_factory.validateObject(latch.getPair().value)) { throw new Exception(&quot;ValidateObject failed&quot;); } synchronized(this) { // only one thread can execute at the moment _numInternalProcessing--; _numActive++; } return latch.getPair().value; } catch (Throwable e) { }</summary>
       
 
       

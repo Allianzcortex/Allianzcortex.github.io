@@ -10,12 +10,12 @@
   
   
   
-  <title>My Database Project — A Full-stack Library Management System with Spring Boot and JQuery</title>
-  <meta name="description" content="After integrating ScalaTest with JUnit, execute sbt test prompt no tests are executed.How to solve it ? 这篇文章对应的中文版">
+  <title>How to deploy Errbot with Webserver plugin activated(inside docker)</title>
+  <meta name="description" content="Connecting the dots when you search through the document &amp;amp; issue &amp;amp; source code. This passage will show how you can deploy the Errbot in production environemnt with Webserver activated. 这篇文章对应的中文版 The fix solution: TL;DR. Solution: Ensure that you can run the Webserver normally with interactive mode Copy&amp;amp;Paste the following 6 files into data folder(if you already have it or run the docker inside the same folder, then this step can be skipped) core.db.bak core.db.dat core.db.dir TextCmds.db.bak TextCmds.db.dat TextCmds.db.dir Copy&amp;amp;Paste the backup.py from https://github.com/errbotio/errbot/blob/master/errbot/core_plugins/backup.py and put it inside the data/ folder change the command into errbot -r &amp;amp;&amp;amp; errbot(no matter you deploy it by supervissor or other daemon tool)">
   
 
   <link rel="stylesheet" href="/assets/main.css">
-  <link rel="canonical" href="http://localhost:4000/2017/05/21/How-I-Finish-My-Database-Project/">
+  <link rel="canonical" href="http://localhost:4000/2017/05/21/How-To-Deploy-Errbot-With-Webserver-Inside-Docker/">
   
   
   <link rel="alternate" type="application/rss+xml" title="Allianzcortex-Blog" href="http://localhost:4000/feed.xml">
@@ -25,8 +25,8 @@
   
   <meta name="twitter:card" content="summary">
   <meta name="twitter:site" content="hzcortex">
-  <meta name="twitter:title" content="My Database Project — A Full-stack Library Management System with S...">
-  <meta name="twitter:description" content="After integrating ScalaTest with JUnit, execute sbt test prompt no tests are executed.How to solve it ? 这篇文章对应的中文版">
+  <meta name="twitter:title" content="How to deploy Errbot with Webserver plugin activated(inside docker)">
+  <meta name="twitter:description" content="Connecting the dots when you search through the document &amp;amp; issue &amp;amp; source code. This passage will show how you can deploy the Errbot in production environemnt with Webserver activat...">
   
     <meta name="twitter:creator" content="hzcortex">
   
@@ -90,7 +90,7 @@
 
   <header class="post-header">
     
-      <h1 class="post-title" itemprop="name headline">My Database Project — A Full-stack Library Management System with Spring Boot and JQuery</h1>
+      <h1 class="post-title" itemprop="name headline">How to deploy Errbot with Webserver plugin activated(inside docker)</h1>
     
     <p class="post-meta"><time datetime="2017-05-21T13:29:10-03:00" itemprop="datePublished">May 21, 2017</time> • 
   
@@ -100,10 +100,40 @@
   </header>
 
   <div class="post-content" itemprop="articleBody">
-    <p>After integrating <code class="highlighter-rouge">ScalaTest</code> with <code class="highlighter-rouge">JUnit</code>, execute <code class="highlighter-rouge">sbt test</code> prompt <code class="highlighter-rouge">no tests are executed</code>.How to solve it ?</p>
+    <p><code class="highlighter-rouge">Connecting the dots when you search through the document &amp; issue &amp; source code</code>. This passage will show how you can deploy the Errbot in production environemnt with Webserver activated.</p>
 
 <!-- more -->
 <p><a href="/../translation/2017-05-21-Scala-Test-Junit-Sbt-Problem.html">这篇文章对应的中文版</a></p>
+
+<p>The fix solution:</p>
+
+<p>TL;DR. Solution:</p>
+
+<ol>
+  <li>Ensure that you can run the Webserver normally with interactive mode</li>
+  <li>Copy&amp;Paste the following 6 files into data folder(if you already have it or run the
+docker inside the same folder, then this step can be skipped)</li>
+</ol>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>core.db.bak
+core.db.dat
+core.db.dir
+TextCmds.db.bak
+TextCmds.db.dat
+TextCmds.db.dir
+</code></pre>
+</div>
+<ol>
+  <li>
+    <p>Copy&amp;Paste the <code class="highlighter-rouge">backup.py</code> from https://github.com/errbotio/errbot/blob/master/errbot/core_plugins/backup.py and put it inside the <code class="highlighter-rouge">data/</code> folder</p>
+  </li>
+  <li>
+    <p>change the command into <code class="highlighter-rouge">errbot -r &amp;&amp; errbot</code>(no matter you deploy it by supervissor or other daemon tool)</p>
+  </li>
+</ol>
+
+<hr />
+
 
   </div>
 
@@ -115,7 +145,7 @@
         /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
         var disqus_shortname = 'allianzcortex-me'; // required: replace example with your forum shortname
         // var disqus_developer = 1; // Comment out when the site is live
-        var disqus_identifier = "/2017/05/21/How-I-Finish-My-Database-Project/";
+        var disqus_identifier = "/2017/05/21/How-To-Deploy-Errbot-With-Webserver-Inside-Docker/";
 
         /* * * DON'T EDIT BELOW THIS LINE * * */
         (function() {

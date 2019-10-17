@@ -660,6 +660,66 @@ ImportError: cannot import name 'NotSupprotedYetException'
       <li>
         <header class="post-header">
           <h1 class="post-title">
+            <a class="post-link" href="/2017/05/21/How-To-Deploy-Errbot-With-Webserver-Inside-Docker/">How to deploy Errbot with Webserver plugin activated(inside docker)</a>
+          </h1>
+
+          <p class="post-meta">May 21, 2017 • 
+  
+  
+
+</p>
+        </header>
+
+        <div class="post-content">
+          <p><code class="highlighter-rouge">Connecting the dots when you search through the document &amp; issue &amp; source code</code>. This passage will show how you can deploy the Errbot in production environemnt with Webserver activated.</p>
+
+<!-- more -->
+<p><a href="/../translation/2017-05-21-Scala-Test-Junit-Sbt-Problem.html">这篇文章对应的中文版</a></p>
+
+<p>The fix solution:</p>
+
+<p>TL;DR. Solution:</p>
+
+<ol>
+  <li>Ensure that you can run the Webserver normally with interactive mode</li>
+  <li>Copy&amp;Paste the following 6 files into data folder(if you already have it or run the
+docker inside the same folder, then this step can be skipped)</li>
+</ol>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>core.db.bak
+core.db.dat
+core.db.dir
+TextCmds.db.bak
+TextCmds.db.dat
+TextCmds.db.dir
+</code></pre>
+</div>
+<ol>
+  <li>
+    <p>Copy&amp;Paste the <code class="highlighter-rouge">backup.py</code> from https://github.com/errbotio/errbot/blob/master/errbot/core_plugins/backup.py and put it inside the <code class="highlighter-rouge">data/</code> folder</p>
+  </li>
+  <li>
+    <p>change the command into <code class="highlighter-rouge">errbot -r &amp;&amp; errbot</code>(no matter you deploy it by supervissor or other daemon tool)</p>
+  </li>
+</ol>
+
+<hr />
+
+
+        </div>
+        
+          <p class="post-continue">
+            <a href="/2017/05/21/How-To-Deploy-Errbot-With-Webserver-Inside-Docker/">Read on &rarr;</a>
+          </p>
+        
+      </li>
+    
+      
+      
+
+      <li>
+        <header class="post-header">
+          <h1 class="post-title">
             <a class="post-link" href="/2017/05/21/How-I-Finish-My-Database-Project/">My Database Project — A Full-stack Library Management System with Spring Boot and JQuery</a>
           </h1>
 
