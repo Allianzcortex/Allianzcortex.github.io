@@ -3,19 +3,62 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>https://Allianzcortex.github.io/archives/</loc>
-  </url>
-  
-  <url>
-    <loc>https://Allianzcortex.github.io/categories/</loc>
+    <loc>https://Allianzcortex.github.io/2014/11/mumbler-about-techonologycontinually-updated/</loc>
+    <lastmod>2014-11-21T19:40:01+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://Allianzcortex.github.io/</loc>
+    <lastmod>2014-11-21T19:40:01+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://Allianzcortex.github.io/categories/</loc>
+    <lastmod>2014-11-21T19:40:01+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://Allianzcortex.github.io/tags/everything/</loc>
+    <lastmod>2014-11-21T19:40:01+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://Allianzcortex.github.io/categories/misc/</loc>
+    <lastmod>2014-11-21T19:40:01+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://Allianzcortex.github.io/post/</loc>
+    <lastmod>2014-11-21T19:40:01+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://Allianzcortex.github.io/tags/</loc>
+    <lastmod>2014-11-21T19:40:01+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://Allianzcortex.github.io/2014/06/one-line-to-achieve-multiprocess-and-multithreads-in-python/</loc>
+    <lastmod>2014-06-22T10:49:24+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://Allianzcortex.github.io/tags/multi-threading/</loc>
+    <lastmod>2014-06-22T10:49:24+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://Allianzcortex.github.io/tags/python/</loc>
+    <lastmod>2014-06-22T10:49:24+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://Allianzcortex.github.io/categories/python/</loc>
+    <lastmod>2014-06-22T10:49:24+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://Allianzcortex.github.io/archives/</loc>
   </url>
   
 </urlset>
