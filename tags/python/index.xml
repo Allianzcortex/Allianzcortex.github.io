@@ -6,10 +6,37 @@
     <description>Recent content in Python on BBBB LLLL OOOO GGGG</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 14 Sep 2015 19:46:30 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 22 May 2017 13:29:10 +0000</lastBuildDate>
     
 	<atom:link href="https://Allianzcortex.github.io/tags/python/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>The Import Mechanism Of Python And Two Related Problems</title>
+      <link>https://Allianzcortex.github.io/2017/05/the-import-mechanism-of-python-and-two-related-problems/</link>
+      <pubDate>Mon, 22 May 2017 13:29:10 +0000</pubDate>
+      
+      <guid>https://Allianzcortex.github.io/2017/05/the-import-mechanism-of-python-and-two-related-problems/</guid>
+      <description>&lt;p&gt;How to solve &lt;code&gt;No module named&lt;/code&gt; and &lt;code&gt;Attempted relative import&lt;/code&gt; ?&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Data Visualize With Flask and Highcharts</title>
+      <link>https://Allianzcortex.github.io/2016/09/data-visualize-with-flask-and-highcharts/</link>
+      <pubDate>Thu, 08 Sep 2016 14:30:05 +0000</pubDate>
+      
+      <guid>https://Allianzcortex.github.io/2016/09/data-visualize-with-flask-and-highcharts/</guid>
+      <description>&lt;p&gt;data visualization with the back-end Flask and front-end Highcharts&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>What do I get after Reading Python Open Source Projects</title>
+      <link>https://Allianzcortex.github.io/2016/05/what-do-i-get-after-reading-python-open-source-projects/</link>
+      <pubDate>Mon, 23 May 2016 15:01:33 +0000</pubDate>
+      
+      <guid>https://Allianzcortex.github.io/2016/05/what-do-i-get-after-reading-python-open-source-projects/</guid>
+      <description>&lt;p&gt;To write &lt;code&gt;fluent/elegant/idiomatic&lt;/code&gt; code&lt;/p&gt;</description>
+    </item>
     
     <item>
       <title>Develop a desktop client with PyQT</title>

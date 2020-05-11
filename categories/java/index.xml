@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Java on BBBB LLLL OOOO GGGG</title>
+    <link>https://Allianzcortex.github.io/categories/java/</link>
+    <description>Recent content in Java on BBBB LLLL OOOO GGGG</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 10 May 2020 22:00:40 -0300</lastBuildDate>
+    
+	<atom:link href="https://Allianzcortex.github.io/categories/java/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Improve Java Project Performace 20 times ！(for an assignment)</title>
+      <link>https://Allianzcortex.github.io/2020/05/improve-java-project-performace-20-times-for-an-assignment/</link>
+      <pubDate>Sun, 10 May 2020 22:00:40 -0300</pubDate>
+      
+      <guid>https://Allianzcortex.github.io/2020/05/improve-java-project-performace-20-times-for-an-assignment/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

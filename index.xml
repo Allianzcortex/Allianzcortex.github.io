@@ -6,7 +6,7 @@
     <description>Recent content on BBBB LLLL OOOO GGGG</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 22 Feb 2016 18:52:22 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 10 May 2020 22:02:23 -0300</lastBuildDate>
     
 	<atom:link href="https://Allianzcortex.github.io/index.xml" rel="self" type="application/rss+xml" />
     
@@ -18,6 +18,69 @@
       
       <guid>https://Allianzcortex.github.io/2014/11/mumbler-about-techonologycontinually-updated/</guid>
       <description>&lt;p&gt;Mumblers about technology&amp;hellip;too short to write a novel&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>2019 02 27 Cache Design Pattern</title>
+      <link>https://Allianzcortex.github.io/2020/05/2019-02-27-cache-design-pattern/</link>
+      <pubDate>Sun, 10 May 2020 22:02:23 -0300</pubDate>
+      
+      <guid>https://Allianzcortex.github.io/2020/05/2019-02-27-cache-design-pattern/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Improve Java Project Performace 20 times ！(for an assignment)</title>
+      <link>https://Allianzcortex.github.io/2020/05/improve-java-project-performace-20-times-for-an-assignment/</link>
+      <pubDate>Sun, 10 May 2020 22:00:40 -0300</pubDate>
+      
+      <guid>https://Allianzcortex.github.io/2020/05/improve-java-project-performace-20-times-for-an-assignment/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>The Import Mechanism Of Python And Two Related Problems</title>
+      <link>https://Allianzcortex.github.io/2017/05/the-import-mechanism-of-python-and-two-related-problems/</link>
+      <pubDate>Mon, 22 May 2017 13:29:10 +0000</pubDate>
+      
+      <guid>https://Allianzcortex.github.io/2017/05/the-import-mechanism-of-python-and-two-related-problems/</guid>
+      <description>&lt;p&gt;How to solve &lt;code&gt;No module named&lt;/code&gt; and &lt;code&gt;Attempted relative import&lt;/code&gt; ?&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Run ScalaTest And JUnit On TravisCI And Some Scala99 Solutions</title>
+      <link>https://Allianzcortex.github.io/2017/05/run-scalatest-and-junit-on-travisci-and-some-scala99-solutions/</link>
+      <pubDate>Sun, 21 May 2017 16:29:10 +0000</pubDate>
+      
+      <guid>https://Allianzcortex.github.io/2017/05/run-scalatest-and-junit-on-travisci-and-some-scala99-solutions/</guid>
+      <description>&lt;p&gt;After integrating &lt;code&gt;ScalaTest&lt;/code&gt; with &lt;code&gt;JUnit&lt;/code&gt;, execute &lt;code&gt;sbt test&lt;/code&gt; prompt &lt;code&gt;no tests are executed&lt;/code&gt;.How to solve it ?&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>A Problem about urlencode,space and 20%</title>
+      <link>https://Allianzcortex.github.io/2016/12/a-problem-about-urlencodespace-and-20/</link>
+      <pubDate>Thu, 15 Dec 2016 17:59:20 +0000</pubDate>
+      
+      <guid>https://Allianzcortex.github.io/2016/12/a-problem-about-urlencodespace-and-20/</guid>
+      <description>&lt;p&gt;So when url is encoded/decoded, when to use + and when to use %20?&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Data Visualize With Flask and Highcharts</title>
+      <link>https://Allianzcortex.github.io/2016/09/data-visualize-with-flask-and-highcharts/</link>
+      <pubDate>Thu, 08 Sep 2016 14:30:05 +0000</pubDate>
+      
+      <guid>https://Allianzcortex.github.io/2016/09/data-visualize-with-flask-and-highcharts/</guid>
+      <description>&lt;p&gt;data visualization with the back-end Flask and front-end Highcharts&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>What do I get after Reading Python Open Source Projects</title>
+      <link>https://Allianzcortex.github.io/2016/05/what-do-i-get-after-reading-python-open-source-projects/</link>
+      <pubDate>Mon, 23 May 2016 15:01:33 +0000</pubDate>
+      
+      <guid>https://Allianzcortex.github.io/2016/05/what-do-i-get-after-reading-python-open-source-projects/</guid>
+      <description>&lt;p&gt;To write &lt;code&gt;fluent/elegant/idiomatic&lt;/code&gt; code&lt;/p&gt;</description>
     </item>
     
     <item>
