@@ -272,7 +272,7 @@
 <p>T he actual solution is, as long as sum&gt;0, then adding a[i] is still possible to increase max; but if sum&lt;0, it should be discarded immediately, starting from 0 to calculate the next</p>
 </li>
 </ul>
-<p>{% highlight Python %}
+<p>&ldquo;starthighlight&rdquo;
 a = {4, 8, -12, 3, 7, 9}
 n = len(a)
 sum = 0
@@ -284,7 +284,7 @@ max = sum
 if sum &lt; 0:
 sum = a[i]
 return sum
-{% endhighlight %}</p>
+&ldquo;endhighlight&rdquo;</p>
 <p>{% highlight Java %}</p>
 <p>public int LIS(int[] arr) {
 int i, j, max = 0;
@@ -321,7 +321,7 @@ Arrays.fill(index, -1);</p>
     System.out.println(builder.toString()); // print the result
     return max;
 </code></pre>
-<p>{% endhighlight %}</p>
+<p>&ldquo;endhighlight&rdquo;</p>
 <hr>
 <h4 id="number-tower-problem">Number tower problem</h4>
 <p><img src="https://Allianzcortex.github.io/images/hdu-2084.jpg" alt="img"></p>
@@ -340,8 +340,8 @@ Arrays.fill(index, -1);</p>
 </li>
 </ul>
 <p>{% highlight C %}
-#include<!-- raw HTML omitted --><br>
-#include<!-- raw HTML omitted --><br>
+#include<iostream><br>
+#include<cstring><br>
 using namespace std;<br>
 #define maxnum 1000<br>
 int num[maxnum][maxnum];<br>
@@ -365,7 +365,7 @@ for(j=1;j&lt;=m;j++) d[m][j]=num[m][j];</p>
 }  
 </code></pre>
 <p>}<br>
-{% endhighlight %}</p>
+&ldquo;endhighlight&rdquo;</p>
 <hr>
 <h4 id="backpack-problem">Backpack Problem</h4>
 <ul>
@@ -407,7 +407,7 @@ public int Knapsack2(int[] value, int[] weight, int capacity, int index) {
     int index = 0;
     System.out.println(dp.Knapsack2(value, weight, capacity, index));  // final result is also 220
 </code></pre>
-<p>{% endhighlight %}</p>
+<p>&ldquo;endhighlight&rdquo;</p>
 <hr>
 <h3 id="303-range-sum-quwey---immutable">303 Range Sum Quwey - Immutable</h3>
 <ul>
@@ -426,11 +426,11 @@ public int Knapsack2(int[] value, int[] weight, int capacity, int index) {
 </ul>
 <p>{% highlight C %}
 // written in c++
-// Using vector<!-- raw HTML omitted --> to add status will be better
+// Using vector<int> to add status will be better
 class NumArray {
 int dp[100000];
 public:
-NumArray(vector<!-- raw HTML omitted --> &amp;nums) {
+NumArray(vector<int> &amp;nums) {
 if (nums.empty())
 return ;
 int length=nums.size();
@@ -447,9 +447,9 @@ dp[i]=dp[i-1]+nums[i];
 }
 </code></pre>
 <p>};
-{% endhighlight %}</p>
+&ldquo;endhighlight&rdquo;</p>
 <p>Writen in Python：</p>
-<p>{% highlight Python %}
+<p>&ldquo;starthighlight&rdquo;
 class NumArray(object):
 def <strong>init</strong>(self, nums):</p>
 <pre><code>    self.dp = nums
@@ -459,7 +459,7 @@ def <strong>init</strong>(self, nums):</p>
 def sumRange(self, i, j):
     return self.dp[j] - (self.dp[i-1] if i &gt; 0 else 0)
 </code></pre>
-<p>{% endhighlight %}</p>
+<p>&ldquo;endhighlight&rdquo;</p>
 <hr>
 <h5 id="70-climbstatirs">70 climbStatirs</h5>
 <ul>
@@ -491,8 +491,8 @@ dp[i]=(dp[i-1]+dp[i-2]);
 return dp[n];
 }
 };
-{% endhighlight %}</p>
-<p>{% highlight Python %}</p>
+&ldquo;endhighlight&rdquo;</p>
+<p>&ldquo;starthighlight&rdquo;</p>
 <h1 id="written-in-python">written in Python</h1>
 <p>class Solution(object):
 def <strong>init</strong>(self):
@@ -504,7 +504,7 @@ self.dp={}</p>
         self.dp[i]=self.dp[i-1]+self.dp[i-2]
     return self.dp[n]  
 </code></pre>
-<p>{% endhighlight %}</p>
+<p>&ldquo;endhighlight&rdquo;</p>
 <hr>
 <h5 id="64-minimum-path-sum">64 Minimum Path Sum</h5>
 <ul>
@@ -526,7 +526,7 @@ Then <code>dp[i][j]=max(dp[i-1][j]+grid[i][j],dp[i][j-1]+gird[i][j]</code>,we ju
 // written in C++
 class Solution {
 public:
-int minPathSum(vector&lt;vector<!-- raw HTML omitted -->&gt;&amp; grid) {
+int minPathSum(vector&lt;vector<int>&gt;&amp; grid) {
 if (grid.empty()) return 0;
 int m=grid.size();
 int n=grid[0].size();
@@ -543,7 +543,7 @@ dp[i][j]=min(dp[i-1][j]+grid[i][j],dp[i][j-1]+grid[i][j]);
 return dp[m-1][n-1];
 }
 };
-{% endhighlight %}</p>
+&ldquo;endhighlight&rdquo;</p>
               
             </div>
           </div>

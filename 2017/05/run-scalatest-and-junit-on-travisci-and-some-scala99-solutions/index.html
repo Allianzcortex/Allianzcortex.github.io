@@ -254,12 +254,12 @@ it(&ldquo;should be equal&rdquo;) {
 assert(xx.max(1,2) == 2)
 }
 }</p>
-<p>{% endhighlight %}</p>
+<p>&ldquo;endhighlight&rdquo;</p>
 <p><strong>build.sbt</strong> is as follows：</p>
 <p>{% highlight Scala %}
 libraryDependencies += &ldquo;org.scalatest&rdquo; % &ldquo;scalatest_2.12&rdquo; % &ldquo;3.0.1&rdquo; % &ldquo;test&rdquo;
 libraryDependencies += &ldquo;junit&rdquo; % &ldquo;junit&rdquo; % &ldquo;4.8.1&rdquo; % &ldquo;test&rdquo;</p>
-<p>{% endhighlight %}</p>
+<p>&ldquo;endhighlight&rdquo;</p>
 <p>Above is the most standard code for <code>Scala-Test</code></p>
 <p>There is no problem in running test cases with <a href="https://www.jetbrains.com/idea/">Intellij IDEA</a> and <code>sbt test</code> at the same time.</p>
 <p>If you want to import Junit,then it will be：</p>
@@ -273,7 +273,7 @@ import org.junit.Test</p>
 assertTrue(xx.max(1,2)==2)
 }</p>
 <p>}
-{% endhighlight %}</p>
+&ldquo;endhighlight&rdquo;</p>
 <p>Currently we can use Intellij IDEA to run unit tests, but if you use <code>sbt test</code> to run it in console, it will hint <code>no tests are executed</code>. If you want to have a continuous development,then manybe you know some famous tools such as <a href="https://travis-ci.org/">TravisCI</a> which cooperates well with github.I write a <code>.travis.yml</code> <a href="https://github.com/Infra-Intern/Scala-LeetCode/blob/master/.travis.yml">file</a>.Now ScalaTest and JUnit can&rsquo;t work on Linux Platform.</p>
 <h3 id="solutions">Solutions</h3>
 <p>Based on this question <a href="http://stackoverflow.com/questions/28174243/run-junit-tests-with-sbt">run-junit-tests-with-sbt</a> you need to add the following code on original <code>build.sbt</code>：</p>
@@ -281,7 +281,7 @@ assertTrue(xx.max(1,2)==2)
 crossPaths := false
 libraryDependencies += &ldquo;com.novocode&rdquo; % &ldquo;junit-interface&rdquo; % &ldquo;0.11&rdquo; % Test
 testOptions += Tests.Argument(TestFrameworks.JUnit, &ldquo;-q&rdquo;, &ldquo;-v&rdquo;)
-{% endhighlight %}</p>
+&ldquo;endhighlight&rdquo;</p>
 <p>The reason for this problem is that Scala and Java finally compiled two different sets of bytecodes. Although in most cases it is compatible,but you also need to mind the corner case.</p>
 <p>BTW,Looked at it, the test cases in Spark are all using the pure ScalaTest framework, without using JUnit.</p>
 <hr>
@@ -317,7 +317,7 @@ testOptions += Tests.Argument(TestFrameworks.JUnit, &ldquo;-q&rdquo;, &ldquo;-v&
 val s = ls.zipWithIndex.partition(elem =&gt; elem._2 + 1 &lt;= n)
 (s._1.map(x =&gt; x._1), s._2.map(x =&gt; x._1))
 }</p>
-<p>{% endhighlight %}</p>
+<p>&ldquo;endhighlight&rdquo;</p>
 <p>And I implement a small demo about <strong>class</strong> and <strong>traits</strong>:</p>
 <p>{% highlight Scala %}
 import collection.mutable.ArrayBuffer</p>
@@ -363,7 +363,7 @@ println(u.activity.toList)
 println(u.getActivity())
 println(u.getAllCost())
 }
-{% endhighlight %}</p>
+&ldquo;endhighlight&rdquo;</p>
               
             </div>
           </div>

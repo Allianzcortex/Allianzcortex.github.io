@@ -277,7 +277,7 @@
 <h5 id="junehttpsgithubcompythoncnjune"><a href="https://github.com/pythoncn/june">june</a></h5>
 <p>Although the project has been deprecated in the description, it can still run smoothly. A forum project that includes the <code>Node/Topic/Reply</code>.</p>
 <p>a. The implementation of OOP is very thorough, the following is an example:</p>
-<p>{% highlight Python %}</p>
+<p>&ldquo;starthighlight&rdquo;</p>
 <h1 id="define-saving-method-in-topic-model">Define saving method in Topic model</h1>
 <p>class Topic(db.Model):
 #&hellip;
@@ -302,10 +302,10 @@ topic = form.save(g.user,node)
 return redirect(url_for('.view&rsquo;,uid=topic.id))
 return render_template(&lsquo;topic/create.html&rsquo;, node=node, form=form)</p>
 <h1 id="so-avoiding-the-hassle-of-calling-the-model-and-dbsessionaddtopic-in-views">So avoiding the hassle of calling the model and db.session.add(topic) in views.</h1>
-<p>{% endhighlight %}</p>
+<p>&ldquo;endhighlight&rdquo;</p>
 <hr>
 <p>b.  there is a decorator <code>@require_user</code>, which is the permission management for the user. A user may have multiple roles. If you define a decorator for each of these roles, there will be too many repetitions. In this case let&rsquo;s see what the author did:</p>
-<p>{% highlight Python %}</p>
+<p>&ldquo;starthighlight&rdquo;</p>
 <h1 id="define-a-base-class">Define a base class</h1>
 <p>class require_role(object):
 roles = {
@@ -347,7 +347,7 @@ def __call__(self, method):
 require_user = require_role(&lsquo;user&rsquo;)
 require_staff = require_role(&lsquo;staff&rsquo;)
 require_admin = require_role(&lsquo;admin&rsquo;)
-{% endhighlight %}</p>
+&ldquo;endhighlight&rdquo;</p>
 <hr>
 <h5 id="zhihu-oauthhttpsgithubcom7sdreamzhihu-oauth-by-7sdream"><a href="https://github.com/7sDream/zhihu-oauth">zhihu-oauth</a> by @7sDream</h5>
 <p>The second project is <a href="https://github.com/7sDream/zhihu-oauth">zhihu-oauth</a> written by @7sDream. The overall structure is very beautiful, and the meta-programming is also very good. Especially considering that the author and I are peers, it is especially amazing. BTW, I also provide two PRs:
@@ -364,12 +364,12 @@ require_admin = require_role(&lsquo;admin&rsquo;)
 <p>Before_login_auth.py defines the BeforeLoginAuth class, inherits the imZhihuAndroidClient class above, adds client_id to imZhihuAndroidClient, and uses self._client_id=client_id to execute validation before login. The implementation of <code>__call__</code> is as follows:</p>
 </li>
 </ul>
-<p>{% highlight Python %}
+<p>&ldquo;starthighlight&rdquo;
 def <strong>call</strong>(self,r):
 r = super(BeforeLoginAuth,self).<strong>call</strong>()
 r.headers[&lsquo;Authorization&rsquo;] = &lsquo;oauth{0}'.format(str(self._client_id))
 return r
-{% endhighlight %}</p>
+&ldquo;endhighlight&rdquo;</p>
 <ul>
 <li>
 <p>In setting.py, some parameters are used, such as <code>ZHIHU_API_ROOT</code>, <code>LOGIN_URL=ZHIHU_API_ROOT+'/signin'</code>, all in uppercase.</p>
@@ -379,7 +379,7 @@ return r
 </li>
 </ul>
 <p>The <code>self._cretate_at=time.time(), self._expires_in=expires_in</code> initialization tool is defined in <code>__init__</code> and these are also provided:</p>
-<p>{% highlight Python %}
+<p>&ldquo;starthighlight&rdquo;
 class ZhihuToken:</p>
 <pre><code>@staticmethod
 def from_dict(json_dict):
@@ -411,9 +411,9 @@ def save(self,filename):
 def user_id(self):
     return self._user_id
 </code></pre>
-<p>{% endhighlight %}</p>
+<p>&ldquo;endhighlight&rdquo;</p>
 <p>Look again at the implementation of <code>exception.py</code>. As mentioned earlier,base exception should be provided for the entire project.</p>
-<p>{% highlight Python %}</p>
+<p>&ldquo;starthighlight&rdquo;</p>
 <h1 id="deal-python2-and-python3-respectively">deal python2 and python3 respectively.</h1>
 <h1 id="also-you-can-use-if-py2import-else-import-but-its-against-the">Also you can use <code>if py2:import ..;else import ..</code>,but it&rsquo;s against the</h1>
 <h1 id="principle-of-easier-to-ask-for-forgiveness-than-permission">principle of <code>easier to ask for forgiveness than permission</code></h1>
@@ -421,8 +421,8 @@ def user_id(self):
 from json import JSONDecodeError as MyJSONDecodeError
 except ImportError:
 MyJSONDecodeError = Exception
-{% endhighlight %}</p>
-<p>{% highlight Python %}
+&ldquo;endhighlight&rdquo;</p>
+<p>&ldquo;starthighlight&rdquo;
 class UnexpectedResponseException(Exception):
 def <strong>init</strong>(self,url,res):
 &quot;&rdquo;&rdquo;
@@ -436,7 +436,7 @@ self.res = res</p>
 
 __str__ = __repr__
 </code></pre>
-<p>{% endhighlight %}</p>
+<p>&ldquo;endhighlight&rdquo;</p>
 <hr>
 <p>Java 代码</p>
 <p>Based on requirements,I ever investigaed the use of <code>jedis</code> to see how it handlers multi-thread situation.</p>
@@ -444,7 +444,7 @@ __str__ = __repr__
 The <code>super.getResource()</code> method, which in turn calls the <code>borrowObject</code> method in the pool.In the <code>borrowObject</code> method, it has implemented the consideration of multithreading:</p>
 <p>{% highlight Java %}
 long starttime = System.currentTimeMillis();
-Latch<!-- raw HTML omitted --> latch = new Latch<!-- raw HTML omitted -->();
+Latch<T> latch = new Latch<T>();
 byte whenExhaustedAction;
 long maxWait;
 synchronized (this) {
@@ -471,7 +471,7 @@ return latch.getPair().value;
 }
 catch (Throwable e) {
 }
-{% endhighlight %}</p>
+&ldquo;endhighlight&rdquo;</p>
               
             </div>
           </div>

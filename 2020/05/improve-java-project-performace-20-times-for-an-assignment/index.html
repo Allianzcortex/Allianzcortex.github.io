@@ -270,7 +270,7 @@ Sb.append(&quot;,&quot;);
 }
 Sb.append(&quot;\n&rdquo;);
 Writer.write(sb.toString());
-{% endhighlight %}</p>
+&ldquo;endhighlight&rdquo;</p>
 <p>But as we said, CSV is a very common file format, so there must be a library optimized for this,  and CSVPrinter in the apache common CSV library is exactly what we need:</p>
 <p>{% highlight Java %}
 Import org.apache.commons.csv.CSVPrinter;</p>
@@ -285,7 +285,7 @@ ex.printStackTrace();
 }</p>
 <p>printer.printRecord(input);
 validRows += 1;</p>
-<p>{% endhighlight %}</p>
+<p>&ldquo;endhighlight&rdquo;</p>
 <hr>
 <h4 id="secondchange-time-processing-logic">Second:Change Time Processing Logic</h4>
 <p>The second optimization part is mainly for the bonus point mentioned in the Assignment. Simply put, there is a string such as <code>prefix2019/01/27suffix</code> which needs to be converted to <code>2019/01/27</code> format that conforms to <code>YYYY/MM/DD</code>.</p>

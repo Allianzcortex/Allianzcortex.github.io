@@ -247,44 +247,49 @@
 <p>There is not much description about pros and cons between multiprocessing and Thread, because the key is that we want our code to be parallel:-D</p>
 <p>Read this article [parallelism-in-one-line] (<a href="http://chriskiehl.com/article/parallelism-in-one-line/">http://chriskiehl.com/article/parallelism-in-one-line/</a>) to get a rough impression.</p>
 <p>Providing an example written:</p>
-<p>{% highlight Python %}</p>
-<h1 id="---codingutf-8---">-<em>- coding:utf-8 -</em>-</h1>
-<p>&quot;&rdquo;&rdquo;
-calculate the md5 value for files under one directory
-&quot;&rdquo;&rdquo;</p>
-<p>import os
-import hashlib
-from multiprocessing import Pool as ProcessPool
-from multiprocessing.dummy import Pool as ThreadPool
-from datetime import datetime</p>
-<p>def traverse_dir(dir_=&rsquo;/home/'):
-for origin_dir, current_dir, filename in os.walk(dir_):
-for file_ in filename:
-yield origin_dir + file_</p>
-<p>def create_hash(filename):
-hashlib.md5(filename)
-temp = reduce(lambda x, y: x * y, range(1, 300))</p>
-<p>if <strong>name</strong> == &lsquo;<strong>main</strong>':</p>
-<pre><code>file_list = list(traverse_dir())
-# import random
-# random.shuffle(file_list)
-print 'There are {} files'.format(len(file_list))
-time1 = datetime.now()
-for filename in file_list:
-    create_hash(filename)
-print 'normal case: {}'.format((datetime.now() - time1).total_seconds())
+<p><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#e6db74">&#34;&#34;&#34;
+</span><span style="color:#e6db74">calculate the md5 value for files under one directory
+</span><span style="color:#e6db74">&#34;&#34;&#34;</span>
 
-pool = ProcessPool(4)
-time2 = datetime.now()
-pool.map(create_hash, file_list)
-print 'multi-process case: {}'.format((datetime.now() - time2).total_seconds())
+<span style="color:#f92672">import</span> os
+<span style="color:#f92672">import</span> hashlib
+<span style="color:#f92672">from</span> multiprocessing <span style="color:#f92672">import</span> Pool <span style="color:#66d9ef">as</span> ProcessPool
+<span style="color:#f92672">from</span> multiprocessing.dummy <span style="color:#f92672">import</span> Pool <span style="color:#66d9ef">as</span> ThreadPool
+<span style="color:#f92672">from</span> datetime <span style="color:#f92672">import</span> datetime
 
-pool = ThreadPool(4)
-time3 = datetime.now()
-pool.map(create_hash, file_list)
-print 'multi-thread: {}'.format((datetime.now() - time3).total_seconds())
-</code></pre>
-<p>{% endhighlight %}</p>
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">traverse_dir</span>(dir_<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;/home/&#39;</span>):
+    <span style="color:#66d9ef">for</span> origin_dir, current_dir, filename <span style="color:#f92672">in</span> os<span style="color:#f92672">.</span>walk(dir_):
+        <span style="color:#66d9ef">for</span> file_ <span style="color:#f92672">in</span> filename:
+            <span style="color:#66d9ef">yield</span> origin_dir <span style="color:#f92672">+</span> file_
+
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">create_hash</span>(filename):
+    hashlib<span style="color:#f92672">.</span>md5(filename)
+    temp <span style="color:#f92672">=</span> reduce(<span style="color:#66d9ef">lambda</span> x, y: x <span style="color:#f92672">*</span> y, range(<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">300</span>))
+
+<span style="color:#66d9ef">if</span> __name__ <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;__main__&#39;</span>:
+
+    file_list <span style="color:#f92672">=</span> list(traverse_dir())
+    <span style="color:#75715e"># import random</span>
+    <span style="color:#75715e"># random.shuffle(file_list)</span>
+    <span style="color:#66d9ef">print</span> <span style="color:#e6db74">&#39;There are {} files&#39;</span><span style="color:#f92672">.</span>format(len(file_list))
+    time1 <span style="color:#f92672">=</span> datetime<span style="color:#f92672">.</span>now()
+    <span style="color:#66d9ef">for</span> filename <span style="color:#f92672">in</span> file_list:
+        create_hash(filename)
+    <span style="color:#66d9ef">print</span> <span style="color:#e6db74">&#39;normal case: {}&#39;</span><span style="color:#f92672">.</span>format((datetime<span style="color:#f92672">.</span>now() <span style="color:#f92672">-</span> time1)<span style="color:#f92672">.</span>total_seconds())
+
+    pool <span style="color:#f92672">=</span> ProcessPool(<span style="color:#ae81ff">4</span>)
+    time2 <span style="color:#f92672">=</span> datetime<span style="color:#f92672">.</span>now()
+    pool<span style="color:#f92672">.</span>map(create_hash, file_list)
+    <span style="color:#66d9ef">print</span> <span style="color:#e6db74">&#39;multi-process case: {}&#39;</span><span style="color:#f92672">.</span>format((datetime<span style="color:#f92672">.</span>now() <span style="color:#f92672">-</span> time2)<span style="color:#f92672">.</span>total_seconds())
+
+    pool <span style="color:#f92672">=</span> ThreadPool(<span style="color:#ae81ff">4</span>)
+    time3 <span style="color:#f92672">=</span> datetime<span style="color:#f92672">.</span>now()
+    pool<span style="color:#f92672">.</span>map(create_hash, file_list)
+    <span style="color:#66d9ef">print</span> <span style="color:#e6db74">&#39;multi-thread: {}&#39;</span><span style="color:#f92672">.</span>format((datetime<span style="color:#f92672">.</span>now() <span style="color:#f92672">-</span> time3)<span style="color:#f92672">.</span>total_seconds())
+
+<span style="color:#e6db74">&#34;</span></code></pre></div>&rdquo;</p>
 <p>There is something to mention：</p>
 <ul>
 <li>If the <code>shuflle</code> operation is performed on the generated file list to make the file unordered,then all the time will be longer. Explain that the thread is <code>I/O Bound</code> when it manipulates the file.</li>
@@ -306,7 +311,7 @@ multi-thread: 0.234787
 <h5 id="lock">Lock</h5>
 <p>The role of <code>Lock</code> is for some sensitive functions or variables, ensuring that only one process/thread is running. Also because Lock is not pickable, it cannot be passed as a parameter to map() . Use global variables directly to solve.</p>
 <p>An example is as follows:</p>
-<p>{% highlight Python %}
+<p>&ldquo;starthighlight&rdquo;
 import multiprocessing.Lock</p>
 <p>l = Lock()</p>
 <p>def func1():
@@ -318,7 +323,7 @@ l.release()</p>
 # or use next method
 with l:
 # do-something,it will release automatic</p>
-<p>{% endhighlight %}</p>
+<p>&ldquo;endhighlight&rdquo;</p>
 <p><code>With lock</code> implements the context manager, which can be compared to Java&rsquo;s <code>Synchronized</code> keyword. During the test, it was found that if all the functions to be executed were placed under lock, the execution time of multiple processes was even worse than the sequential execution.</p>
 <h5 id="about-apply_async">About apply_async</h5>
 <p>In the multiprocessing pool, <code>apply/apply_async</code> is provided in addition to map/map_async. The main differences include:</p>
@@ -337,7 +342,7 @@ with l:
 </li>
 </ul>
 <p>Make a simple comparison as follows:</p>
-<p>{% highlight Python %}
+<p>&ldquo;starthighlight&rdquo;
 import multiprocessing
 from datetime import datetime
 from functools import reduce</p>
@@ -372,7 +377,7 @@ print ('Total cost time is: {}'.format((datetime.now() - date1).total_seconds())
 pool.close()
 pool.join()
 </code></pre>
-<p>{% endhighlight %}</p>
+<p>&ldquo;endhighlight&rdquo;</p>
 <p>Result of <code>pool.apply_async</code>. Each task returns result the moment it is finished.</p>
 <pre><code>1 occurs
 2 occurs
@@ -420,9 +425,9 @@ Total cost time is: 5.706731
 <h4 id="a-complicated-example">A Complicated Example</h4>
 <p>The above method is sufficient for development in most cases. But if we want to have better control over multi-process/thread operations such as sharing state among different threads. we need to understand more.</p>
 <p>I used to write an example of running with <code>mp.Process</code> and using <code>mp.Queue</code> as a queue, as shown below.</p>
-<p>{% highlight Python %}
+<p>&ldquo;starthighlight&rdquo;
 #!/usr/bin/env python</p>
-<h1 id="---codingutf-8----1">-<em>- coding:utf-8 -</em>-</h1>
+<h1 id="---codingutf-8---">-<em>- coding:utf-8 -</em>-</h1>
 <p>import multiprocessing as mp
 import Queue
 import time
@@ -460,7 +465,7 @@ return
 <p>def crawl(url):
 #time.sleep(5.0/1000)
 r=requests.get(url)
-title=re.findall(r'<!-- raw HTML omitted -->(.*?).<!-- raw HTML omitted -->&rsquo;,r.content)
+title=re.findall(r'<title>(.*?).</title>&rsquo;,r.content)
 return title</p>
 <p>if <strong>name</strong> == &lsquo;<strong>main</strong>':
 t1=time.time()</p>
@@ -503,15 +508,15 @@ while True:
 
 print 'cost {}'.format(time.time()-t1)
 </code></pre>
-<p>{% endhighlight %}</p>
+<p>&ldquo;endhighlight&rdquo;</p>
 <h4 id="threadprocess-and-poolexecutor-in-python3">Thread/Process And PoolExecutor In Python3</h4>
 <p>Python3 provides a high-level abstraction。There are two ways to use:</p>
 <h3 id="using-map">Using Map</h3>
 <p>A standard example is：</p>
-<p>{% highlight Python %}
+<p>&ldquo;starthighlight&rdquo;
 with ProcessPoolExecutor(max_workers=4) as executor:
 executor.map(create_hash, file_list)
-{% endhighlight %}</p>
+&ldquo;endhighlight&rdquo;</p>
 <p>put it in the above example.The result is:</p>
 <pre><code>normal case: 12.71012
 multi-process case: 5.799454
@@ -523,7 +528,7 @@ ProcessPoolExecutor case: 5.764657
 <p>As mentioned above, the use of map for PoolExecutor is of little significance. The main discussion of submit is as follows.</p>
 <p>It is obvious that you can see the shadow of Java. The best feature of the future feature is to return once it&rsquo;s done, without having to wait for all blocking to return. It is more abstract than apply_async.</p>
 <p>The example of the official website is slightly improved. It can be used as follows:</p>
-<p>{% highlight Python %}
+<p>&ldquo;starthighlight&rdquo;
 from concurrent.futures import ThreadPoolExecutor,as_completed</p>
 <p>import requests</p>
 <p>URLS = [&lsquo;http://www.foxnews.com/',
@@ -544,7 +549,7 @@ except Exception as ex:
 print (&lsquo;raise exception&rsquo;)
 else:
 print ('{url} content is {content}'.format(url=url,content=data))</p>
-<p>{% endhighlight %}</p>
+<p>&ldquo;endhighlight&rdquo;</p>
               
             </div>
           </div>

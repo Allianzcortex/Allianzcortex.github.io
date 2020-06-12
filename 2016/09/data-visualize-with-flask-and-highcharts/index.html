@@ -255,21 +255,21 @@
 0 30 23（means evening 11:30） 2330
 </code></pre><p>If the time does not meet the four positions when you look at it, you need to complete the leading zero to see.</p>
 <p>The core of time is as follows:</p>
-<p>{% highlight python %}
+<p>&ldquo;starthighlight&rdquo;
 for row in cur.fetchall():
 key = row[1].split()
 if key[2]!='0&rsquo; and key[1]=='0&rsquo;:
 key=10*int(key[2]+key[1])
 else:
 key = int(key[2] + key[1])
-{% endhighlight %}</p>
+&ldquo;endhighlight&rdquo;</p>
 <p>configuring post data:</p>
-<p>{% highlight Python %}
+<p>&ldquo;starthighlight&rdquo;
 @app.route('/timeserialize&rsquo;, methods=[&lsquo;GET&rsquo;, &lsquo;POST&rsquo;])
 def get_json():
 # calculate some data
 return jsonify(result)
-{% endhighlight %}</p>
+&ldquo;endhighlight&rdquo;</p>
 <h4 id="highcharts-frontend-framework">Highcharts FrontEnd Framework</h4>
 <p>There are two famous visualization framework,one is <a href="https://ecomfe.github.io/echarts-doc/public/en/index.html">Echarts</a> opensourced by Baidu,and the other is <a href="https://www.highcharts.com/">Highcharts</a> opensourced by Google(D3.js is mainly for animation).I choose the latter one.</p>
 <p>Adding the resource files firstly.</p>
